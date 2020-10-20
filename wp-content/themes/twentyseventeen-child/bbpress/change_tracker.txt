@@ -1,0 +1,21 @@
+Description: change "Voices" column on bbpress forum to '瀏覽'
+loop-topics.php:19
+from
+			<li class="bbp-topic-voice-count"><?php esc_html_e( 'Voices', 'bbpress' ); ?></li>
+to
+			<li class="bbp-topic-voice-count"><?php esc_html_e( '瀏覽', 'bbpress' ); ?></li>
+reference
+http://www.magpress.com/blog/adding-topics-view-counter-in-bbpress
+2020/8/23
+
+
+
+Description: change "Voices" column to view count
+loop-single-topic.php: 83
+from
+???
+to
+	<li class="bbp-topic-voice-count"><?php echo get_wpbbp_post_view( bbp_get_topic_id() ); ?></li>
+reference
+http://www.magpress.com/blog/adding-topics-view-counter-in-bbpress
+2020/8/23
