@@ -264,7 +264,8 @@ function BuddyForms() {
             passwordHint.remove();
             strengthResult.html('');
             if (strength === 5) {
-                strengthResult.addClass('short').html(buddyformsGlobal.pwsL10n.mismatch);
+                // handle password mismatch
+                strengthResult.addClass('mismatch').html(buddyformsGlobal.pwsL10n.mismatch);
             } else {
                 switch (strength.score) {
                     case 0:
