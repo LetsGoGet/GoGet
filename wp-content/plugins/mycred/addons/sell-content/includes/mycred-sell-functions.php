@@ -483,7 +483,8 @@ if ( ! function_exists( 'mycred_sell_content_payment_buttons' ) ) :
                 //Andy edited
                 //original code:    $button   = '<button type="button" class="mycred-buy-this-content-button ' . $setup['button_classes'] . '" data-pid="' . $post_id . '" data-type="' . $point_type . '">' . $button_label . '</button>';
                 
-				$button       = '<button type="button" class="mycred-buy-this-content-button ' . $setup['button_classes'] . '" data-pid="' . $post_id . '" data-type="' . $point_type . '" onclick="javascript:self.location.reload()";>' . $button_label . '</button>';
+				// $button       = '<button type="button" class="mycred-buy-this-content-button ' . $setup['button_classes'] . '" data-pid="' . $post_id . '" data-type="' . $point_type . '" onclick="javascript:self.location.reload()";>' . $button_label . '</button>';
+                $button       = '<button type="button" class="mycred-buy-this-content-button ' . $setup['button_classes'] . '" data-pid="' . $post_id . '" data-type="' . $point_type . '" onclick="javascript:setTimeout(function(){self.location.reload();}, 500)";>' . $button_label . '</button>';
 				$buttons[]    = apply_filters( 'mycred_sell_this_button', $button, $post, $setup, $mycred );
 
 			}
