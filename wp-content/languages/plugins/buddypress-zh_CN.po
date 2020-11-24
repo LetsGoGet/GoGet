@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - BuddyPress - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2020-06-06 23:02:59+0000\n"
+"PO-Revision-Date: 2020-10-24 08:32:30+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,6 +10,10 @@ msgstr ""
 "X-Generator: GlotPress/3.0.0-alpha.2\n"
 "Language: zh_CN\n"
 "Project-Id-Version: Plugins - BuddyPress - Stable (latest release)\n"
+
+#: bp-friends/classes/class-bp-rest-friends-endpoint.php:316
+msgid "Those users are already friends or have sent friendship request(s) recently."
+msgstr "这些用户已是好友或近期已经发送过好友请求。"
 
 #: bp-friends/classes/class-bp-rest-friends-endpoint.php:827
 #: bp-friends/classes/class-bp-rest-friends-endpoint.php:903
@@ -284,10 +288,6 @@ msgstr "您的活动主题支持广泛的布局吗？ 太棒了！ BP Nouveau现
 msgid "BP Nouveau has been improved"
 msgstr "BP Nouveau 皮肤已有所改善"
 
-#: bp-core/classes/class-bp-admin.php:691
-msgid "In 6.0.0, we are adding the 6 remaining endpoints you were waiting for: Blogs, Blog avatar, Friends, Group Cover Image, Member Cover Image and User Signups. You can now build full-featured BuddyPress Apps!"
-msgstr "在 6.0.0 中，我们将添加您等待的 6 个剩余端点：博客、博客头像、好友、群封面图像、成员封面图片和用户注册。您现在可以构建功能齐全的BuddyPress应用程序！"
-
 #: bp-core/admin/bp-core-admin-tools.php:154
 msgid "Create the database table for Invitations and migrate existing group invitations if needed."
 msgstr "为邀请创建数据库表，并在需要时迁移现有群组邀请。"
@@ -371,6 +371,10 @@ msgstr "上传的图像太大。请上传比%s小的图像"
 msgctxt "last time the user was active"
 msgid "active %s"
 msgstr "活动时间 %s"
+
+#: bp-core/classes/class-bp-admin.php:691
+msgid "In 6.0.0, we are adding the 6 remaining endpoints you were waiting for: Blogs, Blog avatar, Friends, Group Cover Image, Member Cover Image and User Signups. You can now build full-featured BuddyPress Apps!"
+msgstr "在 6.0.0 中，我们将添加您等待的 6 个剩余端点：网站、网站头像、好友、群封面图像、成员封面图片和用户注册。您现在可以构建功能齐全的BuddyPress应用程序！"
 
 #: bp-core/classes/class-bp-admin.php:688
 msgid "reference documentation"
@@ -456,10 +460,6 @@ msgstr "抱歉，您不能进行此操作。"
 msgid "Whether to disable the default Gravatar Admin user fallback."
 msgstr "是否禁用默认的 Gravatar 管理员用户回退。"
 
-#: bp-blogs/classes/class-bp-rest-attachments-blog-avatar-endpoint.php:89
-msgid "There was a problem confirming the blog's user admin is valid."
-msgstr "确认博客的用户管理员有效时出现问题。"
-
 #: bp-members/classes/class-bp-rest-signup-endpoint.php:1018
 msgid "Offset the result set by a specific number of items."
 msgstr "通过特定数量的项目抵消结果集。"
@@ -475,10 +475,6 @@ msgstr "搜索引擎新用户网站的可见性。"
 #: bp-members/classes/class-bp-rest-signup-endpoint.php:967
 msgid "Title of the new user's child site."
 msgstr "新用户子站点的标题。"
-
-#: bp-members/classes/class-bp-rest-signup-endpoint.php:960
-msgid "Unique site name (slug) of the new user's child site."
-msgstr "新用户子站点的唯一站点名称 （slug）。"
 
 #: bp-members/classes/class-bp-rest-signup-endpoint.php:948
 msgid "The new user's full name."
@@ -540,10 +536,6 @@ msgctxt "last time the site was active"
 msgid "active %s"
 msgstr "活动时间 %s"
 
-#: bp-blogs/bp-blogs-template.php:423
-msgid "Site icon for the blog"
-msgstr "博客的网站图标"
-
 #. translators: 1: the activity user link. 2: the post link.
 #: bp-blogs/bp-blogs-activity.php:391
 msgctxt "`new_blog_comment` activity action"
@@ -568,66 +560,9 @@ msgctxt "`new_blog_post` activity action"
 msgid "%1$s wrote a new post, %2$s, on the site %3$s"
 msgstr "%1$s 在站点 %3$s 中撰写了一篇新文章 %2$s"
 
-#: bp-blogs/classes/class-bp-rest-attachments-blog-avatar-endpoint.php:172
-msgid "Sorry, blog avatar is disabled."
-msgstr "抱歉，博客头像已禁用。"
-
-#: bp-blogs/classes/class-bp-rest-attachments-blog-avatar-endpoint.php:118
-msgid "Sorry, there was a problem fetching the blog avatar."
-msgstr "抱歉，获取博客头像时出现问题。"
-
-#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:505
-msgid "ID of the user whose blogs user can post to."
-msgstr "博客用户可以发布到的用户的 ID。"
-
-#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:475
-msgid "Avatar URLs for the blog."
-msgstr "博客的头像URL。"
-
-#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:447
-msgid "The last activity date from the blog, in the site's timezone."
-msgstr "博客中的最后一个活动日期，位于网站的时区。"
-
-#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:441
-msgid "the domain of the blog."
-msgstr "博客的域名。"
-
-#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:435
-msgid "The path of the blog."
-msgstr "博客的路径。"
-
-#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:429
-msgid "The description of the blog."
-msgstr "博客的描述。"
-
-#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:422
-msgid "The permalink of the blog."
-msgstr "博客的固定链接。"
-
-#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:413
-msgid "The name of the blog."
-msgstr "博客的名称。"
-
-#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:407
-msgid "A unique numeric ID for the blog admin."
-msgstr "博客管理员的唯一数字 ID。"
-
-#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:401
-#: bp-blogs/classes/class-bp-rest-attachments-blog-avatar-endpoint.php:62
-msgid "A unique numeric ID for the blog."
-msgstr "博客的唯一数字 ID。"
-
-#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:189
-msgid "Invalid blog ID."
-msgstr "无效的博客 ID。"
-
 #: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:119
 msgid "There was a problem confirming if user ID provided is a valid one."
 msgstr "确认提供的用户 ID 是否有效时出现问题。"
-
-#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:57
-msgid "A unique numeric ID for the Blog."
-msgstr "博客的唯一数字 ID。"
 
 #. translators: 1: Site Name. 2: User Display Name.
 #: bp-activity/actions/feeds.php:53
@@ -741,6 +676,75 @@ msgstr "为成员设置类型。"
 #: bp-blogs/bp-blogs-activity.php:132
 msgid "%1$s created the site %2$s"
 msgstr "%1$s创建了站点%2$s"
+
+#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:57
+msgid "A unique numeric ID for the Blog."
+msgstr "网站的唯一数字 ID。"
+
+#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:407
+msgid "A unique numeric ID for the blog admin."
+msgstr "网站管理员的唯一数字 ID。"
+
+#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:401
+#: bp-blogs/classes/class-bp-rest-attachments-blog-avatar-endpoint.php:62
+msgid "A unique numeric ID for the blog."
+msgstr "网站的唯一数字 ID。"
+
+#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:475
+msgid "Avatar URLs for the blog."
+msgstr "网站的头像网址。"
+
+#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:505
+msgid "ID of the user whose blogs user can post to."
+msgstr "网站用户可以发布到的用户的 ID。"
+
+#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:189
+msgid "Invalid blog ID."
+msgstr "无效的网站 ID。"
+
+#: bp-blogs/bp-blogs-template.php:423
+msgid "Site icon for the blog"
+msgstr "网站的网站图标"
+
+#: bp-blogs/classes/class-bp-rest-attachments-blog-avatar-endpoint.php:172
+msgid "Sorry, blog avatar is disabled."
+msgstr "抱歉，网站头像已禁用。"
+
+#: bp-blogs/classes/class-bp-rest-attachments-blog-avatar-endpoint.php:118
+msgid "Sorry, there was a problem fetching the blog avatar."
+msgstr "抱歉，获取网站头像时出现问题。"
+
+#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:429
+msgid "The description of the blog."
+msgstr "网站的描述。"
+
+#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:447
+msgid "The last activity date from the blog, in the site's timezone."
+msgstr "网站中的最后一个活动日期，位于网站的时区。"
+
+#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:413
+msgid "The name of the blog."
+msgstr "网站的名称。"
+
+#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:435
+msgid "The path of the blog."
+msgstr "网站的路径。"
+
+#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:422
+msgid "The permalink of the blog."
+msgstr "网站的固定链接。"
+
+#: bp-blogs/classes/class-bp-rest-attachments-blog-avatar-endpoint.php:89
+msgid "There was a problem confirming the blog's user admin is valid."
+msgstr "确认网站的用户管理员有效时出现问题。"
+
+#: bp-members/classes/class-bp-rest-signup-endpoint.php:960
+msgid "Unique site name (slug) of the new user's child site."
+msgstr "新用户子站点的唯一站点名称 （别名）。"
+
+#: bp-blogs/classes/class-bp-rest-blogs-endpoint.php:441
+msgid "the domain of the blog."
+msgstr "网站的域名。"
 
 #: bp-core/classes/class-bp-admin.php:804
 #: bp-core/classes/class-bp-admin.php:806
@@ -1149,10 +1153,6 @@ msgstr "将结果集限制为特定用户（ID）创建的项目。"
 msgid "Limit result set to items published after a given ISO8601 compliant date."
 msgstr "将结果集限制为在给定的ISO8601符合日期之后发布的项目。"
 
-#: bp-activity/classes/class-bp-rest-activity-endpoint.php:1422
-msgid "Avatar URLs for the author of the activity."
-msgstr "活动作者的头像URL。"
-
 #: bp-activity/classes/class-bp-rest-activity-endpoint.php:1393
 msgid "Whether the activity object has been favorited by the current user."
 msgstr "活动对象是否已被当前用户收藏。"
@@ -1277,6 +1277,10 @@ msgstr "抱歉，您无法查看活动。"
 #: bp-activity/classes/class-bp-rest-activity-endpoint.php:1284
 msgid "A unique numeric ID for the activity."
 msgstr "活动的唯一数字ID。"
+
+#: bp-activity/classes/class-bp-rest-activity-endpoint.php:1422
+msgid "Avatar URLs for the author of the activity."
+msgstr "活动作者的头像网址。"
 
 #: bp-messages/classes/class-bp-rest-messages-endpoint.php:1213
 msgid "The list of recipient User Objects involved into the Thread."
@@ -1437,10 +1441,6 @@ msgstr "结果是否应包含隐藏的组。"
 msgid "Whether the Group has a forum enabled or not."
 msgstr "群组是否启用了论坛。"
 
-#: bp-groups/classes/class-bp-rest-groups-endpoint.php:1252
-msgid "Limit results set to a certain Group type."
-msgstr "将结果限制为特定的组类型。"
-
 #: bp-groups/classes/class-bp-rest-groups-endpoint.php:1243
 msgid "Ensure result set excludes Groups with specific IDs"
 msgstr "确保结果集排除具有特定ID的组"
@@ -1553,10 +1553,6 @@ msgstr "群组的描述。"
 msgid "The permalink to the Group on the site."
 msgstr "站点上此群组的永久链接。"
 
-#: bp-groups/classes/class-bp-rest-groups-endpoint.php:1013
-msgid "The URL-friendly slug for the Group."
-msgstr "此群组的URL友好段。"
-
 #: bp-groups/classes/class-bp-rest-groups-endpoint.php:1004
 msgid "The name of the Group."
 msgstr "群组的名称。"
@@ -1592,6 +1588,14 @@ msgstr "结果是否应排除被禁止的群组成员。"
 #: bp-groups/classes/class-bp-rest-group-membership-endpoint.php:897
 msgid "Sort the order of results by the status of the group members."
 msgstr "按群组成员的状态对结果进行排序。"
+
+#: bp-groups/classes/class-bp-rest-groups-endpoint.php:1252
+msgid "Limit results set to a certain Group type."
+msgstr "将结果限制为特定的群组类型。"
+
+#: bp-groups/classes/class-bp-rest-groups-endpoint.php:1013
+msgid "The URL-friendly slug for the Group."
+msgstr "此群组的网址友好段。"
 
 #: bp-groups/classes/class-bp-rest-group-membership-endpoint.php:505
 msgid "Sorry, you are not allowed to unban this group member."
@@ -2031,11 +2035,6 @@ msgstr "发生意外错误。请从事。"
 msgid "Version"
 msgstr "版本"
 
-#. translators: %1$s and %2$s is replaced with the registered types
-#: bp-core/bp-core-rest-api.php:293
-msgid "The group type you provided, %1$s, is not one of %2$s."
-msgstr "您提供的组类型%1$s不是%2$s 。"
-
 #. translators: %1$s and %2$s is replaced with the registered type(s)
 #: bp-core/bp-core-rest-api.php:244
 msgid "The member type you provided, %1$s, is not one of %2$s."
@@ -2044,6 +2043,11 @@ msgstr "您提供的成员类型%1$s不是%2$s 。"
 #: bp-core/admin/bp-core-admin-tools.php:628
 msgid "Active components"
 msgstr "活动组件"
+
+#. translators: %1$s and %2$s is replaced with the registered types
+#: bp-core/bp-core-rest-api.php:293
+msgid "The group type you provided, %1$s, is not one of %2$s."
+msgstr "您提供的群组类型%1$s不是%2$s 。"
 
 #. translators: %s is the placeholder for the BuddyPress version number.
 #: bp-core/classes/class-bp-admin.php:642
@@ -2210,14 +2214,14 @@ msgstr "抱歉，成员头像上传已禁用。"
 msgid "There was a problem cropping your %s photo."
 msgstr "剪切您的%s照片时出现问题。"
 
+#: bp-groups/classes/class-bp-rest-attachments-group-avatar-endpoint.php:475
+msgid "Whether to return an <img> HTML element, vs a raw URL to a group avatar."
+msgstr "是否返回<img> HTML元素，而不是原始网址到组头像。"
+
 #: bp-blogs/classes/class-bp-rest-attachments-blog-avatar-endpoint.php:275
 #: bp-members/classes/class-bp-rest-attachments-member-avatar-endpoint.php:483
 msgid "Whether to return an <img> HTML element, vs a raw URL to an avatar."
-msgstr "是否返回<img> HTML元素（相对于头像的原始URL）。"
-
-#: bp-groups/classes/class-bp-rest-attachments-group-avatar-endpoint.php:475
-msgid "Whether to return an <img> HTML element, vs a raw URL to a group avatar."
-msgstr "是否返回<img> HTML元素，而不是原始URL到组头像。"
+msgstr "是否返回<img> HTML元素（相对于头像的原始网址）。"
 
 #: bp-members/classes/class-bp-rest-members-endpoint.php:844
 msgid "Limit results set to a certain XProfile field."
@@ -2230,10 +2234,6 @@ msgstr "将结果限制为某些类型。"
 #: bp-members/classes/class-bp-rest-members-endpoint.php:808
 msgid "Pass IDs of users to limit result set."
 msgstr "传递用户ID以限制结果集。"
-
-#: bp-members/classes/class-bp-rest-members-endpoint.php:756
-msgid "Avatar URLs for the member."
-msgstr "成员的头像URL。"
 
 #: bp-members/classes/class-bp-rest-members-endpoint.php:715
 msgid "Any extra capabilities assigned to the user."
@@ -2345,15 +2345,6 @@ msgstr "抱歉，您需要上传图片文件。"
 msgid "Sorry, there was a problem fetching this group avatar."
 msgstr "抱歉，获取此群组的头像时出现问题。"
 
-#: bp-groups/classes/class-bp-rest-group-membership-endpoint.php:63
-#: bp-groups/classes/class-bp-rest-group-membership-endpoint.php:89
-#: bp-groups/classes/class-bp-rest-attachments-group-avatar-endpoint.php:80
-#: bp-groups/classes/class-bp-rest-groups-endpoint.php:60
-#: bp-groups/classes/class-bp-rest-groups-endpoint.php:992
-#: bp-groups/classes/class-bp-rest-attachments-group-cover-endpoint.php:82
-msgid "A unique numeric ID for the Group."
-msgstr "组的唯一数字ID。"
-
 #: bp-blogs/classes/class-bp-rest-attachments-blog-avatar-endpoint.php:162
 #: bp-groups/classes/class-bp-rest-group-membership-endpoint.php:328
 #: bp-groups/classes/class-bp-rest-group-membership-endpoint.php:488
@@ -2368,6 +2359,15 @@ msgstr "组的唯一数字ID。"
 #: bp-groups/classes/class-bp-rest-groups-endpoint.php:558
 msgid "Invalid group ID."
 msgstr "无效的组ID。"
+
+#: bp-groups/classes/class-bp-rest-group-membership-endpoint.php:63
+#: bp-groups/classes/class-bp-rest-group-membership-endpoint.php:89
+#: bp-groups/classes/class-bp-rest-attachments-group-avatar-endpoint.php:80
+#: bp-groups/classes/class-bp-rest-groups-endpoint.php:60
+#: bp-groups/classes/class-bp-rest-groups-endpoint.php:992
+#: bp-groups/classes/class-bp-rest-attachments-group-cover-endpoint.php:82
+msgid "A unique numeric ID for the Group."
+msgstr "组的唯一数字ID。"
 
 #: bp-templates/bp-nouveau/includes/template-tags.php:2387
 msgid "Confirm new password"
@@ -2456,6 +2456,10 @@ msgstr "无效的成员ID。"
 #: bp-members/classes/class-bp-rest-members-endpoint.php:709
 msgid "All capabilities assigned to the user."
 msgstr "分配给用户的所有权限。"
+
+#: bp-members/classes/class-bp-rest-members-endpoint.php:756
+msgid "Avatar URLs for the member."
+msgstr "成员的头像网址。"
 
 #. translators: %s: email requirement explanations
 #: bp-templates/bp-nouveau/buddypress/members/single/settings/general.php:26
@@ -2661,10 +2665,6 @@ msgstr "动态日期"
 msgid "Activity Description"
 msgstr "动态描述"
 
-#: bp-activity/bp-activity-functions.php:4226
-msgid "Activity URL"
-msgstr "动态URL"
-
 #: bp-activity/bp-activity-filters.php:828
 msgid "BuddyPress Activity Data"
 msgstr "BuddyPress动态数据"
@@ -2703,6 +2703,10 @@ msgstr "您的个人资料图像将在您的个人资料和整个网站上使用
 #: bp-settings/bp-settings-functions.php:201
 msgid "Receive group invitations from my friends only?"
 msgstr "仅接收好友的群组邀请？"
+
+#: bp-activity/bp-activity-functions.php:4226
+msgid "Activity URL"
+msgstr "动态网址"
 
 #. translators: Link to Delete Account Settings page
 #: bp-templates/bp-nouveau/buddypress/members/single/settings/data.php:66
@@ -2855,10 +2859,6 @@ msgstr "通知日期"
 msgid "Sent To"
 msgstr "发送到"
 
-#: bp-messages/bp-messages-functions.php:717
-msgid "Thread URL"
-msgstr "线程URL"
-
 #: bp-members/screens/register.php:77
 msgid "You must indicate that you have read and agreed to the Privacy Policy."
 msgstr "您必须表明您已阅读并同意隐私政策。"
@@ -2913,6 +2913,10 @@ msgstr "待处理群组邀请（已发送）"
 #: bp-groups/bp-groups-functions.php:3137
 msgid "Pending Group Invitations (Received)"
 msgstr "待处理群组邀请（已接收）"
+
+#: bp-messages/bp-messages-functions.php:717
+msgid "Thread URL"
+msgstr "线程网址"
 
 #: bp-core/classes/class-bp-admin.php:606
 msgid "When a logged-in user creates a new group, we use a number of cookies to keep track of the group creation process. These cookies contain no personal data, and are deleted either upon the successful creation of the group or after 24 hours."
@@ -3770,10 +3774,6 @@ msgstr "群组邀请已接受。"
 msgid "Loading your friends. Please wait."
 msgstr "正在加载您的好友，请稍候。"
 
-#: bp-templates/bp-nouveau/includes/functions.php:1107
-msgid "Loading your blogs. Please wait."
-msgstr "正在加载您的博客，请稍候。"
-
 #: bp-templates/bp-nouveau/includes/functions.php:1111
 msgid "Loading your groups. Please wait."
 msgstr "正在加载您的群组，请稍候。"
@@ -3887,10 +3887,6 @@ msgstr "目前只有您的好友可以邀请您加入群组。 取消选中此�
 msgid "Loading the member's updates. Please wait."
 msgstr "正在加载成员更新，请稍候。"
 
-#: bp-templates/bp-nouveau/includes/functions.php:1055
-msgid "Loading the member's blogs. Please wait."
-msgstr "正在加载成员博客，请稍候。"
-
 #: bp-templates/bp-nouveau/includes/functions.php:1059
 msgid "Loading the member's friends. Please wait."
 msgstr "正在加载成员好友，请稍候。"
@@ -3906,6 +3902,14 @@ msgstr "抱歉，没有找到任何群组。"
 #: bp-templates/bp-nouveau/includes/functions.php:1071
 msgid "Currently every member of the community can invite you to join their groups. If you are not comfortable with it, you can always restrict group invites to your friends only."
 msgstr "目前社区的每个成员都可以邀请您加入他们的群组。 如果您对此不满意，您可以随时将群组邀请仅限于您的好友。"
+
+#: bp-templates/bp-nouveau/includes/functions.php:1055
+msgid "Loading the member's blogs. Please wait."
+msgstr "正在加载成员网站，请稍候。"
+
+#: bp-templates/bp-nouveau/includes/functions.php:1107
+msgid "Loading your blogs. Please wait."
+msgstr "正在加载您的网站，请稍候。"
 
 #: bp-templates/bp-nouveau/includes/groups/ajax.php:47
 #: bp-templates/bp-nouveau/includes/groups/ajax.php:263
@@ -4507,10 +4511,6 @@ msgstr "您如何使用BuddyPress？ 收到您对BuddyPress未来版本的反馈
 msgid "Activity generated by posts and comments uses the link field for a permalink back to the content item."
 msgstr "由文章、评论、论坛主题、回复以及一些插件所生成的动态信息条目使用链接字段作为指向原内容的固定链接。"
 
-#: bp-core/admin/bp-core-admin-settings.php:115
-msgid "Allow activity stream commenting on posts and comments"
-msgstr "允许在动态流中显示博客和论坛帖子的评论提示"
-
 #. Translators: %s is the url to the BuddyPress tools administration screen.
 #: bp-core/admin/bp-core-admin-functions.php:877
 msgid "Are these emails not written in your site's language? Go to <a href=\"%s\">BuddyPress Tools and try the \"reinstall emails\"</a> tool."
@@ -4544,6 +4544,10 @@ msgstr "欢迎使用 BuddyPress！"
 #: bp-activity/bp-activity-admin.php:235
 msgid "<strong>Link</strong> - Used by some types of activity (blog posts and comments) to store a link back to the original content."
 msgstr "<strong>链接</strong> - 由某些类型的动态信息（如：文章和评论、以及论坛主题和回贴）用来链接回原内容。"
+
+#: bp-core/admin/bp-core-admin-settings.php:115
+msgid "Allow activity stream commenting on posts and comments"
+msgstr "允许在动态流中显示网站和论坛帖子的评论提示"
 
 #. Description of the plugin
 msgid "BuddyPress adds community features to WordPress. Member Profiles, Activity Streams, Direct Messaging, Notifications, and more!"
@@ -5299,11 +5303,6 @@ msgid "By %1$s on %2$s"
 msgstr "由%2$s 上的 %1$s"
 
 #. translators: accessibility text
-#: bp-activity/bp-activity-admin.php:683
-msgid "Edit activity action"
-msgstr "编辑动态动作"
-
-#. translators: accessibility text
 #: bp-activity/bp-activity-admin.php:694
 msgid "Edit activity content"
 msgstr "编辑动态内容"
@@ -5382,6 +5381,11 @@ msgstr "提到我的 %s"
 #: bp-core/admin/bp-core-admin-tools.php:561
 msgid "It looks like you have more sites to record. Resume recording by checking the \"Repopulate site tracking records\" option."
 msgstr "看起来您有更多的网站要记录。 通过选中“重新填充站点跟踪记录”选项来恢复记录。"
+
+#. translators: accessibility text
+#: bp-activity/bp-activity-admin.php:683
+msgid "Edit activity action"
+msgstr "编辑动态操作"
 
 #: bp-activity/bp-activity-functions.php:551
 msgctxt "Post Type generic comments activity front filter"
@@ -5783,6 +5787,17 @@ msgid "Recipient was mentioned in an activity update."
 msgstr "在动态更新中提到了收件人。"
 
 #. translators: do not remove {} brackets or translate its contents.
+#: bp-core/bp-core-functions.php:3517
+msgid ""
+"You recently changed the email address associated with your account on {{site.name}} to {{user.email}}. If this is correct, go to the following link to confirm the change: {{{verify.url}}}\n"
+"\n"
+"Otherwise, you can safely ignore and delete this email if you have changed your mind, or if you think you have received this email in error."
+msgstr ""
+"您近期将{{site.name}}上与您的帐户相关联的电子邮件地址更改为{{user.email}}。 如果这是正确的，请转到以下链接以确认更改：{{{verify.url}}}\n"
+"\n"
+"否则，如果您改变主意，或者您认为错误地收到了此电子邮件，则可以安全地忽略并删除此电子邮件。"
+
+#. translators: do not remove {} brackets or translate its contents.
 #: bp-core/bp-core-functions.php:3521
 msgid "[{{{site.name}}}] Membership request for group \"{{group.name}}\" accepted"
 msgstr "[{{{site.name}}}]已接受群组\"{{group.name}}\"的成员请求"
@@ -5823,17 +5838,6 @@ msgstr ""
 "您对\"{{group.name}}\"群组的成员请求已被拒绝。\n"
 "\n"
 "要再次申请成员，请访问：{{{group.url}}}"
-
-#. translators: do not remove {} brackets or translate its contents.
-#: bp-core/bp-core-functions.php:3517
-msgid ""
-"You recently changed the email address associated with your account on {{site.name}} to {{user.email}}. If this is correct, go to the following link to confirm the change: {{{verify.url}}}\n"
-"\n"
-"Otherwise, you can safely ignore and delete this email if you have changed your mind, or if you think you have received this email in error."
-msgstr ""
-"您近期将{{site.name}}上与您的帐户相关联的电子邮件地址更改为{{user.email}}。 如果这是正确的，请转到以下链接以确认更改：{{{verify.url}}}\n"
-"\n"
-"否则，如果您改变主意，或者您认为错误地收到了此电子邮件，则可以安全地忽略并删除此电子邮件。"
 
 #: bp-core/bp-core-functions.php:3558
 msgid "A member has replied to an activity update that the recipient posted."
@@ -6974,10 +6978,6 @@ msgstr "受密码保护"
 msgid "Enter the password to view comments."
 msgstr "输入密码以查看评论。"
 
-#: bp-themes/bp-default/comments.php:55
-msgid "Comments are closed, but <a href=\"%1$s\" title=\"Trackback URL for this post\">trackbacks</a> and pingbacks are open."
-msgstr "评论已关闭，但 <a href=\"%1$s\" title=\"Trackback URL for this post\">Trackback</a> 和 Pingback 是开放的。"
-
 #: bp-themes/bp-default/comments.php:59
 msgid "Comments are closed."
 msgstr "评论功能被关闭。"
@@ -7033,6 +7033,10 @@ msgstr "侧栏小工具区域"
 #: bp-themes/bp-default/functions.php:594
 msgid "Theme activated! This theme contains <a href=\"%s\">custom header image</a> support and <a href=\"%s\">sidebar widgets</a>."
 msgstr "主题已启用！此主题包含<a href=\"%s\">自定义页眉图像</a>功能并支持<a href=\"%s\">侧栏小工具</a>。"
+
+#: bp-themes/bp-default/comments.php:55
+msgid "Comments are closed, but <a href=\"%1$s\" title=\"Trackback URL for this post\">trackbacks</a> and pingbacks are open."
+msgstr "评论已关闭，但 <a href=\"%1$s\" title=\"Trackback 网址 for this post\">Trackback</a> 和 Pingback 是开放的。"
 
 #: bp-themes/bp-default/single.php:23 bp-themes/bp-default/search.php:32
 #: bp-themes/bp-default/archive.php:30 bp-themes/bp-default/index.php:34
@@ -7979,17 +7983,12 @@ msgstr "站点标题"
 #: bp-themes/bp-default/registration/register.php:223
 #: bp-templates/bp-legacy/buddypress/members/register.php:281
 msgid "Blog URL"
-msgstr "博客地址（URL）"
+msgstr "网站地址（网址）"
 
 #: bp-themes/bp-default/registration/register.php:219
 #: bp-templates/bp-legacy/buddypress/members/register.php:277
 msgid "Yes, I'd like to create a new site"
 msgstr "是，我想创建新站点"
-
-#: bp-themes/bp-default/registration/register.php:217
-#: bp-templates/bp-legacy/buddypress/members/register.php:275
-msgid "Blog Details"
-msgstr "博客详情"
 
 #: bp-xprofile/classes/class-bp-xprofile-user-admin.php:339
 #: bp-themes/bp-default/members/single/profile/edit.php:132
@@ -7998,6 +7997,11 @@ msgstr "博客详情"
 #: bp-templates/bp-legacy/buddypress/members/single/profile/edit.php:75
 msgid "Who can see this field?"
 msgstr "谁能看见此字段？"
+
+#: bp-themes/bp-default/registration/register.php:217
+#: bp-templates/bp-legacy/buddypress/members/register.php:275
+msgid "Blog Details"
+msgstr "网站详情"
 
 #: bp-themes/bp-default/registration/register.php:170
 #: bp-templates/bp-legacy/buddypress/members/register.php:196
@@ -11801,7 +11805,7 @@ msgstr "编辑 %s 的个人资料"
 
 #: bp-core/deprecated/2.1.php:442
 msgid "Blog Authors"
-msgstr "博客作者"
+msgstr "网站作者"
 
 #: bp-core/deprecated/2.1.php:391 bp-groups/bp-groups-admin.php:1088
 #: bp-themes/bp-default/groups/single/admin.php:360
@@ -12139,15 +12143,15 @@ msgstr "搜索以下内容："
 msgid "Search anything..."
 msgstr "搜索全部..."
 
-#: bp-core/bp-core-template.php:551
-msgctxt "search form"
-msgid "Blogs"
-msgstr "博客"
-
 #: bp-core/bp-core-template.php:554
 msgctxt "search form"
 msgid "Posts"
 msgstr "文章"
+
+#: bp-core/bp-core-template.php:551
+msgctxt "search form"
+msgid "Blogs"
+msgstr "网站"
 
 #: bp-core/bp-core-template.php:547
 msgctxt "search form"
@@ -12707,11 +12711,6 @@ msgid "Counting the number of groups for each user&hellip; %s"
 msgstr "正在为每位用户统计群数量&hellip; %s"
 
 #. translators: %s: the result of the action performed by the repair tool
-#: bp-core/admin/bp-core-admin-tools.php:287
-msgid "Repopulating Blogs records&hellip; %s"
-msgstr "正在重新生成博客记录&hellip; %s"
-
-#. translators: %s: the result of the action performed by the repair tool
 #: bp-core/admin/bp-core-admin-tools.php:316
 msgid "Counting the number of active members on the site&hellip; %s"
 msgstr "正在计算站点活跃用户数量&hellip; %s"
@@ -12720,6 +12719,11 @@ msgstr "正在计算站点活跃用户数量&hellip; %s"
 #: bp-core/admin/bp-core-admin-tools.php:331
 msgid "Determining last activity dates for each user&hellip; %s"
 msgstr "正在为每一个用户指定最后在线日期hellip; %s"
+
+#. translators: %s: the result of the action performed by the repair tool
+#: bp-core/admin/bp-core-admin-tools.php:287
+msgid "Repopulating Blogs records&hellip; %s"
+msgstr "正在重新生成网站记录&hellip; %s"
 
 #: bp-core/admin/bp-core-admin-tools.php:226
 #: bp-core/admin/bp-core-admin-tools.php:274
@@ -13119,13 +13123,13 @@ msgstr "保存设置"
 msgid "Components"
 msgstr "组件"
 
-#: bp-blogs/classes/class-bp-blogs-recent-posts-widget.php:166
-msgid "Link widget title to Blogs directory"
-msgstr "把小工具标题链接到博客目录"
-
 #: bp-blogs/classes/class-bp-blogs-recent-posts-widget.php:167
 msgid "Max posts to show:"
 msgstr "显示文章最多数量："
+
+#: bp-blogs/classes/class-bp-blogs-recent-posts-widget.php:166
+msgid "Link widget title to Blogs directory"
+msgstr "把小工具标题链接到网站目录"
 
 #: bp-blogs/classes/class-bp-blogs-recent-posts-widget.php:165
 msgctxt "Label for the Title field of the Recent Networkwide Posts widget"
@@ -13835,7 +13839,7 @@ msgstr "用户动态"
 #: bp-activity/classes/class-bp-activity-list-table.php:430
 msgctxt "Admin SWA column header"
 msgid "Action"
-msgstr "动作"
+msgstr "操作"
 
 #: bp-activity/classes/class-bp-activity-list-table.php:428
 msgctxt "Admin SWA column header"

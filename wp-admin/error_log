@@ -427,5 +427,3 @@
 [05-Oct-2020 18:00:25 UTC] PHP Fatal error:  Cannot redeclare enable_maintenance_mode_filter() (previously declared in /home2/letsgog7/public_html/.maintenance:1) in /home2/letsgog7/public_html/.maintenance on line 1
 [05-Oct-2020 18:00:25 UTC] PHP Fatal error:  Cannot redeclare enable_maintenance_mode_filter() (previously declared in /home2/letsgog7/public_html/.maintenance:1) in /home2/letsgog7/public_html/.maintenance on line 1
 [05-Oct-2020 18:00:27 UTC] PHP Fatal error:  Cannot redeclare enable_maintenance_mode_filter() (previously declared in /home2/letsgog7/public_html/.maintenance:1) in /home2/letsgog7/public_html/.maintenance on line 1
-[17-Oct-2020 08:41:56 UTC] PHP Fatal error:  Cannot redeclare enable_maintenance_mode_filter() (previously declared in /home2/letsgog7/public_html/dev2/.maintenance:1) in /home2/letsgog7/public_html/dev2/.maintenance on line 1
-[17-Oct-2020 08:42:05 UTC] PHP Fatal error:  Cannot redeclare enable_maintenance_mode_filter() (previously declared in /home2/letsgog7/public_html/dev2/.maintenance:1) in /home2/letsgog7/public_html/dev2/.maintenance on line 1
