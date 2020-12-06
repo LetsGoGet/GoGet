@@ -10,7 +10,7 @@
 /**
  * Core class used to implement a rewrite component API.
  *
- * The WordPress Rewrite class writes the rewrite module rules to the .htaccess
+ * The WordPress Rewrite class writes the rewrite module rules to the .htaccess__
  * file. It also handles parsing the request to get the correct setup for the
  * WordPress Query class.
  *
@@ -211,7 +211,7 @@ class WP_Rewrite {
 	/**
 	 * Rules that don't redirect to WordPress' index.php.
 	 *
-	 * These rules are written to the mod_rewrite portion of the .htaccess,
+	 * These rules are written to the mod_rewrite portion of the .htaccess__,
 	 * and are added by add_external_rule().
 	 *
 	 * @since 2.1.0
@@ -236,10 +236,10 @@ class WP_Rewrite {
 	var $endpoints;
 
 	/**
-	 * Whether to write every mod_rewrite rule for WordPress into the .htaccess file.
+	 * Whether to write every mod_rewrite rule for WordPress into the .htaccess__ file.
 	 *
 	 * This is off by default, turning it on might print a lot of rewrite rules
-	 * to the .htaccess file.
+	 * to the .htaccess__ file.
 	 *
 	 * @since 2.0.0
 	 * @var bool
@@ -1478,12 +1478,12 @@ class WP_Rewrite {
 	}
 
 	/**
-	 * Retrieves mod_rewrite-formatted rewrite rules to write to .htaccess.
+	 * Retrieves mod_rewrite-formatted rewrite rules to write to .htaccess__.
 	 *
-	 * Does not actually write to the .htaccess file, but creates the rules for
+	 * Does not actually write to the .htaccess__ file, but creates the rules for
 	 * the process that will.
 	 *
-	 * Will add the non_wp_rules property rules to the .htaccess file before
+	 * Will add the non_wp_rules property rules to the .htaccess__ file before
 	 * the WordPress rewrite rules one.
 	 *
 	 * @since 1.5.0
@@ -1549,21 +1549,21 @@ class WP_Rewrite {
 		$rules .= "</IfModule>\n";
 
 		/**
-		 * Filters the list of rewrite rules formatted for output to an .htaccess file.
+		 * Filters the list of rewrite rules formatted for output to an .htaccess__ file.
 		 *
 		 * @since 1.5.0
 		 *
-		 * @param string $rules mod_rewrite Rewrite rules formatted for .htaccess.
+		 * @param string $rules mod_rewrite Rewrite rules formatted for .htaccess__.
 		 */
 		$rules = apply_filters( 'mod_rewrite_rules', $rules );
 
 		/**
-		 * Filters the list of rewrite rules formatted for output to an .htaccess file.
+		 * Filters the list of rewrite rules formatted for output to an .htaccess__ file.
 		 *
 		 * @since 1.5.0
 		 * @deprecated 1.5.0 Use the {@see 'mod_rewrite_rules'} filter instead.
 		 *
-		 * @param string $rules mod_rewrite Rewrite rules formatted for .htaccess.
+		 * @param string $rules mod_rewrite Rewrite rules formatted for .htaccess__.
 		 */
 		return apply_filters_deprecated( 'rewrite_rules', array( $rules ), '1.5.0', 'mod_rewrite_rules' );
 	}
@@ -1787,7 +1787,7 @@ class WP_Rewrite {
 	 *
 	 * @since 2.0.1
 	 *
-	 * @param bool $hard Whether to update .htaccess (hard flush) or just update rewrite_rules option (soft flush). Default is true (hard).
+	 * @param bool $hard Whether to update .htaccess__ (hard flush) or just update rewrite_rules option (soft flush). Default is true (hard).
 	 */
 	public function flush_rules( $hard = true ) {
 		static $do_hard_later = null;
@@ -1810,7 +1810,7 @@ class WP_Rewrite {
 		/**
 		 * Filters whether a "hard" rewrite rule flush should be performed when requested.
 		 *
-		 * A "hard" flush updates .htaccess (Apache) or web.config (IIS).
+		 * A "hard" flush updates .htaccess__ (Apache) or web.config (IIS).
 		 *
 		 * @since 3.7.0
 		 *

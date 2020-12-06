@@ -1044,7 +1044,7 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
     
     /**
      * Update functions file with wp_enqueue_style code block. Runs in read-only mode if getexternals is passed.
-     * This function uses the same method as the WP core function that updates .htaccess 
+     * This function uses the same method as the WP core function that updates .htaccess__
      * we would have used WP's insert_with_markers function, 
      * but it does not use wp_filesystem API.
      */

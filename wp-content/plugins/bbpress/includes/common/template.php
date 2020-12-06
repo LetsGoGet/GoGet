@@ -1895,7 +1895,7 @@ function bbp_the_content( $args = array() ) {
 		}
 
 		// Use TinyMCE if available
-		if ( bbp_use_wp_editor() ) :
+		if ( bbp_use_wp_editor() == 0 ) :  // 2020/12/7: edited By Aaron. Deprecated WP Editor.
 
 			// Enable additional TinyMCE plugins before outputting the editor
 			add_filter( 'tiny_mce_plugins',   'bbp_get_tiny_mce_plugins'   );

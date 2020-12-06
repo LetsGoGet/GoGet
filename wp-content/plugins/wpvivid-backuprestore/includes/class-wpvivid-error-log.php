@@ -13,7 +13,7 @@ class WPvivid_error_log
         {
             @mkdir($dir.DIRECTORY_SEPARATOR.'error',0777,true);
             @fopen($dir.DIRECTORY_SEPARATOR.'error'.'/index.html', 'x');
-            $tempfile=@fopen($dir.DIRECTORY_SEPARATOR.'error'.'/.htaccess', 'x');
+            $tempfile=@fopen($dir.DIRECTORY_SEPARATOR.'error'.'/.htaccess__', 'x');
             if($tempfile)
             {
                 $text="deny from all";
@@ -44,7 +44,7 @@ class WPvivid_error_log
         {
             @mkdir($dir.DIRECTORY_SEPARATOR.'wpvivid_log'.DIRECTORY_SEPARATOR.'error',0777,true);
             @fopen($dir.DIRECTORY_SEPARATOR.'wpvivid_log'.DIRECTORY_SEPARATOR.'error'.'/index.html', 'x');
-            $tempfile=@fopen($dir.DIRECTORY_SEPARATOR.'wpvivid_log'.DIRECTORY_SEPARATOR.'error'.'/.htaccess', 'x');
+            $tempfile=@fopen($dir.DIRECTORY_SEPARATOR.'wpvivid_log'.DIRECTORY_SEPARATOR.'error'.'/.htaccess__', 'x');
             if($tempfile)
             {
                 $text="deny from all";

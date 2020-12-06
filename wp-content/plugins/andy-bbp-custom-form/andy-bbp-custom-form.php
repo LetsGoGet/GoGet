@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Andy bbp custom form
-Plugin URI: 
+Plugin URI:
 Description:
 Author: Andy Chen
 Author URI:
@@ -27,8 +27,8 @@ function live_search_handler($request) {
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' ); // Add one library admin function
     }
     $posts_table = $wpdb->prefix . "interview_form";
-    maybe_create_table( $posts_table, 
-        "CREATE TABLE `{$posts_table}` ( 
+    maybe_create_table( $posts_table,
+        "CREATE TABLE `{$posts_table}` (
         `id` bigint(20) NOT NULL AUTO_INCREMENT,
         `industry` varchar(40) NOT NULL UNIQUE,
         PRIMARY KEY (`id`)
@@ -58,6 +58,7 @@ function write_interview_data_handler($request) {
     $query = " (industry) value ('" . strval($d['industry']) . "')";
     $wpdb->get_results( "INSERT " . $posts_table . $query);
     // insert wp_interview_form (industry, country, city) value ('zzz', 'xx', 'yy');
+
     return 'Data written !!';
 }
 
@@ -80,58 +81,58 @@ function fetch_live_search_data($data) { // http://localhost/wordpress/wp-json/t
 add_action('bbp_theme_after_topic_form_title', 'live_search');
 if ( !function_exists('live_search') ) :
     function live_search() {
-        echo("
-            <div id='search_bar' style='margin-bottom: 3px'>
-                <p style='margin-bottom: -2px'> <label>公司產業類別：</label> </p>
-                <input id='search_input' list='suggestions_industry' type='text' size=40 maxlength=40 placeholder='Fill in your industry' style='padding-left: 3px;'> 
-                <datalist id='suggestions_industry'></datalist>
-            </div>
-        ");
-        echo("
-            <script type='text/javascript' >
-                // http://localhost/wordpress/wp-json/fetch_industry/v1/data?industry=marketing.
-                // Start from '?' is added by ajax. You can write down all of params in `url` and omit `data`, e.g. url: url + query.toString()
-                var url_fetch = window.location.href.split('interview')[0] + 'wp-json/fetch_industry/v1/data';
-                const fetch_industry = (query) => jQuery.ajax({
-                    url: url_fetch,
-                    method: 'GET',
-                    dataType: 'json',
-                    data: {industry: query},
-                    contentType: 'application/json',
-                    success: function (data) {
-                        console.log('(Fetch data)', data);
-                        document.getElementById('suggestions_industry').innerHTML = '';
-                        var input_box = document.getElementById('suggestions_industry');
-                        [...data].forEach((item, idx) => {
-                            var ele = document.createElement('option');
-                            ele.value=item;
-                            input_box.appendChild(ele);
-                        });
-                    },
-                    error: function(e){
-                        console.log(e);
-                    }
-                });
-                var prev = '';
-                document.getElementById('search_input').addEventListener('input', function(e){
-                    var curr = e.target.value;
-                    if( prev || curr ) {
-                        prev = curr;
-                        fetch_industry(curr);
-                        console.log(curr);
-                    }
-                });
-            </script>
-        ");
-        // Tinymce lisener is not working !!!
-        echo("<script src='http://localhost/wordpress/wp-includes/js/tinymce/tinymce.min.js'>
-                 console.log(12345);
-                 setTimeout(function(){
-                 tinymce.activeEditor.on('keypress', function(e) {
-                     console.log('!!!!!!!@@@@@@@######');
-                 })}, 1000);
-             </script>
-        ");
+//        echo("
+//            <div id='search_bar' style='margin-bottom: 3px'>
+//                <p style='margin-bottom: -2px'> <label>公司產業類別：</label> </p>
+//                <input id='search_input' list='suggestions_industry' type='text' size=40 maxlength=40 placeholder='Fill in your industry' style='padding-left: 3px;'>
+//                <datalist id='suggestions_industry'></datalist>
+//            </div>
+//        ");
+//        echo("
+//            <script type='text/javascript' >
+//                // http://localhost/wordpress/wp-json/fetch_industry/v1/data?industry=marketing.
+//                // Start from '?' is added by ajax. You can write down all of params in `url` and omit `data`, e.g. url: url + query.toString()
+//                var url_fetch = window.location.href.split('interview')[0] + 'wp-json/fetch_industry/v1/data';
+//                const fetch_industry = (query) => jQuery.ajax({
+//                    url: url_fetch,
+//                    method: 'GET',
+//                    dataType: 'json',
+//                    data: {industry: query},
+//                    contentType: 'application/json',
+//                    success: function (data) {
+//                        console.log('(Fetch data)', data);
+//                        document.getElementById('suggestions_industry').innerHTML = '';
+//                        var input_box = document.getElementById('suggestions_industry');
+//                        [...data].forEach((item, idx) => {
+//                            var ele = document.createElement('option');
+//                            ele.value=item;
+//                            input_box.appendChild(ele);
+//                        });
+//                    },
+//                    error: function(e){
+//                        console.log(e);
+//                    }
+//                });
+//                var prev = '';
+//                document.getElementById('search_input').addEventListener('input', function(e){
+//                    var curr = e.target.value;
+//                    if( prev || curr ) {
+//                        prev = curr;
+//                        fetch_industry(curr);
+//                        console.log(curr);
+//                    }
+//                });
+//            </script>
+//        ");
+//         Tinymce lisener is not working !!!
+//        echo("<script src='http://localhost/wordpress/wp-includes/js/tinymce/tinymce.min.js'>
+//                 console.log(12345);
+//                 setTimeout(function(){
+//                 tinymce.activeEditor.on('keypress', function(e) {
+//                     console.log('!!!!!!!@@@@@@@######');
+//                 })}, 1000);
+//             </script>
+//        ");
     }
 endif;
 
@@ -179,10 +180,14 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
         $path = ABSPATH.'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
         if(file_exists($path)) {
             $lines = file($path, FILE_IGNORE_NEW_LINES);
+
+            //Insert Input Fields
+            ShowInput_Company();
             foreach ($lines as $field_name) {
                if (($field_name == '[mycred_sell_this]') || ($field_name == '[/mycred_sell_this]') ){
                    continue;
                }
+
                echo("<b><font size='3pt'>" . $field_name . "<b></font>");
                $field_key = hash('ripemd160',$field_name);
                bbp_the_content( array( 'context' => $field_key ) );
@@ -192,6 +197,52 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
             bbp_the_content( array( 'context' => 'topic' ) ); //bbpress default
         }
 	}
+
+    function ShowInput_Company(){
+        echo("
+            <div id='search_bar' style='margin-bottom: 3px'>
+                <p style='margin-bottom: -2px'> <label>公司產業類別：</label> </p>
+                <input id='search_input' name='company_name' list='suggestions_industry' type='text' size=40 maxlength=40 placeholder='Fill in your industry' style='padding-left: 3px;'>
+                <datalist id='suggestions_industry'></datalist>
+            </div>
+        ");
+        echo("
+            <script type='text/javascript' >
+                // http://localhost/wordpress/wp-json/fetch_industry/v1/data?industry=marketing.
+                // Start from '?' is added by ajax. You can write down all of params in `url` and omit `data`, e.g. url: url + query.toString()
+                var url_fetch = window.location.href.split('interview')[0] + 'wp-json/fetch_industry/v1/data';
+                const fetch_industry = (query) => jQuery.ajax({
+                    url: url_fetch,
+                    method: 'GET',
+                    dataType: 'json',
+                    data: {industry: query},
+                    contentType: 'application/json',
+                    success: function (data) {
+                        console.log('(Fetch data)', data);
+                        document.getElementById('suggestions_industry').innerHTML = '';
+                        var input_box = document.getElementById('suggestions_industry');
+                        [...data].forEach((item, idx) => {
+                            var ele = document.createElement('option');
+                            ele.value=item;
+                            input_box.appendChild(ele);
+                        });
+                    },
+                    error: function(e){
+                        console.log(e);
+                    }
+                });
+                var prev = '';
+                document.getElementById('search_input').addEventListener('input', function(e){
+                    var curr = e.target.value;
+                    if( prev || curr ) {
+                        prev = curr;
+                        fetch_industry(curr);
+                        console.log(curr);
+                    }
+                });
+            </script>
+        ");
+    }
 endif;
 
 // to parse post data into post content
@@ -202,6 +253,10 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
         $path = ABSPATH.'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
         $content = '';
         $must_fill_tag = '*';
+
+        //add to post metadata
+//        update_post_meta( $_POST['bbp_topic_id'], 'company_name', $_POST['company_name'] );
+
         if(file_exists($path)){
             $lines = file($path, FILE_IGNORE_NEW_LINES);
             foreach ($lines as $field_name) {
@@ -218,17 +273,19 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                     $content .= $token . $_POST['bbp_' . $field_key . '_content'] . $token;
                 }else{
                     if (strpos($field_name, $must_fill_tag) != false){
-                        bbp_add_error( 'bbp_edit_topic_content', __( '<strong>錯誤</strong>： 你有必填項目「' . str_replace($must_fill_tag,"",$field_name) . '」未填', 'bbpress' ) ); 
+                        bbp_add_error( 'bbp_edit_topic_content', __( '<strong>錯誤</strong>： 你有必填項目「' . str_replace($must_fill_tag,"",$field_name) . '」未填', 'bbpress' ) );
                     }
                 }
                 $content .= '
-                
-                
+
+
                 ';
             }
         }else{
             $content = $_POST['bbp_topic_content'];
         }
+        error_log($content);
+
         return $content;
 	}
 endif;

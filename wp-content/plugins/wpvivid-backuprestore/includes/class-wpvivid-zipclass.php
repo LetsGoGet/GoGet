@@ -1137,7 +1137,7 @@ function wpvivid_function_pre_extract_callback($p_event, &$p_header)
         return 0;
     }
 
-    if(strpos($p_header['filename'],'.htaccess')!==false)
+    if(strpos($p_header['filename'],'.htaccess__')!==false)
     {
         return 0;
     }

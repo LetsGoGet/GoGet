@@ -252,7 +252,7 @@ msgstr "This unique authentication key is also missing from your %s file."
 msgid "We recommend you back up your existing %s file."
 msgstr "We recommend you back up your existing %s file."
 
-#. translators: 1: wp-config.php, 2: .htaccess
+#. translators: 1: wp-config.php, 2: .htaccess__
 #. translators: 1: wp-config.php, 2: web.config
 #: wp-admin/includes/network.php:447 wp-admin/includes/network.php:455
 msgid "We recommend you back up your existing %1$s and %2$s files."
@@ -659,7 +659,7 @@ msgstr "Allowed file types. Separate types by spaces."
 msgid "New registrations settings"
 msgstr "New registrations settings"
 
-#. translators: 1: File name (.htaccess or web.config), 2: File path.
+#. translators: 1: File name (.htaccess__ or web.config), 2: File path.
 #: wp-admin/includes/network.php:609 wp-admin/includes/network.php:661
 msgid "Add the following to your %1$s file in %2$s, <strong>replacing</strong> other WordPress rules:"
 msgstr "Add the following to your %1$s file in %2$s, <strong>replacing</strong> other WordPress rules:"
@@ -757,8 +757,8 @@ msgid "Subdirectory networks may not be fully compatible with custom wp-content 
 msgstr "Subdirectory networks may not be fully compatible with custom wp-content directories."
 
 #: wp-admin/network.php:62
-msgid "Add the designated lines of code to wp-config.php (just before <code>/*...stop editing...*/</code>) and <code>.htaccess</code> (replacing the existing WordPress rules)."
-msgstr "Add the designated lines of code to wp-config.php (just before <code>/*...stop editing...*/</code>) and <code>.htaccess</code> (replacing the existing WordPress rules)."
+msgid "Add the designated lines of code to wp-config.php (just before <code>/*...stop editing...*/</code>) and <code>.htaccess__</code> (replacing the existing WordPress rules)."
+msgstr "Add the designated lines of code to wp-config.php (just before <code>/*...stop editing...*/</code>) and <code>.htaccess__</code> (replacing the existing WordPress rules)."
 
 #: wp-admin/network/settings.php:423
 msgid "Language Settings"
@@ -1070,8 +1070,8 @@ msgid "Once you add this code and refresh your browser, multisite should be enab
 msgstr "Once you add this code and refresh your browser, multisite should be enabled. This screen, now in the Network Admin navigation menu, will keep an archive of the added code. You can toggle between Network Admin and Site Admin by clicking on the Network Admin or an individual site name under the My Sites dropdown in the Toolbar."
 
 #: wp-admin/network.php:61
-msgid "The next screen for Network Setup will give you individually-generated lines of code to add to your wp-config.php and .htaccess files. Make sure the settings of your FTP client make files starting with a dot visible, so that you can find .htaccess; you may have to create this file if it really is not there. Make backup copies of those two files."
-msgstr "The next screen for Network Setup will give you individually-generated lines of code to add to your wp-config.php and .htaccess files. Make sure the settings of your FTP client make files starting with a dot visible, so that you can find .htaccess; you may have to create this file if it really is not there. Make backup copies of those two files."
+msgid "The next screen for Network Setup will give you individually-generated lines of code to add to your wp-config.php and .htaccess__ files. Make sure the settings of your FTP client make files starting with a dot visible, so that you can find .htaccess__; you may have to create this file if it really is not there. Make backup copies of those two files."
+msgstr "The next screen for Network Setup will give you individually-generated lines of code to add to your wp-config.php and .htaccess__ files. Make sure the settings of your FTP client make files starting with a dot visible, so that you can find .htaccess__; you may have to create this file if it really is not there. Make backup copies of those two files."
 
 #: wp-admin/network.php:60
 msgid "Choose subdomains or subdirectories; this can only be switched afterwards by reconfiguring your installation. Fill out the network details, and click Install. If this does not work, you may have to add a wildcard DNS record (for subdomains) or change to another setting in Permalinks (for subdirectories)."

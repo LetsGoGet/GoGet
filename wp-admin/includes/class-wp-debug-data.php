@@ -773,25 +773,25 @@ class WP_Debug_Data {
 			'debug' => $pretty_permalinks_supported,
 		);
 
-		// Check if a .htaccess file exists.
-		if ( is_file( ABSPATH . '.htaccess' ) ) {
+		// Check if a .htaccess__ file exists.
+		if ( is_file( ABSPATH . '.htaccess__' ) ) {
 			// If the file exists, grab the content of it.
-			$htaccess_content = file_get_contents( ABSPATH . '.htaccess' );
+			$htaccess_content = file_get_contents( ABSPATH . '.htaccess__' );
 
 			// Filter away the core WordPress rules.
 			$filtered_htaccess_content = trim( preg_replace( '/\# BEGIN WordPress[\s\S]+?# END WordPress/si', '', $htaccess_content ) );
 			$filtered_htaccess_content = ! empty( $filtered_htaccess_content );
 
 			if ( $filtered_htaccess_content ) {
-				/* translators: %s: .htaccess */
-				$htaccess_rules_string = sprintf( __( 'Custom rules have been added to your %s file.' ), '.htaccess' );
+				/* translators: %s: .htaccess__ */
+				$htaccess_rules_string = sprintf( __( 'Custom rules have been added to your %s file.' ), '.htaccess__' );
 			} else {
-				/* translators: %s: .htaccess */
-				$htaccess_rules_string = sprintf( __( 'Your %s file contains only core WordPress features.' ), '.htaccess' );
+				/* translators: %s: .htaccess__ */
+				$htaccess_rules_string = sprintf( __( 'Your %s file contains only core WordPress features.' ), '.htaccess__' );
 			}
 
 			$info['wp-server']['fields']['htaccess_extra_rules'] = array(
-				'label' => __( '.htaccess rules' ),
+				'label' => __( '.htaccess__ rules' ),
 				'value' => $htaccess_rules_string,
 				'debug' => $filtered_htaccess_content,
 			);

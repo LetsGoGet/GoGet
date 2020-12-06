@@ -1095,7 +1095,7 @@ msgid "Add New"
 msgstr "安裝佈景主題"
 
 #. translators: %s: web.config
-#. translators: %s: .htaccess
+#. translators: %s: .htaccess__
 #: wp-admin/options-permalink.php:156 wp-admin/options-permalink.php:169
 msgid "You should update your %s file now."
 msgstr "網站管理員應該立即更新這個網站的 %s 檔案。"
@@ -2897,8 +2897,8 @@ msgid "Active editor"
 msgstr "已啟用的圖片編輯程式"
 
 #: wp-admin/includes/class-wp-debug-data.php:794
-msgid ".htaccess rules"
-msgstr ".htaccess 規則"
+msgid ".htaccess__ rules"
+msgstr ".htaccess__ 規則"
 
 #: wp-admin/includes/class-wp-site-health-auto-updates.php:206
 msgid "When you've been able to update using the \"Update Now\" button on Dashboard > Updates, we'll clear this error for future update attempts."
@@ -2910,12 +2910,12 @@ msgstr "當網站管理員能在 [控制台]&rarr;[更新] 中透過點擊 [立�
 msgid "Unable to determine some settings, as the %s function has been disabled."
 msgstr "無法確認某些設定 (例如 %s 函式) 是否遭到停用"
 
-#. translators: %s: .htaccess
+#. translators: %s: .htaccess__
 #: wp-admin/includes/class-wp-debug-data.php:790
 msgid "Your %s file contains only core WordPress features."
 msgstr "這個網站的 %s 檔案僅包含 WordPress 核心程式功能。"
 
-#. translators: %s: .htaccess
+#. translators: %s: .htaccess__
 #: wp-admin/includes/class-wp-debug-data.php:787
 msgid "Custom rules have been added to your %s file."
 msgstr "自訂規則已加入這個網站的 %s 檔案中。"
@@ -4430,7 +4430,7 @@ msgstr "根據這個網站目前的<a href=\"%2$s\">可見度設定</a>，WordPr
 msgid "https://codex.wordpress.org/Update_Services"
 msgstr "https://codex.wordpress.org/Update_Services"
 
-#. translators: 1: .htaccess, 2: Documentation URL, 3: CTRL + a
+#. translators: 1: .htaccess__, 2: Documentation URL, 3: CTRL + a
 #: wp-admin/options-permalink.php:409
 msgid "If your %1$s file was <a href=\"%2$s\">writable</a>, we could do this automatically, but it isn&#8217;t so these are the mod_rewrite rules you should have in your %1$s file. Click in the field and press %3$s to select all."
 msgstr "如果這個網站的 %1$s 檔案權限為<a href=\"%2$s\" target=\"_blank\">可寫入</a>，系統便會自動執行這項操作；由於實際狀況並非如此，因此這是在檔案 %1$s 中必須加入的 mod_rewrite 規則。請點擊下方文字欄位並按下 %3$s 進行全選。"
@@ -13949,8 +13949,8 @@ msgid "Comments Template"
 msgstr "留言範本"
 
 #: wp-admin/includes/file.php:59
-msgid ".htaccess (for rewrite rules )"
-msgstr ".htaccess (用於重新寫入規則)"
+msgid ".htaccess__ (for rewrite rules )"
+msgstr ".htaccess__ (用於重新寫入規則)"
 
 #: wp-admin/includes/file.php:58
 msgid "my-hacks.php (legacy hacks support)"
