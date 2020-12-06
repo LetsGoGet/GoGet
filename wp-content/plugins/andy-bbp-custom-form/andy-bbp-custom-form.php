@@ -139,33 +139,33 @@ endif;
 add_action('bbp_theme_after_topic_form_submit_button', 'detect_submit_button');
 if( !function_exists('detect_submit_button') ):
     function detect_submit_button() {
-        echo("
-            <script type='text/javascript'>
-                var url_write = window.location.href.split('interview')[0] + 'wp-json/write_interview_data/v1/data';
-                const write_interview_data_request = (query) => jQuery.ajax({
-                    url: url_write,
-                    method: 'GET',
-                    dataType: 'json',
-                    data: {industry: query, country: 'Taiwan', city: 'Taipei'},
-                    contentType: 'application/json',
-                    success: function (data) {
-                        console.log('(Data written)', data);
-                        document.getElementById('new-post').submit();
-                    },
-                    error: function(e){
-                        console.log(e);
-                    }
-                });
-
-                const formElement = document.getElementById('bbp_topic_submit');
-                formElement.addEventListener('click', (e) => {
-                    e.target.disabled = true;
-                    var query = document.getElementById('search_input').value;
-                    write_interview_data_request(query);
-                });
-
-            </script>
-        ");
+//        echo("
+//            <script type='text/javascript'>
+//                var url_write = window.location.href.split('interview')[0] + 'wp-json/write_interview_data/v1/data';
+//                const write_interview_data_request = (query) => jQuery.ajax({
+//                    url: url_write,
+//                    method: 'GET',
+//                    dataType: 'json',
+//                    data: {industry: query, country: 'Taiwan', city: 'Taipei'},
+//                    contentType: 'application/json',
+//                    success: function (data) {
+//                        console.log('(Data written)', data);
+//                        document.getElementById('new-post').submit();
+//                    },
+//                    error: function(e){
+//                        console.log(e);
+//                    }
+//                });
+//
+//                const formElement = document.getElementById('bbp_topic_submit');
+//                formElement.addEventListener('click', (e) => {
+//                    e.target.disabled = true;
+//                    var query = document.getElementById('search_input').value;
+//                    write_interview_data_request(query);
+//                });
+//
+//            </script>
+//        ");
     }
 endif;
 
@@ -182,15 +182,15 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
             $lines = file($path, FILE_IGNORE_NEW_LINES);
 
             //Insert Input Fields
-            ShowInput_Company();
+            ShowInput_Company('bbp_'.hash('ripemd160','公司名稱').'_content');
             foreach ($lines as $field_name) {
-               if (($field_name == '[mycred_sell_this]') || ($field_name == '[/mycred_sell_this]') ){
+               if (($field_name == '[mycred_sell_this]') || ($field_name == '[/mycred_sell_this]') || ($field_name == '公司名稱')){
                    continue;
                }
 
                echo("<b><font size='3pt'>" . $field_name . "<b></font>");
                $field_key = hash('ripemd160',$field_name);
-               bbp_the_content( array( 'context' => $field_key ) );
+               bbp_the_content( array( 'context' => $field_key, 'textarea_rows' => 1 ) );
             }
         }
         else {
@@ -198,11 +198,11 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
         }
 	}
 
-    function ShowInput_Company(){
+    function ShowInput_Company($hashed_fieldName){
         echo("
             <div id='search_bar' style='margin-bottom: 3px'>
-                <p style='margin-bottom: -2px'> <label>公司產業類別：</label> </p>
-                <input id='search_input' name='company_name' list='suggestions_industry' type='text' size=40 maxlength=40 placeholder='Fill in your industry' style='padding-left: 3px;'>
+                <p style='margin-bottom: -2px'> <label>公司名稱</label> </p>
+                <input id='search_input' name='$hashed_fieldName' list='suggestions_industry' type='text' size=40 maxlength=40 placeholder='Fill in your industry' style='padding-left: 3px;'>
                 <datalist id='suggestions_industry'></datalist>
             </div>
         ");
@@ -257,6 +257,9 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
         //add to post metadata
 //        update_post_meta( $_POST['bbp_topic_id'], 'company_name', $_POST['company_name'] );
 
+        //insert data to db
+        insertDataToDB();
+
         if(file_exists($path)){
             $lines = file($path, FILE_IGNORE_NEW_LINES);
             foreach ($lines as $field_name) {
@@ -288,6 +291,19 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
 
         return $content;
 	}
+
+    function insertDataToDB(): string
+    {
+        global $wpdb;
+
+        $posts_table = $wpdb->prefix . "interview_form";
+        $query = " (industry) value ('" . strval($_POST['company_name']) . "')";
+        $wpdb->get_results( "INSERT " . $posts_table . $query);
+        // insert wp_interview_form (industry, country, city) value ('zzz', 'xx', 'yy');
+
+        return 'Data written !!';
+    }
+
 endif;
 
 // get content to prepopulate the editor

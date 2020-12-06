@@ -1,8 +1,14 @@
-作者背景（學歷、工作、經驗、證照）
-面試公司（公司登記的完整名稱、外商可輸入英文）<a style="color:#FF0000;font-size:20px;">*</a>
-職位名稱<a style="color:#FF0000;font-size:20px;">*</a>
-面試時間（申請起始月份，例如：2020.06）
-面試結果（錄取、未錄取、無聲卡、等待中）
+公司名稱
+職務名稱
+作者背景<a style="color:#FF0000;font-size:20px;">*</a>
+面試時間<a style="color:#FF0000;font-size:20px;">*</a>
+面試地點
+面試難度
+面試結果
+面試項目
+準備過程
+面試過程
+心得建議
 [mycred_sell_this]
 面試過程（第幾關、時程、形式、面試官、內容、注意事項）<a style="color:#FF0000;font-size:20px;">*</a>
 準備過程（履歷與面試的準備方法及時間安排）<a style="color:#FF0000;font-size:20px;">*</a>
