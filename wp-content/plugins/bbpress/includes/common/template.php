@@ -1932,7 +1932,7 @@ function bbp_the_content( $args = array() ) {
 		 */
 		else : ?>
 
-			<textarea id="bbp_<?php echo esc_attr( $r['context'] ); ?>_content" class="<?php echo esc_attr( $r['editor_class'] ); ?>" name="bbp_<?php echo esc_attr( $r['context'] ); ?>_content" cols="60" rows="<?php echo esc_attr( $r['textarea_rows'] ); ?>" <?php bbp_tab_index_attribute( $r['tabindex'] ); ?>><?php if ($r['default_content'] != null) echo($r['default_content']) ?><?php echo $post_content; ?></textarea>
+			<textarea id="bbp_<?php echo esc_attr( $r['context'] ); ?>_content" class="<?php echo esc_attr( $r['editor_class'] ); ?>" name="bbp_<?php echo esc_attr( $r['context'] ); ?>_content" style="height:auto" cols="12" rows="<?php echo esc_attr( $r['textarea_rows'] ); ?>" <?php bbp_tab_index_attribute( $r['tabindex'] ); ?>><?php if ($r['default_content'] != null) echo($r['default_content']) ?><?php echo $post_content; ?></textarea>
 
 		<?php endif;
 
