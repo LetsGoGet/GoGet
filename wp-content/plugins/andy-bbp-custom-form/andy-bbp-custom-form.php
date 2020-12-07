@@ -74,7 +74,7 @@ function write_interview_data_handler($request) {
     }
 
     $posts_table = $wpdb->prefix . "interview_form";
-    $query = " (industry) value ('" . strval($d['industry']) . "')";
+    $query = " (company) value ('" . strval($d['name']) . "')";
     $wpdb->get_results( "INSERT " . $posts_table . $query);
     // insert wp_interview_form (industry, country, city) value ('zzz', 'xx', 'yy');
 
@@ -170,11 +170,18 @@ class comboBox extends formElements{
 }
 
 class textArea extends formElements{
+    private string $defaultContent;
+    function __construct($defaultContent)
+    {
+        parent::__construct();
+        $this->defaultContent = $defaultContent;
+    }
     function generateUI($fieldName)
     {
         $hashed_fieldName = hashHelper($fieldName);
+        error_log($fieldName.':'.$hashed_fieldName);
         echo("<b><font size='3pt'>" . $fieldName . "<b></font>");
-        bbp_the_content( array( 'context' => $hashed_fieldName, 'textarea_rows' => 12 ) );
+        bbp_the_content( array( 'context' => $hashed_fieldName, 'textarea_rows' => 12) );
     }
 }
 
@@ -191,6 +198,10 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
 	        $forumId = bbp_get_topic_forum_id();
 	    }
 
+	    //using material UI
+        echo('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">');
+
+
 	    //Start generating form
 
 	    //read form schema
@@ -204,13 +215,14 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                     $row = explode(",", $line);
                     $field_name = $row[0];
                     $field_type = $row[1];
+                    $field_default_content = $row[2];
 
                     if (substr($field_type, 0, 5) == "combo"){
                         $query_type=explode(":", $field_type)[1];
                         $comboBox = new comboBox($query_type);
                         $comboBox->generateUI($field_name);
                     } else if ($field_type == 'textarea') {
-                        $textarea = new textArea();
+                        $textarea = new textArea($field_default_content);
                         $textarea->generateUI($field_name);
                     }
                 }
@@ -219,84 +231,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
         else {
             bbp_the_content( array( 'context' => 'topic' ) ); //bbpress default
         }
-
-        //include extra js
-        customJS();
 	}
-
-    function customJS(){
-//        echo("
-//            <script type='text/javascript' >
-//                // http://localhost/wordpress/wp-json/fetch_industry/v1/data?industry=marketing.
-//                // Start from '?' is added by ajax. You can write down all of params in `url` and omit `data`, e.g. url: url + query.toString()
-//                var url_fetch = window.location.href.split('interview')[0] + 'wp-json/fetch_industry/v1/data';
-//                const fetch_industry = (query) => jQuery.ajax({
-//                    url: url_fetch,
-//                    method: 'GET',
-//                    dataType: 'json',
-//                    data: {industry: query},
-//                    contentType: 'application/json',
-//                    success: function (data) {
-//                        console.log('(Fetch data)', data);
-//                        document.getElementById('suggestions_industry').innerHTML = '';
-//                        var input_box = document.getElementById('suggestions_industry');
-//                        [...data].forEach((item, idx) => {
-//                            var ele = document.createElement('option');
-//                            ele.value=item;
-//                            input_box.appendChild(ele);
-//                        });
-//                    },
-//                    error: function(e){
-//                        console.log(e);
-//                    }
-//                });
-//                var prev = '';
-//                document.getElementById('search_input').addEventListener('input', function(e){
-//                    var curr = e.target.value;
-//                    if( prev || curr ) {
-//                        prev = curr;
-//                        fetch_industry(curr);
-//                        console.log(curr);
-//                    }
-//                });
-//            </script>
-//            <script type='text/javascript' >
-//                // http://localhost/wordpress/wp-json/fetch_industry/v1/data?industry=marketing.
-//                // Start from '?' is added by ajax. You can write down all of params in `url` and omit `data`, e.g. url: url + query.toString()
-//                var url_fetch = window.location.href.split('interview')[0] + 'wp-json/fetch_industry/v1/data';
-//                const fetch_industry = (query) => jQuery.ajax({
-//                    url: url_fetch,
-//                    method: 'GET',
-//                    dataType: 'json',
-//                    data: {type: query, query: query},
-//                    contentType: 'application/json',
-//                    success: function (data) {
-//                        console.log('(Fetch data)', data);
-//                        document.getElementById('suggestions_industry').innerHTML = '';
-//                        var input_box = document.getElementById('suggestions_industry');
-//                        [...data].forEach((item, idx) => {
-//                            var ele = document.createElement('option');
-//                            ele.value=item;
-//                            input_box.appendChild(ele);
-//                        });
-//                    },
-//                    error: function(e){
-//                        console.log(e);
-//                    }
-//                });
-//                var prev = '';
-//                document.getElementById('search_input').addEventListener('input', function(e){
-//                    var curr = e.target.value;
-//                    if( prev || curr ) {
-//                        prev = curr;
-//                        fetch_industry(curr);
-//                        console.log(curr);
-//                    }
-//                });
-//
-//            </script>
-//        ");
-    }
 
     function hashHelper($name): string
     {
@@ -317,37 +252,53 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
         //add to post metadata
 //        update_post_meta( $_POST['bbp_topic_id'], 'company_name', $_POST['company_name'] );
 
-        //insert data to db
-        insertDataToDB();
+        //insert company data to db
 
         if(file_exists($path)){
             $lines = file($path, FILE_IGNORE_NEW_LINES);
-            foreach ($lines as $field_name) {
-                if (($field_name == '[mycred_sell_this]') || ($field_name == '[/mycred_sell_this]') ){
-                    $content .= $field_name;
-                    continue;
-                }
-                $field_title = "<strong><u><font size='3pt'>" . str_replace($must_fill_tag,"",$field_name) . "</strong></u></font>
+            foreach ($lines as $line) {
+                if (($line != '[mycred_sell_this]') && ($line != '[/mycred_sell_this]')) {
+                    $row = explode(",", $line);
+                    $field_name = $row[0];
+
+                    //加入欄位標題
+                    $field_title = "<strong><u><font size='3pt'>" . str_replace($must_fill_tag,"",$field_name) . "</strong></u></font>
                 ";
-                $content .= $field_title;
-                $field_key = hash('ripemd160',$field_name);
-                if ( ! empty( $_POST['bbp_' . $field_key . '_content'] ) ) {
-                    $token = '<noscript>' . $field_key . '</noscript>';
-                    $content .= $token . $_POST['bbp_' . $field_key . '_content'] . $token;
-                }else{
-                    if (strpos($field_name, $must_fill_tag) != false){
-                        bbp_add_error( 'bbp_edit_topic_content', __( '<strong>錯誤</strong>： 你有必填項目「' . str_replace($must_fill_tag,"",$field_name) . '」未填', 'bbpress' ) );
+                    $content .= $field_title;
+
+                    //加入欄位內容
+                    $field_key = hash('ripemd160',$field_name);
+                    error_log("加上欄位：".$field_name."  hash:".$field_key);
+                    if ( ! empty( $_POST['bbp_' . $field_key . '_content'] ) ) {
+                        $token = '<noscript>' . $field_key . '</noscript>';
+                        $content .= $token . $_POST['bbp_' . $field_key . '_content'] . $token;
+                        error_log("欄位值:".$_POST['bbp_' . $field_key . '_content']);
+                    }else{
+                        if (strpos($field_name, $must_fill_tag) != false){
+                            bbp_add_error( 'bbp_edit_topic_content', __( '<strong>錯誤</strong>： 你有必填項目「' . str_replace($must_fill_tag,"",$field_name) . '」未填', 'bbpress' ) );
+                        }
                     }
-                }
-                $content .= '
+                    $content .= '
 
 
                 ';
+                } else {
+                    $content .= $line;
+                    continue;
+                }
+
+
+
+
+                //Added by Aaron Kao.
+//                if ($field_name == '公司名稱'){
+//                    insertDataToDB();
+//                }
             }
         }else{
             $content = $_POST['bbp_topic_content'];
         }
-        error_log($content);
+//        error_log($content);
 
         return $content;
 	}
@@ -357,7 +308,7 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
         global $wpdb;
 
         $posts_table = $wpdb->prefix . "interview_form";
-        $query = " (industry) value ('" . strval($_POST['company_name']) . "')";
+        $query = " (company) value ('" . strval($_POST['company_name']) . "')";
         $wpdb->get_results( "INSERT " . $posts_table . $query);
         // insert wp_interview_form (industry, country, city) value ('zzz', 'xx', 'yy');
 
