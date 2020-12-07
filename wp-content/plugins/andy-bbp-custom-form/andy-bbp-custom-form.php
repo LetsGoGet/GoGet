@@ -12,8 +12,10 @@ function live_search_handler($request) {
     global $wpdb;
 
     // return array('bb', 'bsfbbbewqe', 'zbbvbb', 'bwwwb'); // testing
-    $param = $request['industry']; // $request->get_params(); // JSON: {industry: "ds"}
-    if($param == '') {
+    $queryType = $request['type'];
+    $queryText = $request['text']; // $request->get_params(); // JSON: {industry: "ds"}
+
+    if($queryText == '') {
         return array();
     }
 
@@ -26,21 +28,38 @@ function live_search_handler($request) {
     if( ! function_exists('maybe_create_table') ){
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' ); // Add one library admin function
     }
-    $posts_table = $wpdb->prefix . "interview_form";
-    maybe_create_table( $posts_table,
-        "CREATE TABLE `{$posts_table}` (
-        `id` bigint(20) NOT NULL AUTO_INCREMENT,
-        `industry` varchar(40) NOT NULL UNIQUE,
-        PRIMARY KEY (`id`)
-        ) $charset_collate AUTO_INCREMENT=1;"
-    );
-    $rows = $wpdb->get_results( "SELECT industry FROM " . $posts_table . " WHERE industry like '%" . $param . "%'");
-    // select * from users where users.email like '%abc%';
+
+    switch ($queryType){
+        case 'company':
+            $posts_table = $wpdb->prefix . "company";
+            maybe_create_table( $posts_table,
+                "CREATE TABLE `{$posts_table}` (
+                `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                `name` varchar(256) NOT NULL UNIQUE,
+                PRIMARY KEY (`id`)
+                ) $charset_collate AUTO_INCREMENT=1;"
+            );
+            $rows = $wpdb->get_results( "SELECT name FROM " . $posts_table . " WHERE name like '%" . $queryText . "%'");
+            // select * from users where users.email like '%abc%';
+            break;
+        case 'job_title':
+            $posts_table = $wpdb->prefix . "job_title";
+            maybe_create_table( $posts_table,
+                "CREATE TABLE `{$posts_table}` (
+                `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                `name` varchar(256) NOT NULL UNIQUE,
+                PRIMARY KEY (`id`)
+                ) $charset_collate AUTO_INCREMENT=1;"
+            );
+            $rows = $wpdb->get_results( "SELECT name FROM " . $posts_table . " WHERE name like '%" . $queryText . "%'");
+            // select * from users where users.email like '%abc%';
+            break;
+    }
 
     $query = array();
     if(!empty($rows)){
         foreach($rows as $r) {
-            array_push($query, $r->industry);
+            array_push($query, $r->name);
         }
     }
     return $query;
@@ -78,16 +97,134 @@ function fetch_live_search_data($data) { // http://localhost/wordpress/wp-json/t
     ));
 }
 
-add_action('bbp_theme_after_topic_form_title', 'live_search');
-if ( !function_exists('live_search') ) :
-    function live_search() {
-//        echo("
-//            <div id='search_bar' style='margin-bottom: 3px'>
-//                <p style='margin-bottom: -2px'> <label>公司產業類別：</label> </p>
-//                <input id='search_input' list='suggestions_industry' type='text' size=40 maxlength=40 placeholder='Fill in your industry' style='padding-left: 3px;'>
-//                <datalist id='suggestions_industry'></datalist>
-//            </div>
-//        ");
+class formElements{
+    public function __construct()
+    {
+    }
+
+    function generateUI($fieldName){
+        return $fieldName;
+    }
+}
+
+class comboBox extends formElements{
+    private string $type;
+    function __construct($type)
+    {
+        parent::__construct();
+        $this->type = $type;
+    }
+
+    function generateUI($fieldName)
+    {
+        $hashed_fieldName = hashHelper($fieldName);
+        $fieldID = $hashed_fieldName.'_input';
+        $listID = $hashed_fieldName.'_list';
+        $fetchFunction = $hashed_fieldName.'_fetchData';
+
+        echo("
+            <div id='search_bar' style='margin-bottom: 3px'>
+                <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
+                <input id='$fieldID' name='$hashed_fieldName' list='$listID' type='text' size=40 maxlength=40 placeholder='Fill in your $fieldName' style='padding-left: 3px;'>
+                <datalist id='$listID'></datalist>
+            </div>
+        ");
+
+        //javascript
+        echo("<script type='text/javascript'>
+                    // http://localhost/wordpress/wp-json/fetch_industry/v1/data?industry=marketing.
+                    // Start from '?' is added by ajax. You can write down all of params in `url` and omit `data`, e.g. url: url + query.toString()
+                    var url_fetch = window.location.href.split('interview')[0] + 'wp-json/fetch_industry/v1/data';
+                    const $fetchFunction = (queryText) => jQuery.ajax({
+                        url: url_fetch,
+                        method: 'GET',
+                        dataType: 'json',
+                        data: {type: '$this->type', text: queryText},
+                        contentType: 'application/json',
+                        success: function (data) {
+                            console.log('(Fetch data)', data);
+                            document.getElementById('$listID').innerHTML = '';
+                            var input_box = document.getElementById('$listID');
+                            [...data].forEach((item, idx) => {
+                                var ele = document.createElement('option');
+                                ele.value=item;
+                                input_box.appendChild(ele);
+                            });
+                        },
+                        error: function(e){
+                            console.log(e);
+                        }
+                    });
+
+                    //event listener
+                    var prev = '';
+                    document.getElementById('$fieldID').addEventListener('input', function(e){
+                    var curr = e.target.value;
+                    if( prev || curr ) {
+                        prev = curr;
+                        $fetchFunction(curr);
+                        console.log(curr);
+                    }
+                });</script>");
+    }
+}
+
+class textArea extends formElements{
+    function generateUI($fieldName)
+    {
+        $hashed_fieldName = hashHelper($fieldName);
+        echo("<b><font size='3pt'>" . $fieldName . "<b></font>");
+        bbp_the_content( array( 'context' => $hashed_fieldName, 'textarea_rows' => 12 ) );
+    }
+}
+
+// to display fields in bbp new topic form
+add_action( 'bbp_theme_before_topic_form_content', 'bbp_display_wp_editor_array' );
+if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
+
+
+	function bbp_display_wp_editor_array() {
+
+        //get forum id
+	    $forumId = bbp_get_forum_id();
+	    if ($forumId == 0){
+	        $forumId = bbp_get_topic_forum_id();
+	    }
+
+	    //Start generating form
+
+	    //read form schema
+        $path = ABSPATH.'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
+        if(file_exists($path)) {
+            $lines = file($path, FILE_IGNORE_NEW_LINES);
+
+            foreach ($lines as $line) {
+                //skip mycred row
+                if (($line != '[mycred_sell_this]') && ($line != '[/mycred_sell_this]')) {
+                    $row = explode(",", $line);
+                    $field_name = $row[0];
+                    $field_type = $row[1];
+
+                    if (substr($field_type, 0, 5) == "combo"){
+                        $query_type=explode(":", $field_type)[1];
+                        $comboBox = new comboBox($query_type);
+                        $comboBox->generateUI($field_name);
+                    } else if ($field_type == 'textarea') {
+                        $textarea = new textArea();
+                        $textarea->generateUI($field_name);
+                    }
+                }
+            }
+        }
+        else {
+            bbp_the_content( array( 'context' => 'topic' ) ); //bbpress default
+        }
+
+        //include extra js
+        customJS();
+	}
+
+    function customJS(){
 //        echo("
 //            <script type='text/javascript' >
 //                // http://localhost/wordpress/wp-json/fetch_industry/v1/data?industry=marketing.
@@ -123,127 +260,50 @@ if ( !function_exists('live_search') ) :
 //                    }
 //                });
 //            </script>
-//        ");
-//         Tinymce lisener is not working !!!
-//        echo("<script src='http://localhost/wordpress/wp-includes/js/tinymce/tinymce.min.js'>
-//                 console.log(12345);
-//                 setTimeout(function(){
-//                 tinymce.activeEditor.on('keypress', function(e) {
-//                     console.log('!!!!!!!@@@@@@@######');
-//                 })}, 1000);
-//             </script>
-//        ");
-    }
-endif;
-
-add_action('bbp_theme_after_topic_form_submit_button', 'detect_submit_button');
-if( !function_exists('detect_submit_button') ):
-    function detect_submit_button() {
-//        echo("
-//            <script type='text/javascript'>
-//                var url_write = window.location.href.split('interview')[0] + 'wp-json/write_interview_data/v1/data';
-//                const write_interview_data_request = (query) => jQuery.ajax({
-//                    url: url_write,
+//            <script type='text/javascript' >
+//                // http://localhost/wordpress/wp-json/fetch_industry/v1/data?industry=marketing.
+//                // Start from '?' is added by ajax. You can write down all of params in `url` and omit `data`, e.g. url: url + query.toString()
+//                var url_fetch = window.location.href.split('interview')[0] + 'wp-json/fetch_industry/v1/data';
+//                const fetch_industry = (query) => jQuery.ajax({
+//                    url: url_fetch,
 //                    method: 'GET',
 //                    dataType: 'json',
-//                    data: {industry: query, country: 'Taiwan', city: 'Taipei'},
+//                    data: {type: query, query: query},
 //                    contentType: 'application/json',
 //                    success: function (data) {
-//                        console.log('(Data written)', data);
-//                        document.getElementById('new-post').submit();
+//                        console.log('(Fetch data)', data);
+//                        document.getElementById('suggestions_industry').innerHTML = '';
+//                        var input_box = document.getElementById('suggestions_industry');
+//                        [...data].forEach((item, idx) => {
+//                            var ele = document.createElement('option');
+//                            ele.value=item;
+//                            input_box.appendChild(ele);
+//                        });
 //                    },
 //                    error: function(e){
 //                        console.log(e);
 //                    }
 //                });
-//
-//                const formElement = document.getElementById('bbp_topic_submit');
-//                formElement.addEventListener('click', (e) => {
-//                    e.target.disabled = true;
-//                    var query = document.getElementById('search_input').value;
-//                    write_interview_data_request(query);
+//                var prev = '';
+//                document.getElementById('search_input').addEventListener('input', function(e){
+//                    var curr = e.target.value;
+//                    if( prev || curr ) {
+//                        prev = curr;
+//                        fetch_industry(curr);
+//                        console.log(curr);
+//                    }
 //                });
 //
 //            </script>
 //        ");
     }
-endif;
 
-// to display fields in bbp new topic form
-add_action( 'bbp_theme_before_topic_form_content', 'bbp_display_wp_editor_array' );
-if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
-	function bbp_display_wp_editor_array() {
-	    $forumId = bbp_get_forum_id();
-	    if ($forumId == 0){
-	        $forumId = bbp_get_topic_forum_id();
-	    }
-        $path = ABSPATH.'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
-        if(file_exists($path)) {
-            $lines = file($path, FILE_IGNORE_NEW_LINES);
-
-            //Insert Input Fields
-            ShowInput_Company('bbp_'.hash('ripemd160','公司名稱').'_content');
-            foreach ($lines as $field_name) {
-               if (($field_name == '[mycred_sell_this]') || ($field_name == '[/mycred_sell_this]') || ($field_name == '公司名稱')){
-                   continue;
-               }
-
-               echo("<b><font size='3pt'>" . $field_name . "<b></font>");
-               $field_key = hash('ripemd160',$field_name);
-               bbp_the_content( array( 'context' => $field_key, 'textarea_rows' => 1 ) );
-            }
-        }
-        else {
-            bbp_the_content( array( 'context' => 'topic' ) ); //bbpress default
-        }
-	}
-
-    function ShowInput_Company($hashed_fieldName){
-        echo("
-            <div id='search_bar' style='margin-bottom: 3px'>
-                <p style='margin-bottom: -2px'> <label>公司名稱</label> </p>
-                <input id='search_input' name='$hashed_fieldName' list='suggestions_industry' type='text' size=40 maxlength=40 placeholder='Fill in your industry' style='padding-left: 3px;'>
-                <datalist id='suggestions_industry'></datalist>
-            </div>
-        ");
-        echo("
-            <script type='text/javascript' >
-                // http://localhost/wordpress/wp-json/fetch_industry/v1/data?industry=marketing.
-                // Start from '?' is added by ajax. You can write down all of params in `url` and omit `data`, e.g. url: url + query.toString()
-                var url_fetch = window.location.href.split('interview')[0] + 'wp-json/fetch_industry/v1/data';
-                const fetch_industry = (query) => jQuery.ajax({
-                    url: url_fetch,
-                    method: 'GET',
-                    dataType: 'json',
-                    data: {industry: query},
-                    contentType: 'application/json',
-                    success: function (data) {
-                        console.log('(Fetch data)', data);
-                        document.getElementById('suggestions_industry').innerHTML = '';
-                        var input_box = document.getElementById('suggestions_industry');
-                        [...data].forEach((item, idx) => {
-                            var ele = document.createElement('option');
-                            ele.value=item;
-                            input_box.appendChild(ele);
-                        });
-                    },
-                    error: function(e){
-                        console.log(e);
-                    }
-                });
-                var prev = '';
-                document.getElementById('search_input').addEventListener('input', function(e){
-                    var curr = e.target.value;
-                    if( prev || curr ) {
-                        prev = curr;
-                        fetch_industry(curr);
-                        console.log(curr);
-                    }
-                });
-            </script>
-        ");
+    function hashHelper($name): string
+    {
+        return 'bbp_'.hash('ripemd160', $name).'_content';
     }
 endif;
+
 
 // to parse post data into post content
 add_filter( 'bbp_get_my_custom_post_fields', 'bbp_get_custom_post_data');
