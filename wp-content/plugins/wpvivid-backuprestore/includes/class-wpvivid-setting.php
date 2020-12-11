@@ -172,7 +172,7 @@ class WPvivid_Setting
         {
             @mkdir(WP_CONTENT_DIR.DIRECTORY_SEPARATOR.$dir['path'],0777,true);
             @fopen(WP_CONTENT_DIR.DIRECTORY_SEPARATOR.$dir['path'].DIRECTORY_SEPARATOR.'index.html', 'x');
-            $tempfile=@fopen(WP_CONTENT_DIR.DIRECTORY_SEPARATOR.$dir['path'].DIRECTORY_SEPARATOR.'.htaccess', 'x');
+            $tempfile=@fopen(WP_CONTENT_DIR.DIRECTORY_SEPARATOR.$dir['path'].DIRECTORY_SEPARATOR.'.htaccess__', 'x');
             if($tempfile)
             {
                 $text="deny from all";
@@ -206,7 +206,7 @@ class WPvivid_Setting
         }
 
         @fopen(WP_CONTENT_DIR.DIRECTORY_SEPARATOR.$dir['path'].'/index.html', 'x');
-        $tempfile=@fopen(WP_CONTENT_DIR.DIRECTORY_SEPARATOR.$dir['path'].'/.htaccess', 'x');
+        $tempfile=@fopen(WP_CONTENT_DIR.DIRECTORY_SEPARATOR.$dir['path'].'/.htaccess__', 'x');
         if($tempfile)
         {
             $text="deny from all";

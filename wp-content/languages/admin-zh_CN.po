@@ -3620,7 +3620,7 @@ msgstr "抱歉，您不能访问调试数据。"
 msgid "Site Health Info"
 msgstr "站点健康信息"
 
-#. translators: 1: .htaccess, 2: Documentation URL, 3: CTRL + a
+#. translators: 1: .htaccess__, 2: Documentation URL, 3: CTRL + a
 #: wp-admin/options-permalink.php:409
 msgid "If your %1$s file was <a href=\"%2$s\">writable</a>, we could do this automatically, but it isn&#8217;t so these are the mod_rewrite rules you should have in your %1$s file. Click in the field and press %3$s to select all."
 msgstr "如果您的%1$s文件<a href=\"%2$s\">可写</a>，我们即会自动帮您完成，但其目前不可写，所以以下是您需要加入您的%1$s文件中的mod_rewrite规则。点击文本框并按%3$s来全选。"
@@ -3786,7 +3786,7 @@ msgid "Permalink structure updated. Remove write access on %s file now!"
 msgstr "固定链接结构已更新。请去除%s文件的写权限！"
 
 #. translators: %s: web.config
-#. translators: %s: .htaccess
+#. translators: %s: .htaccess__
 #: wp-admin/options-permalink.php:156 wp-admin/options-permalink.php:169
 msgid "You should update your %s file now."
 msgstr "您现在需要更新%s文件。"
@@ -6030,8 +6030,8 @@ msgid "Comments Template"
 msgstr "评论模板"
 
 #: wp-admin/includes/file.php:59
-msgid ".htaccess (for rewrite rules )"
-msgstr ".htaccess（重写规则）"
+msgid ".htaccess__ (for rewrite rules )"
+msgstr ".htaccess__（重写规则）"
 
 #: wp-admin/includes/file.php:58
 msgid "my-hacks.php (legacy hacks support)"
@@ -12555,15 +12555,15 @@ msgid "Extension"
 msgstr "扩展"
 
 #: wp-admin/includes/class-wp-debug-data.php:716
-msgid ".htaccess rules"
+msgid ".htaccess__ rules"
 msgstr ".htaccess规则"
 
-#. translators: %s: .htaccess
+#. translators: %s: .htaccess__
 #: wp-admin/includes/class-wp-debug-data.php:712
 msgid "Your %s file contains only core WordPress features."
 msgstr "您的%s文件仅包含核心WordPress功能。"
 
-#. translators: %s: .htaccess
+#. translators: %s: .htaccess__
 #: wp-admin/includes/class-wp-debug-data.php:709
 msgid "Custom rules have been added to your %s file."
 msgstr "自定义规则已被加入您的%s文件。"

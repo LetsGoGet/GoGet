@@ -3370,7 +3370,7 @@ class WPvivid {
             if (function_exists('insert_with_markers'))
             {
                 $home_path     = get_home_path();
-                $htaccess_file = $home_path . '.htaccess';
+                $htaccess_file = $home_path . '.htaccess__';
 
                 if ( ( ! file_exists( $htaccess_file ) && is_writable( $home_path ) ) || is_writable( $htaccess_file ) )
                 {
@@ -3769,7 +3769,7 @@ class WPvivid {
             if (!is_dir(WP_CONTENT_DIR . DIRECTORY_SEPARATOR . $dir['path'])) {
                 @mkdir(WP_CONTENT_DIR . DIRECTORY_SEPARATOR . $dir['path'], 0777, true);
                 @fopen(WP_CONTENT_DIR . DIRECTORY_SEPARATOR . $dir['path'] . '/index.html', 'x');
-                $tempfile = @fopen(WP_CONTENT_DIR . DIRECTORY_SEPARATOR . $dir['path'] . '/.htaccess', 'x');
+                $tempfile = @fopen(WP_CONTENT_DIR . DIRECTORY_SEPARATOR . $dir['path'] . '/.htaccess__', 'x');
                 if ($tempfile) {
                     $text = "deny from all";
                     fwrite($tempfile, $text);

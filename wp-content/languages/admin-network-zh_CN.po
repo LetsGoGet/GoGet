@@ -1126,7 +1126,7 @@ msgstr "已存档"
 msgid "Once you complete these steps, your network is enabled and configured. You will have to log in again."
 msgstr "在您完成这些步骤之后，您的网络即已启用并配置完成。您将需要重新登入。"
 
-#. translators: 1: File name (.htaccess or web.config), 2: File path.
+#. translators: 1: File name (.htaccess__ or web.config), 2: File path.
 #: wp-admin/includes/network.php:605 wp-admin/includes/network.php:647
 msgid "Add the following to your %1$s file in %2$s, <strong>replacing</strong> other WordPress rules:"
 msgstr "将这些加入您位于%2$s的%1$s文件，<strong>替换</strong>其他WordPress规则："
@@ -1160,7 +1160,7 @@ msgstr "将以下内容加入到在%2$s的%1$s文件，加在%3$s这行<strong>�
 msgid "We recommend you back up your existing %s file."
 msgstr "<strong>注意：</strong>我们推荐您备份已有的%1s文件。"
 
-#. translators: 1: wp-config.php, 2: .htaccess
+#. translators: 1: wp-config.php, 2: .htaccess__
 #. translators: 1: wp-config.php, 2: web.config
 #: wp-admin/includes/network.php:443 wp-admin/includes/network.php:451
 msgid "We recommend you back up your existing %1$s and %2$s files."
@@ -1373,11 +1373,11 @@ msgid "Once you add this code and refresh your browser, multisite should be enab
 msgstr "在您添加完代码后，请在浏览器刷新页面，之后多站点功能就应该自动启用了。这个页面将仍然保留这段代码，以备日后使用。您可在“管理网络”界面的导航菜单中再次访问本页面来查看代码。用户可以通过顶部“工具栏”中的“我的站点”下拉菜单在“管理网络”和“管理站点”之间切换。"
 
 #: wp-admin/network.php:62
-msgid "Add the designated lines of code to wp-config.php (just before <code>/*...stop editing...*/</code>) and <code>.htaccess</code> (replacing the existing WordPress rules)."
-msgstr "加入如下内容到wp-config.php（在<code>/*...stop editing...*/或/*...停止编辑...*/</code>上方）和<code>.htaccess</code>（替换WordPress原来生成的内容）。"
+msgid "Add the designated lines of code to wp-config.php (just before <code>/*...stop editing...*/</code>) and <code>.htaccess__</code> (replacing the existing WordPress rules)."
+msgstr "加入如下内容到wp-config.php（在<code>/*...stop editing...*/或/*...停止编辑...*/</code>上方）和<code>.htaccess__</code>（替换WordPress原来生成的内容）。"
 
 #: wp-admin/network.php:61
-msgid "The next screen for Network Setup will give you individually-generated lines of code to add to your wp-config.php and .htaccess files. Make sure the settings of your FTP client make files starting with a dot visible, so that you can find .htaccess; you may have to create this file if it really is not there. Make backup copies of those two files."
+msgid "The next screen for Network Setup will give you individually-generated lines of code to add to your wp-config.php and .htaccess__ files. Make sure the settings of your FTP client make files starting with a dot visible, so that you can find .htaccess__; you may have to create this file if it really is not there. Make backup copies of those two files."
 msgstr "在“配置网络”的下一个页面，WordPress将向您提供专为您生成的几行代码，请将它们按要求加入到wp-config.php和.htaccess文件中。请确保您的FTP客户端不隐藏以点（.）开头的文件，这样您才能看到.htaccess文件；若它确实不存在，您需手工创建这个文件。请在对文件作出更改前，备份这两个文件。"
 
 #: wp-admin/network.php:60

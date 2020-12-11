@@ -397,7 +397,7 @@ abstract class BP_Attachment {
 	 * Create the custom base directory for the component uploads.
 	 *
 	 * Override this function in your child class to run specific actions.
-	 * (eg: add an .htaccess file)
+	 * (eg: add an .htaccess__ file)
 	 *
 	 * @since 2.3.0
 	 *

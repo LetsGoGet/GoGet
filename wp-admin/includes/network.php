@@ -440,13 +440,13 @@ function network_step2( $errors = false ) {
 		<p><?php _e( 'Complete the following steps to enable the features for creating a network of sites.' ); ?></p>
 		<div class="notice notice-warning inline"><p>
 		<?php
-		if ( file_exists( $home_path . '.htaccess' ) ) {
+		if ( file_exists( $home_path . '.htaccess__' ) ) {
 			echo '<strong>' . __( 'Caution:' ) . '</strong> ';
 			printf(
-				/* translators: 1: wp-config.php, 2: .htaccess */
+				/* translators: 1: wp-config.php, 2: .htaccess__ */
 				__( 'We recommend you back up your existing %1$s and %2$s files.' ),
 				'<code>wp-config.php</code>',
-				'<code>.htaccess</code>'
+				'<code>.htaccess__</code>'
 			);
 		} elseif ( file_exists( $home_path . 'web.config' ) ) {
 			echo '<strong>' . __( 'Caution:' ) . '</strong> ';
@@ -605,7 +605,7 @@ define('BLOG_ID_CURRENT_SITE', 1);
 
 			echo '<li><p>';
 			printf(
-				/* translators: 1: File name (.htaccess or web.config), 2: File path. */
+				/* translators: 1: File name (.htaccess__ or web.config), 2: File path. */
 				__( 'Add the following to your %1$s file in %2$s, <strong>replacing</strong> other WordPress rules:' ),
 				'<code>web.config</code>',
 				'<code>' . $home_path . '</code>'
@@ -630,7 +630,7 @@ define('BLOG_ID_CURRENT_SITE', 1);
 		);
 		echo '</p></li>';
 
-	else : // End $is_nginx. Construct an .htaccess file instead:
+	else : // End $is_nginx. Construct an .htaccess__ file instead:
 
 		$ms_files_rewriting = '';
 		if ( is_multisite() && get_site_option( 'ms_files_rewriting' ) ) {
@@ -657,9 +657,9 @@ EOF;
 
 		echo '<li><p>';
 		printf(
-			/* translators: 1: File name (.htaccess or web.config), 2: File path. */
+			/* translators: 1: File name (.htaccess__ or web.config), 2: File path. */
 			__( 'Add the following to your %1$s file in %2$s, <strong>replacing</strong> other WordPress rules:' ),
-			'<code>.htaccess</code>',
+			'<code>.htaccess__</code>',
 			'<code>' . $home_path . '</code>'
 		);
 		echo '</p>';

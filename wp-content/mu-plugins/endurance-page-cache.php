@@ -1034,9 +1034,9 @@ if ( ! class_exists( 'Endurance_Page_Cache' ) ) {
 		}
 
 		/**
-		 * Modify the .htaccess file with custom rewrite rules based on caching level.
+		 * Modify the .htaccess__ file with custom rewrite rules based on caching level.
 		 *
-		 * @param string $rules .htaccess content
+		 * @param string $rules .htaccess__ content
 		 *
 		 * @return string
 		 */
@@ -1072,9 +1072,9 @@ if ( ! class_exists( 'Endurance_Page_Cache' ) ) {
 		}
 
 		/**
-		 * Modify the .htaccess file with custom expiration rules based on caching level.
+		 * Modify the .htaccess__ file with custom expiration rules based on caching level.
 		 *
-		 * @param string $rules .htaccess content
+		 * @param string $rules .htaccess__ content
 		 *
 		 * @return string
 		 */
@@ -1277,7 +1277,7 @@ if ( ! class_exists( 'Endurance_Page_Cache' ) ) {
 		}
 
 		/**
-		 * Update cache expirations rules in .htaccess based on cache level.
+		 * Update cache expirations rules in .htaccess__ based on cache level.
 		 *
 		 * @param int $level Cache level
 		 */
@@ -1423,7 +1423,7 @@ if ( ! class_exists( 'Endurance_Page_Cache' ) ) {
 		 * Filter to force got_mod_rewrite() to true
 		 *
 		 * On CLI requests, mod_rewrite is unavailable, so it fails to update
-		 * the .htaccess file when save_mod_rewrite_rules() is called. This
+		 * the .htaccess__ file when save_mod_rewrite_rules() is called. This
 		 * forces that to be true so updates from WP CLI work.
 		 *
 		 * @param bool $got_rewrite Value of apache_mod_loaded('mod_rewrite')
