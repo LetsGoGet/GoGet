@@ -52,7 +52,7 @@ function live_search_handler($request) {
             );
             $rows = $wpdb->get_results( "SELECT name FROM " . $posts_table . " WHERE name like '%" . $queryText . "%'");
             break;
-        case dropdown_countries_and_cities:
+        case 'dropdown_countries_and_cities':
             $cc_path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/countries_and_cities.json';
             $data = file_get_contents($cc_path);
             $cc = json_decode($data, true);
