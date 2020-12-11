@@ -11,9 +11,8 @@ Version: 1.0.0
 function live_search_handler($request) {
     global $wpdb;
 
-    // return array('bb', 'bsfbbbewqe', 'zbbvbb', 'bwwwb'); // testing
     $queryType = $request['type'];
-    $queryText = $request['text']; // $request->get_params(); // JSON: {industry: "ds"}
+    $queryText = $request['text']; // $request->get_params(); // JSON: {text "ds"}
 
     if($queryText == '') {
         return array();
@@ -39,8 +38,8 @@ function live_search_handler($request) {
                 PRIMARY KEY (`id`)
                 ) $charset_collate AUTO_INCREMENT=1;"
             );
-            $rows = $wpdb->get_results( "SELECT name FROM " . $posts_table . " WHERE name like '%" . $queryText . "%'");
             // select * from users where users.email like '%abc%';
+            $rows = $wpdb->get_results( "SELECT name FROM " . $posts_table . " WHERE name like '%" . $queryText . "%'");
             break;
         case 'job_title':
             $posts_table = $wpdb->prefix . "job_title";
@@ -52,8 +51,20 @@ function live_search_handler($request) {
                 ) $charset_collate AUTO_INCREMENT=1;"
             );
             $rows = $wpdb->get_results( "SELECT name FROM " . $posts_table . " WHERE name like '%" . $queryText . "%'");
-            // select * from users where users.email like '%abc%';
             break;
+        case dropdown_countries_and_cities:
+            $cc_path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/countries_and_cities.json';
+            $data = file_get_contents($cc_path);
+            $cc = json_decode($data, true);
+            $html = "";
+            foreach($cc as $country => $city) {
+                if($country == $queryText) {
+                    foreach($city as $c) {
+                        $html .= "<option value='" . $c. "'>" . $c. "</option>";
+                    }
+                }
+            }
+            return $html;
     }
 
     $query = array();
@@ -77,7 +88,6 @@ function write_interview_data_handler($request) {
     $query = " (company) value ('" . strval($d['name']) . "')";
     $wpdb->get_results( "INSERT " . $posts_table . $query);
     // insert wp_interview_form (industry, country, city) value ('zzz', 'xx', 'yy');
-
     return 'Data written !!';
 }
 
@@ -91,7 +101,7 @@ function write_interview_data($data) {
 
 add_action('rest_api_init', 'fetch_live_search_data');
 function fetch_live_search_data($data) { // http://localhost/wordpress/wp-json/test/v1/data?industry=資訊
-    register_rest_route( 'fetch_industry/v1', '/data/', array(
+    register_rest_route( 'fetch/v1', '/data/', array(
             'methods'  => 'GET',
             'callback' => 'live_search_handler',
     ));
@@ -133,11 +143,10 @@ class comboBox extends formElements{
             </div>
         ");
 
-        //javascript
         echo("<script type='text/javascript'>
-                    // http://localhost/wordpress/wp-json/fetch_industry/v1/data?industry=marketing.
+                    // http://localhost/wordpress/wp-json/fetch/v1/data?industry=marketing.
                     // Start from '?' is added by ajax. You can write down all of params in `url` and omit `data`, e.g. url: url + query.toString()
-                    var url_fetch = window.location.href.split('interview')[0] + 'wp-json/fetch_industry/v1/data';
+                    var url_fetch = window.location.href.split('interview')[0] + 'wp-json/fetch/v1/data';
                     const $fetchFunction = (queryText) => jQuery.ajax({
                         url: url_fetch,
                         method: 'GET',
@@ -145,7 +154,6 @@ class comboBox extends formElements{
                         data: {type: '$this->type', text: queryText},
                         contentType: 'application/json',
                         success: function (data) {
-                            console.log('(Fetch data)', data);
                             document.getElementById('$listID').innerHTML = '';
                             var input_box = document.getElementById('$listID');
                             [...data].forEach((item, idx) => {
@@ -159,7 +167,6 @@ class comboBox extends formElements{
                         }
                     });
 
-                    //event listener
                     var prev = '';
                     document.getElementById('$fieldID').addEventListener('input', function(e){
                     var curr = e.target.value;
@@ -186,7 +193,6 @@ class radio extends formElements{
         $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content';
         $label_id = $hashed_fieldName.'_label';
 
-
         echo("
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
@@ -212,7 +218,8 @@ class singleSelection1 extends formElements{
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
-                <label for='$label_id'>
+
+                <label id='singleSelectyion1Radios' style='display: none;' for='$label_id'>
                     <input type='radio' id='$label_id' name='$hashed_fieldName' value='很簡單' />
                     很簡單
                     <input type='radio' id='$label_id' name='$hashed_fieldName' value='簡單' />
@@ -225,6 +232,39 @@ class singleSelection1 extends formElements{
                     很困難
                 </label>
             </div>
+        ");
+        echo("
+            <div id='singleSelectyion1Buttons' style='margin-bottom: 15px'>
+                <button data-item='0' style='margin-right: 8px; border-radius: 17px; background-color: white; color: blue'>很簡單</button>
+                <button data-item='1' style='margin-right: 8px; border-radius: 17px; background-color: white; color: blue'>簡單</button>
+                <button data-item='2' style='margin-right: 8px; border-radius: 17px; background-color: white; color: orange'>普通</button>
+                <button data-item='3' style='margin-right: 8px; border-radius: 17px; background-color: white; color: red'>困難</button>
+                <button data-item='4' style='margin-right: 8px; border-radius: 17px; background-color: white; color: red'>很困難</button>
+            </div>
+            <script>
+                document.getElementById('singleSelectyion1Buttons').addEventListener('click', function(e) {
+                    var idx = e.target.dataset.item;
+
+                    for(i = 0; i < 5; i++) {
+                        if(i == idx) {
+                            document.getElementById('singleSelectyion1Radios').children[i].checked = true;
+                            document.getElementById('singleSelectyion1Buttons').children[i].style.color = 'white';
+                            if (i < 2)       document.getElementById('singleSelectyion1Buttons').children[i].style.backgroundColor = 'blue';
+                            else if (i == 2) document.getElementById('singleSelectyion1Buttons').children[i].style.backgroundColor = 'orange';
+                            else             document.getElementById('singleSelectyion1Buttons').children[i].style.backgroundColor = 'red';
+                        } else {
+                            document.getElementById('singleSelectyion1Radios').children[i].checked = false;
+                            if (i < 2)       document.getElementById('singleSelectyion1Buttons').children[i].style.color = 'blue';
+                            else if (i == 2) document.getElementById('singleSelectyion1Buttons').children[i].style.color = 'orange';
+                            else             document.getElementById('singleSelectyion1Buttons').children[i].style.color = 'red';
+                            document.getElementById('singleSelectyion1Buttons').children[i].style.backgroundColor = 'white';
+                        }
+                    }
+                    e.stopPropagation();
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                });
+            </script>
         ");
     }
 }
@@ -239,7 +279,7 @@ class singleSelection2 extends formElements{
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
-                <label for='$label_id'>
+                <label id='singleSelectyion2Radios' style='display: none;' for='$label_id'>
                     <input type='radio' id='$label_id' name='$hashed_fieldName' value='錄取' />
                     錄取
                     <input type='radio' id='$label_id' name='$hashed_fieldName' value='未錄取' />
@@ -251,35 +291,70 @@ class singleSelection2 extends formElements{
                 </label>
             </div>
         ");
+        echo("
+            <div id='singleSelectyion2Buttons' style='margin-bottom: 15px'>
+                <button data-item='0' style='margin-right: 8px; border-radius: 17px; background-color: white; color: blue'>錄取</button>
+                <button data-item='1' style='margin-right: 8px; border-radius: 17px; background-color: white; color: red'>未錄取</button>
+                <button data-item='2' style='margin-right: 8px; border-radius: 17px; background-color: white; color: orange'>等待中</button>
+                <button data-item='3' style='margin-right: 8px; border-radius: 17px; background-color: white; color: black'>無聲卡</button>
+            </div>
+            <script>
+                document.getElementById('singleSelectyion2Buttons').addEventListener('click', function(e) {
+                    var idx = e.target.dataset.item;
+
+                    for(i = 0; i < 4; i++) {
+                        if(i == idx) {
+                            document.getElementById('singleSelectyion2Radios').children[i].checked = true;
+                            document.getElementById('singleSelectyion2Buttons').children[i].style.color = 'white';
+                            if (i == 0)      document.getElementById('singleSelectyion2Buttons').children[i].style.backgroundColor = 'blue';
+                            else if (i == 1) document.getElementById('singleSelectyion2Buttons').children[i].style.backgroundColor = 'red';
+                            else if (i == 2) document.getElementById('singleSelectyion2Buttons').children[i].style.backgroundColor = 'orange';
+                            else             document.getElementById('singleSelectyion2Buttons').children[i].style.backgroundColor = 'black';
+                        } else {
+                            document.getElementById('singleSelectyion2Radios').children[i].checked = false;
+                            if (i == 0)      document.getElementById('singleSelectyion2Buttons').children[i].style.color = 'blue';
+                            else if (i == 1) document.getElementById('singleSelectyion2Buttons').children[i].style.color = 'red';
+                            else if (i == 2) document.getElementById('singleSelectyion2Buttons').children[i].style.color = 'orange';
+                            else             document.getElementById('singleSelectyion2Buttons').children[i].style.color = 'black';
+                            document.getElementById('singleSelectyion2Buttons').children[i].style.backgroundColor = 'white';
+                        }
+                    }
+                    e.stopPropagation();
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                });
+            </script>
+        ");
     }
 }
 
 class multiSelection extends formElements{
     function generateUI($fieldName)
     {
-        $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content';
+        $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content' . '[]';
         $label_id = $hashed_fieldName.'_label';
+        $ids = array($label_id . '0', $label_id . '1', $label_id . '2', $label_id . '3', $label_id . '4', $label_id . '5', $label_id . '6', );
 
         echo("
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
-                <label for='$label_id'>
-                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='個人面試' />
-                    個人面試
-                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='團體面試' />
-                    團體面試
-                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='筆試' />
-                    筆試
-                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='線上測驗' />
-                    線上測驗
-                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='電話面試' />
-                    電話面試
-                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='複試' />
-                    複試
-                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='其它' />
-                    其它
-                </label>
+                <div>
+                    <input type='checkbox' id='$ids[0]' name='$hashed_fieldName' value='個人面試' />
+                    <label for='$ids[0]'> 個人面試 </label>
+                    <input type='checkbox' id='$ids[1]' name='$hashed_fieldName' value='團體面試' />
+                    <label for='$ids[1]'> 團體面試 </label>
+                    <input type='checkbox' id='$ids[2]' name='$hashed_fieldName' value='筆試' />
+                    <label for='$ids[2]'> 筆試 </label>
+                    <input type='checkbox' id='$ids[3]' name='$hashed_fieldName' value='線上測驗' />
+                    <label for='$ids[3]'> 線上測驗 </label>
+                    <input type='checkbox' id='$ids[4]' name='$hashed_fieldName' value='電話面試' />
+                    <label for='$ids[4]'> 電話面試 </label>
+                    <input type='checkbox' id='$ids[5]' name='$hashed_fieldName' value='複試' />
+                    <label for='$ids[5]'> 複試 </label>
+                    <input type='checkbox' id='$ids[6]' name='$hashed_fieldName' value='其它' />
+                    <label for='$ids[6]'> 其它 </label>
+                </div>
             </div>
         ");
     }
@@ -332,6 +407,101 @@ class dropDown extends formElements{
     }
 }
 
+class dropdown_02 extends formelements{
+    private $subtitle;
+
+    function __construct($subtitle)
+    {
+        parent::__construct();
+        $this->subtitle = $subtitle;
+
+    }
+
+    function generateui($fieldname)
+    {
+        $hashed_fieldname = 'bbp_'.hashhelper($fieldname).'_content'.'[]';
+        $label_id = $hashed_fieldname.'_label';
+
+        echo("
+            <div id='search_bar' style='margin-bottom: 3px'>
+                <p style='margin-bottom: -2px'> <label>$fieldname</label> </p>
+                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
+                <label for='$label_id'>
+                    <select name='$hashed_fieldname' id='$label_id'>
+                        <option value='正職'>正職</option>
+                        <option value='兼職'>兼職</option>
+                        <option value='實習'>實習</option>
+                    </select>
+                </label>
+            </div>
+        ");
+    }
+}
+
+class dropdown_03 extends formelements{
+    private $subtitle;
+
+    function __construct($subtitle, $countries_and_cities)
+    {
+        parent::__construct();
+        $this->subtitle = $subtitle;
+        $this->file = $countries_and_cities;
+        $this->type = dropdown_countries_and_cities;
+    }
+
+    function generateui($fieldname)
+    {
+        $hashed_fieldname = 'bbp_'.hashhelper($fieldname).'_content'.'[]';
+        $label_id = $hashed_fieldname.'_label';
+        $label_country = $label_id . "_country";
+        $label_city = $label_id . "_city";
+
+        $data = file_get_contents($this->file);
+        $cc = json_decode($data, true);
+        // echo '<pre>' . print_r($cc["日本"], true) . '</pre>';
+
+        $html = "";
+        foreach($cc as $country => $city) {
+            $html .= "<option value='" . $country . "'>" . $country . "</option>";
+        }
+        echo("
+            <div id='search_bar' style='margin-bottom: 3px'>
+                <p style='margin-bottom: -2px'> <label>$fieldname</label> </p>
+                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
+                <label for='$label_country'>
+                    <select id='dropdown_country' name='$hashed_fieldname' id='$label_country'> $html </select>
+                </label>
+                <label for='$label_city' style='margin-left: 10px'>
+                    <select id='dropdown_city' name='$hashed_fieldname' id='$label_city'> </select>
+                </label>
+            </div>
+        ");
+        echo("
+            <script type='text/javascript'>
+                var url_fetch = window.location.href.split('interview')[0] + 'wp-json/fetch/v1/data';
+                const fetchFunctionCountriesAndCities = (queryText) => jQuery.ajax({
+                    url: url_fetch,
+                    method: 'GET',
+                    data: {type: '$this->type', text: queryText},
+                    success: function (data) {
+                        document.getElementById('dropdown_city').innerHTML = data;
+                    },
+                    error: function(e){
+                        console.log(e);
+                    }
+                });
+
+                document.getElementById('dropdown_country').addEventListener('change', (e) => {
+                    if (e.target.value != '') {
+                        var cities = fetchFunctionCountriesAndCities(e.target.value);
+                    }
+                });
+            </script>"
+        );
+    }
+}
+
+
 class multiTextArea extends formElements{
     function generateUI($fieldName)
     {
@@ -352,7 +522,6 @@ class multiTextArea extends formElements{
 }
 
 class date extends formElements{
-
     function generateUI($fieldName)
     {
         $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content';
@@ -422,8 +591,6 @@ class text extends formElements{
 // to display fields in bbp new topic form
 add_action( 'bbp_theme_before_topic_form_content', 'bbp_display_wp_editor_array' );
 if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
-
-
 	function bbp_display_wp_editor_array() {
 
         //get forum id
@@ -435,11 +602,10 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
 	    //using material UI
         echo('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">');
 
-
 	    //Start generating form
-
 	    //read form schema
-        $path = ABSPATH.'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
+        $path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
+        $cc_path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/countries_and_cities.json';
         if(file_exists($path)) {
             $lines = file($path, FILE_IGNORE_NEW_LINES);
 
@@ -470,6 +636,12 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         $ml->generateUI($field_name);
                     } else if ($field_type == 'dropdown') {
                         $dn = new dropDown($field_subtitle);
+                        $dn->generateUI($field_name);
+                    } else if ($field_type == 'dropdown_02') {
+                        $dn = new dropDown_02($field_subtitle);
+                        $dn->generateUI($field_name);
+                    } else if ($field_type == 'dropdown_03') {
+                        $dn = new dropDown_03($field_subtitle, $cc_path);
                         $dn->generateUI($field_name);
                     } else if ($field_type == 'date') {
                         $date = new date();
