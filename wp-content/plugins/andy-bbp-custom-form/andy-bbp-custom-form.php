@@ -8,6 +8,10 @@ Author URI:
 Version: 1.0.0
 */
 
+function generateRandomString($length = 6) {
+    return substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length / strlen($x)))), 1, $length);
+}
+
 function live_search_handler($request) {
     global $wpdb;
 
@@ -110,10 +114,16 @@ function fetch_live_search_data($data) { // http://localhost/wordpress/wp-json/t
 class formElements{
     public function __construct()
     {
+        $this->ID = "";
     }
 
     function generateUI($fieldName){
         return $fieldName;
+    }
+
+    function getComponentID() 
+    {
+        return $this->ID;
     }
 }
 
@@ -125,6 +135,7 @@ class comboBox extends formElements{
         parent::__construct();
         $this->type = $type;
         $this->subtitle = $subtitle;
+        $this->ID = "";
     }
 
     function generateUI($fieldName)
@@ -133,6 +144,7 @@ class comboBox extends formElements{
         $fieldID = $hashed_fieldName.'_input';
         $listID = $hashed_fieldName.'_list';
         $fetchFunction = $hashed_fieldName.'_fetchData';
+        $this->ID = $fieldID;
 
         echo("
             <div id='search_bar' style='margin-bottom: 3px'>
@@ -173,7 +185,6 @@ class comboBox extends formElements{
                     if( prev || curr ) {
                         prev = curr;
                         $fetchFunction(curr);
-                        console.log(curr);
                     }
                 });</script>");
     }
@@ -185,7 +196,7 @@ class radio extends formElements{
     {
         parent::__construct();
         $this->subtitle = $subtitle;
-
+        $this->ID = get_class($this) . generateRandomString();
     }
 
     function generateUI($fieldName)
@@ -197,7 +208,7 @@ class radio extends formElements{
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
-                <label for='$label_id'>
+                <label id='$this->ID' for='$label_id'>
                     <input type='radio' id='$label_id' name='$hashed_fieldName' value='是' />
                     是
                     <input type='radio' id='$label_id' name='$hashed_fieldName' value='否' />
@@ -209,17 +220,22 @@ class radio extends formElements{
 }
 
 class singleSelection1 extends formElements{
+    function __construct()
+    {
+        parent::__construct();
+        $this->ID = get_class($this) . generateRandomString();
+    }
+
     function generateUI($fieldName)
     {
         $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content';
         $label_id = $hashed_fieldName.'_label';
+        $attached_btn_id = $this->ID . '_buttons';
 
         echo("
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
-                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
-
-                <label id='singleSelectyion1Radios' style='display: none;' for='$label_id'>
+                <label id='$this->ID' style='display: none;' for='$label_id'>
                     <input type='radio' id='$label_id' name='$hashed_fieldName' value='很簡單' />
                     很簡單
                     <input type='radio' id='$label_id' name='$hashed_fieldName' value='簡單' />
@@ -234,7 +250,7 @@ class singleSelection1 extends formElements{
             </div>
         ");
         echo("
-            <div id='singleSelectyion1Buttons' style='margin-bottom: 15px'>
+            <div id='$attached_btn_id' style='margin-bottom: 15px'>
                 <button data-item='0' style='margin-right: 8px; border-radius: 17px; background-color: white; color: blue'>很簡單</button>
                 <button data-item='1' style='margin-right: 8px; border-radius: 17px; background-color: white; color: blue'>簡單</button>
                 <button data-item='2' style='margin-right: 8px; border-radius: 17px; background-color: white; color: orange'>普通</button>
@@ -242,22 +258,22 @@ class singleSelection1 extends formElements{
                 <button data-item='4' style='margin-right: 8px; border-radius: 17px; background-color: white; color: red'>很困難</button>
             </div>
             <script>
-                document.getElementById('singleSelectyion1Buttons').addEventListener('click', function(e) {
+                document.getElementById('$attached_btn_id').addEventListener('click', function(e) {
                     var idx = e.target.dataset.item;
 
                     for(i = 0; i < 5; i++) {
                         if(i == idx) {
-                            document.getElementById('singleSelectyion1Radios').children[i].checked = true;
-                            document.getElementById('singleSelectyion1Buttons').children[i].style.color = 'white';
-                            if (i < 2)       document.getElementById('singleSelectyion1Buttons').children[i].style.backgroundColor = 'blue';
-                            else if (i == 2) document.getElementById('singleSelectyion1Buttons').children[i].style.backgroundColor = 'orange';
-                            else             document.getElementById('singleSelectyion1Buttons').children[i].style.backgroundColor = 'red';
+                            document.getElementById('$this->ID').children[i].checked = true;
+                            document.getElementById('$attached_btn_id').children[i].style.color = 'white';
+                            if (i < 2)       document.getElementById('$attached_btn_id').children[i].style.backgroundColor = 'blue';
+                            else if (i == 2) document.getElementById('$attached_btn_id').children[i].style.backgroundColor = 'orange';
+                            else             document.getElementById('$attached_btn_id').children[i].style.backgroundColor = 'red';
                         } else {
-                            document.getElementById('singleSelectyion1Radios').children[i].checked = false;
-                            if (i < 2)       document.getElementById('singleSelectyion1Buttons').children[i].style.color = 'blue';
-                            else if (i == 2) document.getElementById('singleSelectyion1Buttons').children[i].style.color = 'orange';
-                            else             document.getElementById('singleSelectyion1Buttons').children[i].style.color = 'red';
-                            document.getElementById('singleSelectyion1Buttons').children[i].style.backgroundColor = 'white';
+                            document.getElementById('$this->ID').children[i].checked = false;
+                            if (i < 2)       document.getElementById('$attached_btn_id').children[i].style.color = 'blue';
+                            else if (i == 2) document.getElementById('$attached_btn_id').children[i].style.color = 'orange';
+                            else             document.getElementById('$attached_btn_id').children[i].style.color = 'red';
+                            document.getElementById('$attached_btn_id').children[i].style.backgroundColor = 'white';
                         }
                     }
                     e.stopPropagation();
@@ -270,16 +286,22 @@ class singleSelection1 extends formElements{
 }
 
 class singleSelection2 extends formElements{
+    function __construct()
+    {
+        parent::__construct();
+        $this->ID = get_class($this) . generateRandomString();
+    }
+
     function generateUI($fieldName)
     {
         $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content';
         $label_id = $hashed_fieldName.'_label';
+        $attached_btn_id = $this->ID . '_buttons';
 
         echo("
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
-                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
-                <label id='singleSelectyion2Radios' style='display: none;' for='$label_id'>
+                <label id='$this->ID' style='display: none;' for='$label_id'>
                     <input type='radio' id='$label_id' name='$hashed_fieldName' value='錄取' />
                     錄取
                     <input type='radio' id='$label_id' name='$hashed_fieldName' value='未錄取' />
@@ -292,31 +314,31 @@ class singleSelection2 extends formElements{
             </div>
         ");
         echo("
-            <div id='singleSelectyion2Buttons' style='margin-bottom: 15px'>
+            <div id='$attached_btn_id' style='margin-bottom: 15px'>
                 <button data-item='0' style='margin-right: 8px; border-radius: 17px; background-color: white; color: blue'>錄取</button>
                 <button data-item='1' style='margin-right: 8px; border-radius: 17px; background-color: white; color: red'>未錄取</button>
                 <button data-item='2' style='margin-right: 8px; border-radius: 17px; background-color: white; color: orange'>等待中</button>
                 <button data-item='3' style='margin-right: 8px; border-radius: 17px; background-color: white; color: black'>無聲卡</button>
             </div>
             <script>
-                document.getElementById('singleSelectyion2Buttons').addEventListener('click', function(e) {
+                document.getElementById('$attached_btn_id').addEventListener('click', function(e) {
                     var idx = e.target.dataset.item;
 
                     for(i = 0; i < 4; i++) {
                         if(i == idx) {
-                            document.getElementById('singleSelectyion2Radios').children[i].checked = true;
-                            document.getElementById('singleSelectyion2Buttons').children[i].style.color = 'white';
-                            if (i == 0)      document.getElementById('singleSelectyion2Buttons').children[i].style.backgroundColor = 'blue';
-                            else if (i == 1) document.getElementById('singleSelectyion2Buttons').children[i].style.backgroundColor = 'red';
-                            else if (i == 2) document.getElementById('singleSelectyion2Buttons').children[i].style.backgroundColor = 'orange';
-                            else             document.getElementById('singleSelectyion2Buttons').children[i].style.backgroundColor = 'black';
+                            document.getElementById('$this->ID').children[i].checked = true;
+                            document.getElementById('$attached_btn_id').children[i].style.color = 'white';
+                            if (i == 0)      document.getElementById('$attached_btn_id').children[i].style.backgroundColor = 'blue';
+                            else if (i == 1) document.getElementById('$attached_btn_id').children[i].style.backgroundColor = 'red';
+                            else if (i == 2) document.getElementById('$attached_btn_id').children[i].style.backgroundColor = 'orange';
+                            else             document.getElementById('$attached_btn_id').children[i].style.backgroundColor = 'black';
                         } else {
-                            document.getElementById('singleSelectyion2Radios').children[i].checked = false;
-                            if (i == 0)      document.getElementById('singleSelectyion2Buttons').children[i].style.color = 'blue';
-                            else if (i == 1) document.getElementById('singleSelectyion2Buttons').children[i].style.color = 'red';
-                            else if (i == 2) document.getElementById('singleSelectyion2Buttons').children[i].style.color = 'orange';
-                            else             document.getElementById('singleSelectyion2Buttons').children[i].style.color = 'black';
-                            document.getElementById('singleSelectyion2Buttons').children[i].style.backgroundColor = 'white';
+                            document.getElementById('$this->ID').children[i].checked = false;
+                            if (i == 0)      document.getElementById('$attached_btn_id').children[i].style.color = 'blue';
+                            else if (i == 1) document.getElementById('$attached_btn_id').children[i].style.color = 'red';
+                            else if (i == 2) document.getElementById('$attached_btn_id').children[i].style.color = 'orange';
+                            else             document.getElementById('$attached_btn_id').children[i].style.color = 'black';
+                            document.getElementById('$attached_btn_id').children[i].style.backgroundColor = 'white';
                         }
                     }
                     e.stopPropagation();
@@ -329,6 +351,12 @@ class singleSelection2 extends formElements{
 }
 
 class multiSelection extends formElements{
+    function __construct()
+    {
+        parent::__construct();
+        $this->ID = get_class($this) . generateRandomString();
+    }
+
     function generateUI($fieldName)
     {
         $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content' . '[]';
@@ -338,8 +366,7 @@ class multiSelection extends formElements{
         echo("
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
-                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
-                <div>
+                <div id='$this->ID'>
                     <input type='checkbox' id='$ids[0]' name='$hashed_fieldName' value='個人面試' />
                     <label for='$ids[0]'> 個人面試 </label>
                     <input type='checkbox' id='$ids[1]' name='$hashed_fieldName' value='團體面試' />
@@ -367,7 +394,7 @@ class dropDown extends formElements{
     {
         parent::__construct();
         $this->subtitle = $subtitle;
-
+        $this->ID = get_class($this) . generateRandomString();
     }
 
     function generateUI($fieldName)
@@ -379,29 +406,30 @@ class dropDown extends formElements{
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
-                <label for='$label_id'>
-                    <select name='$hashed_fieldName' id='$label_id'>
-                        <option value='金融'>金融</option>
-                        <option value='顧問'>顧問</option>
-                        <option value='快消'>快消</option>
-                        <option value='零售'>零售</option>
-                        <option value='科技'>科技</option>
-                        <option value='新創'>新創</option>
-                        <option value='其它'>其它</option>
-                    </select>
-                </label>
-                
-                <label for='$label_id'>
-                    <select name='$hashed_fieldName' id='$label_id'>
-                        <option value='金融'>金融</option>
-                        <option value='顧問'>顧問</option>
-                        <option value='快消'>快消</option>
-                        <option value='零售'>零售</option>
-                        <option value='科技'>科技</option>
-                        <option value='新創'>新創</option>
-                        <option value='其它'>其它</option>
-                    </select>
-                </label>
+                <div id='$this->ID'>
+                    <label for='$label_id'>
+                        <select name='$hashed_fieldName' id='$label_id'>
+                            <option value='金融'>金融</option>
+                            <option value='顧問'>顧問</option>
+                            <option value='快消'>快消</option>
+                            <option value='零售'>零售</option>
+                            <option value='科技'>科技</option>
+                            <option value='新創'>新創</option>
+                            <option value='其它'>其它</option>
+                        </select>
+                    </label>
+                    <label for='$label_id'>
+                        <select name='$hashed_fieldName' id='$label_id'>
+                            <option value='金融'>金融</option>
+                            <option value='顧問'>顧問</option>
+                            <option value='快消'>快消</option>
+                            <option value='零售'>零售</option>
+                            <option value='科技'>科技</option>
+                            <option value='新創'>新創</option>
+                            <option value='其它'>其它</option>
+                        </select>
+                    </label>
+                </div>
             </div>
         ");
     }
@@ -414,7 +442,7 @@ class dropdown_02 extends formelements{
     {
         parent::__construct();
         $this->subtitle = $subtitle;
-
+        $this->ID = get_class($this) . generateRandomString();
     }
 
     function generateui($fieldname)
@@ -426,7 +454,7 @@ class dropdown_02 extends formelements{
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldname</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
-                <label for='$label_id'>
+                <label id='$this->ID' for='$label_id'>
                     <select name='$hashed_fieldname' id='$label_id'>
                         <option value='正職'>正職</option>
                         <option value='兼職'>兼職</option>
@@ -446,7 +474,8 @@ class dropdown_03 extends formelements{
         parent::__construct();
         $this->subtitle = $subtitle;
         $this->file = $countries_and_cities;
-        $this->type = dropdown_countries_and_cities;
+        $this->type = 'dropdown_countries_and_cities';
+        $this->ID = get_class($this) . generateRandomString();
     }
 
     function generateui($fieldname)
@@ -468,12 +497,14 @@ class dropdown_03 extends formelements{
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldname</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
-                <label for='$label_country'>
-                    <select id='dropdown_country' name='$hashed_fieldname' id='$label_country'> $html </select>
-                </label>
-                <label for='$label_city' style='margin-left: 10px'>
-                    <select id='dropdown_city' name='$hashed_fieldname' id='$label_city'> </select>
-                </label>
+                <div id='$this->ID'>
+                    <label for='$label_country'>
+                        <select id='dropdown_country' name='$hashed_fieldname' id='$label_country'> $html </select>
+                    </label>
+                    <label for='$label_city' style='margin-left: 10px'>
+                        <select id='dropdown_city' name='$hashed_fieldname' id='$label_city'> </select>
+                    </label>
+                </div>
             </div>
         ");
         echo("
@@ -503,6 +534,12 @@ class dropdown_03 extends formelements{
 
 
 class multiTextArea extends formElements{
+    function __construct()
+    {
+        parent::__construct();
+        $this->ID = get_class($this) . generateRandomString();
+    }
+
     function generateUI($fieldName)
     {
         $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content'.'[]';
@@ -510,26 +547,32 @@ class multiTextArea extends formElements{
         $label_id = $hashed_fieldName.'_label';
 
         echo("
-            <div id='search_bar' style='margin-bottom: 3px'>
+            <div style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
-                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
-                <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 placeholder='#' style='padding-left: 3px;'>
-                <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 placeholder='#' style='padding-left: 3px; margin-left: 10px'>
-                <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 placeholder='#' style='padding-left: 3px; margin-left: 10px'>
+                <div id='$this->ID'>
+                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 placeholder='#' style='padding-left: 3px;'>
+                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 placeholder='#' style='padding-left: 3px; margin-left: 10px'>
+                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 placeholder='#' style='padding-left: 3px; margin-left: 10px'>
+                </div>
             </div>
         ");
     }
 }
 
 class date extends formElements{
+    function __construct()
+    {
+        parent::__construct();
+        $this->ID = get_class($this) . generateRandomString();
+    }
+
     function generateUI($fieldName)
     {
         $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content';
 
         echo("
-            <div id='search_bar' style='margin-bottom: 3px'>
+            <div id='$this->ID' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
-                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <input type='text' id='datepicker' name='$hashed_fieldName'>
             </div>
         ");
@@ -562,13 +605,16 @@ class textArea extends formElements{
         parent::__construct();
         $this->defaultContent = $defaultContent;
         $this->subtitle = $subtitle;
+        $this->ID = get_class($this) . generateRandomString();
     }
+
     function generateUI($fieldName)
     {
         $hashed_fieldName = hashHelper($fieldName);
         error_log($fieldName.':'.$hashed_fieldName);
         echo("<b><font size='3pt'>" . $fieldName . "<b></font>");
         echo("<p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>");
+        echo("<div id='$this->ID'></div>"); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!?????????????????????????????????
         bbp_the_content( array( 'context' => $hashed_fieldName, 'textarea_rows' => 8, 'default_content' => $this->defaultContent) );
     }
 }
@@ -579,12 +625,14 @@ class text extends formElements{
     {
         parent::__construct();
         $this->subtitle = $subtitle;
+        $this->ID = get_class($this) . generateRandomString();
     }
 
     function generateUI($fieldName)
     {
         echo("<b><font size='3pt'>" . $fieldName . "<b></font>");
         echo("<p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>");
+        echo("<div id='$this->ID'></div>"); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!?????????????????????????????????
     }
 }
 
@@ -609,6 +657,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
         if(file_exists($path)) {
             $lines = file($path, FILE_IGNORE_NEW_LINES);
 
+            $componentIDs = array();
             foreach ($lines as $line) {
                 //skip mycred row
                 if (($line != '[mycred_sell_this]') && ($line != '[/mycred_sell_this]')) {
@@ -622,42 +671,165 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         $query_type=explode(":", $field_type)[1];
                         $comboBox = new comboBox($query_type, $field_subtitle);
                         $comboBox->generateUI($field_name);
+                        array_push($componentIDs, $comboBox->getComponentID());
                     } else if ($field_type == 'radio') {
                         $radio = new radio($field_subtitle);
                         $radio->generateUI($field_name);
+                        array_push($componentIDs, $radio->getComponentID());
                     } else if ($field_type == 'singleSelection1') {
                         $sl1 = new singleSelection1();
                         $sl1->generateUI($field_name);
+                        array_push($componentIDs, $sl1->getComponentID());
                     } else if ($field_type == 'singleSelection2') {
                         $sl2 = new singleSelection2();
                         $sl2->generateUI($field_name);
+                        array_push($componentIDs, $sl2->getComponentID());
                     } else if ($field_type == 'multiSelection') {
                         $ml = new multiSelection();
                         $ml->generateUI($field_name);
+                        array_push($componentIDs, $ml->getComponentID());
                     } else if ($field_type == 'dropdown') {
-                        $dn = new dropDown($field_subtitle);
-                        $dn->generateUI($field_name);
+                        $dn1 = new dropDown($field_subtitle);
+                        $dn1->generateUI($field_name);
+                        array_push($componentIDs, $dn1->getComponentID());
                     } else if ($field_type == 'dropdown_02') {
-                        $dn = new dropDown_02($field_subtitle);
-                        $dn->generateUI($field_name);
+                        $dn2 = new dropDown_02($field_subtitle);
+                        $dn2->generateUI($field_name);
+                        array_push($componentIDs, $dn2->getComponentID());
                     } else if ($field_type == 'dropdown_03') {
-                        $dn = new dropDown_03($field_subtitle, $cc_path);
-                        $dn->generateUI($field_name);
+                        $dn3 = new dropDown_03($field_subtitle, $cc_path);
+                        $dn3->generateUI($field_name);
+                        array_push($componentIDs, $dn3->getComponentID());
                     } else if ($field_type == 'date') {
                         $date = new date();
                         $date->generateUI($field_name);
+                        array_push($componentIDs, $date->getComponentID());
                     } else if ($field_type == 'textarea') {
                         $textarea = new textArea($field_default_content, $field_subtitle);
                         $textarea->generateUI($field_name);
+                        array_push($componentIDs, $textarea->getComponentID());
                     } else if ($field_type == 'multiTextArea') {
                         $multiTextArea = new multiTextArea();
                         $multiTextArea->generateUI($field_name);
+                        array_push($componentIDs, $multiTextArea->getComponentID());
                     } else if ($field_type == 'text') {
                         $text = new text($field_subtitle);
                         $text->generateUI($field_name);
+                        array_push($componentIDs, $text->getComponentID());
                     }
                 }
             }
+
+            echo("
+                <style>
+                    .check_result {
+                        margin-bottom: 5px;
+                    }
+                    #modal{
+                        display: none;
+                        position: fixed;
+                        left: 50%;
+                        top: 55%;
+                        width: 920px;
+                        height: 560px;
+                        margin-left: -460px;
+                        margin-top: -280px;
+                        padding-left: 40px;
+                        padding-right: 40px;
+                        padding-top: 18px;
+                        padding-bottom: 18px;
+                        z-index: 999;
+                        border: 2px solid #444;
+                        box-shadow: 1px 5px 5px #666;
+                        background-color: #f6f6f6;
+                        overflow-x: auto;
+                        overflow-y: auto;
+                    }
+                </style>
+                <script>
+                    const modal = document.createElement('div'); 
+                    modal.id = 'modal';
+                    var beforeThis = document.getElementById('page');
+                    document.body.insertBefore(modal, beforeThis);
+                </script>
+            ");
+
+            echo("
+                <script type='text/javascript'>
+                    function cancelClicked() {
+                        document.getElementById('page').setAttribute('transition', '');
+                        document.getElementById('page').style.pointerEvents = '';
+                        document.getElementById('page').style.filter = '';
+                        document.getElementById('modal').style.display = 'none';
+                        document.getElementById('bbp_topic_submit').disabled = false;
+                    };
+                    function submitClicked() {
+                        document.getElementById('new-post').submit();
+                    };
+                </script>
+                <script type='text/javascript'>
+                    // In this time, the submit button (which id is bbp_topic_submit is not yet created)
+                    function showInterviewExperienceInput() {
+                        var result = '<div style=\"text-align: center;\"><h3>預覽畫面</h3></div>';
+                        result += '<h6 class=\"check_result\">文章標題</h6><text>' + document.getElementById('bbp_topic_title').value + '</text>';
+                        result += '<h6 class=\"check_result\">公司名稱</h6><text>' + document.getElementById('$componentIDs[0]').value + '</text>';
+                        result += '<h6 class=\"check_result\">職務性質</h6><text>' + document.getElementById('$componentIDs[1]').children[0].value + '</text>';
+                        result += '<h6 class=\"check_result\">職務名稱</h6><text>' + document.getElementById('$componentIDs[2]').value + '</text>';
+                        result += '<h6 class=\"check_result\">是否匿名</h6><text>';
+                        for(var i = 0; i < 2; i++) {
+                            if (document.getElementById('$componentIDs[3]').children[i].checked)
+                                result += document.getElementById('$componentIDs[3]').children[i].value;
+                        }
+                        result += '</text>';
+                        result += '<h6 class=\"check_result\">作者背景</h6><text>' + document.getElementById('$componentIDs[4]').nextElementSibling.children[5].children[0].value + '</text>';
+                        result += '<h6 class=\"check_result\">面試時間</h6><text>' + document.getElementById('datepicker').value + '</text>';
+                        result += '<h6 class=\"check_result\">面試地點</h6><text>' + document.getElementById('$componentIDs[6]').children[0].children[0].value, document.getElementById('$componentIDs[6]').children[1].children[0].value + '</text>';
+                        result += '<h6 class=\"check_result\">面試結果</h6><text>';
+                        for(var i = 0; i < 4; i++) {
+                            if (document.getElementById('$componentIDs[7]').children[i].checked)
+                                result += document.getElementById('$componentIDs[7]').children[i].value;
+                        }
+                        result += '</text>';
+                        result += '<h6 class=\"check_result\">面試難度</h6><text>';
+                        for(var i = 0; i < 3; i++) {
+                            if (document.getElementById('$componentIDs[8]').children[i].checked)
+                                result += document.getElementById('$componentIDs[8]').children[i].value + ', ';
+                        }
+                        result += '</text>';
+                        result += '<h6 class=\"check_result\">面試項目</h6><text>';
+                        [...document.getElementById('$componentIDs[9]').children].forEach((ele, idx) => {
+                            if (idx % 2 == 0 && ele.checked == true){
+                                result += document.getElementById('$componentIDs[9]').children[idx].value + ', ';
+                            }
+                        });
+                        result += '</text>';
+                        result += '<h6 class=\"check_result\">準備過程</h6><text>' + document.getElementById('$componentIDs[10]').nextElementSibling.children[5].children[0].value + '</text>';
+                        result += '<h6 class=\"check_result\">面試過程</h6><text>' + document.getElementById('$componentIDs[11]').nextElementSibling.children[5].children[0].value + '</text>';
+                        result += '<h6 class=\"check_result\">心得建議</h6><text>' + document.getElementById('$componentIDs[12]').nextElementSibling.children[5].children[0].value + '</text>';
+                        result += '<h6 class=\"check_result\">（標籤）產業</h6><text>';
+                        result += '#' + document.getElementById('$componentIDs[14]').children[0].children[0].value + ' #' + document.getElementById('$componentIDs[14]').children[1].children[0].value;
+                        result += '</text>';
+                        result += '<h6 class=\"check_result\">（標籤）自創</h6><text>';
+                        if (document.getElementById('$componentIDs[15]').children[0].value != '') result += '#' + document.getElementById('$componentIDs[15]').children[0].value + ' ';
+                        if (document.getElementById('$componentIDs[15]').children[1].value != '') result += '#' + document.getElementById('$componentIDs[15]').children[1].value + ' ';
+                        if (document.getElementById('$componentIDs[15]').children[2].value != '') result += '#' + document.getElementById('$componentIDs[15]').children[2].value + ' ';
+                        result += '</text>';
+                        result = result.trim();
+
+                        var mdl = document.getElementById('modal');
+                        var btn_cancel = '<div style=\"text-align: center;\"><button id=\"modal_cancel\" type=\"button\" onclick=\"cancelClicked()\" style=\"background-color: red; border-color: red; margin-top: 28px; bottom: 10px;\">Cancel</button></div>';
+                        var btn_submit = '<div style=\"text-align: center;\"><button id=\"modal_submit\" type=\"button\" onclick=\"submitClicked()\" style=\"margin-top: 28px; bottom: 10px;\">Submit</button></div>';
+                        mdl.innerHTML = '';
+                        mdl.innerHTML += result;
+                        mdl.innerHTML += btn_cancel;
+                        mdl.innerHTML += btn_submit;
+                        mdl.style.display = 'block';
+                        document.getElementById('page').setAttribute('transition', '.8s filter');
+                        document.getElementById('page').style.pointerEvents = 'none';
+                        document.getElementById('page').style.filter = 'blur(1.5px)';
+                    }
+                </script>
+            ");
         }
         else {
             bbp_the_content( array( 'context' => 'topic' ) ); //bbpress default
@@ -670,6 +842,20 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
     }
 endif;
 
+add_action('bbp_theme_after_topic_form_submit_button', 'detect_submit_button');
+if( !function_exists('detect_submit_button') ):
+    function detect_submit_button() {
+        echo("
+            <script type='text/javascript'>
+                const formElement = document.getElementById('bbp_topic_submit');
+                formElement.addEventListener('click', function originalSubmitButtonClick(e) {
+                    e.target.disabled = true;
+                    showInterviewExperienceInput();
+                });
+            </script>
+        ");
+    }
+endif;
 
 // to parse post data into post content
 add_filter( 'bbp_get_my_custom_post_fields', 'bbp_get_custom_post_data');
@@ -681,9 +867,7 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
         $must_fill_tag = '*';
 
         //add to post metadata
-//        update_post_meta( $_POST['bbp_topic_id'], 'company_name', $_POST['company_name'] );
-
-        //insert company data to db
+        // update_post_meta( $_POST['bbp_topic_id'], 'company_name', $_POST['company_name'] );
 
         if(file_exists($path)){
             $lines = file($path, FILE_IGNORE_NEW_LINES);
