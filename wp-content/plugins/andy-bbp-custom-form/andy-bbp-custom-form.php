@@ -881,7 +881,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                     // In this time, the submit button (which id is bbp_topic_submit is not yet created)
                     function showInterviewExperienceInput() {
                         var result = '<div style=\"text-align: center;\"><h3>預覽畫面</h3></div>';
-                        result += '<div style=\"text-align: center; font-size: 98%; color: red; margin-top: -15px;\">請確認文章內容是否正確，送出就無法編輯了喔!</div>';
+                        result += '<div style=\"text-align: center; font-size: 98%; color: red; margin-top: -15px;\">請確認文章內容是否正確，送出就無法編輯了喔!<br>（檢查內容即可，排版僅供參考）</div>';
                         result += '<h6 class=\"check_result\">文章標題</h6><text>' + document.getElementById('bbp_topic_title').value + '</text>';
                         result += '<h6 class=\"check_result\">公司名稱</h6><text>' + document.getElementById('$componentIDs[0]').value + '</text>';
                         result += '<h6 class=\"check_result\">職務性質</h6><text>' + document.getElementById('$componentIDs[1]').children[0].value + '</text>';
