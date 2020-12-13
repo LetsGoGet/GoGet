@@ -420,6 +420,7 @@ class dropDown extends formElements{
                     </label>
                     <label for='$label_id'>
                         <select name='$hashed_fieldName' id='$label_id'>
+                            <option value=''>(無)</option>
                             <option value='金融'>金融</option>
                             <option value='顧問'>顧問</option>
                             <option value='快消'>快消</option>
