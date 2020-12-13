@@ -647,13 +647,116 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
 	        $forumId = bbp_get_topic_forum_id();
 	    }
 
-	    //using material UI
+	    // Using material UI
         echo('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">');
+        // Using jquery velidate
+        echo('<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>');
+
+        // Read form schema
+        $path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
+        // Create an array with all hashed field name
+        $field_name_array = array();
+        if(file_exists($path)) {
+            $lines = file($path, FILE_IGNORE_NEW_LINES);
+
+            foreach ($lines as $line) {
+                // Skip mycred row
+                if (($line != '[mycred_sell_this]') && ($line != '[/mycred_sell_this]')) {
+                    $row = explode(",", $line);
+                    $field_name = $row[0];
+                    $field_name_array[] = 'bbp_'.hashHelper($field_name).'_content';
+                }
+            }
+        }
+
+        // Set the velidation rules and msg for each field
+        echo('
+            <style>
+                .errTxt{
+                    color: red;
+                }
+            </style>
+            <script>
+                jQuery(document).ready(function($) {
+                    //check prepare, interview, and suggest are not the same(not ok version)
+                    // $.validator.methods.contentEqual = function(value, element, param){
+                    //     if(value !== $("#"+param[0]).value && value !== $("#"+param[1]).value)
+                    //         return true;
+                    // };
+                    $("#new-post").validate({
+                        rules:{
+                            '.$field_name_array[0].': "required",
+                            '.$field_name_array[1].': "required",
+                            '.$field_name_array[2].': "required",
+                            '.$field_name_array[3].': "required",
+                            '.$field_name_array[4].': "required",
+                            '.$field_name_array[5].': "required",
+                            '.$field_name_array[7].': "required",
+                            \''.$field_name_array[10].'[]\': "required",
+                            '.$field_name_array[11].': {
+                                minlength: 100,
+                                maxlength: 2000,
+                                required: true,
+                                // contentEqual: ['.$field_name_array[12].', '.$field_name_array[13].']
+                            },
+                            '.$field_name_array[12].': {
+                                minlength: 100,
+                                maxlength: 2000,
+                                required: true,
+                                // contentEqual: ['.$field_name_array[11].', '.$field_name_array[13].']
+                            },
+                            '.$field_name_array[13].': {
+                                maxlength: 1000,
+                                // contentEqual: ['.$field_name_array[11].', '.$field_name_array[12].']
+                            }
+                        },
+                        messages:{
+                            '.$field_name_array[0].': "必填",
+                            '.$field_name_array[1].': "必填",
+                            '.$field_name_array[2].': "必填",
+                            '.$field_name_array[3].': "必填",
+                            '.$field_name_array[4].': "必填",
+                            '.$field_name_array[5].': "必選",
+                            '.$field_name_array[7].': "必選",
+                            \''.$field_name_array[10].'[]\': "必選",
+                            '.$field_name_array[11].': {
+                                minlength: "再回想看看，還有什麼準備的小細節想跟大家分享嗎？",
+                                maxlength: "非常感謝您的用心分享！（已達字數上限：2000）",
+                                required: "必填",
+                                // contentEqual: "準備過程、面試過程、心得建議內容不能相同喔！"
+                            },
+                            '.$field_name_array[12].': {
+                                minlength: "再回想看看，還有什麼面試的小細節想跟大家分享嗎？",
+                                maxlength: "非常感謝您的用心分享！（已達字數上限：2000）",
+                                required: "必填",
+                                // contentEqual: "準備過程、面試過程、心得建議內容不能相同喔！"
+                            },
+                            '.$field_name_array[13].': {
+                                maxlength: "非常感謝您的用心分享！（已達字數上限：1000）",
+                                // contentEqual: "準備過程、面試過程、心得建議內容不能相同喔！"
+                            }
+                        },
+                        errorElement : "div",
+                        errorPlacement: function (error, element) {
+                            cancelClicked(); // Hide the preview modal
+                            if (element.is(":radio")) {
+                                error.insertAfter(element.parent("label"));
+                            }
+                            else if(element.is(":checkbox")) {
+                                error.insertAfter(element.parent("div"));
+                            }
+                            else{
+                                error.insertAfter(element);
+                            }
+                            error.addClass("errTxt");
+                        }
+                    });
+                });
+            </script>
+        ');
 
 	    //Start generating form
 	    //read form schema
-        $path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
-        $cc_path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/countries_and_cities.json';
         if(file_exists($path)) {
             $lines = file($path, FILE_IGNORE_NEW_LINES);
 
@@ -697,6 +800,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         $dn2->generateUI($field_name);
                         array_push($componentIDs, $dn2->getComponentID());
                     } else if ($field_type == 'dropdown_03') {
+                        $cc_path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/countries_and_cities.json';
                         $dn3 = new dropDown_03($field_subtitle, $cc_path);
                         $dn3->generateUI($field_name);
                         array_push($componentIDs, $dn3->getComponentID());
@@ -754,6 +858,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                 </script>
             ");
 
+                // <script src='https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js'></script>
             echo("
                 <script type='text/javascript'>
                     function cancelClicked() {
@@ -764,7 +869,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         document.getElementById('bbp_topic_submit').disabled = false;
                     };
                     function submitClicked() {
-                        document.getElementById('new-post').submit();
+                        jQuery('#new-post').submit(); // Submit event should be fired by jQuery, otherwise the jQuery validator will not be triggered.
                     };
                 </script>
                 <script type='text/javascript'>
@@ -817,12 +922,10 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         result = result.trim();
 
                         var mdl = document.getElementById('modal');
-                        var btn_cancel = '<div style=\"text-align: center;\"><button id=\"modal_cancel\" type=\"button\" onclick=\"cancelClicked()\" style=\"background-color: red; border-color: red; margin-top: 28px; bottom: 10px;\">Cancel</button></div>';
-                        var btn_submit = '<div style=\"text-align: center;\"><button id=\"modal_submit\" type=\"button\" onclick=\"submitClicked()\" style=\"margin-top: 28px; bottom: 10px;\">Submit</button></div>';
+                        var btns = ' <div style=\"text-align: center;\"> <button id=\"modal_cancel\" type=\"button\" onclick=\"cancelClicked()\" style=\"background-color: red; border-color: red; margin-top: 28px; bottom: 10px;\">Cancel</button> <button id=\"modal_submit\" type=\"button\" onclick=\"submitClicked()\" style=\"margin-top: 28px; bottom: 10px;\">Submit</button> </div>';
                         mdl.innerHTML = '';
                         mdl.innerHTML += result;
-                        mdl.innerHTML += btn_cancel;
-                        mdl.innerHTML += btn_submit;
+                        mdl.innerHTML += btns;
                         mdl.style.display = 'block';
                         document.getElementById('page').setAttribute('transition', '.8s filter');
                         document.getElementById('page').style.pointerEvents = 'none';
