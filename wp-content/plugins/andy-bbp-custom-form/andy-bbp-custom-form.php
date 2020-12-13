@@ -876,6 +876,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                     // In this time, the submit button (which id is bbp_topic_submit is not yet created)
                     function showInterviewExperienceInput() {
                         var result = '<div style=\"text-align: center;\"><h3>預覽畫面</h3></div>';
+                        result += '<div style=\"text-align: center; font-size: 98%; color: red; margin-top: -15px;\">請確認文章內容是否正確，送出就無法編輯了喔!</div>';
                         result += '<h6 class=\"check_result\">文章標題</h6><text>' + document.getElementById('bbp_topic_title').value + '</text>';
                         result += '<h6 class=\"check_result\">公司名稱</h6><text>' + document.getElementById('$componentIDs[0]').value + '</text>';
                         result += '<h6 class=\"check_result\">職務性質</h6><text>' + document.getElementById('$componentIDs[1]').children[0].value + '</text>';
@@ -973,6 +974,9 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
         // update_post_meta( $_POST['bbp_topic_id'], 'company_name', $_POST['company_name'] );
 
         if(file_exists($path)){
+            $customizedTopic = "";
+            $isAnonymous = false;
+            $customizedTags = "";
             $lines = file($path, FILE_IGNORE_NEW_LINES);
             foreach ($lines as $key => $line) {
                 if (($line != '[mycred_sell_this]') && ($line != '[/mycred_sell_this]')) {
@@ -982,9 +986,13 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                     $field_type = $row[1];
                     $field_key = hash('ripemd160',$field_name);
 
-                    //加入公司名稱
-                    if ($key == 0){ //公司名稱
+                    if ($key == 0){ // 公司名稱
                         insertDataToDB($_POST['bbp_' . $field_key . '_content']);
+                        $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . " ";
+                    } else if ($key == 2) { // 職務名稱
+                        $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . "面試經驗";
+                    } else if ($key == 3) { // 職務名稱
+                        $isAnonymous = $_POST['bbp_' . $field_key . '_content'];
                     }
 
                     //加入欄位內容
@@ -999,11 +1007,19 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                         if (is_array($_POST['bbp_' . $field_key . '_content'])){
                             $content .= $token;
                             foreach($_POST['bbp_' . $field_key . '_content'] as $key1=>$item){
-                                error_log($field_name.':'.$item);
+                                error_log($field_name . ':' . $item);
                                 if ($key1 != count($_POST['bbp_' . $field_key . '_content']) -1 ){
                                     $content .= $item . ', ';
+                                    if ($key == (count($lines) - 1) || $key == (count($lines) - 2)) {
+                                        $customizedTags .= $item . ', ';
+                                    }
                                 } else {
                                     $content .= $item;
+                                    if ($key == (count($lines) - 2)) {
+                                        $customizedTags .= $item . ', ';
+                                    } else if ($key == (count($lines) - 1)) {
+                                        $customizedTags .= $item;
+                                    }
                                 }
                             }
                             $content .= $token;
@@ -1025,12 +1041,13 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                     continue;
                 }
             }
-        }else{
+            error_log($content);
+            return array($customizedTopic, $isAnonymous, $customizedTags, $content);
+        } else {
             $content = $_POST['bbp_topic_content'];
+            error_log($content);
+            return array($content);
         }
-
-        error_log($content);
-        return $content;
 	}
 
     function insertDataToDB($company_name)
