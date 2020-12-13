@@ -524,6 +524,10 @@ class dropdown_03 extends formelements{
 
                 document.getElementById('dropdown_country').addEventListener('change', (e) => {
                     if (e.target.value != '') {
+                        if(e.target.value != '台灣'){
+                            document.getElementById('dropdown_city').innerHTML = '';
+                            return;
+                        }
                         var cities = fetchFunctionCountriesAndCities(e.target.value);
                     }
                 });
@@ -861,6 +865,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                 // <script src='https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js'></script>
             echo("
                 <script type='text/javascript'>
+                    fetchFunctionCountriesAndCities($componentIDs[6].children[0].children[0].value);
                     function cancelClicked() {
                         document.getElementById('page').setAttribute('transition', '');
                         document.getElementById('page').style.pointerEvents = '';
@@ -1010,15 +1015,13 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                                 error_log($field_name . ':' . $item);
                                 if ($key1 != count($_POST['bbp_' . $field_key . '_content']) -1 ){
                                     $content .= $item . ', ';
-                                    if ($key == (count($lines) - 1) || $key == (count($lines) - 2)) {
+                                    if ($key == (count($lines) - 1) || $key == (count($lines) - 2) || $key == (count($lines) - 3)) {
                                         $customizedTags .= $item . ', ';
                                     }
                                 } else {
                                     $content .= $item;
-                                    if ($key == (count($lines) - 2)) {
+                                    if ($key == (count($lines) - 1) || $key == (count($lines) - 2) || $key == (count($lines) - 3)) {
                                         $customizedTags .= $item . ', ';
-                                    } else if ($key == (count($lines) - 1)) {
-                                        $customizedTags .= $item;
                                     }
                                 }
                             }
