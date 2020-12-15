@@ -487,11 +487,9 @@ function bbp_edit_forum_handler( $action = '' ) {
 	}
 
 	/** Additional Actions (Before Save) **************************************/
-    echo '<h2>!!!!!!!!!!!!!!!!!!!!!1</h2>';
 
 	do_action( 'bbp_edit_forum_pre_extras', $forum_id );
 
-    echo '<h2>!!!!!!!!!!!!!!!!!!!!!1</h2>';
 	// Bail if errors
 	if ( bbp_has_errors() ) {
 		return;
