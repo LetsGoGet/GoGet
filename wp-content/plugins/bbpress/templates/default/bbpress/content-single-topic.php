@@ -48,7 +48,15 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php endif; ?>
 
-		<?php bbp_get_template_part( 'form', 'reply' ); ?>
+        <!-- unlocked section -->
+        <?php $user_id=get_current_user_id() ?>
+        <?php $post_id=bbp_get_topic_id() ?>
+
+        <?php if (mycred_user_paid_for_content( $user_id, $post_id )) : ?>
+            <?php bbp_get_template_part( 'form', 'reply' ); ?>
+        <?php endif; ?>
+        <!-- end of unlocked section -->
+
 
 	<?php endif; ?>
 
