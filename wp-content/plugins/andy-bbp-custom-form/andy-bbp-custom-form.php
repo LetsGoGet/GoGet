@@ -351,10 +351,12 @@ class singleSelection2 extends formElements{
 }
 
 class multiSelection extends formElements{
-    function __construct()
+    private $subtitle;
+    function __construct($subtitle)
     {
         parent::__construct();
         $this->ID = get_class($this) . generateRandomString();
+        $this->subtitle = $subtitle;
     }
 
     function generateUI($fieldName)
@@ -366,6 +368,7 @@ class multiSelection extends formElements{
         echo("
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
+                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <div id='$this->ID'>
                     <input type='checkbox' id='$ids[0]' name='$hashed_fieldName' value='個人面試' />
                     <label for='$ids[0]'> 個人面試 </label>
@@ -793,7 +796,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         $sl2->generateUI($field_name);
                         array_push($componentIDs, $sl2->getComponentID());
                     } else if ($field_type == 'multiSelection') {
-                        $ml = new multiSelection();
+                        $ml = new multiSelection($field_subtitle);
                         $ml->generateUI($field_name);
                         array_push($componentIDs, $ml->getComponentID());
                     } else if ($field_type == 'dropdown') {
