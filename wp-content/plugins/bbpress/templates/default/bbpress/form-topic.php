@@ -110,11 +110,6 @@ if ( ! bbp_is_single_forum() ) : ?>
 
 						<?php do_action( 'bbp_theme_before_topic_form_tags' ); ?>
 
-						<p>
-							<label for="bbp_topic_tags"><?php esc_html_e( 'Topic Tags:', 'bbpress' ); ?></label><br />
-							<input type="text" value="<?php bbp_form_topic_tags(); ?>" size="40" name="bbp_topic_tags" id="bbp_topic_tags" <?php disabled( bbp_is_topic_spam() ); ?> />
-						</p>
-
 						<?php do_action( 'bbp_theme_after_topic_form_tags' ); ?>
 
 					<?php endif; ?>

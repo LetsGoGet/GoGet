@@ -351,10 +351,12 @@ class singleSelection2 extends formElements{
 }
 
 class multiSelection extends formElements{
-    function __construct()
+    private $subtitle;
+    function __construct($subtitle)
     {
         parent::__construct();
         $this->ID = get_class($this) . generateRandomString();
+        $this->subtitle = $subtitle;
     }
 
     function generateUI($fieldName)
@@ -366,6 +368,7 @@ class multiSelection extends formElements{
         echo("
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
+                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <div id='$this->ID'>
                     <input type='checkbox' id='$ids[0]' name='$hashed_fieldName' value='個人面試' />
                     <label for='$ids[0]'> 個人面試 </label>
@@ -793,7 +796,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         $sl2->generateUI($field_name);
                         array_push($componentIDs, $sl2->getComponentID());
                     } else if ($field_type == 'multiSelection') {
-                        $ml = new multiSelection();
+                        $ml = new multiSelection($field_subtitle);
                         $ml->generateUI($field_name);
                         array_push($componentIDs, $ml->getComponentID());
                     } else if ($field_type == 'dropdown') {
@@ -883,7 +886,6 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                     function showInterviewExperienceInput() {
                         var result = '<div style=\"text-align: center;\"><h3>預覽畫面</h3></div>';
                         result += '<div style=\"text-align: center; font-size: 98%; color: red; margin-top: -15px;\">請確認文章內容是否正確，送出就無法編輯了喔!<br>（檢查內容即可，排版僅供參考）</div>';
-                        result += '<h6 class=\"check_result\">文章標題</h6><text>' + document.getElementById('bbp_topic_title').value + '</text>';
                         result += '<h6 class=\"check_result\">公司名稱</h6><text>' + document.getElementById('$componentIDs[0]').value + '</text>';
                         result += '<h6 class=\"check_result\">職務性質</h6><text>' + document.getElementById('$componentIDs[1]').children[0].value + '</text>';
                         result += '<h6 class=\"check_result\">職務名稱</h6><text>' + document.getElementById('$componentIDs[2]').value + '</text>';
@@ -893,7 +895,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                                 result += document.getElementById('$componentIDs[3]').children[i].value;
                         }
                         result += '</text>';
-                        result += '<h6 class=\"check_result\">作者背景</h6><text>' + document.getElementById('$componentIDs[4]').nextElementSibling.children[5].children[0].value + '</text>';
+                        result += '<h6 class=\"check_result\">作者背景</h6><text>' + document.getElementById('$componentIDs[4]').nextElementSibling.children[0].children[0].value + '</text>';
                         result += '<h6 class=\"check_result\">面試時間</h6><text>' + document.getElementById('datepicker').value + '</text>';
                         result += '<h6 class=\"check_result\">面試地點</h6><text>' + document.getElementById('$componentIDs[6]').children[0].children[0].value, document.getElementById('$componentIDs[6]').children[1].children[0].value + '</text>';
                         result += '<h6 class=\"check_result\">面試結果</h6><text>';
@@ -915,9 +917,9 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                             }
                         });
                         result += '</text>';
-                        result += '<h6 class=\"check_result\">準備過程</h6><text>' + document.getElementById('$componentIDs[10]').nextElementSibling.children[5].children[0].value + '</text>';
-                        result += '<h6 class=\"check_result\">面試過程</h6><text>' + document.getElementById('$componentIDs[11]').nextElementSibling.children[5].children[0].value + '</text>';
-                        result += '<h6 class=\"check_result\">心得建議</h6><text>' + document.getElementById('$componentIDs[12]').nextElementSibling.children[5].children[0].value + '</text>';
+                        result += '<h6 class=\"check_result\">準備過程</h6><text>' + document.getElementById('$componentIDs[10]').nextElementSibling.children[0].children[0].value + '</text>';
+                        result += '<h6 class=\"check_result\">面試過程</h6><text>' + document.getElementById('$componentIDs[11]').nextElementSibling.children[0].children[0].value + '</text>';
+                        result += '<h6 class=\"check_result\">心得建議</h6><text>' + document.getElementById('$componentIDs[12]').nextElementSibling.children[0].children[0].value + '</text>';
                         result += '<h6 class=\"check_result\">（標籤）產業</h6><text>';
                         result += '#' + document.getElementById('$componentIDs[14]').children[0].children[0].value + ' #' + document.getElementById('$componentIDs[14]').children[1].children[0].value;
                         result += '</text>';
