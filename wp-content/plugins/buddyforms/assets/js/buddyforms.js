@@ -22,7 +22,7 @@ BuddyFormsHooks.addAction = function (tag, callback, priority) {
     }
     // If the tag doesn't exist, create it.
     BuddyFormsHooks.actions[tag] = BuddyFormsHooks.actions[tag] || [];
-    BuddyFormsHooks.actions[tag].push({ priority: priority, callback: callback });
+    BuddyFormsHooks.actions[tag].push({priority: priority, callback: callback});
 };
 
 /**
@@ -38,7 +38,7 @@ BuddyFormsHooks.addFilter = function (tag, callback, priority) {
     }
     // If the tag doesn't exist, create it.
     BuddyFormsHooks.filters[tag] = BuddyFormsHooks.filters[tag] || [];
-    BuddyFormsHooks.filters[tag].push({ priority: priority, callback: callback });
+    BuddyFormsHooks.filters[tag].push({priority: priority, callback: callback});
 };
 
 /**
@@ -263,31 +263,30 @@ function BuddyForms() {
             hint_html += '</small>';
             passwordHint.remove();
             strengthResult.html('');
-            if (strength === 5) {
-                // handle password mismatch
-                strengthResult.addClass('mismatch').html(buddyformsGlobal.pwsL10n.mismatch);
-            } else {
-                switch (strength.score) {
-                    case 0:
-                    case 1:
-                        strengthResult.addClass('short').html(buddyformsGlobal.pwsL10n.short);
-                        break;
-                    case 2:
-                        strengthResult.addClass('bad').html(buddyformsGlobal.pwsL10n.bad);
-                        break;
+            switch (strength.score) {
+                case 0:
+                case 1:
+                    strengthResult.addClass('short').html(buddyformsGlobal.pwsL10n.short);
+                    break;
+                case 2:
+                    strengthResult.addClass('bad').html(buddyformsGlobal.pwsL10n.bad);
+                    break;
 
-                    case 3:
-                        strengthResult.addClass('good').html(buddyformsGlobal.pwsL10n.good);
-                        break;
+                case 3:
+                    strengthResult.addClass('good').html(buddyformsGlobal.pwsL10n.good);
+                    break;
 
-                    case 4:
-                        strengthResult.addClass('strong').html(buddyformsGlobal.pwsL10n.strong);
-                        break;
+                case 4:
+                    strengthResult.addClass('strong').html(buddyformsGlobal.pwsL10n.strong);
+                    break;
 
-                    default:
-                        strengthResult.addClass('short').html(buddyformsGlobal.pwsL10n.short);
+                case 5:
+                    strengthResult.addClass('short').html(buddyformsGlobal.pwsL10n.mismatch);
+                    break;
 
-                }
+                default:
+                    strengthResult.addClass('short').html(buddyformsGlobal.pwsL10n.short);
+
             }
 
             // The meter function returns a result even if pass2 is empty,
@@ -326,7 +325,7 @@ function BuddyForms() {
             jQuery.ajax({
                 type: 'POST',
                 url: buddyformsGlobal.admin_url,
-                data: { "action": "buddyforms_ajax_delete_post", "post_id": post_id },
+                data: {"action": "buddyforms_ajax_delete_post", "post_id": post_id},
                 success: function (data) {
                     if (isNaN(data)) {
                         alert(data);
@@ -1103,7 +1102,7 @@ function BuddyForms() {
             if (captchaElement && captchaElement.length > 0) {
                 reCaptchaV3NoAjax(args, function (submitCaptchaCallback) {
 
-                    if (args[0] === 'Submit') {
+                    if(args[0]==='Submit'){
                         var targetForms = args[1];
                         targetForms.trigger('submit');
                     }
@@ -1209,7 +1208,7 @@ function BuddyForms() {
                 };
 
                 var validationSettings = {
-                    invalidHandler: function (form, validator) {
+                    invalidHandler: function(form, validator) {
 
                         if (!validator.numberOfInvalids()) {
                             return;
@@ -1217,12 +1216,12 @@ function BuddyForms() {
 
                         var firstElm = jQuery(validator.errorList[0].element);
                         var startRow = firstElm.parents('.bf-start-row').length;
-                        if (startRow == 0) {
+                        if (startRow==0){
 
                             var position = firstElm.offset().top;
                             jQuery(window).scrollTop(parseInt(position) - 100);
                         }
-                        else if (startRow > 0) {
+                        else if(startRow >0){
                             var position = firstElm.parents('.bf-start-row').offset().top;
                             jQuery(window).scrollTop(parseInt(position) - 100);
                         }
@@ -1248,8 +1247,8 @@ function BuddyForms() {
                         var elem = jQuery(element);
                         if (elem.hasClass('select2-hidden-accessible')) {
                             elem.parent().find('span.select2-selection').addClass(errorClass);
-                        } else if (elem.hasClass('wp-editor-area')) {
-                            elem.off('change').change(function (e) {
+                        } else if(elem.hasClass('wp-editor-area')){
+                            elem.off('change').change(function(e) {
                                 if (elem.valid()) {
                                     elem.parents('.wp-editor-container').removeClass(errorClass);
                                 } else {
@@ -1325,7 +1324,7 @@ function BuddyForms() {
             jQuery.each(errors.errors[id], function (i, e) {
                 var fieldData = getFieldFromSlug(i, form_id);
                 if (!fieldData) {
-                    errorHTMLItems.push({ id: i, message: e });
+                    errorHTMLItems.push({id: i, message: e});
                     return true;
                 }
                 var targetField;
@@ -1340,7 +1339,7 @@ function BuddyForms() {
                 if (targetField && targetField.length > 0) {
                     targetField.addClass('error');
                     var labelSlug = fieldData.slug + '-error';
-                    var labelElement = jQuery('<label>').attr({ id: labelSlug, class: 'error', for: fieldData.slug }).text(e);
+                    var labelElement = jQuery('<label>').attr({id: labelSlug, class: 'error', for: fieldData.slug}).text(e);
                     errorPlacement(labelElement, targetField);
                 }
             });
@@ -1358,7 +1357,7 @@ function BuddyForms() {
 
             var scrollElement = labelErrors.first();
             if (scrollElement.length > 0) {
-                jQuery('html, body').animate({ scrollTop: scrollElement.offset().top - 100 }, {
+                jQuery('html, body').animate({scrollTop: scrollElement.offset().top - 100}, {
                     duration: 500, complete: function () {
                         jQuery('html, body').on("click", function () {
                             jQuery('html, body').stop()
@@ -1381,7 +1380,7 @@ function BuddyForms() {
                 if (typeof grecaptcha !== "undefined") {
                     grecaptcha.ready(function () {
                         var captcha_action = fieldStateData.captcha_v3_action.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '');
-                        grecaptcha.execute(fieldStateData.captcha_site_key, { action: captcha_action }).then(function (token) {
+                        grecaptcha.execute(fieldStateData.captcha_site_key, {action: captcha_action}).then(function (token) {
                             jQuery(currentElement).val(token).change();
                             var recaptchaResponse = document.getElementById('bf-cpchtk');
                             recaptchaResponse.value = token;
@@ -1405,7 +1404,7 @@ function BuddyForms() {
                 if (typeof grecaptcha !== "undefined") {
                     grecaptcha.ready(function () {
                         var captcha_action = fieldStateData.captcha_v3_action.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '');
-                        grecaptcha.execute(fieldStateData.captcha_site_key, { action: captcha_action }).then(function (token) {
+                        grecaptcha.execute(fieldStateData.captcha_site_key, {action: captcha_action}).then(function (token) {
                             jQuery(currentElement).val(token).change();
                             var recaptchaResponse = document.getElementById('bf-cpchtk');
                             recaptchaResponse.value = token;
@@ -1509,7 +1508,7 @@ function BuddyForms() {
                         // scroll to message after submit
                         var scrollElement = jQuery("#buddyforms_form_hero_" + id);
                         if (scrollElement.length > 0) {
-                            jQuery('html, body').animate({ scrollTop: scrollElement.offset().top - 100 }, {
+                            jQuery('html, body').animate({scrollTop: scrollElement.offset().top - 100}, {
                                 duration: 500, complete: function () {
                                     jQuery('html, body').on("click", function () {
                                         jQuery('html, body').stop()
@@ -1590,11 +1589,11 @@ function BuddyForms() {
         actionFromButton: function (e) {
             return actionFromButton(e);
         },
-        getFieldFromName: function (fieldName, formSlug) {
-            return getFieldFromName(fieldName, formSlug);
+        getFieldFromName: function(fieldName, formSlug){
+          return getFieldFromName(fieldName, formSlug);
         },
-        getFieldFrom: function (fieldValue, formSlug, from) {
-            return getFieldFrom(fieldValue, formSlug, from);
+        getFieldFrom: function(fieldValue, formSlug, from){
+          return getFieldFrom(fieldValue, formSlug, from);
         },
         getFieldFromSlug: function (fieldSlug, formSlug) {
             return getFieldFromSlug(fieldSlug, formSlug);
@@ -1701,10 +1700,10 @@ function bf_trans(str) {
         && typeof buddyformsGlobal.localize !== 'undefined'
         && typeof buddyformsGlobal.localize.bf_trans !== 'undefined'
     ) {
-        const localize_str = Object.values(buddyformsGlobal.localize.bf_trans).find(function (elm) {
+        const localize_str = Object.values(buddyformsGlobal.localize.bf_trans).find(function(elm) {
             return elm.msgid === str
         });
-
+    
         return (typeof localize_str !== 'undefined') ? localize_str.msgstr : str;
     }
 

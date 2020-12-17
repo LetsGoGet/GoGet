@@ -243,7 +243,7 @@ msgstr "這個唯一驗證金鑰也在檔案 %s 中遺漏。"
 msgid "We recommend you back up your existing %s file."
 msgstr "建議多站網路管理員備份現有的 %s 檔案。"
 
-#. translators: 1: wp-config.php, 2: .htaccess
+#. translators: 1: wp-config.php, 2: .htaccess__
 #. translators: 1: wp-config.php, 2: web.config
 #: wp-admin/includes/network.php:447 wp-admin/includes/network.php:455
 msgid "We recommend you back up your existing %1$s and %2$s files."
@@ -642,7 +642,7 @@ msgstr "開放上傳的檔案類型。請使用空格分隔檔案副檔名。"
 msgid "New registrations settings"
 msgstr "註冊設定"
 
-#. translators: 1: File name (.htaccess or web.config), 2: File path.
+#. translators: 1: File name (.htaccess__ or web.config), 2: File path.
 #: wp-admin/includes/network.php:609 wp-admin/includes/network.php:661
 msgid "Add the following to your %1$s file in %2$s, <strong>replacing</strong> other WordPress rules:"
 msgstr "請將以下程式碼加入位於 %2$s 的 %1$s 檔案中，並<strong>取代</strong>其他 WordPress 規則:"
@@ -740,8 +740,8 @@ msgid "Subdirectory networks may not be fully compatible with custom wp-content 
 msgstr "以子目錄方式建立網站的多站網路可能與自訂的 wp-content 目錄無法完全相容。"
 
 #: wp-admin/network.php:62
-msgid "Add the designated lines of code to wp-config.php (just before <code>/*...stop editing...*/</code>) and <code>.htaccess</code> (replacing the existing WordPress rules)."
-msgstr "請將專屬程式碼加入 wp-config.php 檔案 (就在 <code>/*...stop editing...*/</code> 這行之前) 及 <code>.htaccess</code> 檔案中 (取代現有的 WordPress 規則)。"
+msgid "Add the designated lines of code to wp-config.php (just before <code>/*...stop editing...*/</code>) and <code>.htaccess__</code> (replacing the existing WordPress rules)."
+msgstr "請將專屬程式碼加入 wp-config.php 檔案 (就在 <code>/*...stop editing...*/</code> 這行之前) 及 <code>.htaccess__</code> 檔案中 (取代現有的 WordPress 規則)。"
 
 #: wp-admin/network/settings.php:423
 msgid "Language Settings"
@@ -1053,8 +1053,8 @@ msgid "Once you add this code and refresh your browser, multisite should be enab
 msgstr "加入專屬程式碼並在瀏覽器中重新整理頁面後，多站網路便會完成啟用；這個畫面會成為 [多站網路管理中心] 導覽選單的一部份，會保留專屬程式碼以供後續參考取用。多站網站管理員可以點擊工具列中的 [多站網路管理中心] 或 [我的網站] 下拉式選單中的網站名稱，藉以在 [多站網路管理中心] 及 [網站管理中心] 兩者間切換。"
 
 #: wp-admin/network.php:61
-msgid "The next screen for Network Setup will give you individually-generated lines of code to add to your wp-config.php and .htaccess files. Make sure the settings of your FTP client make files starting with a dot visible, so that you can find .htaccess; you may have to create this file if it really is not there. Make backup copies of those two files."
-msgstr "[多站網路組態] 的下一個畫面會提供這個多站網路專屬的程式碼，且必須將這些程式碼加入 wp-config.php 及 .htaccess 檔案中。請確定 FTP 客戶端程式能顯示檔案名稱以點 <code>.</code> 開頭的檔案，這樣才能夠找到 .htaccess；如果這個檔案不存在，務必建立一個新的 .htaccess 檔案。變更這兩個檔案前，請為這兩個檔案進行備份。"
+msgid "The next screen for Network Setup will give you individually-generated lines of code to add to your wp-config.php and .htaccess__ files. Make sure the settings of your FTP client make files starting with a dot visible, so that you can find .htaccess__; you may have to create this file if it really is not there. Make backup copies of those two files."
+msgstr "[多站網路組態] 的下一個畫面會提供這個多站網路專屬的程式碼，且必須將這些程式碼加入 wp-config.php 及 .htaccess__ 檔案中。請確定 FTP 客戶端程式能顯示檔案名稱以點 <code>.</code> 開頭的檔案，這樣才能夠找到 .htaccess__；如果這個檔案不存在，務必建立一個新的 .htaccess__ 檔案。變更這兩個檔案前，請為這兩個檔案進行備份。"
 
 #: wp-admin/network.php:60
 msgid "Choose subdomains or subdirectories; this can only be switched afterwards by reconfiguring your installation. Fill out the network details, and click Install. If this does not work, you may have to add a wildcard DNS record (for subdomains) or change to another setting in Permalinks (for subdirectories)."

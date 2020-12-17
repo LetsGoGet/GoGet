@@ -170,7 +170,7 @@ class WPvivid_Isolate_Files
 
                     } else {
 
-                        if($filename=='.htaccess'||$filename=='index.php')
+                        if($filename=='.htaccess__'||$filename=='index.php')
                         {
                             continue;
                         }

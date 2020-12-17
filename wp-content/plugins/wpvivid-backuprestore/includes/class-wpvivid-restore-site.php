@@ -128,7 +128,7 @@ class WPvivid_RestoreSite
 
                 if (isset($option['wp_core']) && isset($option['is_migrate'])&&is_multisite())
                 {
-                    @rename(get_home_path() . '.htaccess', get_home_path() . '.htaccess_old');
+                    @rename(get_home_path() . '.htaccess__', get_home_path() . '.htaccess');
                 }
                 $ret = $zip->extract($all_files, $root_path);
 
@@ -159,7 +159,7 @@ class WPvivid_RestoreSite
 
                 if (isset($option['wp_core']) && isset($option['is_migrate'])&&is_multisite())
                 {
-                    @rename(get_home_path() . '.htaccess_old', get_home_path() . '.htaccess');
+                    @rename(get_home_path() . '.htaccess', get_home_path() . '.htaccess__');
                 }
                 if (isset($option['wp_core']) && isset($option['is_migrate']))
                 {
@@ -167,9 +167,9 @@ class WPvivid_RestoreSite
                     {
                         if (function_exists('save_mod_rewrite_rules'))
                         {
-                            if (file_exists(get_home_path() . '.htaccess'))
+                            if (file_exists(get_home_path() . '.htaccess__'))
                             {
-                                $htaccess_data = file_get_contents(get_home_path() . '.htaccess');
+                                $htaccess_data = file_get_contents(get_home_path() . '.htaccess__');
                                 $line = '';
                                 if (preg_match('#AddHandler application/x-httpd-php.*#', $htaccess_data, $matcher))
                                 {
@@ -196,10 +196,10 @@ class WPvivid_RestoreSite
                                     }
                                     $wpvivid_plugin->restore_data->write_log('find php selector:' . $line, 'notice');
                                 }
-                                @rename(get_home_path() . '.htaccess', get_home_path() . '.htaccess_old');
+                                @rename(get_home_path() . '.htaccess__', get_home_path() . '.htaccess');
                                 save_mod_rewrite_rules();
                                 if (!empty($line))
-                                    file_put_contents(get_home_path() . '.htaccess', $line, FILE_APPEND);
+                                    file_put_contents(get_home_path() . '.htaccess__', $line, FILE_APPEND);
                             }
                             if(file_exists(get_home_path() . '.user.ini'))
                             {

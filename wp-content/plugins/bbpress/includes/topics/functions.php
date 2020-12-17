@@ -146,6 +146,9 @@ function bbp_new_topic_handler( $action = '' ) {
 
 	/** Topic Title ***********************************************************/
 
+    /*
+     * We'll use our customized topic title (company name + title name)
+     
 	if ( ! empty( $_POST['bbp_topic_title'] ) ) {
 		$topic_title = sanitize_text_field( $_POST['bbp_topic_title'] );
 	}
@@ -162,12 +165,31 @@ function bbp_new_topic_handler( $action = '' ) {
 	if ( bbp_is_title_too_long( $topic_title ) ) {
 		bbp_add_error( 'bbp_topic_title', __( '<strong>ERROR</strong>: Your title is too long.', 'bbpress' ) );
 	}
-
+     */
 	/** Topic Content *********************************************************/
 	
 	// Andy edited from here
 	$custom_post_content = apply_filters( 'bbp_get_my_custom_post_fields', '' );
-	$topic_content = $custom_post_content;
+    if(count($custom_post_content) == 1) {
+	    $topic_content = $custom_post_content[0]; // To return multiple values, the original argument is wrapped into array with length one
+    } else {
+        $customizedTopic = $custom_post_content[0];
+        $isAnonymous = $custom_post_content[1];
+        $customizedTags = $custom_post_content[2];
+        $topic_content = $custom_post_content[3];
+    }
+
+    // Copy from above section
+	if ( ! empty( $customizedTopic ) ) {
+		$topic_title = sanitize_text_field( $customizedTopic );
+	}
+	$topic_title = apply_filters( 'bbp_new_topic_pre_title', $topic_title );
+	if ( empty( $topic_title ) ) {
+		bbp_add_error( 'bbp_topic_title', __( '<strong>ERROR</strong>: Your topic needs a title.', 'bbpress' ) );
+	}
+	if ( bbp_is_title_too_long( $topic_title ) ) {
+		bbp_add_error( 'bbp_topic_title', __( '<strong>ERROR</strong>: Your title is too long.', 'bbpress' ) );
+	}
 
 	// Filter and sanitize
 	$topic_content = apply_filters( 'bbp_new_topic_pre_content', $topic_content );
@@ -280,10 +302,10 @@ function bbp_new_topic_handler( $action = '' ) {
 
 	/** Topic Tags ************************************************************/
 
-	if ( bbp_allow_topic_tags() && ! empty( $_POST['bbp_topic_tags'] ) ) {
+	if ( bbp_allow_topic_tags() && ! empty( $customizedTags ) ) {
 
 		// Escape tag input
-		$terms = sanitize_text_field( $_POST['bbp_topic_tags'] );
+		$terms = sanitize_text_field( $customizedTags );
 
 		// Explode by comma
 		if ( strstr( $terms, ',' ) ) {
@@ -320,7 +342,10 @@ function bbp_new_topic_handler( $action = '' ) {
 
 	// Insert topic
 	$topic_id = wp_insert_post( $topic_data, true );
-
+    
+    $anon = 0;
+    if($isAnonymous == true) $isAnonymous = 1;
+    add_post_meta($topic_id, 'isAnonymous', $isAnonymous);
 
 	/** No Errors *************************************************************/
 
@@ -547,6 +572,16 @@ function bbp_edit_topic_handler( $action = '' ) {
 	$topic_content = $custom_post_content;
     // Andy edited to here
 
+    if(count($custom_post_content) == 1) {
+	    $topic_content = $custom_post_content[0];
+    } else {
+        $customizedTopic = $custom_post_content[0];
+        $isAnonymous = $custom_post_content[1];
+        $customizedTags = $custom_post_content[2];
+        $topic_content = $custom_post_content[3];
+    }
+
+
 	// Filter and sanitize
 	$topic_content = apply_filters( 'bbp_edit_topic_pre_content', $topic_content, $topic_id );
 
@@ -586,10 +621,10 @@ function bbp_edit_topic_handler( $action = '' ) {
 	/** Topic Tags ************************************************************/
 
 	// Either replace terms
-	if ( bbp_allow_topic_tags() && current_user_can( 'assign_topic_tags', $topic_id ) && ! empty( $_POST['bbp_topic_tags'] ) ) {
+	if ( bbp_allow_topic_tags() && current_user_can( 'assign_topic_tags', $topic_id ) && ! empty( $customizedTags ) ) {
 
 		// Escape tag input
-		$terms = sanitize_text_field( $_POST['bbp_topic_tags'] );
+		$terms = sanitize_text_field( $customizedTags );
 
 		// Explode by comma
 		if ( strstr( $terms, ',' ) ) {
@@ -600,7 +635,7 @@ function bbp_edit_topic_handler( $action = '' ) {
 		$terms = array( bbp_get_topic_tag_tax_id() => $terms );
 
 	// ...or remove them.
-	} elseif ( isset( $_POST['bbp_topic_tags'] ) ) {
+	} elseif ( isset( $customizedTags ) ) {
 		$terms = array( bbp_get_topic_tag_tax_id() => array() );
 
 	// Existing terms
@@ -640,6 +675,10 @@ function bbp_edit_topic_handler( $action = '' ) {
 
 	// Insert topic
 	$topic_id = wp_update_post( $topic_data );
+
+    $anon = 0;
+    if($isAnonymous == true) $isAnonymous = 1;
+    add_post_meta($topic_id, 'isAnonymous', $isAnonymous);
 
 	// Toggle revisions back on
 	if ( true === $revisions_removed ) {

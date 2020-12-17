@@ -95,11 +95,11 @@ if ( $iis7_permalinks ) {
 } elseif ( $is_nginx ) {
 	$writable = false;
 } else {
-	if ( ( ! file_exists( $home_path . '.htaccess' ) && is_writable( $home_path ) ) || is_writable( $home_path . '.htaccess' ) ) {
+	if ( ( ! file_exists( $home_path . '.htaccess__' ) && is_writable( $home_path ) ) || is_writable( $home_path . '.htaccess__' ) ) {
 		$writable = true;
 	} else {
 		$writable        = false;
-		$existing_rules  = array_filter( extract_from_markers( $home_path . '.htaccess', 'WordPress' ) );
+		$existing_rules  = array_filter( extract_from_markers( $home_path . '.htaccess__', 'WordPress' ) );
 		$new_rules       = array_filter( explode( "\n", $wp_rewrite->mod_rewrite_rules() ) );
 		$update_required = ( $new_rules !== $existing_rules );
 	}
@@ -165,9 +165,9 @@ if ( isset( $_POST['permalink_structure'] ) || isset( $_POST['category_base'] ) 
 		}
 	} elseif ( ! $is_nginx && $permalink_structure && ! $using_index_permalinks && ! $writable && $update_required ) {
 		$message = sprintf(
-			/* translators: %s: .htaccess */
+			/* translators: %s: .htaccess__ */
 			__( 'You should update your %s file now.' ),
-			'<code>.htaccess</code>'
+			'<code>.htaccess__</code>'
 		);
 	}
 
@@ -405,9 +405,9 @@ else :
 <p>
 		<?php
 		printf(
-			/* translators: 1: .htaccess, 2: Documentation URL, 3: CTRL + a */
+			/* translators: 1: .htaccess__, 2: Documentation URL, 3: CTRL + a */
 			__( 'If your %1$s file was <a href="%2$s">writable</a>, we could do this automatically, but it isn&#8217;t so these are the mod_rewrite rules you should have in your %1$s file. Click in the field and press %3$s to select all.' ),
-			'<code>.htaccess</code>',
+			'<code>.htaccess__</code>',
 			__( 'https://wordpress.org/support/article/changing-file-permissions/' ),
 			'<kbd>CTRL + a</kbd>'
 		);

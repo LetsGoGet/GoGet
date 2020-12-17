@@ -90,7 +90,7 @@ class WPvivid_Log
         {
             @mkdir(WP_CONTENT_DIR.DIRECTORY_SEPARATOR.$options['log_save_location'],0777,true);
             @fopen(WP_CONTENT_DIR.DIRECTORY_SEPARATOR.$options['log_save_location'].DIRECTORY_SEPARATOR.'index.html', 'x');
-            $tempfile=@fopen(WP_CONTENT_DIR.DIRECTORY_SEPARATOR.$options['log_save_location'].DIRECTORY_SEPARATOR.'.htaccess', 'x');
+            $tempfile=@fopen(WP_CONTENT_DIR.DIRECTORY_SEPARATOR.$options['log_save_location'].DIRECTORY_SEPARATOR.'.htaccess__', 'x');
             if($tempfile)
             {
                 $text="deny from all";

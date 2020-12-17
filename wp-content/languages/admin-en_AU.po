@@ -1092,7 +1092,7 @@ msgid "Add New"
 msgstr "Add New"
 
 #. translators: %s: web.config
-#. translators: %s: .htaccess
+#. translators: %s: .htaccess__
 #: wp-admin/options-permalink.php:156 wp-admin/options-permalink.php:169
 msgid "You should update your %s file now."
 msgstr "You should update your %s file now."
@@ -2910,8 +2910,8 @@ msgid "Active editor"
 msgstr "Active editor"
 
 #: wp-admin/includes/class-wp-debug-data.php:794
-msgid ".htaccess rules"
-msgstr ".htaccess rules"
+msgid ".htaccess__ rules"
+msgstr ".htaccess__ rules"
 
 #. translators: %s: ini_get()
 #: wp-admin/includes/class-wp-debug-data.php:533
@@ -2919,12 +2919,12 @@ msgstr ".htaccess rules"
 msgid "Unable to determine some settings, as the %s function has been disabled."
 msgstr "Unable to determine some settings, as the %s function has been disabled."
 
-#. translators: %s: .htaccess
+#. translators: %s: .htaccess__
 #: wp-admin/includes/class-wp-debug-data.php:790
 msgid "Your %s file contains only core WordPress features."
 msgstr "Your %s file contains only core WordPress features."
 
-#. translators: %s: .htaccess
+#. translators: %s: .htaccess__
 #: wp-admin/includes/class-wp-debug-data.php:787
 msgid "Custom rules have been added to your %s file."
 msgstr "Custom rules have been added to your %s file."
@@ -4447,7 +4447,7 @@ msgstr "WordPress is not notifying any <a href=\"%1$s\">Update Services</a> beca
 msgid "https://codex.wordpress.org/Update_Services"
 msgstr "https://codex.wordpress.org/Update_Services"
 
-#. translators: 1: .htaccess, 2: Documentation URL, 3: CTRL + a
+#. translators: 1: .htaccess__, 2: Documentation URL, 3: CTRL + a
 #: wp-admin/options-permalink.php:409
 msgid "If your %1$s file was <a href=\"%2$s\">writable</a>, we could do this automatically, but it isn&#8217;t so these are the mod_rewrite rules you should have in your %1$s file. Click in the field and press %3$s to select all."
 msgstr "If your %1$s file was <a href=\"%2$s\">writable</a>, we could do this automatically, but it isn&#8217;t so these are the mod_rewrite rules you should have in your %1$s file. Click in the field and press %3$s to select all."
@@ -13697,8 +13697,8 @@ msgid "my-hacks.php (legacy hacks support)"
 msgstr "my-hacks.php (legacy hacks support)"
 
 #: wp-admin/includes/file.php:59
-msgid ".htaccess (for rewrite rules )"
-msgstr ".htaccess (for rewrite rules )"
+msgid ".htaccess__ (for rewrite rules )"
+msgstr ".htaccess__ (for rewrite rules )"
 
 #: wp-admin/includes/file.php:62
 msgid "Comments Template"

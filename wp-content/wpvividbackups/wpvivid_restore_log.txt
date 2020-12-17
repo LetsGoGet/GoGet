@@ -1,407 +1,403 @@
-Log created: 2020-10-20 12:27:41
+Log created: 2020-11-17 18:01:47
 Type: restore
-[2020-10-20 12:27:41][notice]init restore data
-[2020-10-20 12:27:41][notice]Start restoring dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_all.part001.zip
-[2020-10-20 12:27:41][notice]extract root:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\
-[2020-10-20 12:27:41][notice]start extracting file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_all.part001.zip
-[2020-10-20 12:27:44][notice]extract finished file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_all.part001.zip
-[2020-10-20 12:27:44][notice]Finished restoring dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_all.part001.zip
-[2020-10-20 12:27:45][notice]Start restoring dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_all.part002.zip
-[2020-10-20 12:27:45][notice]extract root:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\
-[2020-10-20 12:27:45][notice]start extracting file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_all.part002.zip
-[2020-10-20 12:27:45][notice]extract finished file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_all.part002.zip
-[2020-10-20 12:27:45][notice]Finished restoring dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_all.part002.zip
-[2020-10-20 12:27:46][notice]Start restoring dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_plugin.zip
-[2020-10-20 12:27:46][notice]restore from files:["C:\\Users\\Sean\\Desktop\\repo\\GoGet\/wp-content\\wpvividbackups\\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_plugin.zip"]
-[2020-10-20 12:27:46][notice]start extracting file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_plugin.zip
-[2020-10-20 12:29:57][notice]extract finished file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_plugin.zip
-[2020-10-20 12:29:57][notice]Finished restoring dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_plugin.zip
-[2020-10-20 12:29:58][notice]Start restoring dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_core.zip
-[2020-10-20 12:29:58][notice]restore from files:["C:\\Users\\Sean\\Desktop\\repo\\GoGet\/wp-content\\wpvividbackups\\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_core.zip"]
-[2020-10-20 12:29:58][notice]start extracting file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_core.zip
-[2020-10-20 12:30:30][notice]extract finished file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_core.zip
-[2020-10-20 12:30:30][notice]Finished restoring dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_core.zip
-[2020-10-20 12:30:31][notice]Start restoring dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_themes.zip
-[2020-10-20 12:30:31][notice]restore from files:["C:\\Users\\Sean\\Desktop\\repo\\GoGet\/wp-content\\wpvividbackups\\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_themes.zip"]
-[2020-10-20 12:30:31][notice]start extracting file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_themes.zip
-[2020-10-20 12:31:06][notice]extract finished file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_themes.zip
-[2020-10-20 12:31:06][notice]Finished restoring dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_themes.zip
-[2020-10-20 12:31:07][notice]Start restoring dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_content.zip
-[2020-10-20 12:31:07][notice]restore from files:["C:\\Users\\Sean\\Desktop\\repo\\GoGet\/wp-content\\wpvividbackups\\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_content.zip"]
-[2020-10-20 12:31:07][notice]start extracting file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_content.zip
-[2020-10-20 12:31:09][notice]extract finished file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_content.zip
-[2020-10-20 12:31:09][notice]Finished restoring dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_content.zip
-[2020-10-20 12:31:11][notice]Start restoring dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_uploads.zip
-[2020-10-20 12:31:11][notice]restore from files:["C:\\Users\\Sean\\Desktop\\repo\\GoGet\/wp-content\\wpvividbackups\\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_uploads.zip"]
-[2020-10-20 12:31:11][notice]start extracting file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_uploads.zip
-[2020-10-20 12:31:12][notice]extract finished file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_uploads.zip
-[2020-10-20 12:31:12][notice]Finished restoring dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_uploads.zip
-[2020-10-20 12:31:13][notice]Start restoring dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_db.zip
-[2020-10-20 12:31:13][notice]start extracting file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_db.zip
-[2020-10-20 12:31:13][notice]extract finished file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_db.zip
-[2020-10-20 12:31:13][notice]sql file: dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_db.sql
-[2020-10-20 12:31:13][Warning]wpdb
-[2020-10-20 12:31:13][notice]The test to create table succeeds.
-[2020-10-20 12:31:13][notice]The test to insert into table succeeds.
-[2020-10-20 12:31:13][notice]The test to drop table succeeds.
-[2020-10-20 12:31:13][notice]get max_allowed_packet wpdb 
-[2020-10-20 12:31:13][notice]max_allowed_packet less than 32M :1.00 MB
-[2020-10-20 12:31:13][notice]Start import sql file.
-[2020-10-20 12:31:13][notice]old site url:https://dev2.letsgoget.info
-[2020-10-20 12:31:13][notice]old home url:http://dev2.letsgoget.info
-[2020-10-20 12:31:13][notice]old content url:https://dev2.letsgoget.info/wp-content
-[2020-10-20 12:31:13][notice]old upload url:https://dev2.letsgoget.info/wp-content/uploads
-[2020-10-20 12:31:13][notice]old site prefix:g6C_
-[2020-10-20 12:31:13][notice]Drop table if exist
-[2020-10-20 12:31:13][notice]Create table wp_bp_activity
-[2020-10-20 12:31:13][notice]lock replace table:g6C_bp_activity to :wp_bp_activity
-[2020-10-20 12:31:13][notice]Dumping table wp_bp_activity is complete. Start replacing row(s).
-[2020-10-20 12:31:13][notice]Count of rows in wp_bp_activity: 12
-[2020-10-20 12:31:13][notice]Replace the row in 0 line.
-[2020-10-20 12:31:13][notice]finish replace rows
-[2020-10-20 12:31:13][notice]Drop table if exist
-[2020-10-20 12:31:13][notice]Create table wp_bp_activity_meta
-[2020-10-20 12:31:13][notice]lock replace table:g6C_bp_activity_meta to :wp_bp_activity_meta
-[2020-10-20 12:31:13][notice]Dumping table wp_bp_activity_meta is complete. Start replacing row(s).
-[2020-10-20 12:31:13][notice]Count of rows in wp_bp_activity_meta: 0
-[2020-10-20 12:31:13][notice]Drop table if exist
-[2020-10-20 12:31:13][notice]Create table wp_bp_friends
-[2020-10-20 12:31:13][notice]lock replace table:g6C_bp_friends to :wp_bp_friends
-[2020-10-20 12:31:13][notice]Dumping table wp_bp_friends is complete. Start replacing row(s).
-[2020-10-20 12:31:13][notice]Count of rows in wp_bp_friends: 1
-[2020-10-20 12:31:13][notice]Replace the row in 0 line.
-[2020-10-20 12:31:13][notice]finish replace rows
-[2020-10-20 12:31:13][notice]Drop table if exist
-[2020-10-20 12:31:13][notice]Create table wp_bp_groups
-[2020-10-20 12:31:13][notice]lock replace table:g6C_bp_groups to :wp_bp_groups
-[2020-10-20 12:31:13][notice]Dumping table wp_bp_groups is complete. Start replacing row(s).
-[2020-10-20 12:31:13][notice]Count of rows in wp_bp_groups: 0
-[2020-10-20 12:31:13][notice]Drop table if exist
-[2020-10-20 12:31:13][notice]Create table wp_bp_groups_groupmeta
-[2020-10-20 12:31:13][notice]lock replace table:g6C_bp_groups_groupmeta to :wp_bp_groups_groupmeta
-[2020-10-20 12:31:13][notice]Dumping table wp_bp_groups_groupmeta is complete. Start replacing row(s).
-[2020-10-20 12:31:13][notice]Count of rows in wp_bp_groups_groupmeta: 0
-[2020-10-20 12:31:13][notice]Drop table if exist
-[2020-10-20 12:31:13][notice]Create table wp_bp_groups_members
-[2020-10-20 12:31:14][notice]lock replace table:g6C_bp_groups_members to :wp_bp_groups_members
-[2020-10-20 12:31:14][notice]Dumping table wp_bp_groups_members is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_bp_groups_members: 0
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_bp_invitations
-[2020-10-20 12:31:14][notice]lock replace table:g6C_bp_invitations to :wp_bp_invitations
-[2020-10-20 12:31:14][notice]Dumping table wp_bp_invitations is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_bp_invitations: 0
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_bp_messages_messages
-[2020-10-20 12:31:14][notice]lock replace table:g6C_bp_messages_messages to :wp_bp_messages_messages
-[2020-10-20 12:31:14][notice]Dumping table wp_bp_messages_messages is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_bp_messages_messages: 0
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_bp_messages_meta
-[2020-10-20 12:31:14][notice]lock replace table:g6C_bp_messages_meta to :wp_bp_messages_meta
-[2020-10-20 12:31:14][notice]Dumping table wp_bp_messages_meta is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_bp_messages_meta: 0
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_bp_messages_notices
-[2020-10-20 12:31:14][notice]lock replace table:g6C_bp_messages_notices to :wp_bp_messages_notices
-[2020-10-20 12:31:14][notice]Dumping table wp_bp_messages_notices is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_bp_messages_notices: 0
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_bp_messages_recipients
-[2020-10-20 12:31:14][notice]lock replace table:g6C_bp_messages_recipients to :wp_bp_messages_recipients
-[2020-10-20 12:31:14][notice]Dumping table wp_bp_messages_recipients is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_bp_messages_recipients: 0
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_bp_notifications
-[2020-10-20 12:31:14][notice]lock replace table:g6C_bp_notifications to :wp_bp_notifications
-[2020-10-20 12:31:14][notice]Dumping table wp_bp_notifications is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_bp_notifications: 3
-[2020-10-20 12:31:14][notice]Replace the row in 0 line.
-[2020-10-20 12:31:14][notice]finish replace rows
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_bp_notifications_meta
-[2020-10-20 12:31:14][notice]lock replace table:g6C_bp_notifications_meta to :wp_bp_notifications_meta
-[2020-10-20 12:31:14][notice]Dumping table wp_bp_notifications_meta is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_bp_notifications_meta: 0
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_bp_user_blogs
-[2020-10-20 12:31:14][notice]lock replace table:g6C_bp_user_blogs to :wp_bp_user_blogs
-[2020-10-20 12:31:14][notice]Dumping table wp_bp_user_blogs is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_bp_user_blogs: 1
-[2020-10-20 12:31:14][notice]Replace the row in 0 line.
-[2020-10-20 12:31:14][notice]finish replace rows
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_bp_user_blogs_blogmeta
-[2020-10-20 12:31:14][notice]lock replace table:g6C_bp_user_blogs_blogmeta to :wp_bp_user_blogs_blogmeta
-[2020-10-20 12:31:14][notice]Dumping table wp_bp_user_blogs_blogmeta is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_bp_user_blogs_blogmeta: 8
-[2020-10-20 12:31:14][notice]Replace the row in 0 line.
-[2020-10-20 12:31:14][notice]finish replace rows
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_bp_xprofile_data
-[2020-10-20 12:31:14][notice]lock replace table:g6C_bp_xprofile_data to :wp_bp_xprofile_data
-[2020-10-20 12:31:14][notice]Dumping table wp_bp_xprofile_data is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_bp_xprofile_data: 2
-[2020-10-20 12:31:14][notice]Replace the row in 0 line.
-[2020-10-20 12:31:14][notice]finish replace rows
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_bp_xprofile_fields
-[2020-10-20 12:31:14][notice]lock replace table:g6C_bp_xprofile_fields to :wp_bp_xprofile_fields
-[2020-10-20 12:31:14][notice]Dumping table wp_bp_xprofile_fields is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_bp_xprofile_fields: 1
-[2020-10-20 12:31:14][notice]Replace the row in 0 line.
-[2020-10-20 12:31:14][notice]finish replace rows
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_bp_xprofile_groups
-[2020-10-20 12:31:14][notice]lock replace table:g6C_bp_xprofile_groups to :wp_bp_xprofile_groups
-[2020-10-20 12:31:14][notice]Dumping table wp_bp_xprofile_groups is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_bp_xprofile_groups: 1
-[2020-10-20 12:31:14][notice]Replace the row in 0 line.
-[2020-10-20 12:31:14][notice]finish replace rows
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_bp_xprofile_meta
-[2020-10-20 12:31:14][notice]lock replace table:g6C_bp_xprofile_meta to :wp_bp_xprofile_meta
-[2020-10-20 12:31:14][notice]Dumping table wp_bp_xprofile_meta is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_bp_xprofile_meta: 1
-[2020-10-20 12:31:14][notice]Replace the row in 0 line.
-[2020-10-20 12:31:14][notice]finish replace rows
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_commentmeta
-[2020-10-20 12:31:14][notice]lock replace table:g6C_commentmeta to :wp_commentmeta
-[2020-10-20 12:31:14][notice]Dumping table wp_commentmeta is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_commentmeta: 0
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_comments
-[2020-10-20 12:31:14][notice]lock replace table:g6C_comments to :wp_comments
-[2020-10-20 12:31:14][notice]Dumping table wp_comments is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_comments: 0
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_ff_scheduled_actions
-[2020-10-20 12:31:14][notice]lock replace table:g6C_ff_scheduled_actions to :wp_ff_scheduled_actions
-[2020-10-20 12:31:14][notice]Dumping table wp_ff_scheduled_actions is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_ff_scheduled_actions: 0
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_fluentform_entry_details
-[2020-10-20 12:31:14][notice]lock replace table:g6C_fluentform_entry_details to :wp_fluentform_entry_details
-[2020-10-20 12:31:14][notice]Dumping table wp_fluentform_entry_details is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_fluentform_entry_details: 2
-[2020-10-20 12:31:14][notice]Replace the row in 0 line.
-[2020-10-20 12:31:14][notice]finish replace rows
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_fluentform_form_analytics
-[2020-10-20 12:31:14][notice]lock replace table:g6C_fluentform_form_analytics to :wp_fluentform_form_analytics
-[2020-10-20 12:31:14][notice]Dumping table wp_fluentform_form_analytics is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_fluentform_form_analytics: 1
-[2020-10-20 12:31:14][notice]Replace the row in 0 line.
-[2020-10-20 12:31:14][notice]finish replace rows
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_fluentform_form_meta
-[2020-10-20 12:31:14][notice]lock replace table:g6C_fluentform_form_meta to :wp_fluentform_form_meta
-[2020-10-20 12:31:14][notice]Dumping table wp_fluentform_form_meta is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_fluentform_form_meta: 3
-[2020-10-20 12:31:14][notice]Replace the row in 0 line.
-[2020-10-20 12:31:14][notice]finish replace rows
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_fluentform_forms
-[2020-10-20 12:31:14][notice]lock replace table:g6C_fluentform_forms to :wp_fluentform_forms
-[2020-10-20 12:31:14][notice]Dumping table wp_fluentform_forms is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_fluentform_forms: 1
-[2020-10-20 12:31:14][notice]Replace the row in 0 line.
-[2020-10-20 12:31:14][notice]finish replace rows
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_fluentform_logs
-[2020-10-20 12:31:14][notice]lock replace table:g6C_fluentform_logs to :wp_fluentform_logs
-[2020-10-20 12:31:14][notice]Dumping table wp_fluentform_logs is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_fluentform_logs: 0
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_fluentform_submission_meta
-[2020-10-20 12:31:14][notice]lock replace table:g6C_fluentform_submission_meta to :wp_fluentform_submission_meta
-[2020-10-20 12:31:14][notice]Dumping table wp_fluentform_submission_meta is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_fluentform_submission_meta: 0
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_fluentform_submissions
-[2020-10-20 12:31:14][notice]lock replace table:g6C_fluentform_submissions to :wp_fluentform_submissions
-[2020-10-20 12:31:14][notice]Dumping table wp_fluentform_submissions is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_fluentform_submissions: 1
-[2020-10-20 12:31:14][notice]Replace the row in 0 line.
-[2020-10-20 12:31:14][notice]finish replace rows
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_gdrts_cache
-[2020-10-20 12:31:14][notice]lock replace table:g6C_gdrts_cache to :wp_gdrts_cache
-[2020-10-20 12:31:14][notice]Dumping table wp_gdrts_cache is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_gdrts_cache: 0
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_gdrts_itemmeta
-[2020-10-20 12:31:14][notice]lock replace table:g6C_gdrts_itemmeta to :wp_gdrts_itemmeta
-[2020-10-20 12:31:14][notice]Dumping table wp_gdrts_itemmeta is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_gdrts_itemmeta: 0
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_gdrts_items
-[2020-10-20 12:31:14][notice]lock replace table:g6C_gdrts_items to :wp_gdrts_items
-[2020-10-20 12:31:14][notice]Dumping table wp_gdrts_items is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_gdrts_items: 5
-[2020-10-20 12:31:14][notice]Replace the row in 0 line.
-[2020-10-20 12:31:14][notice]finish replace rows
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_gdrts_items_basic
-[2020-10-20 12:31:14][notice]lock replace table:g6C_gdrts_items_basic to :wp_gdrts_items_basic
-[2020-10-20 12:31:14][notice]Dumping table wp_gdrts_items_basic is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_gdrts_items_basic: 0
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_gdrts_logmeta
-[2020-10-20 12:31:14][notice]lock replace table:g6C_gdrts_logmeta to :wp_gdrts_logmeta
-[2020-10-20 12:31:14][notice]Dumping table wp_gdrts_logmeta is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_gdrts_logmeta: 0
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_gdrts_logs
-[2020-10-20 12:31:14][notice]lock replace table:g6C_gdrts_logs to :wp_gdrts_logs
-[2020-10-20 12:31:14][notice]Dumping table wp_gdrts_logs is complete. Start replacing row(s).
-[2020-10-20 12:31:14][notice]Count of rows in wp_gdrts_logs: 0
-[2020-10-20 12:31:14][notice]Drop table if exist
-[2020-10-20 12:31:14][notice]Create table wp_likebtn_item
-[2020-10-20 12:31:15][notice]lock replace table:g6C_likebtn_item to :wp_likebtn_item
-[2020-10-20 12:31:15][notice]Dumping table wp_likebtn_item is complete. Start replacing row(s).
-[2020-10-20 12:31:15][notice]Count of rows in wp_likebtn_item: 0
-[2020-10-20 12:31:15][notice]Drop table if exist
-[2020-10-20 12:31:15][notice]Create table wp_likebtn_vote
-[2020-10-20 12:31:15][notice]lock replace table:g6C_likebtn_vote to :wp_likebtn_vote
-[2020-10-20 12:31:15][notice]Dumping table wp_likebtn_vote is complete. Start replacing row(s).
-[2020-10-20 12:31:15][notice]Count of rows in wp_likebtn_vote: 9
-[2020-10-20 12:31:15][notice]Replace the row in 0 line.
-[2020-10-20 12:31:15][notice]finish replace rows
-[2020-10-20 12:31:15][notice]Drop table if exist
-[2020-10-20 12:31:15][notice]Create table wp_links
-[2020-10-20 12:31:15][notice]lock replace table:g6C_links to :wp_links
-[2020-10-20 12:31:15][notice]Dumping table wp_links is complete. Start replacing row(s).
-[2020-10-20 12:31:15][notice]Count of rows in wp_links: 0
-[2020-10-20 12:31:15][notice]Drop table if exist
-[2020-10-20 12:31:15][notice]Create table wp_myCRED_log
-[2020-10-20 12:31:15][notice]lock replace table:g6C_myCRED_log to :wp_myCRED_log
-[2020-10-20 12:31:15][notice]Dumping table wp_myCRED_log is complete. Start replacing row(s).
-[2020-10-20 12:31:15][notice]Count of rows in wp_myCRED_log: 194
-[2020-10-20 12:31:15][notice]Replace the row in 0 line.
-[2020-10-20 12:31:15][notice]finish replace rows
-[2020-10-20 12:31:15][notice]Drop table if exist
-[2020-10-20 12:31:15][notice]Create table wp_options
-[2020-10-20 12:31:15][notice]lock replace table:g6C_options to :wp_options
-[2020-10-20 12:31:15][notice]Dumping table wp_options is complete. Start replacing row(s).
-[2020-10-20 12:31:15][notice]UPDATE wp_options SET option_name="wp_user_roles" WHERE option_name="g6C_user_roles";
-[2020-10-20 12:31:15][notice]update query len:85
-[2020-10-20 12:31:15][notice]Count of rows in wp_options: 2451
-[2020-10-20 12:31:15][notice]Replace the row in 0 line.
-[2020-10-20 12:31:16][notice]finish replace rows
-[2020-10-20 12:31:16][notice]Drop table if exist
-[2020-10-20 12:31:16][notice]Create table wp_postmeta
-[2020-10-20 12:31:16][notice]lock replace table:g6C_postmeta to :wp_postmeta
-[2020-10-20 12:31:16][notice]Dumping table wp_postmeta is complete. Start replacing row(s).
-[2020-10-20 12:31:16][notice]Count of rows in wp_postmeta: 2105
-[2020-10-20 12:31:16][notice]Replace the row in 0 line.
-[2020-10-20 12:31:17][notice]finish replace rows
-[2020-10-20 12:31:17][notice]Drop table if exist
-[2020-10-20 12:31:17][notice]Create table wp_posts
-[2020-10-20 12:31:17][notice]lock replace table:g6C_posts to :wp_posts
-[2020-10-20 12:31:17][notice]Dumping table wp_posts is complete. Start replacing row(s).
-[2020-10-20 12:31:17][notice]Count of rows in wp_posts: 207
-[2020-10-20 12:31:17][notice]Replace the row in 0 line.
-[2020-10-20 12:31:17][notice]finish replace rows
-[2020-10-20 12:31:17][notice]Drop table if exist
-[2020-10-20 12:31:17][notice]Create table wp_signups
-[2020-10-20 12:31:17][notice]lock replace table:g6C_signups to :wp_signups
-[2020-10-20 12:31:17][notice]Dumping table wp_signups is complete. Start replacing row(s).
-[2020-10-20 12:31:17][notice]Count of rows in wp_signups: 3
-[2020-10-20 12:31:17][notice]Replace the row in 0 line.
-[2020-10-20 12:31:17][notice]finish replace rows
-[2020-10-20 12:31:17][notice]Drop table if exist
-[2020-10-20 12:31:17][notice]Create table wp_term_relationships
-[2020-10-20 12:31:17][notice]lock replace table:g6C_term_relationships to :wp_term_relationships
-[2020-10-20 12:31:17][notice]Dumping table wp_term_relationships is complete. Start replacing row(s).
-[2020-10-20 12:31:17][Warning]Skip table wp_term_relationships
-[2020-10-20 12:31:17][notice]Drop table if exist
-[2020-10-20 12:31:17][notice]Create table wp_term_taxonomy
-[2020-10-20 12:31:17][notice]lock replace table:g6C_term_taxonomy to :wp_term_taxonomy
-[2020-10-20 12:31:17][notice]Dumping table wp_term_taxonomy is complete. Start replacing row(s).
-[2020-10-20 12:31:17][notice]Count of rows in wp_term_taxonomy: 18
-[2020-10-20 12:31:17][notice]Replace the row in 0 line.
-[2020-10-20 12:31:17][notice]finish replace rows
-[2020-10-20 12:31:17][notice]Drop table if exist
-[2020-10-20 12:31:17][notice]Create table wp_termmeta
-[2020-10-20 12:31:17][notice]lock replace table:g6C_termmeta to :wp_termmeta
-[2020-10-20 12:31:17][notice]Dumping table wp_termmeta is complete. Start replacing row(s).
-[2020-10-20 12:31:17][notice]Count of rows in wp_termmeta: 0
-[2020-10-20 12:31:17][notice]Drop table if exist
-[2020-10-20 12:31:17][notice]Create table wp_terms
-[2020-10-20 12:31:17][notice]lock replace table:g6C_terms to :wp_terms
-[2020-10-20 12:31:17][notice]Dumping table wp_terms is complete. Start replacing row(s).
-[2020-10-20 12:31:17][notice]Count of rows in wp_terms: 18
-[2020-10-20 12:31:17][notice]Replace the row in 0 line.
-[2020-10-20 12:31:17][notice]finish replace rows
-[2020-10-20 12:31:17][notice]Drop table if exist
-[2020-10-20 12:31:17][notice]Create table wp_ulike
-[2020-10-20 12:31:17][notice]lock replace table:g6C_ulike to :wp_ulike
-[2020-10-20 12:31:17][notice]Dumping table wp_ulike is complete. Start replacing row(s).
-[2020-10-20 12:31:17][notice]Count of rows in wp_ulike: 0
-[2020-10-20 12:31:17][notice]Drop table if exist
-[2020-10-20 12:31:17][notice]Create table wp_ulike_activities
-[2020-10-20 12:31:17][notice]lock replace table:g6C_ulike_activities to :wp_ulike_activities
-[2020-10-20 12:31:17][notice]Dumping table wp_ulike_activities is complete. Start replacing row(s).
-[2020-10-20 12:31:17][notice]Count of rows in wp_ulike_activities: 0
-[2020-10-20 12:31:17][notice]Drop table if exist
-[2020-10-20 12:31:17][notice]Create table wp_ulike_comments
-[2020-10-20 12:31:17][notice]lock replace table:g6C_ulike_comments to :wp_ulike_comments
-[2020-10-20 12:31:17][notice]Dumping table wp_ulike_comments is complete. Start replacing row(s).
-[2020-10-20 12:31:17][notice]Count of rows in wp_ulike_comments: 0
-[2020-10-20 12:31:17][notice]Drop table if exist
-[2020-10-20 12:31:17][notice]Create table wp_ulike_forums
-[2020-10-20 12:31:17][notice]lock replace table:g6C_ulike_forums to :wp_ulike_forums
-[2020-10-20 12:31:17][notice]Dumping table wp_ulike_forums is complete. Start replacing row(s).
-[2020-10-20 12:31:17][notice]Count of rows in wp_ulike_forums: 11
-[2020-10-20 12:31:17][notice]Replace the row in 0 line.
-[2020-10-20 12:31:17][notice]finish replace rows
-[2020-10-20 12:31:17][notice]Drop table if exist
-[2020-10-20 12:31:17][notice]Create table wp_ulike_meta
-[2020-10-20 12:31:18][notice]lock replace table:g6C_ulike_meta to :wp_ulike_meta
-[2020-10-20 12:31:18][notice]Dumping table wp_ulike_meta is complete. Start replacing row(s).
-[2020-10-20 12:31:18][notice]Count of rows in wp_ulike_meta: 124
-[2020-10-20 12:31:18][notice]Replace the row in 0 line.
-[2020-10-20 12:31:18][notice]finish replace rows
-[2020-10-20 12:31:18][notice]Drop table if exist
-[2020-10-20 12:31:18][notice]Create table wp_user_registration_sessions
-[2020-10-20 12:31:18][notice]lock replace table:g6C_user_registration_sessions to :wp_user_registration_sessions
-[2020-10-20 12:31:18][notice]Dumping table wp_user_registration_sessions is complete. Start replacing row(s).
-[2020-10-20 12:31:18][notice]Count of rows in wp_user_registration_sessions: 0
-[2020-10-20 12:31:18][notice]Drop table if exist
-[2020-10-20 12:31:18][notice]Create table wp_usermeta
-[2020-10-20 12:31:18][notice]lock replace table:g6C_usermeta to :wp_usermeta
-[2020-10-20 12:31:18][notice]Dumping table wp_usermeta is complete. Start replacing row(s).
-[2020-10-20 12:31:18][notice]UPDATE wp_usermeta SET meta_key=REPLACE(meta_key,"g6C_","wp_") WHERE meta_key LIKE "g6C\_%";
-[2020-10-20 12:31:18][notice]update query len:92
-[2020-10-20 12:31:18][notice]Drop table if exist
-[2020-10-20 12:31:18][notice]Create table wp_users
-[2020-10-20 12:31:18][notice]lock replace table:g6C_users to :wp_users
-[2020-10-20 12:31:18][notice]Dumping table wp_users is complete. Start replacing row(s).
-[2020-10-20 12:31:18][notice]Count of rows in wp_users: 39
-[2020-10-20 12:31:18][notice]Replace the row in 0 line.
-[2020-10-20 12:31:18][notice]finish replace rows
-[2020-10-20 12:31:18][notice]Drop table if exist
-[2020-10-20 12:31:18][notice]Create table wp_wpvivid_scan_result
-[2020-10-20 12:31:18][notice]lock replace table:g6C_wpvivid_scan_result to :wp_wpvivid_scan_result
-[2020-10-20 12:31:18][notice]Dumping table wp_wpvivid_scan_result is complete. Start replacing row(s).
-[2020-10-20 12:31:18][notice]Count of rows in wp_wpvivid_scan_result: 0
-[2020-10-20 12:31:18][notice]Drop table if exist
-[2020-10-20 12:31:18][notice]Create table wp_wpvivid_unused_uploads_files
-[2020-10-20 12:31:18][notice]lock replace table:g6C_wpvivid_unused_uploads_files to :wp_wpvivid_unused_uploads_files
-[2020-10-20 12:31:18][notice]Dumping table wp_wpvivid_unused_uploads_files is complete. Start replacing row(s).
-[2020-10-20 12:31:18][notice]Count of rows in wp_wpvivid_unused_uploads_files: 0
-[2020-10-20 12:31:18][notice]UPDATE wp_options SET option_value="http://localhost" WHERE option_name="siteurl";
-[2020-10-20 12:31:18][notice]update query len:82
-[2020-10-20 12:31:18][notice]UPDATE wp_options SET option_value="http://localhost" WHERE option_name="home";
-[2020-10-20 12:31:18][notice]update query len:79
-[2020-10-20 12:31:18][notice]Finished restoring dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_db.zip
-[2020-10-20 12:31:20][notice]Restore task completed.
-[2020-10-20 12:31:22][notice]disable maintenance mode
-[2020-10-20 12:31:22][notice]clean file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_plugin.zip
-[2020-10-20 12:31:22][notice]clean file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_core.zip
-[2020-10-20 12:31:22][notice]clean file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_themes.zip
-[2020-10-20 12:31:22][notice]clean file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_content.zip
-[2020-10-20 12:31:22][notice]clean file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_uploads.zip
-[2020-10-20 12:31:22][notice]clean file:C:\Users\Sean\Desktop\repo\GoGet/wp-content\wpvividbackups\dev2.letsgoget.info_wpvivid-5f8da83a63a63_2020-10-19-22-52_backup_db.zip
+[2020-11-17 18:01:47][notice]init restore data
+[2020-11-17 18:01:47][notice]Start restoring www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_all.zip
+[2020-11-17 18:01:47][notice]extract root:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/
+[2020-11-17 18:01:47][notice]start extracting file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_all.zip
+[2020-11-17 18:01:49][notice]extract finished file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_all.zip
+[2020-11-17 18:01:49][notice]Finished restoring www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_all.zip
+[2020-11-17 18:01:50][notice]Start restoring www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_plugin.zip
+[2020-11-17 18:01:50][notice]restore from files:["\/Users\/cwhuang\/Sites\/wordpress\/wp-content\/wpvividbackups\/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_plugin.zip"]
+[2020-11-17 18:01:50][notice]start extracting file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_plugin.zip
+[2020-11-17 18:01:51][notice]extract finished file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_plugin.zip
+[2020-11-17 18:01:51][notice]Finished restoring www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_plugin.zip
+[2020-11-17 18:01:52][notice]Start restoring www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_core.zip
+[2020-11-17 18:01:52][notice]restore from files:["\/Users\/cwhuang\/Sites\/wordpress\/wp-content\/wpvividbackups\/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_core.zip"]
+[2020-11-17 18:01:52][notice]start extracting file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_core.zip
+[2020-11-17 18:01:53][notice]extract finished file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_core.zip
+[2020-11-17 18:01:53][notice]Finished restoring www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_core.zip
+[2020-11-17 18:01:53][notice]Start restoring www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_themes.zip
+[2020-11-17 18:01:53][notice]restore from files:["\/Users\/cwhuang\/Sites\/wordpress\/wp-content\/wpvividbackups\/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_themes.zip"]
+[2020-11-17 18:01:53][notice]start extracting file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_themes.zip
+[2020-11-17 18:01:54][notice]extract finished file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_themes.zip
+[2020-11-17 18:01:54][notice]Finished restoring www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_themes.zip
+[2020-11-17 18:01:56][notice]Start restoring www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_content.zip
+[2020-11-17 18:01:56][notice]restore from files:["\/Users\/cwhuang\/Sites\/wordpress\/wp-content\/wpvividbackups\/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_content.zip"]
+[2020-11-17 18:01:56][notice]start extracting file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_content.zip
+[2020-11-17 18:01:56][notice]extract finished file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_content.zip
+[2020-11-17 18:01:56][notice]Finished restoring www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_content.zip
+[2020-11-17 18:01:57][notice]Start restoring www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_uploads.zip
+[2020-11-17 18:01:57][notice]restore from files:["\/Users\/cwhuang\/Sites\/wordpress\/wp-content\/wpvividbackups\/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_uploads.zip"]
+[2020-11-17 18:01:57][notice]start extracting file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_uploads.zip
+[2020-11-17 18:01:57][notice]extract finished file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_uploads.zip
+[2020-11-17 18:01:57][notice]Finished restoring www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_uploads.zip
+[2020-11-17 18:01:58][notice]Start restoring www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_db.zip
+[2020-11-17 18:01:58][notice]start extracting file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_db.zip
+[2020-11-17 18:01:58][notice]extract finished file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_db.zip
+[2020-11-17 18:01:58][notice]sql file: www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_db.sql
+[2020-11-17 18:01:58][Warning]wpdb
+[2020-11-17 18:01:58][notice]The test to create table succeeds.
+[2020-11-17 18:01:58][notice]The test to insert into table succeeds.
+[2020-11-17 18:01:58][notice]The test to drop table succeeds.
+[2020-11-17 18:01:58][notice]get max_allowed_packet wpdb 
+[2020-11-17 18:01:58][notice]max_allowed_packet less than 32M :4.00 MB
+[2020-11-17 18:01:58][notice]Start import sql file.
+[2020-11-17 18:01:58][notice]old site url:https://www.letsgoget.info
+[2020-11-17 18:01:58][notice]old home url:https://www.letsgoget.info
+[2020-11-17 18:01:58][notice]old content url:https://www.letsgoget.info/wp-content
+[2020-11-17 18:01:58][notice]old upload url:https://www.letsgoget.info/wp-content/uploads
+[2020-11-17 18:01:58][notice]old site prefix:gpm_
+[2020-11-17 18:01:58][notice]Drop table if exist
+[2020-11-17 18:01:58][notice]Create table wp_bp_activity
+[2020-11-17 18:01:58][notice]lock replace table:gpm_bp_activity to :wp_bp_activity
+[2020-11-17 18:01:58][notice]Dumping table wp_bp_activity is complete. Start replacing row(s).
+[2020-11-17 18:01:58][notice]Count of rows in wp_bp_activity: 12
+[2020-11-17 18:01:58][notice]Replace the row in 0 line.
+[2020-11-17 18:01:58][notice]finish replace rows
+[2020-11-17 18:01:58][notice]Drop table if exist
+[2020-11-17 18:01:58][notice]Create table wp_bp_activity_meta
+[2020-11-17 18:01:58][notice]lock replace table:gpm_bp_activity_meta to :wp_bp_activity_meta
+[2020-11-17 18:01:58][notice]Dumping table wp_bp_activity_meta is complete. Start replacing row(s).
+[2020-11-17 18:01:58][notice]Count of rows in wp_bp_activity_meta: 0
+[2020-11-17 18:01:58][notice]Drop table if exist
+[2020-11-17 18:01:58][notice]Create table wp_bp_friends
+[2020-11-17 18:01:58][notice]lock replace table:gpm_bp_friends to :wp_bp_friends
+[2020-11-17 18:01:58][notice]Dumping table wp_bp_friends is complete. Start replacing row(s).
+[2020-11-17 18:01:58][notice]Count of rows in wp_bp_friends: 1
+[2020-11-17 18:01:58][notice]Replace the row in 0 line.
+[2020-11-17 18:01:58][notice]finish replace rows
+[2020-11-17 18:01:58][notice]Drop table if exist
+[2020-11-17 18:01:58][notice]Create table wp_bp_groups
+[2020-11-17 18:01:58][notice]lock replace table:gpm_bp_groups to :wp_bp_groups
+[2020-11-17 18:01:58][notice]Dumping table wp_bp_groups is complete. Start replacing row(s).
+[2020-11-17 18:01:58][notice]Count of rows in wp_bp_groups: 0
+[2020-11-17 18:01:58][notice]Drop table if exist
+[2020-11-17 18:01:58][notice]Create table wp_bp_groups_groupmeta
+[2020-11-17 18:01:58][notice]lock replace table:gpm_bp_groups_groupmeta to :wp_bp_groups_groupmeta
+[2020-11-17 18:01:58][notice]Dumping table wp_bp_groups_groupmeta is complete. Start replacing row(s).
+[2020-11-17 18:01:58][notice]Count of rows in wp_bp_groups_groupmeta: 0
+[2020-11-17 18:01:58][notice]Drop table if exist
+[2020-11-17 18:01:58][notice]Create table wp_bp_groups_members
+[2020-11-17 18:01:58][notice]lock replace table:gpm_bp_groups_members to :wp_bp_groups_members
+[2020-11-17 18:01:58][notice]Dumping table wp_bp_groups_members is complete. Start replacing row(s).
+[2020-11-17 18:01:58][notice]Count of rows in wp_bp_groups_members: 0
+[2020-11-17 18:01:58][notice]Drop table if exist
+[2020-11-17 18:01:58][notice]Create table wp_bp_invitations
+[2020-11-17 18:01:58][notice]lock replace table:gpm_bp_invitations to :wp_bp_invitations
+[2020-11-17 18:01:58][notice]Dumping table wp_bp_invitations is complete. Start replacing row(s).
+[2020-11-17 18:01:58][notice]Count of rows in wp_bp_invitations: 0
+[2020-11-17 18:01:58][notice]Drop table if exist
+[2020-11-17 18:01:58][notice]Create table wp_bp_messages_messages
+[2020-11-17 18:01:58][notice]lock replace table:gpm_bp_messages_messages to :wp_bp_messages_messages
+[2020-11-17 18:01:58][notice]Dumping table wp_bp_messages_messages is complete. Start replacing row(s).
+[2020-11-17 18:01:58][notice]Count of rows in wp_bp_messages_messages: 0
+[2020-11-17 18:01:58][notice]Drop table if exist
+[2020-11-17 18:01:58][notice]Create table wp_bp_messages_meta
+[2020-11-17 18:01:58][notice]lock replace table:gpm_bp_messages_meta to :wp_bp_messages_meta
+[2020-11-17 18:01:58][notice]Dumping table wp_bp_messages_meta is complete. Start replacing row(s).
+[2020-11-17 18:01:58][notice]Count of rows in wp_bp_messages_meta: 0
+[2020-11-17 18:01:58][notice]Drop table if exist
+[2020-11-17 18:01:58][notice]Create table wp_bp_messages_notices
+[2020-11-17 18:01:58][notice]lock replace table:gpm_bp_messages_notices to :wp_bp_messages_notices
+[2020-11-17 18:01:58][notice]Dumping table wp_bp_messages_notices is complete. Start replacing row(s).
+[2020-11-17 18:01:58][notice]Count of rows in wp_bp_messages_notices: 0
+[2020-11-17 18:01:58][notice]Drop table if exist
+[2020-11-17 18:01:58][notice]Create table wp_bp_messages_recipients
+[2020-11-17 18:01:58][notice]lock replace table:gpm_bp_messages_recipients to :wp_bp_messages_recipients
+[2020-11-17 18:01:58][notice]Dumping table wp_bp_messages_recipients is complete. Start replacing row(s).
+[2020-11-17 18:01:58][notice]Count of rows in wp_bp_messages_recipients: 0
+[2020-11-17 18:01:58][notice]Drop table if exist
+[2020-11-17 18:01:58][notice]Create table wp_bp_notifications
+[2020-11-17 18:01:58][notice]lock replace table:gpm_bp_notifications to :wp_bp_notifications
+[2020-11-17 18:01:58][notice]Dumping table wp_bp_notifications is complete. Start replacing row(s).
+[2020-11-17 18:01:58][notice]Count of rows in wp_bp_notifications: 3
+[2020-11-17 18:01:58][notice]Replace the row in 0 line.
+[2020-11-17 18:01:58][notice]finish replace rows
+[2020-11-17 18:01:58][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_bp_notifications_meta
+[2020-11-17 18:01:59][notice]lock replace table:gpm_bp_notifications_meta to :wp_bp_notifications_meta
+[2020-11-17 18:01:59][notice]Dumping table wp_bp_notifications_meta is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_bp_notifications_meta: 0
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_bp_user_blogs
+[2020-11-17 18:01:59][notice]lock replace table:gpm_bp_user_blogs to :wp_bp_user_blogs
+[2020-11-17 18:01:59][notice]Dumping table wp_bp_user_blogs is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_bp_user_blogs: 1
+[2020-11-17 18:01:59][notice]Replace the row in 0 line.
+[2020-11-17 18:01:59][notice]finish replace rows
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_bp_user_blogs_blogmeta
+[2020-11-17 18:01:59][notice]lock replace table:gpm_bp_user_blogs_blogmeta to :wp_bp_user_blogs_blogmeta
+[2020-11-17 18:01:59][notice]Dumping table wp_bp_user_blogs_blogmeta is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_bp_user_blogs_blogmeta: 8
+[2020-11-17 18:01:59][notice]Replace the row in 0 line.
+[2020-11-17 18:01:59][notice]finish replace rows
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_bp_xprofile_data
+[2020-11-17 18:01:59][notice]lock replace table:gpm_bp_xprofile_data to :wp_bp_xprofile_data
+[2020-11-17 18:01:59][notice]Dumping table wp_bp_xprofile_data is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_bp_xprofile_data: 2
+[2020-11-17 18:01:59][notice]Replace the row in 0 line.
+[2020-11-17 18:01:59][notice]finish replace rows
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_bp_xprofile_fields
+[2020-11-17 18:01:59][notice]lock replace table:gpm_bp_xprofile_fields to :wp_bp_xprofile_fields
+[2020-11-17 18:01:59][notice]Dumping table wp_bp_xprofile_fields is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_bp_xprofile_fields: 1
+[2020-11-17 18:01:59][notice]Replace the row in 0 line.
+[2020-11-17 18:01:59][notice]finish replace rows
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_bp_xprofile_groups
+[2020-11-17 18:01:59][notice]lock replace table:gpm_bp_xprofile_groups to :wp_bp_xprofile_groups
+[2020-11-17 18:01:59][notice]Dumping table wp_bp_xprofile_groups is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_bp_xprofile_groups: 1
+[2020-11-17 18:01:59][notice]Replace the row in 0 line.
+[2020-11-17 18:01:59][notice]finish replace rows
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_bp_xprofile_meta
+[2020-11-17 18:01:59][notice]lock replace table:gpm_bp_xprofile_meta to :wp_bp_xprofile_meta
+[2020-11-17 18:01:59][notice]Dumping table wp_bp_xprofile_meta is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_bp_xprofile_meta: 1
+[2020-11-17 18:01:59][notice]Replace the row in 0 line.
+[2020-11-17 18:01:59][notice]finish replace rows
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_commentmeta
+[2020-11-17 18:01:59][notice]lock replace table:gpm_commentmeta to :wp_commentmeta
+[2020-11-17 18:01:59][notice]Dumping table wp_commentmeta is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_commentmeta: 0
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_comments
+[2020-11-17 18:01:59][notice]lock replace table:gpm_comments to :wp_comments
+[2020-11-17 18:01:59][notice]Dumping table wp_comments is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_comments: 0
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_ff_scheduled_actions
+[2020-11-17 18:01:59][notice]lock replace table:gpm_ff_scheduled_actions to :wp_ff_scheduled_actions
+[2020-11-17 18:01:59][notice]Dumping table wp_ff_scheduled_actions is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_ff_scheduled_actions: 0
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_fluentform_entry_details
+[2020-11-17 18:01:59][notice]lock replace table:gpm_fluentform_entry_details to :wp_fluentform_entry_details
+[2020-11-17 18:01:59][notice]Dumping table wp_fluentform_entry_details is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_fluentform_entry_details: 2
+[2020-11-17 18:01:59][notice]Replace the row in 0 line.
+[2020-11-17 18:01:59][notice]finish replace rows
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_fluentform_form_analytics
+[2020-11-17 18:01:59][notice]lock replace table:gpm_fluentform_form_analytics to :wp_fluentform_form_analytics
+[2020-11-17 18:01:59][notice]Dumping table wp_fluentform_form_analytics is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_fluentform_form_analytics: 1
+[2020-11-17 18:01:59][notice]Replace the row in 0 line.
+[2020-11-17 18:01:59][notice]finish replace rows
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_fluentform_form_meta
+[2020-11-17 18:01:59][notice]lock replace table:gpm_fluentform_form_meta to :wp_fluentform_form_meta
+[2020-11-17 18:01:59][notice]Dumping table wp_fluentform_form_meta is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_fluentform_form_meta: 3
+[2020-11-17 18:01:59][notice]Replace the row in 0 line.
+[2020-11-17 18:01:59][notice]finish replace rows
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_fluentform_forms
+[2020-11-17 18:01:59][notice]lock replace table:gpm_fluentform_forms to :wp_fluentform_forms
+[2020-11-17 18:01:59][notice]Dumping table wp_fluentform_forms is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_fluentform_forms: 1
+[2020-11-17 18:01:59][notice]Replace the row in 0 line.
+[2020-11-17 18:01:59][notice]finish replace rows
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_fluentform_logs
+[2020-11-17 18:01:59][notice]lock replace table:gpm_fluentform_logs to :wp_fluentform_logs
+[2020-11-17 18:01:59][notice]Dumping table wp_fluentform_logs is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_fluentform_logs: 0
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_fluentform_submission_meta
+[2020-11-17 18:01:59][notice]lock replace table:gpm_fluentform_submission_meta to :wp_fluentform_submission_meta
+[2020-11-17 18:01:59][notice]Dumping table wp_fluentform_submission_meta is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_fluentform_submission_meta: 0
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_fluentform_submissions
+[2020-11-17 18:01:59][notice]lock replace table:gpm_fluentform_submissions to :wp_fluentform_submissions
+[2020-11-17 18:01:59][notice]Dumping table wp_fluentform_submissions is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_fluentform_submissions: 1
+[2020-11-17 18:01:59][notice]Replace the row in 0 line.
+[2020-11-17 18:01:59][notice]finish replace rows
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_gdrts_cache
+[2020-11-17 18:01:59][notice]lock replace table:gpm_gdrts_cache to :wp_gdrts_cache
+[2020-11-17 18:01:59][notice]Dumping table wp_gdrts_cache is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_gdrts_cache: 0
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_gdrts_itemmeta
+[2020-11-17 18:01:59][notice]lock replace table:gpm_gdrts_itemmeta to :wp_gdrts_itemmeta
+[2020-11-17 18:01:59][notice]Dumping table wp_gdrts_itemmeta is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_gdrts_itemmeta: 0
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_gdrts_items
+[2020-11-17 18:01:59][notice]lock replace table:gpm_gdrts_items to :wp_gdrts_items
+[2020-11-17 18:01:59][notice]Dumping table wp_gdrts_items is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_gdrts_items: 5
+[2020-11-17 18:01:59][notice]Replace the row in 0 line.
+[2020-11-17 18:01:59][notice]finish replace rows
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_gdrts_items_basic
+[2020-11-17 18:01:59][notice]lock replace table:gpm_gdrts_items_basic to :wp_gdrts_items_basic
+[2020-11-17 18:01:59][notice]Dumping table wp_gdrts_items_basic is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_gdrts_items_basic: 0
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_gdrts_logmeta
+[2020-11-17 18:01:59][notice]lock replace table:gpm_gdrts_logmeta to :wp_gdrts_logmeta
+[2020-11-17 18:01:59][notice]Dumping table wp_gdrts_logmeta is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_gdrts_logmeta: 0
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_gdrts_logs
+[2020-11-17 18:01:59][notice]lock replace table:gpm_gdrts_logs to :wp_gdrts_logs
+[2020-11-17 18:01:59][notice]Dumping table wp_gdrts_logs is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_gdrts_logs: 0
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_likebtn_item
+[2020-11-17 18:01:59][notice]lock replace table:gpm_likebtn_item to :wp_likebtn_item
+[2020-11-17 18:01:59][notice]Dumping table wp_likebtn_item is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_likebtn_item: 0
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_likebtn_vote
+[2020-11-17 18:01:59][notice]lock replace table:gpm_likebtn_vote to :wp_likebtn_vote
+[2020-11-17 18:01:59][notice]Dumping table wp_likebtn_vote is complete. Start replacing row(s).
+[2020-11-17 18:01:59][notice]Count of rows in wp_likebtn_vote: 9
+[2020-11-17 18:01:59][notice]Replace the row in 0 line.
+[2020-11-17 18:01:59][notice]finish replace rows
+[2020-11-17 18:01:59][notice]Drop table if exist
+[2020-11-17 18:01:59][notice]Create table wp_links
+[2020-11-17 18:02:00][notice]lock replace table:gpm_links to :wp_links
+[2020-11-17 18:02:00][notice]Dumping table wp_links is complete. Start replacing row(s).
+[2020-11-17 18:02:00][notice]Count of rows in wp_links: 0
+[2020-11-17 18:02:00][notice]Drop table if exist
+[2020-11-17 18:02:00][notice]Create table wp_myCRED_log
+[2020-11-17 18:02:00][notice]lock replace table:gpm_myCRED_log to :wp_myCRED_log
+[2020-11-17 18:02:00][notice]Dumping table wp_myCRED_log is complete. Start replacing row(s).
+[2020-11-17 18:02:00][notice]Count of rows in wp_myCRED_log: 573
+[2020-11-17 18:02:00][notice]Replace the row in 0 line.
+[2020-11-17 18:02:00][notice]finish replace rows
+[2020-11-17 18:02:00][notice]Drop table if exist
+[2020-11-17 18:02:00][notice]Create table wp_options
+[2020-11-17 18:02:00][notice]lock replace table:gpm_options to :wp_options
+[2020-11-17 18:02:01][notice]Dumping table wp_options is complete. Start replacing row(s).
+[2020-11-17 18:02:01][notice]UPDATE wp_options SET option_name="wp_user_roles" WHERE option_name="gpm_user_roles";
+[2020-11-17 18:02:01][notice]update query len:85
+[2020-11-17 18:02:01][notice]Count of rows in wp_options: 2445
+[2020-11-17 18:02:01][notice]Replace the row in 0 line.
+[2020-11-17 18:02:01][notice]finish replace rows
+[2020-11-17 18:02:01][notice]Drop table if exist
+[2020-11-17 18:02:01][notice]Create table wp_postmeta
+[2020-11-17 18:02:01][notice]lock replace table:gpm_postmeta to :wp_postmeta
+[2020-11-17 18:02:02][notice]Dumping table wp_postmeta is complete. Start replacing row(s).
+[2020-11-17 18:02:02][notice]Count of rows in wp_postmeta: 6141
+[2020-11-17 18:02:03][notice]Replace the row in 0 line.
+[2020-11-17 18:02:03][notice]Replace the row in 5000 line.
+[2020-11-17 18:02:03][notice]finish replace rows
+[2020-11-17 18:02:03][notice]Drop table if exist
+[2020-11-17 18:02:03][notice]Create table wp_posts
+[2020-11-17 18:02:03][notice]lock replace table:gpm_posts to :wp_posts
+[2020-11-17 18:02:04][notice]Dumping table wp_posts is complete. Start replacing row(s).
+[2020-11-17 18:02:04][notice]Count of rows in wp_posts: 451
+[2020-11-17 18:02:04][notice]Replace the row in 0 line.
+[2020-11-17 18:02:04][notice]finish replace rows
+[2020-11-17 18:02:04][notice]Drop table if exist
+[2020-11-17 18:02:04][notice]Create table wp_signups
+[2020-11-17 18:02:04][notice]lock replace table:gpm_signups to :wp_signups
+[2020-11-17 18:02:04][notice]Dumping table wp_signups is complete. Start replacing row(s).
+[2020-11-17 18:02:04][notice]Count of rows in wp_signups: 3
+[2020-11-17 18:02:04][notice]Replace the row in 0 line.
+[2020-11-17 18:02:04][notice]finish replace rows
+[2020-11-17 18:02:04][notice]Drop table if exist
+[2020-11-17 18:02:04][notice]Create table wp_term_relationships
+[2020-11-17 18:02:04][notice]lock replace table:gpm_term_relationships to :wp_term_relationships
+[2020-11-17 18:02:04][notice]Dumping table wp_term_relationships is complete. Start replacing row(s).
+[2020-11-17 18:02:04][Warning]Skip table wp_term_relationships
+[2020-11-17 18:02:04][notice]Drop table if exist
+[2020-11-17 18:02:04][notice]Create table wp_term_taxonomy
+[2020-11-17 18:02:04][notice]lock replace table:gpm_term_taxonomy to :wp_term_taxonomy
+[2020-11-17 18:02:04][notice]Dumping table wp_term_taxonomy is complete. Start replacing row(s).
+[2020-11-17 18:02:04][notice]Count of rows in wp_term_taxonomy: 18
+[2020-11-17 18:02:04][notice]Replace the row in 0 line.
+[2020-11-17 18:02:04][notice]finish replace rows
+[2020-11-17 18:02:04][notice]Drop table if exist
+[2020-11-17 18:02:04][notice]Create table wp_termmeta
+[2020-11-17 18:02:04][notice]lock replace table:gpm_termmeta to :wp_termmeta
+[2020-11-17 18:02:04][notice]Dumping table wp_termmeta is complete. Start replacing row(s).
+[2020-11-17 18:02:04][notice]Count of rows in wp_termmeta: 0
+[2020-11-17 18:02:04][notice]Drop table if exist
+[2020-11-17 18:02:04][notice]Create table wp_terms
+[2020-11-17 18:02:04][notice]lock replace table:gpm_terms to :wp_terms
+[2020-11-17 18:02:04][notice]Dumping table wp_terms is complete. Start replacing row(s).
+[2020-11-17 18:02:04][notice]Count of rows in wp_terms: 18
+[2020-11-17 18:02:04][notice]Replace the row in 0 line.
+[2020-11-17 18:02:04][notice]finish replace rows
+[2020-11-17 18:02:04][notice]Drop table if exist
+[2020-11-17 18:02:04][notice]Create table wp_ulike
+[2020-11-17 18:02:04][notice]lock replace table:gpm_ulike to :wp_ulike
+[2020-11-17 18:02:04][notice]Dumping table wp_ulike is complete. Start replacing row(s).
+[2020-11-17 18:02:04][notice]Count of rows in wp_ulike: 0
+[2020-11-17 18:02:04][notice]Drop table if exist
+[2020-11-17 18:02:04][notice]Create table wp_ulike_activities
+[2020-11-17 18:02:04][notice]lock replace table:gpm_ulike_activities to :wp_ulike_activities
+[2020-11-17 18:02:04][notice]Dumping table wp_ulike_activities is complete. Start replacing row(s).
+[2020-11-17 18:02:04][notice]Count of rows in wp_ulike_activities: 0
+[2020-11-17 18:02:04][notice]Drop table if exist
+[2020-11-17 18:02:04][notice]Create table wp_ulike_comments
+[2020-11-17 18:02:04][notice]lock replace table:gpm_ulike_comments to :wp_ulike_comments
+[2020-11-17 18:02:04][notice]Dumping table wp_ulike_comments is complete. Start replacing row(s).
+[2020-11-17 18:02:04][notice]Count of rows in wp_ulike_comments: 0
+[2020-11-17 18:02:04][notice]Drop table if exist
+[2020-11-17 18:02:04][notice]Create table wp_ulike_forums
+[2020-11-17 18:02:04][notice]lock replace table:gpm_ulike_forums to :wp_ulike_forums
+[2020-11-17 18:02:04][notice]Dumping table wp_ulike_forums is complete. Start replacing row(s).
+[2020-11-17 18:02:04][notice]Count of rows in wp_ulike_forums: 11
+[2020-11-17 18:02:04][notice]Replace the row in 0 line.
+[2020-11-17 18:02:04][notice]finish replace rows
+[2020-11-17 18:02:04][notice]Drop table if exist
+[2020-11-17 18:02:04][notice]Create table wp_ulike_meta
+[2020-11-17 18:02:04][notice]lock replace table:gpm_ulike_meta to :wp_ulike_meta
+[2020-11-17 18:02:04][notice]Dumping table wp_ulike_meta is complete. Start replacing row(s).
+[2020-11-17 18:02:04][notice]Count of rows in wp_ulike_meta: 124
+[2020-11-17 18:02:04][notice]Replace the row in 0 line.
+[2020-11-17 18:02:04][notice]finish replace rows
+[2020-11-17 18:02:04][notice]Drop table if exist
+[2020-11-17 18:02:04][notice]Create table wp_user_registration_sessions
+[2020-11-17 18:02:04][notice]lock replace table:gpm_user_registration_sessions to :wp_user_registration_sessions
+[2020-11-17 18:02:04][notice]Dumping table wp_user_registration_sessions is complete. Start replacing row(s).
+[2020-11-17 18:02:04][notice]Count of rows in wp_user_registration_sessions: 0
+[2020-11-17 18:02:04][notice]Drop table if exist
+[2020-11-17 18:02:05][notice]Create table wp_usermeta
+[2020-11-17 18:02:05][notice]lock replace table:gpm_usermeta to :wp_usermeta
+[2020-11-17 18:02:06][notice]Dumping table wp_usermeta is complete. Start replacing row(s).
+[2020-11-17 18:02:06][notice]UPDATE wp_usermeta SET meta_key=REPLACE(meta_key,"gpm_","wp_") WHERE meta_key LIKE "gpm\_%";
+[2020-11-17 18:02:06][notice]update query len:92
+[2020-11-17 18:02:06][notice]Drop table if exist
+[2020-11-17 18:02:06][notice]Create table wp_users
+[2020-11-17 18:02:06][notice]lock replace table:gpm_users to :wp_users
+[2020-11-17 18:02:06][notice]Dumping table wp_users is complete. Start replacing row(s).
+[2020-11-17 18:02:06][notice]Count of rows in wp_users: 164
+[2020-11-17 18:02:06][notice]Replace the row in 0 line.
+[2020-11-17 18:02:06][notice]finish replace rows
+[2020-11-17 18:02:06][notice]Drop table if exist
+[2020-11-17 18:02:06][notice]Create table wp_wpvivid_scan_result
+[2020-11-17 18:02:06][notice]lock replace table:gpm_wpvivid_scan_result to :wp_wpvivid_scan_result
+[2020-11-17 18:02:06][notice]Dumping table wp_wpvivid_scan_result is complete. Start replacing row(s).
+[2020-11-17 18:02:06][notice]Count of rows in wp_wpvivid_scan_result: 0
+[2020-11-17 18:02:06][notice]Drop table if exist
+[2020-11-17 18:02:06][notice]Create table wp_wpvivid_unused_uploads_files
+[2020-11-17 18:02:06][notice]lock replace table:gpm_wpvivid_unused_uploads_files to :wp_wpvivid_unused_uploads_files
+[2020-11-17 18:02:06][notice]Dumping table wp_wpvivid_unused_uploads_files is complete. Start replacing row(s).
+[2020-11-17 18:02:06][notice]Count of rows in wp_wpvivid_unused_uploads_files: 0
+[2020-11-17 18:02:06][notice]UPDATE wp_options SET option_value="http://localhost/wordpress" WHERE option_name="siteurl";
+[2020-11-17 18:02:06][notice]update query len:92
+[2020-11-17 18:02:06][notice]UPDATE wp_options SET option_value="http://localhost/wordpress" WHERE option_name="home";
+[2020-11-17 18:02:06][notice]update query len:89
+[2020-11-17 18:02:06][notice]Finished restoring www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_db.zip
+[2020-11-17 18:02:09][notice]Restore task completed.
+[2020-11-17 18:02:10][notice]disable maintenance mode
+[2020-11-17 18:02:10][notice]clean file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_plugin.zip
+[2020-11-17 18:02:10][notice]clean file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_core.zip
+[2020-11-17 18:02:10][notice]clean file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_themes.zip
+[2020-11-17 18:02:10][notice]clean file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_content.zip
+[2020-11-17 18:02:10][notice]clean file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_uploads.zip
+[2020-11-17 18:02:10][notice]clean file:/Users/cwhuang/Sites/wordpress/wp-content/wpvividbackups/www.letsgoget.info_wpvivid-5fb3fbeb35cd0_2020-11-18-00-35_backup_db.zip
