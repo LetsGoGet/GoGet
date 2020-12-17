@@ -6,8 +6,8 @@
 面試時間<a style="color:#FF0000;font-size:20px;">*</a>,date,,,
 面試地點,place,,,
 面試地點<a style="color:#FF0000;font-size:20px;">*</a>,dropdown_03,,
-面試難度,singleSelection1,,,
-面試結果,singleSelection2,,,
+面試難度<a style="color:#FF0000;font-size:20px;">*</a>,singleSelection1,,,
+面試結果<a style="color:#FF0000;font-size:20px;">*</a>,singleSelection2,,,
 [mycred_sell_this]
 面試項目<a style="color:#FF0000;font-size:20px;">*</a>,multiSelection,選擇申請過程中有參與到的項目/關卡（可複選）,選擇申請過程中有參與到的項目/關卡（可複選）,
 準備過程<a style="color:#FF0000;font-size:20px;">*</a>,textarea,履歷、面試準備方法及時間安排,,
