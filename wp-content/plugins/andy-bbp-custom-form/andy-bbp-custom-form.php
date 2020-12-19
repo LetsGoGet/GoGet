@@ -992,17 +992,21 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                     $field_type = $row[1];
                     $field_key = hash('ripemd160',$field_name);
 
+                    //是否將此欄位存到文章內容中
+                    $saveToPost = true;
+
                     if ($key == 0){ // 公司名稱
                         insertDataToDB($_POST['bbp_' . $field_key . '_content']);
                         $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . " ";
                     } else if ($key == 2) { // 職務名稱
                         $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . "面試經驗";
                     } else if ($key == 3) { // 職務名稱
-                        $isAnonymous = $_POST['bbp_' . $field_key . '_content'];
+                        $isAnonymous = $_POST['bbp_' . $field_key . '_content'] == '是' ? 1:0;
+                        $saveToPost = false; //不存入 anonymous 欄位
                     }
 
                     //加入欄位內容
-                    if ( ! empty( $_POST['bbp_' . $field_key . '_content'] ) && $field_type != 'text') {
+                    if ( ! empty( $_POST['bbp_' . $field_key . '_content'] ) && $field_type != 'text' && $saveToPost) {
                         //加入欄位標題
                         $field_title = "<strong><u><font size='3pt'>" . str_replace($must_fill_tag,"",$field_name) . "</strong></u></font>
                 ";
