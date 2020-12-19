@@ -1034,12 +1034,8 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                         } else {
                             $content .= $token . $_POST['bbp_' . $field_key . '_content'] . $token;
                         }
-//                        error_log("欄位值:".$_POST['bbp_' . $field_key . '_content']);
-                    }else{
-                        if (strpos($field_name, $must_fill_tag) != false){
-                            bbp_add_error( 'bbp_edit_topic_content', __( '<strong>錯誤</strong>： 你有必填項目「' . str_replace($must_fill_tag,"",$field_name) . '」未填', 'bbpress' ) );
-                        }
                     }
+
                     $content .= '
 
 
