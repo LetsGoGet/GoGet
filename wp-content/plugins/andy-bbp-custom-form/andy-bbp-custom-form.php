@@ -1016,20 +1016,24 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
 
                         $token = '<noscript>' . $field_key . '</noscript>';
 
-                        if (is_array($_POST['bbp_' . $field_key . '_content'])){
+                        if (is_array($_POST['bbp_' . $field_key . '_content'])){ //處理欄位多值
                             $content .= $token;
-                            foreach($_POST['bbp_' . $field_key . '_content'] as $key1=>$item){
+
+                            //去除 array 中的空白值, 以防產生逗號結尾文字 ex. array 有三個值 ['1', '2', ''] ---> print 出 ' 1,2, '
+                            $arr = $_POST['bbp_' . $field_key . '_content'];
+                            $arr = array_filter($arr, function($value) { return !is_null($value) && $value !== ''; });
+
+                            foreach($arr as $key1=>$item){
                                 error_log($field_name . ':' . $item);
-                                if ($key1 != count($_POST['bbp_' . $field_key . '_content']) -1 ){
+                                if ($key1 != count($arr) -1){
                                     $content .= $item . ', ';
-                                    if ($key == (count($lines) - 1) || $key == (count($lines) - 2) || $key == (count($lines) - 3)) {
-                                        $customizedTags .= $item . ', ';
-                                    }
                                 } else {
                                     $content .= $item;
-                                    if ($key == (count($lines) - 1) || $key == (count($lines) - 2) || $key == (count($lines) - 3)) {
-                                        $customizedTags .= $item . ', ';
-                                    }
+                                }
+
+                                //customized tags
+                                if ($key == (count($lines) - 1) || $key == (count($lines) - 2) || $key == (count($lines) - 3)) {
+                                    $customizedTags .= $item . ', ';
                                 }
                             }
                             $content .= $token;
@@ -1047,11 +1051,9 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                     continue;
                 }
             }
-            error_log($content);
             return array($customizedTopic, $isAnonymous, $customizedTags, $content);
         } else {
             $content = $_POST['bbp_topic_content'];
-            error_log($content);
             return array($content);
         }
 	}
