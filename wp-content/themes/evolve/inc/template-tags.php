@@ -298,8 +298,9 @@ if ( ! function_exists( 'evolve_header_block_below' ) ) {
 			}
 		} elseif ( ( evolve_get_slider_position() == 'below' && ! is_front_page() ) || ( evolve_get_slider_position() == 'default' && evolve_theme_mod( 'evl_slider_position', 'below' ) == 'below' && ! is_front_page() ) ) {
 			get_template_part( 'template-parts/slider/slider' );
-		}
-
+		} elseif(evolve_theme_mod('evl_bootstrap_slider')){
+			get_template_part( 'template-parts/slider/slider' );
+        }
 		// Load The Header Widgets If Enabled
 		get_template_part( 'template-parts/header/header', 'widgets' );
 
@@ -413,7 +414,7 @@ add_action( 'evolve_footer_area', 'evolve_footer_widgets', 30 );
 if ( ! function_exists( 'evolve_custom_footer' ) ) {
 	function evolve_custom_footer() {
 		$evolve_home_url = esc_url( "https://theme4press.com/" );
-		echo '<div class="row"><div class="col custom-footer">' . evolve_theme_mod( 'evl_footer_content', '<div id="copyright"><a href="' . $evolve_home_url . 'evolve-multipurpose-wordpress-theme/">evolve</a> theme by Theme4Press - Powered by <a href="http://wordpress.org">WordPress</a></div>' ) . '</div></div>';
+		echo '<div class="row"><div class="col custom-footer">' . evolve_theme_mod( 'evl_footer_content', '<div id="copyright"><a href="' . $evolve_home_url . 'evolve-multipurpose-wordpress-theme/">evolve</a> theme by Theme4Press - Powered by <a href="https://wordpress.org">WordPress</a></div>' ) . '</div></div>';
 	}
 }
 
@@ -1254,29 +1255,30 @@ if ( ! function_exists( 'evolve_sharethis' ) ) {
                 <div class="share-this">
 
                     <a rel="nofollow" data-toggle="tooltip" data-placement="bottom"
-                       title="<?php esc_attr_e( 'Share on Twitter', 'evolve' ); ?>" target="_blank"
-                       href="http://twitter.com/intent/tweet?status=<?php echo $post->post_title; ?>+&raquo;+<?php the_permalink(); ?>">
+                       title="<?php esc_attr_e('Share on Twitter', 'evolve'); ?>" target="_blank"
+                       href="https://twitter.com/intent/tweet?text=<?php echo urlencode($post->post_title); ?>&amp;url=<?php echo urlencode(get_the_permalink()); ?>"
+                       ); ?>
 
-						<?php echo evolve_get_svg( 'twitter' ); ?>
+                        <?php echo evolve_get_svg('twitter'); ?>
 
                     </a>
                     <a rel="nofollow" data-toggle="tooltip" data-placement="bottom"
                        title="<?php esc_attr_e( 'Share on Facebook', 'evolve' ); ?>" target="_blank"
-                       href="http://www.facebook.com/sharer/sharer.php?u=<?php the_permalink(); ?>&amp;t=<?php echo $post->post_title; ?>">
+                       href="https://www.facebook.com/sharer/sharer.php?u=<?php the_permalink(); ?>&amp;t=<?php echo $post->post_title; ?>">
 
 						<?php echo evolve_get_svg( 'facebook' ); ?>
 
                     </a>
                     <a rel="nofollow" data-toggle="tooltip" data-placement="bottom"
                        title="<?php esc_attr_e( 'Share on Pinterest', 'evolve' ); ?>" target="_blank"
-                       href="http://pinterest.com/pin/create/button/?url=<?php the_permalink(); ?>&media=<?php echo $image_url; ?>&description=<?php echo $post->post_title; ?>">
+                       href="https://pinterest.com/pin/create/button/?url=<?php the_permalink(); ?>&media=<?php echo $image_url; ?>&description=<?php echo $post->post_title; ?>">
 
 						<?php echo evolve_get_svg( 'pinterest' ); ?>
 
                     </a>
                     <a rel="nofollow" data-toggle="tooltip" data-placement="bottom"
                        title="<?php esc_attr_e( 'Share by Email', 'evolve' ); ?>" target="_blank"
-                       href="http://www.addtoany.com/email?linkurl=<?php the_permalink(); ?>&linkname=<?php echo $post->post_title; ?>">
+                       href="https://www.addtoany.com/email?linkurl=<?php the_permalink(); ?>&linkname=<?php echo $post->post_title; ?>">
 
 						<?php echo evolve_get_svg( 'email' ); ?>
 
@@ -1284,7 +1286,7 @@ if ( ! function_exists( 'evolve_sharethis' ) ) {
                     <a rel="nofollow" data-toggle="tooltip" data-placement="bottom"
                        title="<?php esc_attr_e( 'More options', 'evolve' ); ?>"
                        target="_blank"
-                       href="http://www.addtoany.com/share_save#url=<?php the_permalink(); ?>&linkname=<?php echo $post->post_title; ?>">
+                       href="https://www.addtoany.com/share_save#url=<?php the_permalink(); ?>&linkname=<?php echo $post->post_title; ?>">
 
 						<?php echo evolve_get_svg( 'more' ); ?>
 
