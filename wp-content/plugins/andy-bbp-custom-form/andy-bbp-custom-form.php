@@ -897,7 +897,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         result += '</text>';
                         result += '<h6 class=\"check_result\">作者背景</h6><text>' + document.getElementById('$componentIDs[4]').nextElementSibling.children[0].children[0].value + '</text>';
                         result += '<h6 class=\"check_result\">面試時間</h6><text>' + document.getElementById('datepicker').value + '</text>';
-                        result += '<h6 class=\"check_result\">面試地點</h6><text>' + document.getElementById('$componentIDs[6]').children[0].children[0].value, document.getElementById('$componentIDs[6]').children[1].children[0].value + '</text>';
+                        result += '<h6 class=\"check_result\">職缺地點</h6><text>' + document.getElementById('$componentIDs[6]').children[0].children[0].value, document.getElementById('$componentIDs[6]').children[1].children[0].value + '</text>';
                         result += '<h6 class=\"check_result\">面試結果</h6><text>';
                         for(var i = 0; i < 4; i++) {
                             if (document.getElementById('$componentIDs[7]').children[i].checked)
