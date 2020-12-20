@@ -897,7 +897,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         result += '</text>';
                         result += '<h6 class=\"check_result\">作者背景</h6><text>' + document.getElementById('$componentIDs[4]').nextElementSibling.children[0].children[0].value + '</text>';
                         result += '<h6 class=\"check_result\">面試時間</h6><text>' + document.getElementById('datepicker').value + '</text>';
-                        result += '<h6 class=\"check_result\">面試地點</h6><text>' + document.getElementById('$componentIDs[6]').children[0].children[0].value, document.getElementById('$componentIDs[6]').children[1].children[0].value + '</text>';
+                        result += '<h6 class=\"check_result\">職缺地點</h6><text>' + document.getElementById('$componentIDs[6]').children[0].children[0].value, document.getElementById('$componentIDs[6]').children[1].children[0].value + '</text>';
                         result += '<h6 class=\"check_result\">面試結果</h6><text>';
                         for(var i = 0; i < 4; i++) {
                             if (document.getElementById('$componentIDs[7]').children[i].checked)
@@ -994,17 +994,21 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                     $field_type = $row[1];
                     $field_key = hash('ripemd160',$field_name);
 
+                    //是否將此欄位存到文章內容中
+                    $saveToPost = true;
+
                     if ($key == 0){ // 公司名稱
                         insertDataToDB($_POST['bbp_' . $field_key . '_content']);
                         $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . " ";
                     } else if ($key == 2) { // 職務名稱
                         $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . "面試經驗";
                     } else if ($key == 3) { // 職務名稱
-                        $isAnonymous = $_POST['bbp_' . $field_key . '_content'];
+                        $isAnonymous = $_POST['bbp_' . $field_key . '_content'] == '是' ? 1:0;
+                        $saveToPost = false; //不存入 anonymous 欄位
                     }
 
                     //加入欄位內容
-                    if ( ! empty( $_POST['bbp_' . $field_key . '_content'] ) && $field_type != 'text') {
+                    if ( ! empty( $_POST['bbp_' . $field_key . '_content'] ) && $field_type != 'text' && $saveToPost) {
                         //加入欄位標題
                         $field_title = "<strong><u><font size='3pt'>" . str_replace($must_fill_tag,"",$field_name) . "</strong></u></font>
                 ";
@@ -1012,32 +1016,32 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
 
                         $token = '<noscript>' . $field_key . '</noscript>';
 
-                        if (is_array($_POST['bbp_' . $field_key . '_content'])){
+                        if (is_array($_POST['bbp_' . $field_key . '_content'])){ //處理欄位多值
                             $content .= $token;
-                            foreach($_POST['bbp_' . $field_key . '_content'] as $key1=>$item){
+
+                            //去除 array 中的空白值, 以防產生逗號結尾文字 ex. array 有三個值 ['1', '2', ''] ---> print 出 ' 1,2, '
+                            $arr = $_POST['bbp_' . $field_key . '_content'];
+                            $arr = array_filter($arr, function($value) { return !is_null($value) && $value !== ''; });
+
+                            foreach($arr as $key1=>$item){
                                 error_log($field_name . ':' . $item);
-                                if ($key1 != count($_POST['bbp_' . $field_key . '_content']) -1 ){
+                                if ($key1 != count($arr) -1){
                                     $content .= $item . ', ';
-                                    if ($key == (count($lines) - 1) || $key == (count($lines) - 2) || $key == (count($lines) - 3)) {
-                                        $customizedTags .= $item . ', ';
-                                    }
                                 } else {
                                     $content .= $item;
-                                    if ($key == (count($lines) - 1) || $key == (count($lines) - 2) || $key == (count($lines) - 3)) {
-                                        $customizedTags .= $item . ', ';
-                                    }
+                                }
+
+                                //customized tags
+                                if ($key == (count($lines) - 1) || $key == (count($lines) - 2) || $key == (count($lines) - 3)) {
+                                    $customizedTags .= $item . ', ';
                                 }
                             }
                             $content .= $token;
                         } else {
                             $content .= $token . $_POST['bbp_' . $field_key . '_content'] . $token;
                         }
-//                        error_log("欄位值:".$_POST['bbp_' . $field_key . '_content']);
-                    }else{
-                        if (strpos($field_name, $must_fill_tag) != false){
-                            bbp_add_error( 'bbp_edit_topic_content', __( '<strong>錯誤</strong>： 你有必填項目「' . str_replace($must_fill_tag,"",$field_name) . '」未填', 'bbpress' ) );
-                        }
                     }
+
                     $content .= '
 
 
@@ -1047,11 +1051,9 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                     continue;
                 }
             }
-            error_log($content);
             return array($customizedTopic, $isAnonymous, $customizedTags, $content);
         } else {
             $content = $_POST['bbp_topic_content'];
-            error_log($content);
             return array($content);
         }
 	}

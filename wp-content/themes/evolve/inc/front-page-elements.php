@@ -4,6 +4,14 @@
     Bootstrap Slider
     ======================================= */
 
+// if wp is not 5.5
+if ( ! function_exists( 'wp_body_open' ) ) {
+    function wp_body_open() {
+        do_action( 'wp_body_open' );
+    }
+}
+
+
 if ( ! function_exists( 'evolve_frontpage_bootstrap_slider' ) ) {
 	function evolve_frontpage_bootstrap_slider() {
 		if ( ( evolve_theme_mod( 'evl_bootstrap_slider_support', '0' ) == "1" && is_front_page() ) || ( get_post_meta( evolve_get_post_id(), 'evolve_slider_type', true ) == 'bootstrap' && evolve_theme_mod( 'evl_bootstrap_slider_support', '0' ) == '1' && is_home() ) ):
