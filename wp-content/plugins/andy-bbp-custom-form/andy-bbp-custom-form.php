@@ -392,8 +392,7 @@ class dropDown extends formElements{
                         <select name='$hashed_fieldName' id='$label_id'>
                             <option value='金融'>金融</option>
                             <option value='顧問'>顧問</option>
-                            <option value='快消'>快消</option>
-                            <option value='零售'>零售</option>
+                            <option value='快消零售'>快消零售</option>
                             <option value='科技'>科技</option>
                             <option value='新創'>新創</option>
                             <option value='其它'>其它</option>
@@ -404,8 +403,7 @@ class dropDown extends formElements{
                             <option value=''>(無)</option>
                             <option value='金融'>金融</option>
                             <option value='顧問'>顧問</option>
-                            <option value='快消'>快消</option>
-                            <option value='零售'>零售</option>
+                            <option value='快消零售'>快消零售</option>
                             <option value='科技'>科技</option>
                             <option value='新創'>新創</option>
                             <option value='其它'>其它</option>
@@ -823,14 +821,10 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         height: 560px;
                         margin-left: -460px;
                         margin-top: -280px;
-                        padding-left: 40px;
-                        padding-right: 40px;
-                        padding-top: 18px;
-                        padding-bottom: 18px;
                         z-index: 999;
                         border: 2px solid #444;
                         box-shadow: 1px 5px 5px #666;
-                        background-color: #f6f6f6;
+                        background: white;
                         overflow-x: auto;
                         overflow-y: auto;
                     }
@@ -843,7 +837,6 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                 </script>
             ");
 
-                // <script src='https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js'></script>
             echo("
                 <script type='text/javascript'>
                     fetchFunctionCountriesAndCities($componentIDs[6].children[0].children[0].value);
@@ -861,8 +854,11 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                 <script type='text/javascript'>
                     // In this time, the submit button (which id is bbp_topic_submit is not yet created)
                     function showInterviewExperienceInput() {
-                        var result = '<div style=\"text-align: center;\"><h3>預覽畫面</h3></div>';
-                        result += '<div style=\"text-align: center; font-size: 98%; color: red; margin-top: -15px;\">請確認文章內容是否正確，送出就無法編輯了喔!<br>（檢查內容即可，排版僅供參考）</div>';
+                        var result = '<div style=\"margin-top: -12px; padding-top: 20px; padding-left: 40px; padding-right: 40px; padding-bottom: 18px; background: linear-gradient(#0A2D87 11.9%, white 0%);\">';
+                        result += '<div style=\"color: white;\"><h3 style=\"color: white\">預覽畫面</h3>';
+                        result += '<h5 class=\"check_result\" style=\"color: white\">' + document.getElementById('$componentIDs[0]').value + '&nbsp' + document.getElementById('$componentIDs[2]').value + '&nbsp' + '面試心得' + '</h5>';
+                        result += '</div>';
+                        result += '<br>';
                         result += '<h6 class=\"check_result\">公司名稱</h6><text>' + document.getElementById('$componentIDs[0]').value + '</text>';
                         result += '<h6 class=\"check_result\">職務性質</h6><text>' + document.getElementById('$componentIDs[1]').children[0].value + '</text>';
                         result += '<h6 class=\"check_result\">職務名稱</h6><text>' + document.getElementById('$componentIDs[2]').value + '</text>';
@@ -875,18 +871,28 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         result += '<h6 class=\"check_result\">作者背景</h6><text>' + document.getElementById('$componentIDs[4]').nextElementSibling.children[0].children[0].value + '</text>';
                         result += '<h6 class=\"check_result\">面試時間</h6><text>' + document.getElementById('datepicker').value + '</text>';
                         result += '<h6 class=\"check_result\">職缺地點</h6><text>' + document.getElementById('$componentIDs[6]').children[0].children[0].value, document.getElementById('$componentIDs[6]').children[1].children[0].value + '</text>';
-                        result += '<h6 class=\"check_result\">面試結果</h6><text>';
+                        result += '<h6 class=\"check_result\">面試難度</h6>';
                         for(var i = 0; i < 4; i++) {
-                            if (document.getElementById('$componentIDs[7]').children[i].checked)
-                                result += document.getElementById('$componentIDs[7]').children[i].value;
+                            if (document.getElementById('$componentIDs[7]').children[i].checked) {
+                                var val = document.getElementById('$componentIDs[7]').children[i].value;
+                                var bc = 'orange';
+                                if (i == 0 || i == 1) bc = 'blue';
+                                else if (i == 3 || i == 4) bc = 'red';
+                                result += '<button style=\"margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: ' + bc + '; background-color: ' + bc + '; color: white\">' + val + '</button>';
+                            }
                         }
                         result += '</text>';
-                        result += '<h6 class=\"check_result\">面試難度</h6><text>';
+                        result += '<h6 class=\"check_result\">面試結果</h6><text>';
                         for(var i = 0; i < 3; i++) {
-                            if (document.getElementById('$componentIDs[8]').children[i].checked)
-                                result += document.getElementById('$componentIDs[8]').children[i].value + ', ';
+                            if (document.getElementById('$componentIDs[8]').children[i].checked) {
+                                var val = document.getElementById('$componentIDs[8]').children[i].value;
+                                var bc = 'black';
+                                if (i == 0) bc = 'blue';
+                                else if (i == 1) bc = 'red';
+                                else if (i == 2) bc = 'orange';
+                                result += '<button style=\"margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: ' + bc + '; background-color: ' + bc + '; color: white\">' + val + '</button>';
+                            }
                         }
-                        result += '</text>';
                         result += '<h6 class=\"check_result\">面試項目</h6><text>';
                         [...document.getElementById('$componentIDs[9]').children].forEach((ele, idx) => {
                             if (idx % 2 == 0 && ele.checked == true){
@@ -894,24 +900,39 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                             }
                         });
                         result += '</text>';
+                        result += '<hr style=\"height:0.8px;background-color:gray;\">';
                         result += '<h6 class=\"check_result\">準備過程</h6><text>' + document.getElementById('$componentIDs[10]').nextElementSibling.children[0].children[0].value + '</text>';
                         result += '<h6 class=\"check_result\">面試過程</h6><text>' + document.getElementById('$componentIDs[11]').nextElementSibling.children[0].children[0].value + '</text>';
                         result += '<h6 class=\"check_result\">心得建議</h6><text>' + document.getElementById('$componentIDs[12]').nextElementSibling.children[0].children[0].value + '</text>';
-                        result += '<h6 class=\"check_result\">（標籤）產業</h6><text>';
-                        result += '#' + document.getElementById('$componentIDs[14]').children[0].children[0].value + ' #' + document.getElementById('$componentIDs[14]').children[1].children[0].value;
-                        result += '</text>';
-                        result += '<h6 class=\"check_result\">（標籤）自創</h6><text>';
-                        if (document.getElementById('$componentIDs[15]').children[0].value != '') result += '#' + document.getElementById('$componentIDs[15]').children[0].value + ' ';
-                        if (document.getElementById('$componentIDs[15]').children[1].value != '') result += '#' + document.getElementById('$componentIDs[15]').children[1].value + ' ';
-                        if (document.getElementById('$componentIDs[15]').children[2].value != '') result += '#' + document.getElementById('$componentIDs[15]').children[2].value + ' ';
-                        result += '</text>';
+                        result += '<br>';
+                        if (document.getElementById('$componentIDs[14]').children[1].children[0].value != '') {
+                            var val = document.getElementById('$componentIDs[14]').children[1].children[0].value;
+                            result += '<button style=\"margin-right: 22px; margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: #F7F8FC; background-color: #F7F8FC; color: #1B3B90\">' + val + '</button>';
+                        }
+                        if (document.getElementById('$componentIDs[14]').children[0].children[0].value != '') {
+                            var val = document.getElementById('$componentIDs[14]').children[0].children[0].value;
+                            result += '<button style=\"margin-right: 22px; margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: #F7F8FC; background-color: #F7F8FC; color: #1B3B90\">' + val + '</button>';
+                        }
+                        if (document.getElementById('$componentIDs[15]').children[0].value != '') {
+                            var val = document.getElementById('$componentIDs[15]').children[0].value;
+                            result += '<button style=\"margin-right: 22px; margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: #F7F8FC; background-color: #F7F8FC; color: #1B3B90\">' + val + '</button>';
+                        }
+                        if (document.getElementById('$componentIDs[15]').children[1].value != '') {
+                            var val = document.getElementById('$componentIDs[15]').children[1].value;
+                            result += '<button style=\"margin-right: 22px; margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: #F7F8FC; background-color: #F7F8FC; color: #1B3B90\">' + val + '</button>';
+                        }
+                        if (document.getElementById('$componentIDs[15]').children[2].value != '') {
+                            var val = document.getElementById('$componentIDs[15]').children[2].value;
+                            result += '<button style=\"margin-right: 22px; margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: #F7F8FC; background-color: #F7F8FC; color: #1B3B90\">' + val + '</button>';
+                        }
+                        var btns = ' <div style=\"text-align: right;\"> <button id=\"modal_cancel\" type=\"button\" onclick=\"cancelClicked()\" style=\"color: white; background-color: red; border-color: red; margin-top: 28px; bottom: 10px; margin-right: 25px;\">上一步</button> <button id=\"modal_submit\" type=\"button\" onclick=\"submitClicked()\" style=\"color: white; background-color: #1F3372; margin-top: 28px; bottom: 10px;\">確認發佈</button> </div>';
+                        result += btns;
+                        result += '</div>';
                         result = result.trim();
 
                         var mdl = document.getElementById('modal');
-                        var btns = ' <div style=\"text-align: center;\"> <button id=\"modal_cancel\" type=\"button\" onclick=\"cancelClicked()\" style=\"background-color: red; border-color: red; margin-top: 28px; bottom: 10px;\">Cancel</button> <button id=\"modal_submit\" type=\"button\" onclick=\"submitClicked()\" style=\"margin-top: 28px; bottom: 10px;\">Submit</button> </div>';
                         mdl.innerHTML = '';
                         mdl.innerHTML += result;
-                        mdl.innerHTML += btns;
                         mdl.style.display = 'block';
                         document.getElementById('page').setAttribute('transition', '.8s filter');
                         document.getElementById('page').style.pointerEvents = 'none';
