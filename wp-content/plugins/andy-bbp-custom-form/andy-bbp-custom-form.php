@@ -9,14 +9,15 @@ Version: 1.0.0
 */
 
 function generateRandomString($length = 6) {
-    return substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length / strlen($x)))), 1, $length);
+    static $unqid = 0;
+    return "__" . strval($unqid++);
 }
 
 function live_search_handler($request) {
     global $wpdb;
 
-    $queryType = $request['type'];
-    $queryText = $request['text']; // $request->get_params(); // JSON: {text "ds"}
+    $queryType = htmlentities($request['type']);
+    $queryText = htmlentities($request['text']); // $request->get_params(); // JSON: {text "ds"}
 
     if($queryText == '') {
         return array();
@@ -78,29 +79,6 @@ function live_search_handler($request) {
         }
     }
     return $query;
-}
-
-function write_interview_data_handler($request) {
-    global $wpdb;
-
-    $d = $request->get_params();
-    if($d['industry'] == '' || $d['country'] == '' || $d['city'] == '') {
-        return '';
-    }
-
-    $posts_table = $wpdb->prefix . "interview_form";
-    $query = " (company) value ('" . strval($d['name']) . "')";
-    $wpdb->get_results( "INSERT " . $posts_table . $query);
-    // insert wp_interview_form (industry, country, city) value ('zzz', 'xx', 'yy');
-    return 'Data written !!';
-}
-
-add_action('rest_api_init', 'write_interview_data');
-function write_interview_data($data) {
-    register_rest_route( 'write_interview_data/v1', '/data/', array(
-            'methods'  => 'GET',
-            'callback' => 'write_interview_data_handler',
-    ));
 }
 
 add_action('rest_api_init', 'fetch_live_search_data');
@@ -746,7 +724,6 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         },
                         errorElement : "div",
                         errorPlacement: function (error, element) {
-                            cancelClicked(); // Hide the preview modal
                             if (element.is(":radio")) {
                                 error.insertAfter(element.parent("label"));
                             }
@@ -961,8 +938,10 @@ if( !function_exists('detect_submit_button') ):
             <script type='text/javascript'>
                 const formElement = document.getElementById('bbp_topic_submit');
                 formElement.addEventListener('click', function originalSubmitButtonClick(e) {
-                    e.target.disabled = true;
-                    showInterviewExperienceInput();
+                    if(jQuery('#new-post').valid()) {
+                        e.target.disabled = true;
+                        showInterviewExperienceInput();
+                    }
                 });
             </script>
         ");
