@@ -1,4 +1,4 @@
-公司名稱<a style="color:#FF0000;font-size:20px;">*</a>,combobox:company,請輸入公司登記的完整名稱（外商可輸入英文）,請輸入公司登記的完整名稱（外商可輸入英文）,
+公司名稱<a style="color:#FF0000;font-size:20px;">*</a>,combobox:company,外商可直接輸入英文查詢，非外商可輸入中文查詢，若沒有找到請自行輸入。,外商可直接輸入英文查詢，非外商可輸入中文查詢，若沒有找到請自行輸入。,
 職務性質<a style="color:#FF0000;font-size:20px;">*</a>,dropdown_02,,
 職務名稱<a style="color:#FF0000;font-size:20px;">*</a>,combobox:job_title,,請輸入完整職務名稱,
 是否匿名發布<a style="color:#FF0000;font-size:20px;">*</a>,radio,,若想為善不欲人知請勾選，我們將盡力保護您的隱私,
