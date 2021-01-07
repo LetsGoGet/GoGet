@@ -62,7 +62,7 @@ if ( ! bbp_is_single_forum() ) : ?>
 					</div>
 
 				<?php endif; ?>
-
+<!--
 				<?php if ( current_user_can( 'unfiltered_html' ) ) : ?>
 
 					<div class="bbp-template-notice">
@@ -72,7 +72,7 @@ if ( ! bbp_is_single_forum() ) : ?>
 					</div>
 
 				<?php endif; ?>
-
+-->
 				<?php do_action( 'bbp_template_notices' ); ?>
 
 				<div>

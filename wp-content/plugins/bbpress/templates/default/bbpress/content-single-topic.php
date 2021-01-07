@@ -51,8 +51,9 @@ defined( 'ABSPATH' ) || exit;
         <!-- unlocked section -->
         <?php $user_id=get_current_user_id() ?>
         <?php $post_id=bbp_get_topic_id() ?>
+        <?php $author_id=bbp_get_topic_author_id($post_id) ?>
 
-        <?php if (mycred_user_paid_for_content( $user_id, $post_id ) || mycred_is_admin($user_id) ) : ?>
+        <?php if (mycred_user_paid_for_content( $user_id, $post_id ) || mycred_is_admin($user_id) || $user_id == $author_id ) : ?>
             <?php bbp_get_template_part( 'form', 'reply' ); ?>
         <?php endif; ?>
         <!-- end of unlocked section -->

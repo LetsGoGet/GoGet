@@ -818,7 +818,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         left: 50%;
                         top: 55%;
                         width: 920px;
-                        height: 560px;
+                        height: 500px;
                         margin-left: -460px;
                         margin-top: -280px;
                         z-index: 999;
@@ -1043,7 +1043,6 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                     }
 
                     $content .= '
-
 
                 ';
                 } else {
