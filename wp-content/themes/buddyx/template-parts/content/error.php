@@ -35,7 +35,7 @@ namespace BuddyX\Buddyx;
 		} elseif ( is_search() ) {
 			?>
 			<p>
-				<?php esc_html_e( 'Sorry, but nothing matched your search terms. Please try again with some different keywords.', 'buddyx' ); ?>
+				<?php esc_html_e( '抱歉，沒有符合的搜索結果。請使用其他關鍵字再試一次。', 'buddyx' ); ?>
 			</p>
 			<?php
 		} else {
@@ -45,8 +45,8 @@ namespace BuddyX\Buddyx;
 			</p>
 			<?php
 		}
-
-		get_search_form();
+        // commented out by Andy
+		//get_search_form();
 		?>
 	</div><!-- .page-content -->
 </section><!-- .error -->

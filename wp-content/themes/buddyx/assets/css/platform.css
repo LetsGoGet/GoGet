@@ -10,21 +10,12 @@
 # Forums
 # Documents
 # Extra Plugins Support
-    # BuddyPress Sticky Post
-    # BuddyPress Quotes
-    # BuddyPress Moderation Pro
 --------------------------------------------------------------*/
 
 
 /*--------------------------------------------------------------
 # Activity Directory
 --------------------------------------------------------------*/
-
-img.emoji,
-img.emojioneemoji {
-    width: 18px !important;
-    height: 18px !important;
-}
 
 @media screen and (max-width: 46.8em) {
     .activity-update-form #whats-new-avatar {
@@ -65,10 +56,6 @@ img.emojioneemoji {
 .activity-update-form #whats-new {
     padding: 0;
     border: 0;
-}
-
-#whats-new-attachments.empty {
-    display: none;
 }
 
 .activity-content .bb-activity-media-elem .entry-img {
@@ -328,6 +315,10 @@ img.emojioneemoji {
 
 .activity-list .activity-item .bp-generic-meta.action .unfav:before {
     color: #db2828;
+}
+
+.bp-nouveau .activity-list .activity-item .activity-meta.action .bp-share-button::before {
+    content: "\e830";
 }
 
 #item-body #group-invites-container {
@@ -686,57 +677,20 @@ span.bbp-author-avatar img {
     margin: 0;
 }
 
-.bb-activity-media-wrap .bb-activity-media-elem.document-activity {
-    margin-left: 6px;
-}
-
 
 /*--------------------------------------------------------------
-## BuddyPress Sticky Post
+# Extra Plugins Support
 --------------------------------------------------------------*/
 
-.bpsp-pin-tool[data-bp-tooltip]:before,
+.bpsp-pin-tool[data-bp-tooltip]:before {
+    top: 0;
+}
+
 .bpsp-pin-tool[data-bp-tooltip]:after {
-    display: none;
+    top: -30px;
+    left: 0;
 }
 
 .blpro-locked-title-header {
     margin-top: 1rem;
-}
-
-#buddypress .activity-list .activity-item .activity-content>.bp-generic-meta.action .button.bpsp-pin-tool .fa {
-    font-size: 14px;
-    margin-right: 2px;
-}
-
-
-/*--------------------------------------------------------------
-## BuddyPress Quotes
---------------------------------------------------------------*/
-
-body.wb-quote .buddypress-wrap #whats-new-textarea {
-    padding: 0;
-}
-
-body.wb-quote .activity-update-form #whats-new {
-    min-height: 70px;
-    padding: 12px 15px;
-    border-radius: 0;
-}
-
-
-/*--------------------------------------------------------------
-## BuddyPress Moderation Pro
---------------------------------------------------------------*/
-
-#buddypress .activity-list .activity-item .activity-content>.bp-generic-meta.action .button.bmpro-flag-activity-btn::before {
-    content: "\f227";
-    font-family: dashicons;
-    opacity: 1;
-    background: none;
-    position: relative;
-}
-
-#buddypress .activity-list .activity-item .activity-content>.bp-generic-meta.action .button.bmpro-flag-activity-btn::after {
-    content: none;
 }

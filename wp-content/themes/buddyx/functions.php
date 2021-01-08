@@ -161,3 +161,39 @@ function buddyx_woo_dequeue_styles() {
 if ( !class_exists( 'WooCommerce' ) ) {
 	add_action( 'wp_print_styles', 'buddyx_woo_dequeue_styles' );
 }
+
+//andy added
+// to customize logo on login page
+function my_login_logo() { ?>
+    <style type="text/css">
+        #login h1 a, .login h1 a {
+            background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/images/login_page_logo.png);
+		height:65px;
+		width:320px;
+		background-size: 80px 80px;
+		background-repeat: no-repeat;
+        	padding-bottom: 30px;
+        }
+    </style>
+<?php }
+add_action( 'login_enqueue_scripts', 'my_login_logo' );
+
+//showing "登出" after log in
+function my_wp_nav_menu_args( $args = '' ) {
+	if( is_user_logged_in() ) { 
+		$args['menu'] = 'logged-in';
+	} else { 
+		$args['menu'] = '主選單';
+	} 
+    return $args;
+}
+add_filter( 'wp_nav_menu_args', 'my_wp_nav_menu_args' );
+
+
+// andy added
+// to not show excerpt of the posts on the search result
+// the excerpt could be 亂碼 sometimes
+add_filter( 'the_excerpt', 'filter_the_excerpt', 10, 2 );
+    function filter_the_excerpt( ) {
+    return ' ';
+ }

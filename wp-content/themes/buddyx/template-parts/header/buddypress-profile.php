@@ -58,14 +58,25 @@ if ( class_exists( 'BuddyPress' ) && is_user_logged_in() && bp_is_active( 'notif
 if ( is_user_logged_in() ) {
   $loggedin_user = wp_get_current_user();
   if ( ($loggedin_user instanceof WP_User ) ) {
-    $user_link = function_exists( 'bp_core_get_user_domain' ) ? bp_core_get_user_domain( get_current_user_id() ) : '#';
+    //$user_link = function_exists( 'bp_core_get_user_domain' ) ? bp_core_get_user_domain( get_current_user_id() ) : '#';
+    $user_link = "/forums/users/".$loggedin_user->user_login."/";
+	//$logout_link = wp_logout_url();
+	?>
+	<?php
+	//echo '<a href="'.$logout_link.'" style="width: 3em;">登出</a>';
     echo '<div class="user-link-wrap">';
-    echo '<a class="user-link" href="' . esc_url($user_link) . '">';
+    //echo '<a class="user-link" href="' . esc_url($user_link) . '">';
+    //add user profile link
+	echo '<a class="user-link" href="' . $user_link . '">';
     ?>
     <span class="bp-user"><?php echo esc_html($loggedin_user->display_name); ?></span>
     <?php
     echo get_avatar( $loggedin_user->user_email, 100 );
     echo '</a>';
+	  // show mycred_balance after user log in & add the link to bean page
+	echo '<a href="http://www.letsgoget.info/greenbean/" class="my-bean-balance">';
+	echo(do_shortcode('[mycred_my_balance title_el="div" balance_el="" title="我的綠豆" wrapper=0]'));
+	echo '</a>';
     wp_nav_menu( array( 'theme_location' => 'user_menu', 'menu_id' => 'user-profile-menu', 'fallback_cb' => '', 'container' => false, 'menu_class' => 'user-profile-menu', ) );
     echo '</div>';
     }
