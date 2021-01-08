@@ -125,7 +125,7 @@ class comboBox extends formElements{
         $this->ID = $fieldID;
 
         echo("
-            <div id='search_bar' style='margin-bottom: 3px'>
+            <div id='search_bar' style='margin-bottom: 10px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <input id='$fieldID' name='$hashed_fieldName' list='$listID' type='text' size=40 maxlength=40 style='padding-left: 3px;'>
@@ -183,7 +183,7 @@ class radio extends formElements{
         $label_id = $hashed_fieldName.'_label';
 
         echo("
-            <div id='search_bar' style='margin-bottom: 3px'>
+            <div id='search_bar' style='margin-bottom: 10px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <label id='$this->ID' for='$label_id'>
@@ -211,7 +211,7 @@ class singleSelection1 extends formElements{
         $attached_btn_id = $this->ID . '_buttons';
 
         echo("
-            <div id='search_bar' style='margin-bottom: 3px'>
+            <div id='search_bar' style='margin-bottom: 10px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <label id='$this->ID' style='display: none;' for='$label_id'>
                     <input type='radio' id='$label_id' name='$hashed_fieldName' value='很簡單' />
@@ -277,7 +277,7 @@ class singleSelection2 extends formElements{
         $attached_btn_id = $this->ID . '_buttons';
 
         echo("
-            <div id='search_bar' style='margin-bottom: 3px'>
+            <div id='search_bar' style='margin-bottom: 10px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <label id='$this->ID' style='display: none;' for='$label_id'>
                     <input type='radio' id='$label_id' name='$hashed_fieldName' value='錄取' />
@@ -344,7 +344,7 @@ class multiSelection extends formElements{
         $ids = array($label_id . '0', $label_id . '1', $label_id . '2', $label_id . '3', $label_id . '4', $label_id . '5', $label_id . '6', );
 
         echo("
-            <div id='search_bar' style='margin-bottom: 3px'>
+            <div id='search_bar' style='margin-bottom: 10px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <div id='$this->ID'>
@@ -384,7 +384,7 @@ class dropDown extends formElements{
         $label_id = $hashed_fieldName.'_label';
 
         echo("
-            <div id='search_bar' style='margin-bottom: 3px'>
+            <div id='search_bar' style='margin-bottom: 10px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <div id='$this->ID'>
@@ -431,7 +431,7 @@ class dropdown_02 extends formelements{
         $label_id = $hashed_fieldname.'_label';
 
         echo("
-            <div id='search_bar' style='margin-bottom: 3px'>
+            <div id='search_bar' style='margin-bottom: 10px'>
                 <p style='margin-bottom: -2px'> <label>$fieldname</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <label id='$this->ID' for='$label_id'>
@@ -474,7 +474,7 @@ class dropdown_03 extends formelements{
             $html .= "<option value='" . $country . "'>" . $country . "</option>";
         }
         echo("
-            <div id='search_bar' style='margin-bottom: 3px'>
+            <div id='search_bar' style='margin-bottom: 10px'>
                 <p style='margin-bottom: -2px'> <label>$fieldname</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <div id='$this->ID'>
@@ -531,8 +531,8 @@ class multiTextArea extends formElements{
         $label_id = $hashed_fieldName.'_label';
 
         echo("
-            <div style='margin-bottom: 3px'>
-                <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
+            <div style='margin-bottom: 10px'>
+                <p> <label>$fieldName</label> </p>
                 <div id='$this->ID'>
                     <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 placeholder='#' style='padding-left: 3px;'>
                     <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 placeholder='#' style='padding-left: 3px; margin-left: 10px'>
@@ -556,7 +556,7 @@ class date extends formElements{
 
         echo("
             <div id='$this->ID' style='margin-bottom: 3px'>
-                <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
+                <p> <label>$fieldName</label> </p>
                 <input type='text' id='datepicker' name='$hashed_fieldName'>
             </div>
         ");
@@ -596,7 +596,7 @@ class textArea extends formElements{
     {
         $hashed_fieldName = hashHelper($fieldName);
         error_log($fieldName.':'.$hashed_fieldName);
-        echo("<b><font size='3pt'>" . $fieldName . "<b></font>");
+        echo("<p style='margin-bottom: -2px; padding-top: 5px'>" . $fieldName . "</p>");
         echo("<p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>");
         echo("<div id='$this->ID'></div>"); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!?????????????????????????????????
         bbp_the_content( array( 'context' => $hashed_fieldName, 'textarea_rows' => 8, 'default_content' => $this->defaultContent) );
@@ -614,7 +614,7 @@ class text extends formElements{
 
     function generateUI($fieldName)
     {
-        echo("<b><font size='3pt'>" . $fieldName . "<b></font>");
+        echo("<p style='margin-bottom: -2px'>" . $fieldName . "</p>");
         echo("<p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>");
         echo("<div id='$this->ID'></div>"); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!?????????????????????????????????
     }
@@ -676,20 +676,20 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                             '.$field_name_array[4].': "required",
                             '.$field_name_array[5].': "required",
                             '.$field_name_array[7].': "required",
-                            \''.$field_name_array[10].'[]\': "required",
-                            '.$field_name_array[11].': {
+                            \''.$field_name_array[9].'[]\': "required",
+                            '.$field_name_array[10].': {
                                 minlength: 100,
                                 maxlength: 2000,
                                 required: true,
                                 // contentEqual: ['.$field_name_array[12].', '.$field_name_array[13].']
                             },
-                            '.$field_name_array[12].': {
+                            '.$field_name_array[11].': {
                                 minlength: 100,
                                 maxlength: 2000,
                                 required: true,
                                 // contentEqual: ['.$field_name_array[11].', '.$field_name_array[13].']
                             },
-                            '.$field_name_array[13].': {
+                            '.$field_name_array[12].': {
                                 maxlength: 1000,
                                 // contentEqual: ['.$field_name_array[11].', '.$field_name_array[12].']
                             }
@@ -702,20 +702,20 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                             '.$field_name_array[4].': "必填",
                             '.$field_name_array[5].': "必選",
                             '.$field_name_array[7].': "必選",
-                            \''.$field_name_array[10].'[]\': "必選",
-                            '.$field_name_array[11].': {
+                            \''.$field_name_array[9].'[]\': "必選",
+                            '.$field_name_array[10].': {
                                 minlength: "再回想看看，還有什麼準備的小細節想跟大家分享嗎？",
                                 maxlength: "非常感謝您的用心分享！（已達字數上限：2000）",
                                 required: "必填",
                                 // contentEqual: "準備過程、面試過程、心得建議內容不能相同喔！"
                             },
-                            '.$field_name_array[12].': {
+                            '.$field_name_array[11].': {
                                 minlength: "再回想看看，還有什麼面試的小細節想跟大家分享嗎？",
                                 maxlength: "非常感謝您的用心分享！（已達字數上限：2000）",
                                 required: "必填",
                                 // contentEqual: "準備過程、面試過程、心得建議內容不能相同喔！"
                             },
-                            '.$field_name_array[13].': {
+                            '.$field_name_array[12].': {
                                 maxlength: "非常感謝您的用心分享！（已達字數上限：1000）",
                                 // contentEqual: "準備過程、面試過程、心得建議內容不能相同喔！"
                             }
@@ -868,7 +868,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                                 result += document.getElementById('$componentIDs[3]').children[i].value;
                         }
                         result += '</text>';
-                        result += '<h6 class=\"check_result\">作者背景</h6><text>' + document.getElementById('$componentIDs[4]').nextElementSibling.children[0].children[0].value + '</text>';
+                        result += '<h6 class=\"check_result\">作者背景</h6><text>' + document.getElementById('$componentIDs[4]').nextElementSibling.children[0].value + '</text>';
                         result += '<h6 class=\"check_result\">面試時間</h6><text>' + document.getElementById('datepicker').value + '</text>';
                         result += '<h6 class=\"check_result\">職缺地點</h6><text>' + document.getElementById('$componentIDs[6]').children[0].children[0].value, document.getElementById('$componentIDs[6]').children[1].children[0].value + '</text>';
                         result += '<h6 class=\"check_result\">面試難度</h6>';
@@ -901,9 +901,9 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         });
                         result += '</text>';
                         result += '<hr style=\"height:0.8px;background-color:gray;\">';
-                        result += '<h6 class=\"check_result\">準備過程</h6><text>' + document.getElementById('$componentIDs[10]').nextElementSibling.children[0].children[0].value + '</text>';
-                        result += '<h6 class=\"check_result\">面試過程</h6><text>' + document.getElementById('$componentIDs[11]').nextElementSibling.children[0].children[0].value + '</text>';
-                        result += '<h6 class=\"check_result\">心得建議</h6><text>' + document.getElementById('$componentIDs[12]').nextElementSibling.children[0].children[0].value + '</text>';
+                        result += '<h6 class=\"check_result\">準備過程</h6><text>' + document.getElementById('$componentIDs[10]').nextElementSibling.children[0].value + '</text>';
+                        result += '<h6 class=\"check_result\">面試過程</h6><text>' + document.getElementById('$componentIDs[11]').nextElementSibling.children[0].value + '</text>';
+                        result += '<h6 class=\"check_result\">心得建議</h6><text>' + document.getElementById('$componentIDs[12]').nextElementSibling.children[0].value + '</text>';
                         result += '<br>';
                         if (document.getElementById('$componentIDs[14]').children[1].children[0].value != '') {
                             var val = document.getElementById('$componentIDs[14]').children[1].children[0].value;
