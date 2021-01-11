@@ -182,6 +182,8 @@ function bbp_new_topic_handler( $action = '' ) {
     // Copy from above section
 	if ( ! empty( $customizedTopic ) ) {
 		$topic_title = sanitize_text_field( $customizedTopic );
+	}else{
+	    $topic_title = sanitize_text_field( $_POST['bbp_topic_title'] ); // for issue 49
 	}
 	$topic_title = apply_filters( 'bbp_new_topic_pre_title', $topic_title );
 	if ( empty( $topic_title ) ) {
@@ -544,6 +546,8 @@ function bbp_edit_topic_handler( $action = '' ) {
 	}
 
 	/** Topic Title ***********************************************************/
+    /*
+     * We'll use our customized topic title (company name + title name)
 
 	if ( ! empty( $_POST['bbp_topic_title'] ) ) {
 		$topic_title = sanitize_text_field( $_POST['bbp_topic_title'] );
@@ -561,7 +565,7 @@ function bbp_edit_topic_handler( $action = '' ) {
 	if ( bbp_is_title_too_long( $topic_title ) ) {
 		bbp_add_error( 'bbp_topic_title', __( '<strong>ERROR</strong>: Your title is too long.', 'bbpress' ) );
 	}
-
+   */
 	/** Topic Content *********************************************************/
 
     // Andy edited from here
@@ -569,17 +573,31 @@ function bbp_edit_topic_handler( $action = '' ) {
 // 		$topic_content = $_POST['bbp_topic_content'];
 // 	}
 	$custom_post_content = apply_filters( 'bbp_get_my_custom_post_fields', '' );
-	$topic_content = $custom_post_content;
+	//$topic_content = $custom_post_content;
     // Andy edited to here
 
     if(count($custom_post_content) == 1) {
-	    $topic_content = $custom_post_content[0];
+	    $topic_content = $custom_post_content[0];// To return multiple values, the original argument is wrapped into array with length one
     } else {
         $customizedTopic = $custom_post_content[0];
         $isAnonymous = $custom_post_content[1];
         $customizedTags = $custom_post_content[2];
         $topic_content = $custom_post_content[3];
     }
+
+    // Copy from above section
+	if ( ! empty( $customizedTopic ) ) {
+		$topic_title = sanitize_text_field( $customizedTopic );
+	}else{
+	    $topic_title = sanitize_text_field( $_POST['bbp_topic_title'] ); // for issue 49
+	}
+	$topic_title = apply_filters( 'bbp_new_topic_pre_title', $topic_title );
+	if ( empty( $topic_title ) ) {
+		bbp_add_error( 'bbp_topic_title', __( '<strong>ERROR</strong>: Your topic needs a title.', 'bbpress' ) );
+	}
+	if ( bbp_is_title_too_long( $topic_title ) ) {
+		bbp_add_error( 'bbp_topic_title', __( '<strong>ERROR</strong>: Your title is too long.', 'bbpress' ) );
+	}
 
 
 	// Filter and sanitize

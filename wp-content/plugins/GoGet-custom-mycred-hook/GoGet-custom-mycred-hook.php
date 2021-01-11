@@ -26,7 +26,7 @@ Plugin dependency
 
 
 
-// Hook definition starts here
+// Hook definitions starts here
 
 
 //////// POINT DECUCTION FOR TOPIC BEING TRASHED //////////
@@ -36,13 +36,13 @@ Plugin dependency
 // By default, only admin users can trash topics. "bbp style pack" plugin are used to enable normal users to trash their topic.
 // myCred bbpress hooks supports point deduction for bbpress topic being "deleted" (by admin user) but not for "trashed"
 
-add_action( 'mycred_setup_hooks', 'register_trash_topic_hook' );
-function register_trash_topic_hook( $installed ) {
+add_action( 'mycred_setup_hooks', 'goget_register_trash_topic_hook' );
+function goget_register_trash_topic_hook( $installed ) {
 
 	$installed['goget_point_deduction_for_trashed_topic'] = array(
-		'title'       => __( '%plural% for topic being trashed', 'mycredcu' ),
+		'title'       => __( '[GoGet] %plural% for topic being trashed', 'mycredcu' ),
 		'description' => __( 'Deduct %plural% when bbpress topics being trashed (i.e, to remove frontend visibility. Similar to delete but the topic will still be accessible in the backend), by either the author or administrator.', 'mycredcu' ),
-		'callback'    => array( 'myCRED_Hook_Trashed_Topic' )
+		'callback'    => array( 'myCRED_Hook_GoGet_Trashed_Topic' )
 	);
 	return $installed;
 }
@@ -54,10 +54,10 @@ function register_trash_topic_hook( $installed ) {
  * @since 1.0
  * @version 1.0
  */
-add_action( 'mycred_load_hooks', 'mycredpro_load_trashed_topic_hook', 10 );
-function mycredpro_load_trashed_topic_hook() {
+add_action( 'mycred_load_hooks', 'mycredpro_load_goget_trashed_topic_hook', 10 );
+function mycredpro_load_goget_trashed_topic_hook() {
 
-	class myCRED_Hook_Trashed_Topic extends myCRED_Hook {
+	class myCRED_Hook_GoGet_Trashed_Topic extends myCRED_Hook {
 
 		/**
 		 * Construct
@@ -68,9 +68,6 @@ function mycredpro_load_trashed_topic_hook() {
 			parent::__construct( array(
 				'id'       => 'goget_point_deduction_for_trashed_topic',
 				'defaults' => array(
-				// 	'post_type' => 'post',
-				// 	'taxonomy'  => 'category',
-				// 	'log'       => '%plural% for publishing content'
 				)
 			), $hook_prefs, $type );
 		}
@@ -82,7 +79,7 @@ function mycredpro_load_trashed_topic_hook() {
 		 */
 		public function run() {
 
-			add_action( 'bbp_trash_topic', array( $this, 'point_deduction_for_trashed_topic' ), 10, 1);
+			add_action( 'bbp_trash_topic', array( $this, 'goget_point_deduction_for_trashed_topic' ), 10, 1);
 
 		}
 
@@ -90,7 +87,13 @@ function mycredpro_load_trashed_topic_hook() {
 		 * @since 1.0
 		 * @version 1.0
 		 */
-		public function point_deduction_for_trashed_topic( $topic_id ) {
+		public function goget_point_deduction_for_trashed_topic( $topic_id ) {
+		    $forumId = bbp_get_topic_forum_id($topic_id);  //for issue 49 start
+		    if ($forumId==70){ 
+		        return;
+		    }
+		    //for issue 49 end
+		    
 		    $user_id = bbp_get_topic_author_id($topic_id);
 		    
     		// Check if user is excluded (required)
@@ -104,9 +107,94 @@ function mycredpro_load_trashed_topic_hook() {
     
     		// Execute
     		$this->core->add_creds(
-    			'point_deduction_for_trashed_topic',
+    			'goget_point_deduction_for_trashed_topic',
     			$user_id,
     			-50,    // the amount of point deducted
+    			$log,
+    			0,
+    			'',
+    			$m
+    		);
+		}
+	}
+}
+
+
+
+
+//////// POINT AWARD FOR TOPIC CREATING TOPIC //////////
+// Award authors for creating bbpress topics
+// do_action( 'bbp_new_topic', $topic_id, $forum_id, $anonymous_data, $topic_author ) is called by bbpress plugin in bbpress/includes/topics/functions.php
+
+add_action( 'mycred_setup_hooks', 'goget_register_create_topic_hook' );
+function goget_register_create_topic_hook( $installed ) {
+
+	$installed['goget_point_award_for_creating_topic'] = array(
+		'title'       => __( '[GoGet] %plural% for topic being created', 'mycredcu' ),
+		'description' => __( 'Award authors for creating bbpress topics', 'mycredcu' ),
+		'callback'    => array( 'myCRED_Hook_GoGet_Create_Topic' )
+	);
+	return $installed;
+}
+
+/**
+ * Custom Hook: Load custom hook
+ * Since 1.6, this would be the proper way to add in the hook class from a theme file
+ * or from a plugin file.
+ * @since 1.0
+ * @version 1.0
+ */
+add_action( 'mycred_load_hooks', 'mycredpro_load_goget_create_topic_hook', 10 );
+function mycredpro_load_goget_create_topic_hook() {
+
+	class myCRED_Hook_GoGet_Create_Topic extends myCRED_Hook {
+
+		/**
+		 * Construct
+		 */
+		function __construct( $hook_prefs, $type = 'mycred_default' ) {
+
+// id must start with lower case !!!!!!!
+			parent::__construct( array(
+				'id'       => 'goget_point_award_for_creating_topic',
+				'defaults' => array(
+				)
+			), $hook_prefs, $type );
+		}
+
+		/**
+		 * Run
+		 * @since 1.0
+		 * @version 1.0
+		 */
+		public function run() {
+
+			add_action( 'bbp_new_topic', array( $this, 'goget_point_award_for_creating_topic' ), 10, 4);
+
+		}
+
+		/**
+		 * @since 1.0
+		 * @version 1.0
+		 */
+		public function goget_point_award_for_creating_topic( $topic_id, $forum_id, $anonymous_data, $topic_author ) {
+		    if ($forum_id==70){ //for issue 49 start
+		        return;
+		    }//for issue 49 end
+
+		    
+		    $user_id = $topic_author;
+		    
+    		// Check if user is excluded (required)
+    		if ( $this->core->exclude_user( $user_id ) ) return;
+    		
+            $log = '建立文章「' . bbp_get_topic_title($topic_id) . '」';
+            
+    		// Execute
+    		$this->core->add_creds(
+    			'goget_point_award_for_creating_topic',
+    			$user_id,
+    			50,    // the amount of point awarded
     			$log,
     			0,
     			'',
