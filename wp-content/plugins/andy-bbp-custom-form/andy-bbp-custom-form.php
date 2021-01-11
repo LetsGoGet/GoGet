@@ -677,17 +677,15 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                             '.$field_name_array[5].': "required",
                             '.$field_name_array[7].': "required",
                             '.$field_name_array[10].': {
-                                minlength: 100,
-                                maxlength: 100000,
                                 required: true,
+                                rangelength: [100, 10000]
                             },
                             '.$field_name_array[11].': {
-                                minlength: 100,
-                                maxlength: 100000,
                                 required: true,
+                                rangelength: [100, 10000]
                             },
                             '.$field_name_array[12].': {
-                                maxlength: 100000,
+                                rangelength: [100, 10000]                 
                             }
                         },
                         messages:{
@@ -699,17 +697,38 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                             '.$field_name_array[5].': "必選",
                             '.$field_name_array[7].': "必選",
                             '.$field_name_array[10].': {
-                                minlength: "再回想看看，還有什麼小細節想跟大家分享嗎？（字數下限：100）",
-                                maxlength: "非常感謝您的用心分享！（已達字數上限：100000）",
+//                                minlength: "再回想看看，還有什麼小細節想跟大家分享嗎？（字數下限：100）",
+//                                maxlength: "非常感謝您的用心分享！（已達字數上限：100000）",
                                 required: "必填",
+                                rangelength: function(range, input){
+                                    var length = $(input).val().length;
+                                    if (length < 100){
+                                        return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：" + length + "/100）";
+                                    } else if (length > 10000) {
+                                        return "超過字數限制。（字數上限：" + length + "/10000）";
+                                    }
+                                },
                             },
                             '.$field_name_array[11].': {
-                                minlength: "再回想看看，還有什麼小細節想跟大家分享嗎？（字數下限：100）",
-                                maxlength: "非常感謝您的用心分享！（已達字數上限：100000）",
                                 required: "必填",
+                                rangelength: function(range, input){
+                                    var length = $(input).val().length;
+                                    if (length < 100){
+                                        return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：" + length + "/100）";
+                                    } else if (length > 10000) {
+                                        return "超過字數限制。（字數上限：" + length + "/10000）";
+                                    }
+                                },
                             },
                             '.$field_name_array[12].': {
-                                maxlength: "非常感謝您的用心分享！（已達字數上限：100000）",
+                                rangelength: function(range, input){
+                                    var length = $(input).val().length;
+                                    if (length < 100){
+                                        return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：" + length + "/100）";
+                                    } else if (length > 10000) {
+                                        return "超過字數限制。（字數上限：" + length + "/10000）";
+                                    }
+                                },                            
                             }
                         },
                         errorElement : "div",
