@@ -187,10 +187,10 @@ class radio extends formElements{
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <label id='$this->ID' for='$label_id'>
+                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='否' checked/>
+                    否
                     <input type='radio' id='$label_id' name='$hashed_fieldName' value='是' />
                     是
-                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='否' />
-                    否
                 </label>
             </div>
         ");
@@ -623,15 +623,15 @@ class text extends formElements{
 // to display fields in bbp new topic form
 add_action( 'bbp_theme_before_topic_form_content', 'bbp_display_wp_editor_array' );
 if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
-	function bbp_display_wp_editor_array() {
+    function bbp_display_wp_editor_array() {
 
         //get forum id
-	    $forumId = bbp_get_forum_id();
-	    if ($forumId == 0){
-	        $forumId = bbp_get_topic_forum_id();
-	    }
+        $forumId = bbp_get_forum_id();
+        if ($forumId == 0){
+            $forumId = bbp_get_topic_forum_id();
+        }
 
-	    // Using material UI
+        // Using material UI
         echo('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">');
         // Using jquery velidate
         echo('<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>');
@@ -676,22 +676,18 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                             '.$field_name_array[4].': "required",
                             '.$field_name_array[5].': "required",
                             '.$field_name_array[7].': "required",
-                            \''.$field_name_array[10].'[]\': "required",
+                            '.$field_name_array[10].': {
+                                minlength: 100,
+                                maxlength: 100000,
+                                required: true,
+                            },
                             '.$field_name_array[11].': {
                                 minlength: 100,
-                                maxlength: 2000,
+                                maxlength: 100000,
                                 required: true,
-                                // contentEqual: ['.$field_name_array[12].', '.$field_name_array[13].']
                             },
                             '.$field_name_array[12].': {
-                                minlength: 100,
-                                maxlength: 2000,
-                                required: true,
-                                // contentEqual: ['.$field_name_array[11].', '.$field_name_array[13].']
-                            },
-                            '.$field_name_array[13].': {
-                                maxlength: 1000,
-                                // contentEqual: ['.$field_name_array[11].', '.$field_name_array[12].']
+                                maxlength: 100000,
                             }
                         },
                         messages:{
@@ -702,22 +698,18 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                             '.$field_name_array[4].': "必填",
                             '.$field_name_array[5].': "必選",
                             '.$field_name_array[7].': "必選",
-                            \''.$field_name_array[10].'[]\': "必選",
-                            '.$field_name_array[11].': {
-                                minlength: "再回想看看，還有什麼準備的小細節想跟大家分享嗎？",
-                                maxlength: "非常感謝您的用心分享！（已達字數上限：2000）",
+                            '.$field_name_array[10].': {
+                                minlength: "再回想看看，還有什麼小細節想跟大家分享嗎？（字數下限：100）",
+                                maxlength: "非常感謝您的用心分享！（已達字數上限：100000）",
                                 required: "必填",
-                                // contentEqual: "準備過程、面試過程、心得建議內容不能相同喔！"
+                            },
+                            '.$field_name_array[11].': {
+                                minlength: "再回想看看，還有什麼小細節想跟大家分享嗎？（字數下限：100）",
+                                maxlength: "非常感謝您的用心分享！（已達字數上限：100000）",
+                                required: "必填",
                             },
                             '.$field_name_array[12].': {
-                                minlength: "再回想看看，還有什麼面試的小細節想跟大家分享嗎？",
-                                maxlength: "非常感謝您的用心分享！（已達字數上限：2000）",
-                                required: "必填",
-                                // contentEqual: "準備過程、面試過程、心得建議內容不能相同喔！"
-                            },
-                            '.$field_name_array[13].': {
-                                maxlength: "非常感謝您的用心分享！（已達字數上限：1000）",
-                                // contentEqual: "準備過程、面試過程、心得建議內容不能相同喔！"
+                                maxlength: "非常感謝您的用心分享！（已達字數上限：100000）",
                             }
                         },
                         errorElement : "div",
@@ -738,8 +730,8 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
             </script>
         ');
 
-	    //Start generating form
-	    //read form schema
+        //Start generating form
+        //read form schema
         if(file_exists($path)) {
             $lines = file($path, FILE_IGNORE_NEW_LINES);
 
@@ -944,7 +936,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
         else {
             bbp_the_content( array( 'context' => 'topic' ) ); //bbpress default
         }
-	}
+    }
 
     function hashHelper($name)
     {
@@ -955,6 +947,15 @@ endif;
 add_action('bbp_theme_after_topic_form_submit_button', 'detect_submit_button');
 if( !function_exists('detect_submit_button') ):
     function detect_submit_button() {
+        // for issue 49, start
+        $forumId = bbp_get_forum_id();
+        if ($forumId == 0){
+            $forumId = bbp_get_topic_forum_id();
+        }
+        if ($forumId==70){
+            return;
+        }
+        // for issue 49, end
         echo("
             <script type='text/javascript'>
                 const formElement = document.getElementById('bbp_topic_submit');
@@ -972,8 +973,8 @@ endif;
 // to parse post data into post content
 add_filter( 'bbp_get_my_custom_post_fields', 'bbp_get_custom_post_data');
 if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
-	function bbp_get_custom_post_data() {
-	    $forumId = $_POST['bbp_forum_id'];
+    function bbp_get_custom_post_data() {
+        $forumId = $_POST['bbp_forum_id'];
         $path = ABSPATH.'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
         $content = '';
         $must_fill_tag = '*';
@@ -1055,7 +1056,7 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
             $content = $_POST['bbp_topic_content'];
             return array($content);
         }
-	}
+    }
 
     function insertDataToDB($company_name)
     {
@@ -1075,13 +1076,13 @@ endif;
 // called inside bbp bbp_get_the_content() in wp-content/plugins/bbpress/includes/common/template.php
 add_filter('bbp_get_topic_field_content', 'get_topic_field_content');
 if ( ! function_exists( 'get_topic_field_content' ) ) :
-	function get_topic_field_content($field_key) {
-	    // Get _POST data
+    function get_topic_field_content($field_key) {
+        // Get _POST data
         // at this case, $field_key is already the hash key
-		if ( bbp_is_topic_form_post_request() && isset( $_POST['bbp_' . $field_key . '_content'] ) ) {
-			$topic_content = wp_unslash( $_POST['bbp_' . $field_key . '_content'] );
-		// Get edit data
-		} elseif ( bbp_is_topic_edit() ) {
+        if ( bbp_is_topic_form_post_request() && isset( $_POST['bbp_' . $field_key . '_content'] ) ) {
+            $topic_content = wp_unslash( $_POST['bbp_' . $field_key . '_content'] );
+        // Get edit data
+        } elseif ( bbp_is_topic_edit() ) {
             $topic_content = bbp_get_global_post_field( 'post_content', 'raw' );
             $token = '<noscript>' . $field_key . '</noscript>';
             $start = strpos($topic_content, $token);
@@ -1091,24 +1092,32 @@ if ( ! function_exists( 'get_topic_field_content' ) ) :
             $start += strlen($token);
             $end = $start + strpos(substr($topic_content, $start) , $token);
             $topic_content = substr($topic_content, $start, $end-$start);
-		// No data
-		} else {
-		    $topic_content = '';
-		}
+        // No data
+        } else {
+            $topic_content = '';
+        }
         return $topic_content;
-	}
+    }
 endif;
 
 // Show message above the new topic form to indicate * as must answer fields
 add_action( 'bbp_theme_before_topic_form_notices', 'bbp_display_must_answer_fields_message' );
 if ( ! function_exists( 'bbp_display_must_answer_fields_message' ) ) :
-	function bbp_display_must_answer_fields_message() {
+    function bbp_display_must_answer_fields_message() {
+        // for issue 49 start
+        $forumId = bbp_get_forum_id();
+        if ($forumId == 0){
+            $forumId = bbp_get_topic_forum_id();
+        }
+        if($forumId!=70){ //for issue 49 end
 ?>
-					<div class="bbp-template-notice">
-						<ul>
-							<li><a style="color:#FF0000;font-size:20px;">*</a>為必填項目</li>
-						</ul>
-					</div>
+    
+                    <div class="bbp-template-notice">
+                        <ul>
+                            <li><a style="color:#FF0000;font-size:20px;">*</a>為必填項目</li>
+                        </ul>
+                    </div>
 <?php
-	}
+        }  //for issue 49
+    }
 endif;

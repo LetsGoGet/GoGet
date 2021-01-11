@@ -5,3 +5,6 @@
 
 #ignore vscode settings
 .idea/*
+
+#random generated font file
+wp-content/fonts/open-sans/*
