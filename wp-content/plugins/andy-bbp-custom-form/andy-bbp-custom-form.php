@@ -74,8 +74,8 @@ function live_search_handler($request) {
 
     $query = array();
     if(!empty($rows)){
-        foreach($rows as $r) {
-            array_push($query, $r->name);
+        foreach($rows as $key=>$r) {
+            array_push($query, (object) ['id' => $key, 'text' => $r->name]);
         }
     }
     return $query;
@@ -123,48 +123,65 @@ class comboBox extends formElements{
         $listID = $hashed_fieldName.'_list';
         $fetchFunction = $hashed_fieldName.'_fetchData';
         $this->ID = $fieldID;
+        $label_id = $hashed_fieldName.'_label';
+        error_log($label_id);
+
+        //ajax select2
+        echo("
+            <script>
+                jQuery(document).ready(function($) {
+                    var url_fetch = window.location.href.split('interview')[0] + 'wp-json/fetch/v1/data';
+                    
+                    $('#$label_id').select2({
+                        language: 'zh-tw',
+                        tags: true,
+                        dropdownAutoWidth: true,
+                        ajax: {
+                            url: url_fetch,
+                            method: 'GET',
+                            dataType: 'json',
+                            data: function (params) {
+                              return {
+                                text: params.term, // search term
+                                page: params.page,
+                                type: '$this->type',
+                              };
+                            },
+                            contentType: 'application/json',
+                            delay: 50,
+                            processResults: function (data, params) {
+                              // parse the results into the format expected by Select2
+                              // since we are using custom formatting functions we do not need to
+                              // alter the remote JSON data, except to indicate that infinite
+                              // scrolling can be used
+                              params.page = params.page || 1;
+                              console.log(data);
+
+                              return {
+                                results: data,
+                                pagination: {
+                                  more: (params.page * 30) < data.total_count
+                                }
+                              };
+                            },
+                            cache: true
+                        }
+                    });
+                });
+            </script>
+        ");
 
         echo("
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
-                <input id='$fieldID' name='$hashed_fieldName' list='$listID' type='text' size=40 maxlength=40 style='padding-left: 3px;'>
-                <datalist id='$listID'></datalist>
+                <label id='$this->ID' for='$label_id'>
+                    <select name='$hashed_fieldName' id='$label_id' >
+                    <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                    </select>
+                </label>
             </div>
         ");
-
-        echo("<script type='text/javascript'>
-                    // http://localhost/wordpress/wp-json/fetch/v1/data?industry=marketing.
-                    // Start from '?' is added by ajax. You can write down all of params in `url` and omit `data`, e.g. url: url + query.toString()
-                    var url_fetch = window.location.href.split('interview')[0] + 'wp-json/fetch/v1/data';
-                    const $fetchFunction = (queryText) => jQuery.ajax({
-                        url: url_fetch,
-                        method: 'GET',
-                        dataType: 'json',
-                        data: {type: '$this->type', text: queryText},
-                        contentType: 'application/json',
-                        success: function (data) {
-                            document.getElementById('$listID').innerHTML = '';
-                            var input_box = document.getElementById('$listID');
-                            [...data].forEach((item, idx) => {
-                                var ele = document.createElement('option');
-                                ele.value=item;
-                                input_box.appendChild(ele);
-                            });
-                        },
-                        error: function(e){
-                            console.log(e);
-                        }
-                    });
-
-                    var prev = '';
-                    document.getElementById('$fieldID').addEventListener('input', function(e){
-                    var curr = e.target.value;
-                    if( prev || curr ) {
-                        prev = curr;
-                        $fetchFunction(curr);
-                    }
-                });</script>");
     }
 }
 
@@ -183,7 +200,7 @@ class radio extends formElements{
         $label_id = $hashed_fieldName.'_label';
 
         echo("
-            <div id='search_bar' style='margin-bottom: 3px'>
+            <div id='search_bar' style='margin-bottom: 3px; margin-top: 10px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <label id='$this->ID' for='$label_id'>
@@ -368,7 +385,7 @@ class multiSelection extends formElements{
     }
 }
 
-class dropDown extends formElements{
+class dropdown_industry extends formElements{
     private $subtitle;
 
     function __construct($subtitle)
@@ -381,29 +398,30 @@ class dropDown extends formElements{
     function generateUI($fieldName)
     {
         $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content'.'[]';
-        $label_id = $hashed_fieldName.'_label';
+        $label_id_1 = $hashed_fieldName.'_label_1';
+        $label_id_2 = $hashed_fieldName.'_label_2';
 
         echo("
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <div id='$this->ID'>
-                    <label for='$label_id'>
-                        <select name='$hashed_fieldName' id='$label_id'>
+                    <label for='$label_id_1'>
+                        <select class='select2' data-minimum-results-for-search='Infinity' name='$hashed_fieldName' id='$label_id_1'>
                             <option value='金融'>金融</option>
                             <option value='顧問'>顧問</option>
-                            <option value='快消零售'>快消零售</option>
+                            <option value='零售'>零售</option>
                             <option value='科技'>科技</option>
                             <option value='新創'>新創</option>
                             <option value='其它'>其它</option>
                         </select>
                     </label>
-                    <label for='$label_id'>
-                        <select name='$hashed_fieldName' id='$label_id'>
+                    <label for='$label_id_2'>
+                        <select class='select2' data-minimum-results-for-search='Infinity' name='$hashed_fieldName' id='$label_id_2'>
                             <option value=''>(無)</option>
                             <option value='金融'>金融</option>
                             <option value='顧問'>顧問</option>
-                            <option value='快消零售'>快消零售</option>
+                            <option value='零售'>零售</option>
                             <option value='科技'>科技</option>
                             <option value='新創'>新創</option>
                             <option value='其它'>其它</option>
@@ -516,11 +534,197 @@ class dropdown_03 extends formelements{
     }
 }
 
+class dropdown_job_category extends formelements{
+    private $subtitle;
 
-class multiTextArea extends formElements{
-    function __construct()
+    function __construct($subtitle)
     {
         parent::__construct();
+        $this->subtitle = $subtitle;
+        $this->ID = get_class($this) . generateRandomString();
+    }
+
+    function generateui($fieldname)
+    {
+        $hashed_fieldname = 'bbp_'.hashhelper($fieldname).'_content';
+        $label_id = $hashed_fieldname.'_label';
+
+        //Fetch DB data
+        $htmlOfOptions = "";
+
+        try {
+            $data = $this->fetchData();
+
+            foreach($data as $row) {
+                $htmlOfOptions .= "<option value='$row->name'>$row->name</option>";
+            }
+        } catch (Exception $e){
+            error_log($e);
+        }
+
+        echo("
+            <div id='search_bar' style='margin-bottom: 3px'>
+                <p style='margin-bottom: -2px'> <label>$fieldname</label> </p>
+                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
+                <label id='$this->ID' for='$label_id'>
+                    <select class='select2' name='$hashed_fieldname' id='$label_id'>
+                        <option></option>
+                        $htmlOfOptions
+                    </select>
+                </label>
+            </div>
+        ");
+    }
+
+    function fetchData(){
+        global $wpdb;
+        return $wpdb->get_results("SELECT * FROM {$wpdb->prefix}job_category");
+    }
+}
+
+class dropdown_sub_industry extends formelements{
+    private $subtitle;
+
+    function __construct($subtitle)
+    {
+        parent::__construct();
+        $this->subtitle = $subtitle;
+        $this->ID = get_class($this) . generateRandomString();
+    }
+
+    function generateui($fieldName)
+    {
+        $hashed_fieldName = 'bbp_'.hashhelper($fieldName).'_content';
+        $label_id_1 = $hashed_fieldName.'_label_1';
+        $label_id_2 = $hashed_fieldName.'_label_2';
+
+        echo("
+            <script>
+                jQuery(document).ready(function($) {
+                    var data1 = [{
+                        id: 0,
+                        text: '金融',
+                        children: [{
+                            id: 1,
+                            text: '金融機構'
+                        },
+                        {
+                            id: 2,
+                            text:'投資理財'
+                        },
+                        {
+                            id: 3,
+                            text:'保險業'
+                        }
+                        ]
+                    },{
+                        id: 4,
+                        text: '商業',
+                        children: [{
+                            id: 5,
+                            text: '法律服務'
+                        },
+                        {
+                            id: 6,
+                            text:'會計服務'
+                        },
+                        {
+                            id: 7,
+                            text:'顧問服務'
+                        },
+                        {
+                            id: 8,
+                            text: '人力仲介'
+                        }
+                        ]
+                    }
+                    ]
+                    
+                    var data2 = [{
+                        id: 99999,
+                        text: '無',
+                    },{
+                        id: 0,
+                        text: '金融',
+                        children: [{
+                            id: 1,
+                            text: '金融機構'
+                        },
+                        {
+                            id: 2,
+                            text:'投資理財'
+                        },
+                        {
+                            id: 3,
+                            text:'保險業'
+                        }
+                        ]
+                    },{
+                        id: 4,
+                        text: '商業',
+                        children: [{
+                            id: 5,
+                            text: '法律服務'
+                        },
+                        {
+                            id: 6,
+                            text:'會計服務'
+                        },
+                        {
+                            id: 7,
+                            text:'顧問服務'
+                        },
+                        {
+                            id: 8,
+                            text: '人力仲介'
+                        }
+                        ]
+                    }
+                    ]
+                    
+                    $('#$label_id_1').select2({
+                        language: 'zh-tw',
+                        data: data1
+                    });
+                    
+                    $('#$label_id_2').select2({
+                        language: 'zh-tw',
+                        data: data2
+                    });
+                });
+            </script>
+        ");
+
+        echo("
+            <div id='search_bar' style='margin-bottom: 3px'>
+                <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
+                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
+                
+                <div id='$this->ID'>
+                    <label id='$this->ID' for='$label_id_1'>
+                        <select id='$label_id_1' name='$hashed_fieldName'></select>
+                    </label>
+                    <label id='$this->ID' for='$label_id_2'>
+                        <select id='$label_id_2' name='$hashed_fieldName'></select>
+                    </label>
+                </div>
+            </div>
+        ");
+    }
+
+    function fetchData(){
+        global $wpdb;
+        return $wpdb->get_results("SELECT * FROM {$wpdb->prefix}job_category");
+    }
+}
+
+class multiTextArea extends formElements{
+    private $subtitle;
+
+    function __construct($subtitle)
+    {
+        parent::__construct();
+        $this->subtitle = $subtitle;
         $this->ID = get_class($this) . generateRandomString();
     }
 
@@ -533,6 +737,7 @@ class multiTextArea extends formElements{
         echo("
             <div style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
+                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <div id='$this->ID'>
                     <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 placeholder='#' style='padding-left: 3px;'>
                     <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 placeholder='#' style='padding-left: 3px; margin-left: 10px'>
@@ -578,6 +783,26 @@ class date extends formElements{
                   });
                 });
             </script>");
+    }
+}
+
+class inputBox extends formElements{
+    function __construct()
+    {
+        parent::__construct();
+        $this->ID = get_class($this) . generateRandomString();
+    }
+
+    function generateUI($fieldName)
+    {
+        $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content';
+
+        echo("
+            <div id='$this->ID' style='margin-bottom: 3px'>
+                <p> <label>$fieldName</label> </p>
+                <input type='text' name='$hashed_fieldName'>
+            </div>
+        ");
     }
 }
 
@@ -636,6 +861,22 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
         // Using jquery velidate
         echo('<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>');
 
+        // Using select2
+        echo('<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/zh-TW.min.js"></script>');
+
+        echo("
+            <script>
+                jQuery(document).ready(function($) {
+                    $('.select2').select2({
+                        language: 'zh-tw'
+                    });
+                });
+            </script>
+        ");
+
+
         // Read form schema
         $path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
         // Create an array with all hashed field name
@@ -653,7 +894,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
             }
         }
 
-        // Set the velidation rules and msg for each field
+        // Set the validation rules and msg for each field
         echo('
             <style>
                 .errTxt{
@@ -785,19 +1026,27 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         $ml = new multiSelection($field_subtitle);
                         $ml->generateUI($field_name);
                         array_push($componentIDs, $ml->getComponentID());
-                    } else if ($field_type == 'dropdown') {
-                        $dn1 = new dropDown($field_subtitle);
+                    } else if ($field_type == 'dropdown_job_category') {
+                        $dn = new dropdown_job_category($field_subtitle);
+                        $dn->generateUI($field_name);
+                        array_push($componentIDs, $dn->getComponentID());
+                    } else if ($field_type == 'dropdown_industry') {
+                        $dn1 = new dropdown_industry($field_subtitle);
                         $dn1->generateUI($field_name);
                         array_push($componentIDs, $dn1->getComponentID());
-                    } else if ($field_type == 'dropdown_02') {
-                        $dn2 = new dropDown_02($field_subtitle);
+                    } else if ($field_type == 'dropdown_sub_industry') {
+                        $dn2 = new dropdown_sub_industry($field_subtitle);
                         $dn2->generateUI($field_name);
                         array_push($componentIDs, $dn2->getComponentID());
-                    } else if ($field_type == 'dropdown_03') {
-                        $cc_path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/countries_and_cities.json';
-                        $dn3 = new dropDown_03($field_subtitle, $cc_path);
+                    } else if ($field_type == 'dropdown_02') {
+                        $dn3 = new dropDown_02($field_subtitle);
                         $dn3->generateUI($field_name);
                         array_push($componentIDs, $dn3->getComponentID());
+                    } else if ($field_type == 'dropdown_03') {
+                        $cc_path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/countries_and_cities.json';
+                        $dn4 = new dropDown_03($field_subtitle, $cc_path);
+                        $dn4->generateUI($field_name);
+                        array_push($componentIDs, $dn4->getComponentID());
                     } else if ($field_type == 'date') {
                         $date = new date();
                         $date->generateUI($field_name);
@@ -807,9 +1056,13 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         $textarea->generateUI($field_name);
                         array_push($componentIDs, $textarea->getComponentID());
                     } else if ($field_type == 'multiTextArea') {
-                        $multiTextArea = new multiTextArea();
+                        $multiTextArea = new multiTextArea($field_subtitle);
                         $multiTextArea->generateUI($field_name);
                         array_push($componentIDs, $multiTextArea->getComponentID());
+                    } else if ($field_type == 'inputBox') {
+                        $inputBox = new inputBox();
+                        $inputBox->generateUI($field_name);
+                        array_push($componentIDs, $inputBox->getComponentID());
                     } else if ($field_type == 'text') {
                         $text = new text($field_subtitle);
                         $text->generateUI($field_name);
@@ -850,7 +1103,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
 
             echo("
                 <script type='text/javascript'>
-                    fetchFunctionCountriesAndCities($componentIDs[6].children[0].children[0].value);
+                    fetchFunctionCountriesAndCities($componentIDs[9].children[0].children[0].value);
                     function cancelClicked() {
                         document.getElementById('page').setAttribute('transition', '');
                         document.getElementById('page').style.pointerEvents = '';
@@ -1020,9 +1273,9 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                     if ($key == 0){ // 公司名稱
                         insertDataToDB($_POST['bbp_' . $field_key . '_content']);
                         $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . " ";
-                    } else if ($key == 2) { // 職務名稱
-                        $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . "面試經驗";
                     } else if ($key == 3) { // 職務名稱
+                        $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . "面試經驗";
+                    } else if ($key == 6) { // 匿名
                         $isAnonymous = $_POST['bbp_' . $field_key . '_content'] == '是' ? 1:0;
                         $saveToPost = false; //不存入 anonymous 欄位
                     }
