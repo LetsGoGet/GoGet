@@ -598,6 +598,9 @@ class dropdown_sub_industry extends formelements{
         $label_id_1 = $hashed_fieldName.'_label_1';
         $label_id_2 = $hashed_fieldName.'_label_2';
 
+        //use for multi-dropdown column
+        $hashed_fieldName .= '[]';
+
         echo("
             <script>
                 jQuery(document).ready(function($) {
@@ -605,36 +608,36 @@ class dropdown_sub_industry extends formelements{
                         id: 0,
                         text: '金融',
                         children: [{
-                            id: 1,
-                            text: '金融機構'
+                            id: '金融機構',
+                            text: '金融機構',
                         },
                         {
-                            id: 2,
-                            text:'投資理財'
+                            id: '金融機構',
+                            text: '投資理財',
                         },
                         {
-                            id: 3,
-                            text:'保險業'
+                            id: '保險業',
+                            text: '保險業',
                         }
                         ]
                     },{
                         id: 4,
                         text: '商業',
                         children: [{
-                            id: 5,
-                            text: '法律服務'
+                            id: '法律服務',
+                            text: '法律服務',
                         },
                         {
-                            id: 6,
-                            text:'會計服務'
+                            id: '會計服務',
+                            text: '會計服務',
                         },
                         {
-                            id: 7,
-                            text:'顧問服務'
+                            id: '顧問服務',
+                            text: '顧問服務',
                         },
                         {
-                            id: 8,
-                            text: '人力仲介'
+                            id: '人力仲介',
+                            text: '人力仲介',
                         }
                         ]
                     }
@@ -647,36 +650,36 @@ class dropdown_sub_industry extends formelements{
                         id: 0,
                         text: '金融',
                         children: [{
-                            id: 1,
-                            text: '金融機構'
+                            id: '金融機構',
+                            text: '金融機構',
                         },
                         {
-                            id: 2,
-                            text:'投資理財'
+                            id: '金融機構',
+                            text: '投資理財',
                         },
                         {
-                            id: 3,
-                            text:'保險業'
+                            id: '保險業',
+                            text: '保險業',
                         }
                         ]
                     },{
                         id: 4,
                         text: '商業',
                         children: [{
-                            id: 5,
-                            text: '法律服務'
+                            id: '法律服務',
+                            text: '法律服務',
                         },
                         {
-                            id: 6,
-                            text:'會計服務'
+                            id: '會計服務',
+                            text: '會計服務',
                         },
                         {
-                            id: 7,
-                            text:'顧問服務'
+                            id: '顧問服務',
+                            text: '顧問服務',
                         },
                         {
-                            id: 8,
-                            text: '人力仲介'
+                            id: '人力仲介',
+                            text: '人力仲介',
                         }
                         ]
                     }
@@ -710,11 +713,6 @@ class dropdown_sub_industry extends formelements{
                 </div>
             </div>
         ");
-    }
-
-    function fetchData(){
-        global $wpdb;
-        return $wpdb->get_results("SELECT * FROM {$wpdb->prefix}job_category");
     }
 }
 
@@ -1228,17 +1226,17 @@ if( !function_exists('detect_submit_button') ):
             return;
         }
         // for issue 49, end
-        echo("
-            <script type='text/javascript'>
-                const formElement = document.getElementById('bbp_topic_submit');
-                formElement.addEventListener('click', function originalSubmitButtonClick(e) {
-                    if(jQuery('#new-post').valid()) {
-                        e.target.disabled = true;
-                        showInterviewExperienceInput();
-                    }
-                });
-            </script>
-        ");
+//        echo("
+//            <script type='text/javascript'>
+//                const formElement = document.getElementById('bbp_topic_submit');
+//                formElement.addEventListener('click', function originalSubmitButtonClick(e) {
+//                    if(jQuery('#new-post').valid()) {
+//                        e.target.disabled = true;
+//                        showInterviewExperienceInput();
+//                    }
+//                });
+//            </script>
+//        ");
     }
 endif;
 
@@ -1297,7 +1295,6 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                             $arr = array_filter($arr, function($value) { return !is_null($value) && $value !== ''; });
 
                             foreach($arr as $key1=>$item){
-                                error_log($field_name . ':' . $item);
                                 if ($key1 != count($arr) -1){
                                     $content .= $item . ', ';
                                 } else {
@@ -1305,7 +1302,7 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                                 }
 
                                 //customized tags
-                                if ($key == (count($lines) - 1) || $key == (count($lines) - 2) || $key == (count($lines) - 3)) {
+                                if ($field_name == '產業類別' || $field_name == '細分產業類別' || $field_name == '標籤') {
                                     $customizedTags .= $item . ', ';
                                 }
                             }
