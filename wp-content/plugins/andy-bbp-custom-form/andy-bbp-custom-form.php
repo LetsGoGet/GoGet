@@ -385,54 +385,6 @@ class multiSelection extends formElements{
     }
 }
 
-class dropdown_industry extends formElements{
-    private $subtitle;
-
-    function __construct($subtitle)
-    {
-        parent::__construct();
-        $this->subtitle = $subtitle;
-        $this->ID = get_class($this) . generateRandomString();
-    }
-
-    function generateUI($fieldName)
-    {
-        $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content'.'[]';
-        $label_id_1 = $hashed_fieldName.'_label_1';
-        $label_id_2 = $hashed_fieldName.'_label_2';
-
-        echo("
-            <div id='search_bar' style='margin-bottom: 3px'>
-                <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
-                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
-                <div id='$this->ID'>
-                    <label for='$label_id_1'>
-                        <select class='select2' data-minimum-results-for-search='Infinity' name='$hashed_fieldName' id='$label_id_1'>
-                            <option value='金融'>金融</option>
-                            <option value='顧問'>顧問</option>
-                            <option value='零售'>零售</option>
-                            <option value='科技'>科技</option>
-                            <option value='新創'>新創</option>
-                            <option value='其它'>其它</option>
-                        </select>
-                    </label>
-                    <label for='$label_id_2'>
-                        <select class='select2' data-minimum-results-for-search='Infinity' name='$hashed_fieldName' id='$label_id_2'>
-                            <option value=''>(無)</option>
-                            <option value='金融'>金融</option>
-                            <option value='顧問'>顧問</option>
-                            <option value='零售'>零售</option>
-                            <option value='科技'>科技</option>
-                            <option value='新創'>新創</option>
-                            <option value='其它'>其它</option>
-                        </select>
-                    </label>
-                </div>
-            </div>
-        ");
-    }
-}
-
 class dropdown_02 extends formelements{
     private $subtitle;
 
@@ -453,7 +405,7 @@ class dropdown_02 extends formelements{
                 <p style='margin-bottom: -2px'> <label>$fieldname</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <label id='$this->ID' for='$label_id'>
-                    <select name='$hashed_fieldname' id='$label_id'>
+                    <select class='select2' data-minimum-results-for-search='Infinity' name='$hashed_fieldname' id='$label_id'>
                         <option value='正職'>正職</option>
                         <option value='兼職'>兼職</option>
                         <option value='實習'>實習</option>
@@ -582,6 +534,54 @@ class dropdown_job_category extends formelements{
     }
 }
 
+class dropdown_industry extends formElements{
+    private $subtitle;
+
+    function __construct($subtitle)
+    {
+        parent::__construct();
+        $this->subtitle = $subtitle;
+        $this->ID = get_class($this) . generateRandomString();
+    }
+
+    function generateUI($fieldName)
+    {
+        $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content'.'[]';
+        $label_id_1 = $hashed_fieldName.'_label_1';
+        $label_id_2 = $hashed_fieldName.'_label_2';
+
+        echo("
+            <div id='search_bar' style='margin-bottom: 3px'>
+                <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
+                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
+                <div id='$this->ID'>
+                    <label for='$label_id_1'>
+                        <select class='select2' data-minimum-results-for-search='Infinity' name='$hashed_fieldName' id='$label_id_1'>
+                            <option value='金融'>金融</option>
+                            <option value='顧問'>顧問</option>
+                            <option value='零售'>零售</option>
+                            <option value='科技'>科技</option>
+                            <option value='新創'>新創</option>
+                            <option value='其它'>其它</option>
+                        </select>
+                    </label>
+                    <label for='$label_id_2'>
+                        <select class='select2' data-minimum-results-for-search='Infinity' name='$hashed_fieldName' id='$label_id_2'>
+                            <option disabled selected>(無)</option>
+                            <option value='金融'>金融</option>
+                            <option value='顧問'>顧問</option>
+                            <option value='零售'>零售</option>
+                            <option value='科技'>科技</option>
+                            <option value='新創'>新創</option>
+                            <option value='其它'>其它</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+        ");
+    }
+}
+
 class dropdown_sub_industry extends formelements{
     private $subtitle;
 
@@ -644,8 +644,8 @@ class dropdown_sub_industry extends formelements{
                     ]
                     
                     var data2 = [{
-                        id: 99999,
-                        text: '無',
+                        id: '',
+                        text: '(無)',
                     },{
                         id: 0,
                         text: '金融',
@@ -685,6 +685,7 @@ class dropdown_sub_industry extends formelements{
                     }
                     ]
                     
+                    
                     $('#$label_id_1').select2({
                         language: 'zh-tw',
                         data: data1
@@ -692,7 +693,7 @@ class dropdown_sub_industry extends formelements{
                     
                     $('#$label_id_2').select2({
                         language: 'zh-tw',
-                        data: data2
+                        data: data2,                        
                     });
                 });
             </script>
@@ -892,6 +893,13 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
             }
         }
 
+        //multi selection columns
+        $field_name_array_4= $field_name_array[4].'[]'; //產業類別
+        $field_name_array_5= $field_name_array[5].'[]'; //細分產業類別
+        $field_name_array_10= $field_name_array[10].'[]'; //面試難度
+        $field_name_array_11= $field_name_array[11].'[]'; //面試結果
+        $field_name_array_12= $field_name_array[12].'[]'; //面試項目
+
         // Set the validation rules and msg for each field
         echo('
             <style>
@@ -906,24 +914,32 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                     //     if(value !== $("#"+param[0]).value && value !== $("#"+param[1]).value)
                     //         return true;
                     // };
+                    console.log("'.$field_name_array_10.'");
+                    
                     $("#new-post").validate({
                         rules:{
                             '.$field_name_array[0].': "required",
                             '.$field_name_array[1].': "required",
                             '.$field_name_array[2].': "required",
                             '.$field_name_array[3].': "required",
-                            '.$field_name_array[4].': "required",
-                            '.$field_name_array[5].': "required",
+                            "'.$field_name_array_4.'": "required",
+                            "'.$field_name_array_5.'": "required",
+                            '.$field_name_array[6].': "required",
                             '.$field_name_array[7].': "required",
-                            '.$field_name_array[10].': {
+                            '.$field_name_array[8].': "required",
+                            '.$field_name_array[9].': "required",
+                            "'.$field_name_array_10.'": "required",
+                            "'.$field_name_array_11.'": "required",
+                            "'.$field_name_array_12.'": "required",
+                            '.$field_name_array[13].': {
                                 required: true,
                                 rangelength: [100, 10000]
                             },
-                            '.$field_name_array[11].': {
+                            '.$field_name_array[14].': {
                                 required: true,
                                 rangelength: [100, 10000]
                             },
-                            '.$field_name_array[12].': {
+                            '.$field_name_array[15].': {
                                 rangelength: [100, 10000]                 
                             }
                         },
@@ -932,10 +948,16 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                             '.$field_name_array[1].': "必填",
                             '.$field_name_array[2].': "必填",
                             '.$field_name_array[3].': "必填",
-                            '.$field_name_array[4].': "必填",
-                            '.$field_name_array[5].': "必選",
-                            '.$field_name_array[7].': "必選",
-                            '.$field_name_array[10].': {
+                            "'.$field_name_array_4.'": "必填",
+                            "'.$field_name_array_5.'": "必填",
+                            '.$field_name_array[6].': "必填",
+                            '.$field_name_array[7].': "必填",
+                            '.$field_name_array[8].': "必填",
+                            '.$field_name_array[9].': "必填",
+                            "'.$field_name_array_10.'": "必填",
+                            "'.$field_name_array_11.'": "必填",
+                            "'.$field_name_array_12.'": "必填",
+                            '.$field_name_array[13].': {
 //                                minlength: "再回想看看，還有什麼小細節想跟大家分享嗎？（字數下限：100）",
 //                                maxlength: "非常感謝您的用心分享！（已達字數上限：100000）",
                                 required: "必填",
@@ -948,7 +970,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                                     }
                                 },
                             },
-                            '.$field_name_array[11].': {
+                            '.$field_name_array[14].': {
                                 required: "必填",
                                 rangelength: function(range, input){
                                     var length = $(input).val().length;
@@ -959,7 +981,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                                     }
                                 },
                             },
-                            '.$field_name_array[12].': {
+                            '.$field_name_array[15].': {
                                 rangelength: function(range, input){
                                     var length = $(input).val().length;
                                     if (length < 100){
@@ -1295,6 +1317,7 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                             $arr = array_filter($arr, function($value) { return !is_null($value) && $value !== ''; });
 
                             foreach($arr as $key1=>$item){
+                                error_log($field_name.":".$item);
                                 if ($key1 != count($arr) -1){
                                     $content .= $item . ', ';
                                 } else {
@@ -1302,7 +1325,7 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                                 }
 
                                 //customized tags
-                                if ($field_name == '產業類別' || $field_name == '細分產業類別' || $field_name == '標籤') {
+                                if ($field_name == '產業類別<a style="color:#FF0000;font-size:20px;">*</a>' || $field_name == '細分產業類別<a style="color:#FF0000;font-size:20px;">*</a>' || $field_name == '標籤') {
                                     $customizedTags .= $item . ', ';
                                 }
                             }
@@ -1320,6 +1343,7 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                     continue;
                 }
             }
+            error_log($customizedTags);
             return array($customizedTopic, $isAnonymous, $customizedTags, $content);
         } else {
             $content = $_POST['bbp_topic_content'];
