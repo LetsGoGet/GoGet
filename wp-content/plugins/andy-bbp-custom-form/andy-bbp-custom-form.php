@@ -822,11 +822,11 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                     // };
                     console.log("'.$field_name_array_10.'");
                     
-                            // '.$field_name_array[2].': "required", // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     $("#new-post").validate({
                         rules:{
                             '.$field_name_array[0].': "required",
                             '.$field_name_array[1].': "required",
+                            '.$field_name_array[2].': "required",
                             '.$field_name_array[3].': "required",
                             "'.$field_name_array_4.'": "required",
                             "'.$field_name_array_5.'": "required",
