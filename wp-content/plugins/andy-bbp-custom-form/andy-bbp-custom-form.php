@@ -155,7 +155,6 @@ class comboBox extends formElements{
                               // alter the remote JSON data, except to indicate that infinite
                               // scrolling can be used
                               params.page = params.page || 1;
-                              console.log(data);
 
                               return {
                                 results: data,
@@ -601,96 +600,15 @@ class dropdown_sub_industry extends formelements{
         //use for multi-dropdown column
         $hashed_fieldName .= '[]';
 
+        $data = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/js/sub_industry_data.js');
         echo("
             <script>
                 jQuery(document).ready(function($) {
-                    var data1 = [{
-                        id: 0,
-                        text: '金融',
-                        children: [{
-                            id: '金融機構',
-                            text: '金融機構',
-                        },
-                        {
-                            id: '金融機構',
-                            text: '投資理財',
-                        },
-                        {
-                            id: '保險業',
-                            text: '保險業',
-                        }
-                        ]
-                    },{
-                        id: 4,
-                        text: '商業',
-                        children: [{
-                            id: '法律服務',
-                            text: '法律服務',
-                        },
-                        {
-                            id: '會計服務',
-                            text: '會計服務',
-                        },
-                        {
-                            id: '顧問服務',
-                            text: '顧問服務',
-                        },
-                        {
-                            id: '人力仲介',
-                            text: '人力仲介',
-                        }
-                        ]
-                    }
-                    ]
-                    
-                    var data2 = [{
-                        id: '',
-                        text: '(無)',
-                    },{
-                        id: 0,
-                        text: '金融',
-                        children: [{
-                            id: '金融機構',
-                            text: '金融機構',
-                        },
-                        {
-                            id: '金融機構',
-                            text: '投資理財',
-                        },
-                        {
-                            id: '保險業',
-                            text: '保險業',
-                        }
-                        ]
-                    },{
-                        id: 4,
-                        text: '商業',
-                        children: [{
-                            id: '法律服務',
-                            text: '法律服務',
-                        },
-                        {
-                            id: '會計服務',
-                            text: '會計服務',
-                        },
-                        {
-                            id: '顧問服務',
-                            text: '顧問服務',
-                        },
-                        {
-                            id: '人力仲介',
-                            text: '人力仲介',
-                        }
-                        ]
-                    }
-                    ]
-                    
-                    
+                    $data;
                     $('#$label_id_1').select2({
                         language: 'zh-tw',
                         data: data1
                     });
-                    
                     $('#$label_id_2').select2({
                         language: 'zh-tw',
                         data: data2,                        
@@ -768,20 +686,8 @@ class date extends formElements{
         wp_enqueue_style( 'style', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css' );
         echo('<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>');
 
-        //jquery
-        echo("<script type='text/javascript'>
-                jQuery(document).ready(function($) {
-                  $( '#datepicker' ).datepicker({
-                    changeMonth: true,
-                    changeYear: true,
-                    showButtonPanel: true,
-                    dateFormat: 'yy.mm',
-                    onClose: function(dateText, inst) { 
-                        $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
-                    }
-                  });
-                });
-            </script>");
+        $data = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/js/date_picker.js');
+        echo("<script type='text/javascript'>$data</script>");
     }
 }
 
@@ -862,8 +768,9 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
 
         // Using select2
         echo('<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/zh-TW.min.js"></script>');
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/zh-TW.min.js"></script>'
+        );
 
         echo("
             <script>
@@ -874,7 +781,6 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                 });
             </script>
         ");
-
 
         // Read form schema
         $path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
@@ -916,11 +822,11 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                     // };
                     console.log("'.$field_name_array_10.'");
                     
+                            // '.$field_name_array[2].': "required", // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     $("#new-post").validate({
                         rules:{
                             '.$field_name_array[0].': "required",
                             '.$field_name_array[1].': "required",
-                            '.$field_name_array[2].': "required",
                             '.$field_name_array[3].': "required",
                             "'.$field_name_array_4.'": "required",
                             "'.$field_name_array_5.'": "required",
@@ -1010,8 +916,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
             </script>
         ');
 
-        //Start generating form
-        //read form schema
+        // Start generating form (read form schema)
         if(file_exists($path)) {
             $lines = file($path, FILE_IGNORE_NEW_LINES);
 
@@ -1091,136 +996,75 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                 }
             }
 
-            echo("
-                <style>
-                    .check_result {
-                        margin-bottom: 5px;
-                    }
-                    #modal{
-                        display: none;
-                        position: fixed;
-                        left: 50%;
-                        top: 55%;
-                        width: 920px;
-                        height: 500px;
-                        margin-left: -460px;
-                        margin-top: -280px;
-                        z-index: 999;
-                        border: 2px solid #444;
-                        box-shadow: 1px 5px 5px #666;
-                        background: white;
-                        overflow-x: auto;
-                        overflow-y: auto;
-                    }
-                </style>
-                <script>
-                    const modal = document.createElement('div'); 
-                    modal.id = 'modal';
-                    var beforeThis = document.getElementById('page');
-                    document.body.insertBefore(modal, beforeThis);
-                </script>
-            ");
+            $preview_modal_css = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/css/preview_modal.css');
+            $preview_modal_js = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/js/preview_modal.js');
+            echo("<style>$preview_modal_css</style>");
+            echo("<script type='text/javascript'>$preview_modal_js</script>");
 
             echo("
                 <script type='text/javascript'>
                     fetchFunctionCountriesAndCities($componentIDs[9].children[0].children[0].value);
-                    function cancelClicked() {
-                        document.getElementById('page').setAttribute('transition', '');
-                        document.getElementById('page').style.pointerEvents = '';
-                        document.getElementById('page').style.filter = '';
-                        document.getElementById('modal').style.display = 'none';
-                        document.getElementById('bbp_topic_submit').disabled = false;
-                    };
-                    function submitClicked() {
-                        jQuery('#new-post').submit(); // Submit event should be fired by jQuery, otherwise the jQuery validator will not be triggered.
-                    };
-                </script>
-                <script type='text/javascript'>
-                    // In this time, the submit button (which id is bbp_topic_submit is not yet created)
-                    function showInterviewExperienceInput() {
-                        var result = '<div style=\"margin-top: -12px; padding-top: 20px; padding-left: 40px; padding-right: 40px; padding-bottom: 18px; background: linear-gradient(#0A2D87 11.9%, white 0%);\">';
-                        result += '<div style=\"color: white;\"><h3 style=\"color: white\">預覽畫面</h3>';
-                        result += '<h5 class=\"check_result\" style=\"color: white\">' + document.getElementById('$componentIDs[0]').value + '&nbsp' + document.getElementById('$componentIDs[2]').value + '&nbsp' + '面試心得' + '</h5>';
-                        result += '</div>';
-                        result += '<br>';
-                        result += '<h6 class=\"check_result\">公司名稱</h6><text>' + document.getElementById('$componentIDs[0]').value + '</text>';
-                        result += '<h6 class=\"check_result\">職務性質</h6><text>' + document.getElementById('$componentIDs[1]').children[0].value + '</text>';
-                        result += '<h6 class=\"check_result\">職務名稱</h6><text>' + document.getElementById('$componentIDs[2]').value + '</text>';
-                        result += '<h6 class=\"check_result\">是否匿名</h6><text>';
+
+                    function showInterviewExperienceInput() { // In this time, the submit button (which id is bbp_topic_submit is not yet created)
+                        var isAnon, difficulty, interview_result, interview_type, tags;
+                        var company_name = '<text>' + document.getElementById('$componentIDs[0]').children[0].value + '</text>';
+                        var job_property = '<text>' + document.getElementById('$componentIDs[1]').children[0].value + '</text>';
+                        var job_category = '<text>' + document.getElementById('$componentIDs[2]').value + '</text>';
+                        var job_title = '<text>' + document.getElementById('$componentIDs[3]').children[1].value + '</text>';
+                        var industry = '<text>' + document.getElementById('$componentIDs[4]').children[0].children[0].value + '&nbsp;&nbsp;' + document.getElementById('$componentIDs[4]').children[1].children[0].value;
+                        var sub_industry = '<text>' + document.getElementById('$componentIDs[5]').children[0].children[0].value + '&nbsp;&nbsp;' + document.getElementById('$componentIDs[5]').children[1].children[0].value;
                         for(var i = 0; i < 2; i++) {
-                            if (document.getElementById('$componentIDs[3]').children[i].checked)
-                                result += document.getElementById('$componentIDs[3]').children[i].value;
+                            if (document.getElementById('$componentIDs[6]').children[i].checked)
+                                isAnon = '<text>' + document.getElementById('$componentIDs[6]').children[i].value + '</text>';
                         }
-                        result += '</text>';
-                        result += '<h6 class=\"check_result\">作者背景</h6><text>' + document.getElementById('$componentIDs[4]').nextElementSibling.children[0].children[0].value + '</text>';
-                        result += '<h6 class=\"check_result\">面試時間</h6><text>' + document.getElementById('datepicker').value + '</text>';
-                        result += '<h6 class=\"check_result\">職缺地點</h6><text>' + document.getElementById('$componentIDs[6]').children[0].children[0].value, document.getElementById('$componentIDs[6]').children[1].children[0].value + '</text>';
-                        result += '<h6 class=\"check_result\">面試難度</h6>';
+                        var author_bg = '<text>' + document.getElementById('$componentIDs[7]').nextElementSibling.children[0].children[0].value + '</text>';
+                        var interview_date = '<text>' + document.getElementById('datepicker').value + '</text>';
+                        var interview_loc = '<text>' + document.getElementById('$componentIDs[9]').children[0].children[0].value + '&nbsp;' + document.getElementById('$componentIDs[9]').children[1].children[0].value + '</text>';
                         for(var i = 0; i < 4; i++) {
-                            if (document.getElementById('$componentIDs[7]').children[i].checked) {
-                                var val = document.getElementById('$componentIDs[7]').children[i].value;
+                            if (document.getElementById('$componentIDs[10]').children[i].checked) {
+                                var val = document.getElementById('$componentIDs[10]').children[i].value;
                                 var bc = 'orange';
                                 if (i == 0 || i == 1) bc = 'blue';
                                 else if (i == 3 || i == 4) bc = 'red';
-                                result += '<button style=\"margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: ' + bc + '; background-color: ' + bc + '; color: white\">' + val + '</button>';
+                                difficulty = '<button style=\"margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: ' + bc + '; background-color: ' + bc + '; color: white\">' + val + '</button>';
                             }
                         }
-                        result += '</text>';
-                        result += '<h6 class=\"check_result\">面試結果</h6><text>';
                         for(var i = 0; i < 3; i++) {
-                            if (document.getElementById('$componentIDs[8]').children[i].checked) {
-                                var val = document.getElementById('$componentIDs[8]').children[i].value;
+                            if (document.getElementById('$componentIDs[11]').children[i].checked) {
+                                var val = document.getElementById('$componentIDs[11]').children[i].value;
                                 var bc = 'black';
                                 if (i == 0) bc = 'blue';
                                 else if (i == 1) bc = 'red';
                                 else if (i == 2) bc = 'orange';
-                                result += '<button style=\"margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: ' + bc + '; background-color: ' + bc + '; color: white\">' + val + '</button>';
+                                interview_result = '<button style=\"margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: ' + bc + '; background-color: ' + bc + '; color: white\">' + val + '</button>';
                             }
                         }
-                        result += '<h6 class=\"check_result\">面試項目</h6><text>';
-                        [...document.getElementById('$componentIDs[9]').children].forEach((ele, idx) => {
+                        interview_type = '';
+                        [...document.getElementById('$componentIDs[12]').children].forEach((ele, idx) => {
                             if (idx % 2 == 0 && ele.checked == true){
-                                result += document.getElementById('$componentIDs[9]').children[idx].value + ', ';
+                                interview_type += '<text>' + document.getElementById('$componentIDs[12]').children[idx].value + ', ';
                             }
                         });
-                        result += '</text>';
-                        result += '<hr style=\"height:0.8px;background-color:gray;\">';
-                        result += '<h6 class=\"check_result\">準備過程</h6><text>' + document.getElementById('$componentIDs[10]').nextElementSibling.children[0].children[0].value + '</text>';
-                        result += '<h6 class=\"check_result\">面試過程</h6><text>' + document.getElementById('$componentIDs[11]').nextElementSibling.children[0].children[0].value + '</text>';
-                        result += '<h6 class=\"check_result\">心得建議</h6><text>' + document.getElementById('$componentIDs[12]').nextElementSibling.children[0].children[0].value + '</text>';
-                        result += '<br>';
-                        if (document.getElementById('$componentIDs[14]').children[1].children[0].value != '') {
-                            var val = document.getElementById('$componentIDs[14]').children[1].children[0].value;
-                            result += '<button style=\"margin-right: 22px; margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: #F7F8FC; background-color: #F7F8FC; color: #1B3B90\">' + val + '</button>';
+                        interview_type = interview_type.slice(0, -2);
+                        interview_type += '</text>';
+                        var preparation = '<text>' + document.getElementById('$componentIDs[13]').nextElementSibling.children[0].children[0].value + '</text>';
+                        var interview_flow = '<text>' + document.getElementById('$componentIDs[14]').nextElementSibling.children[0].children[0].value + '</text>';
+                        var feedback = '<text>' + document.getElementById('$componentIDs[15]').nextElementSibling.children[0].children[0].value + '</text>';
+                        tags = '';
+                        if (document.getElementById('$componentIDs[16]').children[0].value != '') {
+                            var val = document.getElementById('$componentIDs[16]').children[0].value;
+                            tags += '<button style=\"margin-right: 22px; margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: #F7F8FC; background-color: #F7F8FC; color: #1B3B90\">' + val + '</button>';
                         }
-                        if (document.getElementById('$componentIDs[14]').children[0].children[0].value != '') {
-                            var val = document.getElementById('$componentIDs[14]').children[0].children[0].value;
-                            result += '<button style=\"margin-right: 22px; margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: #F7F8FC; background-color: #F7F8FC; color: #1B3B90\">' + val + '</button>';
+                        if (document.getElementById('$componentIDs[16]').children[1].value != '') {
+                            var val = document.getElementById('$componentIDs[16]').children[1].value;
+                            tags += '<button style=\"margin-right: 22px; margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: #F7F8FC; background-color: #F7F8FC; color: #1B3B90\">' + val + '</button>';
                         }
-                        if (document.getElementById('$componentIDs[15]').children[0].value != '') {
-                            var val = document.getElementById('$componentIDs[15]').children[0].value;
-                            result += '<button style=\"margin-right: 22px; margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: #F7F8FC; background-color: #F7F8FC; color: #1B3B90\">' + val + '</button>';
+                        if (document.getElementById('$componentIDs[16]').children[2].value != '') {
+                            var val = document.getElementById('$componentIDs[16]').children[2].value;
+                            tags += '<button style=\"margin-right: 22px; margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: #F7F8FC; background-color: #F7F8FC; color: #1B3B90\">' + val + '</button>';
                         }
-                        if (document.getElementById('$componentIDs[15]').children[1].value != '') {
-                            var val = document.getElementById('$componentIDs[15]').children[1].value;
-                            result += '<button style=\"margin-right: 22px; margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: #F7F8FC; background-color: #F7F8FC; color: #1B3B90\">' + val + '</button>';
-                        }
-                        if (document.getElementById('$componentIDs[15]').children[2].value != '') {
-                            var val = document.getElementById('$componentIDs[15]').children[2].value;
-                            result += '<button style=\"margin-right: 22px; margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: #F7F8FC; background-color: #F7F8FC; color: #1B3B90\">' + val + '</button>';
-                        }
-                        var btns = ' <div style=\"text-align: right;\"> <button id=\"modal_cancel\" type=\"button\" onclick=\"cancelClicked()\" style=\"color: white; background-color: red; border-color: red; margin-top: 28px; bottom: 10px; margin-right: 25px;\">上一步</button> <button id=\"modal_submit\" type=\"button\" onclick=\"submitClicked()\" style=\"color: white; background-color: #1F3372; margin-top: 28px; bottom: 10px;\">確認發佈</button> </div>';
-                        result += btns;
-                        result += '</div>';
-                        result = result.trim();
 
-                        var mdl = document.getElementById('modal');
-                        mdl.innerHTML = '';
-                        mdl.innerHTML += result;
-                        mdl.style.display = 'block';
-                        document.getElementById('page').setAttribute('transition', '.8s filter');
-                        document.getElementById('page').style.pointerEvents = 'none';
-                        document.getElementById('page').style.filter = 'blur(1.5px)';
+                        displayPreview([company_name, job_property, job_category, job_title, industry, sub_industry, isAnon, author_bg, interview_date, interview_loc, difficulty, interview_result, interview_type, preparation, interview_flow, feedback, tags]);
                     }
                 </script>
             ");
@@ -1240,25 +1084,16 @@ add_action('bbp_theme_after_topic_form_submit_button', 'detect_submit_button');
 if( !function_exists('detect_submit_button') ):
     function detect_submit_button() {
         // for issue 49, start
-        $forumId = bbp_get_forum_id();
-        if ($forumId == 0){
-            $forumId = bbp_get_topic_forum_id();
-        }
-        if ($forumId==70){
-            return;
-        }
+        // $forumId = bbp_get_forum_id();
+        // if ($forumId == 0){ // Interview experience form
+        //     $forumId = bbp_get_topic_forum_id();
+        // }
+        // if ($forumId==70){
+        //     return;
+        // }
         // for issue 49, end
-//        echo("
-//            <script type='text/javascript'>
-//                const formElement = document.getElementById('bbp_topic_submit');
-//                formElement.addEventListener('click', function originalSubmitButtonClick(e) {
-//                    if(jQuery('#new-post').valid()) {
-//                        e.target.disabled = true;
-//                        showInterviewExperienceInput();
-//                    }
-//                });
-//            </script>
-//        ");
+       $data = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/js/detect_submit.js');
+       echo("<script type='text/javascript'>$data</script>");
     }
 endif;
 
