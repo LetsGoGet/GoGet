@@ -13,6 +13,8 @@ defined( 'ABSPATH' ) || exit;
 ?>
 
 <div id="bbpress-forums" class="bbpress-wrapper">
+    
+    <h1 align="center"><?php echo(bbp_get_topic_title(bbp_get_topic_id())); ?></h1>
 
 	<?php bbp_breadcrumb(); ?>
 
@@ -29,6 +31,8 @@ defined( 'ABSPATH' ) || exit;
 	<?php else : ?>
 
 		<?php bbp_topic_tag_list(); ?>
+		
+		<?php echo(do_shortcode("[GoGet_display_sell_count]")); ?>
 
 		<?php bbp_single_topic_description(); ?>
 
