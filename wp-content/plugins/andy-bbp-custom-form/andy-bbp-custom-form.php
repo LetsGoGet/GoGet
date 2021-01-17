@@ -846,7 +846,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                                 rangelength: [100, 10000]
                             },
                             '.$field_name_array[15].': {
-                                rangelength: [100, 10000]                 
+                                rangelength: [0, 10000]                 
                             }
                         },
                         messages:{
@@ -890,9 +890,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                             '.$field_name_array[15].': {
                                 rangelength: function(range, input){
                                     var length = $(input).val().length;
-                                    if (length < 100){
-                                        return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：" + length + "/100）";
-                                    } else if (length > 10000) {
+                                    if (length > 10000) {
                                         return "超過字數限制。（字數上限：" + length + "/10000）";
                                     }
                                 },                            
