@@ -154,14 +154,19 @@ class comboBox extends formElements{
                               // since we are using custom formatting functions we do not need to
                               // alter the remote JSON data, except to indicate that infinite
                               // scrolling can be used
-                              params.page = params.page || 1;
-
-                              return {
-                                results: data,
-                                pagination: {
-                                  more: (params.page * 30) < data.total_count
-                                }
-                              };
+                              var resData = [];
+                                data.forEach(function(value) {
+                                    if (value.text.indexOf(params.term) != -1)
+                                        resData.push(value)
+                                })
+                                return {
+                                    results: $.map(resData, function(item) {
+                                        return {
+                                            text: item.text,
+                                            id: item.text
+                                        }
+                                    })
+                                };
                             },
                             cache: true
                         }
@@ -1127,7 +1132,7 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                         insertDataToDB($_POST['bbp_' . $field_key . '_content']);
                         $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . " ";
                     } else if ($key == 3) { // 職務名稱
-                        $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . "面試經驗";
+                        $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . " 面試經驗";
                     } else if ($key == 6) { // 匿名
                         $isAnonymous = $_POST['bbp_' . $field_key . '_content'] == '是' ? 1:0;
                         $saveToPost = false; //不存入 anonymous 欄位
