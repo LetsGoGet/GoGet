@@ -820,7 +820,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                     //     if(value !== $("#"+param[0]).value && value !== $("#"+param[1]).value)
                     //         return true;
                     // };
-                    console.log("'.$field_name_array[2].'");
+                    console.log("'.$field_name_array_10.'");
                     
                     $("#new-post").validate({
                         rules:{
