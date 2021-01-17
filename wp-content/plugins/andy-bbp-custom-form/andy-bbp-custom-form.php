@@ -820,7 +820,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                     //     if(value !== $("#"+param[0]).value && value !== $("#"+param[1]).value)
                     //         return true;
                     // };
-                    console.log("'.$field_name_array_10.'");
+                    console.log("'.$field_name_array[2].'");
                     
                     $("#new-post").validate({
                         rules:{
@@ -1009,7 +1009,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         var isAnon, difficulty, interview_result, interview_type, tags;
                         var company_name = '<text>' + document.getElementById('$componentIDs[0]').children[0].value + '</text>';
                         var job_property = '<text>' + document.getElementById('$componentIDs[1]').children[0].value + '</text>';
-                        var job_category = '<text>' + document.getElementById('$componentIDs[2]').value + '</text>';
+                        var job_category = '<text>' + document.getElementById('$componentIDs[2]').children[0].value + '</text>';
                         var job_title = '<text>' + document.getElementById('$componentIDs[3]').children[1].value + '</text>';
                         var industry = '<text>' + document.getElementById('$componentIDs[4]').children[0].children[0].value + '&nbsp;&nbsp;' + document.getElementById('$componentIDs[4]').children[1].children[0].value;
                         var sub_industry = '<text>' + document.getElementById('$componentIDs[5]').children[0].children[0].value + '&nbsp;&nbsp;' + document.getElementById('$componentIDs[5]').children[1].children[0].value;
@@ -1084,13 +1084,13 @@ add_action('bbp_theme_after_topic_form_submit_button', 'detect_submit_button');
 if( !function_exists('detect_submit_button') ):
     function detect_submit_button() {
         // for issue 49, start
-        // $forumId = bbp_get_forum_id();
-        // if ($forumId == 0){ // Interview experience form
-        //     $forumId = bbp_get_topic_forum_id();
-        // }
-        // if ($forumId==70){
-        //     return;
-        // }
+         $forumId = bbp_get_forum_id();
+         if ($forumId == 0){ // Interview experience form
+             $forumId = bbp_get_topic_forum_id();
+         }
+         if ($forumId==70){
+             return;
+         }
         // for issue 49, end
        $data = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/js/detect_submit.js');
        echo("<script type='text/javascript'>$data</script>");
