@@ -1,6 +1,34 @@
 .check_result {
     margin-bottom: 5px;
 }
+
+.preview_modal_tags {
+    margin-right: 22px;
+    margin-top: 5px;
+    margin-bottom: 8px;
+    border-radius: 20px;
+    border-color: #DFE4F2;
+    background-color: #F7F8FC;
+    color: #1B3B90;
+}
+.preview_modal_cancel_btns {
+    color: #0A2D87;
+    background-color: white;
+    border-color: #0A2D87;
+    border-radius: 25px;
+    margin-top: 28px;
+    bottom: 10px;
+    margin-right: 25px;
+}
+.preview_modal_submit_btns {
+    color: white;
+    background-color: #3255AF;
+    border-color: #3255AF;
+    border-radius: 25px;
+    margin-top: 28px;
+    bottom: 10px;
+}
+
 #modal{
     display: none;
     position: fixed;
@@ -17,4 +45,3 @@
     overflow-x: auto;
     overflow-y: auto;
 }
-

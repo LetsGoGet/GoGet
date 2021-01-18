@@ -13,7 +13,7 @@ function cancelClicked() {
 };
 
 function submitClicked() {
-    jQuery('#new-post').submit(); // Submit event should be fired by jQuery, otherwise the jQuery validator will not be triggered.
+    jQuery('#new-post').submit();
 };
 
 function displayPreview(arr) {
@@ -22,6 +22,11 @@ function displayPreview(arr) {
 
     var result = '<div style="margin-top: -12px; padding-top: 20px; padding-left: 40px; padding-right: 40px; padding-bottom: 18px; \
                     background: linear-gradient(#0A2D87 7.8%, white 0%);">';
+    var btns = '<div style="text-align: right;"> \
+                <button id="modal_cancel" class="preview_modal_cancel_btns" onclick="cancelClicked()" >上一步</button> \
+                <button id="modal_submit" class="preview_modal_submit_btns" onclick="submitClicked()" >確認發佈</button> \
+                </div>';
+
     result += '<div style="color: white;"><h3 style="color: white">預覽畫面</h3>';
     result += '<h5 class="check_result" style="color: white">' + company_name + '&nbsp' + job_title + '&nbsp' + '面試心得' + '</h5>';
     result += '</div><br>';
@@ -44,10 +49,6 @@ function displayPreview(arr) {
     result += '<h6 class="check_result">心得建議</h6>' + feedback;
     result += '<br><br>';
     result += tags;
-    var btns = '<div style="text-align: right;"><button id="modal_cancel" type="button" onclick="cancelClicked()" style="color: white; \
-                background-color: red; border-color: red; margin-top: 28px; bottom: 10px; margin-right: 25px;">上一步</button> \
-                <button id="modal_submit" type="button" onclick="submitClicked()" style="color: white; background-color: #1F3372; \
-                margin-top: 28px; bottom: 10px;">確認發佈</button> </div>';
     result += btns;
     result += '</div>';
     result = result.trim();
@@ -61,23 +62,69 @@ function displayPreview(arr) {
     document.getElementById('page').style.filter = 'blur(1.5px)';
 }
 
-// function show_all_components() {
-//     console.log('0', document.getElementById('$componentIDs[0]'));
-//     console.log('1', document.getElementById('$componentIDs[1]'));
-//     console.log('2', document.getElementById('$componentIDs[2]'));
-//     console.log('3', document.getElementById('$componentIDs[3]'));
-//     console.log('4', document.getElementById('$componentIDs[4]'));
-//     console.log('5', document.getElementById('$componentIDs[5]'));
-//     console.log('6', document.getElementById('$componentIDs[6]'));
-//     console.log('7', document.getElementById('$componentIDs[7]'));
-//     console.log('8', document.getElementById('$componentIDs[8]'));
-//     console.log('9', document.getElementById('$componentIDs[9]'));
-//     console.log('10', document.getElementById('$componentIDs[10]'));
-//     console.log('11', document.getElementById('$componentIDs[11]'));
-//     console.log('12', document.getElementById('$componentIDs[12]'));
-//     console.log('13', document.getElementById('$componentIDs[13]'));
-//     console.log('14', document.getElementById('$componentIDs[14]'));
-//     console.log('15', document.getElementById('$componentIDs[15]'));
-//     console.log('16', document.getElementById('$componentIDs[16]'));
-// }
+function grabValuesInComponentsAndDisplay($comps) {
+    var isAnon, difficulty, interview_result, interview_type, tags;
+
+    var company_name = '<text>' + $comps[0].children[0].value + '</text>';
+    var job_property = '<text>' + $comps[1].children[0].value + '</text>';
+    var job_category = '<text>' + $comps[2].children[0].value + '</text>';
+    var job_title = '<text>' + $comps[3].children[1].value + '</text>';
+    var industry = '<text>' + $comps[4].children[0].children[0].value + '&nbsp;&nbsp;' + $comps[4].children[1].children[0].value;
+    var sub_industry = '<text>' + $comps[5][0].children[0].value + '&nbsp;&nbsp;' + $comps[5][0].children[1].children[0].value;
+    for(var i = 0; i < 2; i++) {
+        if ($comps[6].children[i].checked)
+            isAnon = '<text>' + $comps[6].children[i].value + '</text>';
+    }
+    var author_bg = '<text>' + $comps[7].nextElementSibling.children[0].children[0].value + '</text>';
+    var interview_date = '<text>' + document.getElementById('datepicker').value + '</text>';
+    var interview_loc = '<text>' + $comps[9].children[0].children[0].value + '&nbsp;' + $comps[9].children[1].children[0].value + '</text>';
+
+    for(var i = 0; i < 4; i++) {
+        if ($comps[10].children[i].checked) {
+            var val = $comps[10].children[i].value;
+            var bc = 'orange';
+            if (i == 0 || i == 1) bc = 'blue';
+            else if (i == 3 || i == 4) bc = 'red';
+            difficulty = '<button style="margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: ' + bc + '; background-color: ' + bc + '; color: white">' + val + '</button>';
+        }
+    }
+
+    for(var i = 0; i < 3; i++) {
+        if ($comps[11].children[i].checked) {
+            var val = $comps[11].children[i].value;
+            var bc = 'black';
+            if (i == 0) bc = 'blue';
+            else if (i == 1) bc = 'red';
+            else if (i == 2) bc = 'orange';
+            interview_result = '<button style="margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: ' + bc + '; background-color: ' + bc + '; color: white">' + val + '</button>';
+        }
+    }
+
+    interview_type = '';
+    [...$comps[12].children].forEach((ele, idx) => {
+        if (idx % 2 == 0 && ele.checked == true){
+            interview_type += '<text>' + $comps[12].children[idx].value + ', ';
+        }
+    });
+    interview_type = interview_type.slice(0, -2) + '</text>';
+    var preparation = '<text>' + $comps[13].nextElementSibling.children[0].children[0].value + '</text>';
+    var interview_flow = '<text>' + $comps[14].nextElementSibling.children[0].children[0].value + '</text>';
+    var feedback = '<text>' + $comps[15].nextElementSibling.children[0].children[0].value + '</text>';
+
+    tags = '';
+    if ($comps[16].children[0].value != '') {
+        var val = $comps[16].children[0].value;
+        tags += '<button class="preview_modal_tags">' + val + '</button>';
+    }
+    if ($comps[16].children[1].value != '') {
+        var val = $comps[16].children[1].value;
+        tags += '<button class="preview_modal_tags">' + val + '</button>';
+    }
+    if ($comps[16].children[2].value != '') {
+        var val = $comps[16].children[2].value;
+        tags += '<button class="preview_modal_tags">' + val + '</button>';
+    }
+
+    displayPreview([company_name, job_property, job_category, job_title, industry, sub_industry, isAnon, author_bg, interview_date, interview_loc, difficulty, interview_result, interview_type, preparation, interview_flow, feedback, tags]);
+}
 
