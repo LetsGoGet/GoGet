@@ -329,6 +329,10 @@ function bbp_new_topic_handler( $action = '' ) {
 
 	/** No Errors *************************************************************/
 
+    # Some articles has been url encoding (in rare cases), so try to decode them before inserting into database
+    # This function will not modify strings which haven't been encoded
+    $topic_content = html_entity_decode($topic_content);
+
 	// Add the content of the form to $topic_data as an array.
 	// Just in time manipulation of topic data before being created
 	$topic_data = apply_filters( 'bbp_new_topic_pre_insert', array(
