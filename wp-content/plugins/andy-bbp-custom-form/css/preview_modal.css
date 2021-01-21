@@ -29,16 +29,16 @@
     bottom: 10px !important;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 480px) {
     #modal{
         display: none;
         position: fixed;
         left: 50%;
-        top: 30%;
-        width: 98%;
-        height: 90%;
-        margin-left: -49%;
-        margin-top: -45%;
+        top: 31%;
+        width: 96%;
+        margin-left: -48%;
+        height: 84%;
+        margin-top: -42%;
         z-index: 999;
         border: 2px solid #444;
         box-shadow: 1px 5px 5px #666;
@@ -47,16 +47,16 @@
         overflow-y: auto;
     }
 }
-@media (min-width: 500px) and (max-width: 790px) {
+@media (min-width: 480px) and (max-width: 800px) {
     #modal{
         display: none;
         position: fixed;
         left: 50%;
         top: 50%;
-        width: 486px;
-        height: 470px;
-        margin-left: -243px;
-        margin-top: -235px;
+        width: 82%;
+        margin-left: -41%;
+        height: 560px;
+        margin-top: -280px;
         z-index: 999;
         border: 2px solid #444;
         box-shadow: 1px 5px 5px #666;
@@ -65,16 +65,16 @@
         overflow-y: auto;
     }
 }
-@media (min-width: 790px) and (max-width: 5000px) {
+@media (min-width: 800px) and (max-width: 5000px) {
     #modal{
         display: none;
         position: fixed;
         left: 50%;
-        top: 56%;
+        top: 50%;
         width: 776px;
-        height: 500px;
         margin-left: -388px;
-        margin-top: -250px;
+        height: 560px;
+        margin-top: -280px;
         z-index: 999;
         border: 2px solid #444;
         box-shadow: 1px 5px 5px #666;
