@@ -62,7 +62,7 @@ if ( ! bbp_is_single_forum() ) : ?>
 					</div>
 
 				<?php endif; ?>
-
+<!--
 				<?php if ( current_user_can( 'unfiltered_html' ) ) : ?>
 
 					<div class="bbp-template-notice">
@@ -72,7 +72,7 @@ if ( ! bbp_is_single_forum() ) : ?>
 					</div>
 
 				<?php endif; ?>
-
+-->
 				<?php do_action( 'bbp_template_notices' ); ?>
 
 				<div>
@@ -81,12 +81,22 @@ if ( ! bbp_is_single_forum() ) : ?>
 
 					<?php do_action( 'bbp_theme_before_topic_form_title' ); ?>
 
-<!--
+<!--For issue 49-->
+<!--To allow users enter the title for GoGet討論版 (id==70)-->
+                    <?php  $forumId = bbp_get_forum_id();
+                    	    if ($forumId == 0){
+                    	        $forumId = bbp_get_topic_forum_id();
+                    	    }
+                    
+                    if ($forumId==70): ?>
+
 					<p>
 						<label for="bbp_topic_title"><?php printf( esc_html__( 'Topic Title (Maximum Length: %d):', 'bbpress' ), bbp_get_title_max_length() ); ?></label><br />
 						<input type="text" id="bbp_topic_title" value="<?php bbp_form_topic_title(); ?>" size="40" name="bbp_topic_title" maxlength="<?php bbp_title_max_length(); ?>" />
 					</p>
--->
+                    <?php endif; ?>	
+<!--End modification for issue 49-->
+
 					<?php do_action( 'bbp_theme_after_topic_form_title' ); ?>
 
 					<?php do_action( 'bbp_theme_before_topic_form_content' );
@@ -109,11 +119,6 @@ if ( ! bbp_is_single_forum() ) : ?>
 					<?php if ( bbp_allow_topic_tags() && current_user_can( 'assign_topic_tags', bbp_get_topic_id() ) ) : ?>
 
 						<?php do_action( 'bbp_theme_before_topic_form_tags' ); ?>
-
-						<p>
-							<label for="bbp_topic_tags"><?php esc_html_e( 'Topic Tags:', 'bbpress' ); ?></label><br />
-							<input type="text" value="<?php bbp_form_topic_tags(); ?>" size="40" name="bbp_topic_tags" id="bbp_topic_tags" <?php disabled( bbp_is_topic_spam() ); ?> />
-						</p>
 
 						<?php do_action( 'bbp_theme_after_topic_form_tags' ); ?>
 

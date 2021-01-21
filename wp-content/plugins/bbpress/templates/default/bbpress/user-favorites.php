@@ -16,7 +16,7 @@ do_action( 'bbp_template_before_user_favorites' ); ?>
 
 	<?php bbp_get_template_part( 'form', 'topic-search' ); ?>
 
-	<h2 class="entry-title"><?php esc_html_e( 'Favorite Forum Topics', 'bbpress' ); ?></h2>
+	<h2 class="entry-title"><?php esc_html_e( '我的收藏', 'bbpress' ); ?></h2>
 	<div class="bbp-user-section">
 
 		<?php if ( bbp_get_user_favorites() ) : ?>

@@ -9,14 +9,15 @@ Version: 1.0.0
 */
 
 function generateRandomString($length = 6) {
-    return substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length / strlen($x)))), 1, $length);
+    static $unqid = 0;
+    return "__" . strval($unqid++);
 }
 
 function live_search_handler($request) {
     global $wpdb;
 
-    $queryType = $request['type'];
-    $queryText = $request['text']; // $request->get_params(); // JSON: {text "ds"}
+    $queryType = htmlentities($request['type']);
+    $queryText = htmlentities($request['text']); // $request->get_params(); // JSON: {text "ds"}
 
     if($queryText == '') {
         return array();
@@ -73,34 +74,11 @@ function live_search_handler($request) {
 
     $query = array();
     if(!empty($rows)){
-        foreach($rows as $r) {
-            array_push($query, $r->name);
+        foreach($rows as $key=>$r) {
+            array_push($query, (object) ['id' => $key, 'text' => $r->name]);
         }
     }
     return $query;
-}
-
-function write_interview_data_handler($request) {
-    global $wpdb;
-
-    $d = $request->get_params();
-    if($d['industry'] == '' || $d['country'] == '' || $d['city'] == '') {
-        return '';
-    }
-
-    $posts_table = $wpdb->prefix . "interview_form";
-    $query = " (company) value ('" . strval($d['name']) . "')";
-    $wpdb->get_results( "INSERT " . $posts_table . $query);
-    // insert wp_interview_form (industry, country, city) value ('zzz', 'xx', 'yy');
-    return 'Data written !!';
-}
-
-add_action('rest_api_init', 'write_interview_data');
-function write_interview_data($data) {
-    register_rest_route( 'write_interview_data/v1', '/data/', array(
-            'methods'  => 'GET',
-            'callback' => 'write_interview_data_handler',
-    ));
 }
 
 add_action('rest_api_init', 'fetch_live_search_data');
@@ -145,48 +123,69 @@ class comboBox extends formElements{
         $listID = $hashed_fieldName.'_list';
         $fetchFunction = $hashed_fieldName.'_fetchData';
         $this->ID = $fieldID;
+        $label_id = $hashed_fieldName.'_label';
+        error_log($label_id);
+
+        //ajax select2
+        echo("
+            <script>
+                jQuery(document).ready(function($) {
+                    var url_fetch = window.location.href.split('interview')[0] + 'wp-json/fetch/v1/data';
+                    
+                    $('#$label_id').select2({
+                        language: 'zh-tw',
+                        tags: true,
+                        dropdownAutoWidth: true,
+                        ajax: {
+                            url: url_fetch,
+                            method: 'GET',
+                            dataType: 'json',
+                            data: function (params) {
+                              return {
+                                text: params.term, // search term
+                                page: params.page,
+                                type: '$this->type',
+                              };
+                            },
+                            contentType: 'application/json',
+                            delay: 50,
+                            processResults: function (data, params) {
+                              // parse the results into the format expected by Select2
+                              // since we are using custom formatting functions we do not need to
+                              // alter the remote JSON data, except to indicate that infinite
+                              // scrolling can be used
+                              var resData = [];
+                                data.forEach(function(value) {
+                                    if (value.text.indexOf(params.term) != -1)
+                                        resData.push(value)
+                                })
+                                return {
+                                    results: $.map(resData, function(item) {
+                                        return {
+                                            text: item.text,
+                                            id: item.text
+                                        }
+                                    })
+                                };
+                            },
+                            cache: true
+                        }
+                    });
+                });
+            </script>
+        ");
 
         echo("
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
-                <input id='$fieldID' name='$hashed_fieldName' list='$listID' type='text' size=40 maxlength=40 style='padding-left: 3px;'>
-                <datalist id='$listID'></datalist>
+                <label id='$this->ID' for='$label_id'>
+                    <select name='$hashed_fieldName' id='$label_id' >
+                    <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                    </select>
+                </label>
             </div>
         ");
-
-        echo("<script type='text/javascript'>
-                    // http://localhost/wordpress/wp-json/fetch/v1/data?industry=marketing.
-                    // Start from '?' is added by ajax. You can write down all of params in `url` and omit `data`, e.g. url: url + query.toString()
-                    var url_fetch = window.location.href.split('interview')[0] + 'wp-json/fetch/v1/data';
-                    const $fetchFunction = (queryText) => jQuery.ajax({
-                        url: url_fetch,
-                        method: 'GET',
-                        dataType: 'json',
-                        data: {type: '$this->type', text: queryText},
-                        contentType: 'application/json',
-                        success: function (data) {
-                            document.getElementById('$listID').innerHTML = '';
-                            var input_box = document.getElementById('$listID');
-                            [...data].forEach((item, idx) => {
-                                var ele = document.createElement('option');
-                                ele.value=item;
-                                input_box.appendChild(ele);
-                            });
-                        },
-                        error: function(e){
-                            console.log(e);
-                        }
-                    });
-
-                    var prev = '';
-                    document.getElementById('$fieldID').addEventListener('input', function(e){
-                    var curr = e.target.value;
-                    if( prev || curr ) {
-                        prev = curr;
-                        $fetchFunction(curr);
-                    }
-                });</script>");
     }
 }
 
@@ -205,14 +204,14 @@ class radio extends formElements{
         $label_id = $hashed_fieldName.'_label';
 
         echo("
-            <div id='search_bar' style='margin-bottom: 3px'>
+            <div id='search_bar' style='margin-bottom: 3px; margin-top: 10px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <label id='$this->ID' for='$label_id'>
+                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='否' checked/>
+                    否
                     <input type='radio' id='$label_id' name='$hashed_fieldName' value='是' />
                     是
-                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='否' />
-                    否
                 </label>
             </div>
         ");
@@ -351,10 +350,12 @@ class singleSelection2 extends formElements{
 }
 
 class multiSelection extends formElements{
-    function __construct()
+    private $subtitle;
+    function __construct($subtitle)
     {
         parent::__construct();
         $this->ID = get_class($this) . generateRandomString();
+        $this->subtitle = $subtitle;
     }
 
     function generateUI($fieldName)
@@ -366,6 +367,7 @@ class multiSelection extends formElements{
         echo("
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
+                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <div id='$this->ID'>
                     <input type='checkbox' id='$ids[0]' name='$hashed_fieldName' value='個人面試' />
                     <label for='$ids[0]'> 個人面試 </label>
@@ -381,55 +383,6 @@ class multiSelection extends formElements{
                     <label for='$ids[5]'> 複試 </label>
                     <input type='checkbox' id='$ids[6]' name='$hashed_fieldName' value='其它' />
                     <label for='$ids[6]'> 其它 </label>
-                </div>
-            </div>
-        ");
-    }
-}
-
-class dropDown extends formElements{
-    private $subtitle;
-
-    function __construct($subtitle)
-    {
-        parent::__construct();
-        $this->subtitle = $subtitle;
-        $this->ID = get_class($this) . generateRandomString();
-    }
-
-    function generateUI($fieldName)
-    {
-        $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content'.'[]';
-        $label_id = $hashed_fieldName.'_label';
-
-        echo("
-            <div id='search_bar' style='margin-bottom: 3px'>
-                <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
-                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
-                <div id='$this->ID'>
-                    <label for='$label_id'>
-                        <select name='$hashed_fieldName' id='$label_id'>
-                            <option value='金融'>金融</option>
-                            <option value='顧問'>顧問</option>
-                            <option value='快消'>快消</option>
-                            <option value='零售'>零售</option>
-                            <option value='科技'>科技</option>
-                            <option value='新創'>新創</option>
-                            <option value='其它'>其它</option>
-                        </select>
-                    </label>
-                    <label for='$label_id'>
-                        <select name='$hashed_fieldName' id='$label_id'>
-                            <option value=''>(無)</option>
-                            <option value='金融'>金融</option>
-                            <option value='顧問'>顧問</option>
-                            <option value='快消'>快消</option>
-                            <option value='零售'>零售</option>
-                            <option value='科技'>科技</option>
-                            <option value='新創'>新創</option>
-                            <option value='其它'>其它</option>
-                        </select>
-                    </label>
                 </div>
             </div>
         ");
@@ -456,7 +409,7 @@ class dropdown_02 extends formelements{
                 <p style='margin-bottom: -2px'> <label>$fieldname</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <label id='$this->ID' for='$label_id'>
-                    <select name='$hashed_fieldname' id='$label_id'>
+                    <select class='select2' data-minimum-results-for-search='Infinity' name='$hashed_fieldname' id='$label_id'>
                         <option value='正職'>正職</option>
                         <option value='兼職'>兼職</option>
                         <option value='實習'>實習</option>
@@ -537,11 +490,163 @@ class dropdown_03 extends formelements{
     }
 }
 
+class dropdown_job_category extends formelements{
+    private $subtitle;
 
-class multiTextArea extends formElements{
-    function __construct()
+    function __construct($subtitle)
     {
         parent::__construct();
+        $this->subtitle = $subtitle;
+        $this->ID = get_class($this) . generateRandomString();
+    }
+
+    function generateui($fieldname)
+    {
+        $hashed_fieldname = 'bbp_'.hashhelper($fieldname).'_content';
+        $label_id = $hashed_fieldname.'_label';
+
+        //Fetch DB data
+        $htmlOfOptions = "";
+
+        try {
+            $data = $this->fetchData();
+
+            foreach($data as $row) {
+                $htmlOfOptions .= "<option value='$row->name'>$row->name</option>";
+            }
+        } catch (Exception $e){
+            error_log($e);
+        }
+
+        echo("
+            <div id='search_bar' style='margin-bottom: 3px'>
+                <p style='margin-bottom: -2px'> <label>$fieldname</label> </p>
+                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
+                <label id='$this->ID' for='$label_id'>
+                    <select class='select2' name='$hashed_fieldname' id='$label_id'>
+                        <option></option>
+                        $htmlOfOptions
+                    </select>
+                </label>
+            </div>
+        ");
+    }
+
+    function fetchData(){
+        global $wpdb;
+        return $wpdb->get_results("SELECT * FROM {$wpdb->prefix}job_category");
+    }
+}
+
+class dropdown_industry extends formElements{
+    private $subtitle;
+
+    function __construct($subtitle)
+    {
+        parent::__construct();
+        $this->subtitle = $subtitle;
+        $this->ID = get_class($this) . generateRandomString();
+    }
+
+    function generateUI($fieldName)
+    {
+        $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content'.'[]';
+        $label_id_1 = $hashed_fieldName.'_label_1';
+        $label_id_2 = $hashed_fieldName.'_label_2';
+
+        echo("
+            <div id='search_bar' style='margin-bottom: 3px'>
+                <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
+                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
+                <div id='$this->ID'>
+                    <label for='$label_id_1'>
+                        <select class='select2' data-minimum-results-for-search='Infinity' name='$hashed_fieldName' id='$label_id_1'>
+                            <option value='金融'>金融</option>
+                            <option value='顧問'>顧問</option>
+                            <option value='零售'>零售</option>
+                            <option value='科技'>科技</option>
+                            <option value='新創'>新創</option>
+                            <option value='其它'>其它</option>
+                        </select>
+                    </label>
+                    <label for='$label_id_2'>
+                        <select class='select2' data-minimum-results-for-search='Infinity' name='$hashed_fieldName' id='$label_id_2'>
+                            <option disabled selected>(無)</option>
+                            <option value='金融'>金融</option>
+                            <option value='顧問'>顧問</option>
+                            <option value='零售'>零售</option>
+                            <option value='科技'>科技</option>
+                            <option value='新創'>新創</option>
+                            <option value='其它'>其它</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+        ");
+    }
+}
+
+class dropdown_sub_industry extends formelements{
+    private $subtitle;
+
+    function __construct($subtitle)
+    {
+        parent::__construct();
+        $this->subtitle = $subtitle;
+        $this->ID = get_class($this) . generateRandomString();
+    }
+
+    function generateui($fieldName)
+    {
+        $hashed_fieldName = 'bbp_'.hashhelper($fieldName).'_content';
+        $label_id_1 = $hashed_fieldName.'_label_1';
+        $label_id_2 = $hashed_fieldName.'_label_2';
+
+        //use for multi-dropdown column
+        $hashed_fieldName .= '[]';
+
+        $data = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/js/sub_industry_data.js');
+        echo("
+            <script>
+                jQuery(document).ready(function($) {
+                    $data;
+                    $('#$label_id_1').select2({
+                        language: 'zh-tw',
+                        data: data1
+                    });
+                    $('#$label_id_2').select2({
+                        language: 'zh-tw',
+                        data: data2,                        
+                    });
+                });
+            </script>
+        ");
+
+        echo("
+            <div id='search_bar' style='margin-bottom: 3px'>
+                <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
+                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
+                
+                <div id='$this->ID'>
+                    <label id='$this->ID' for='$label_id_1'>
+                        <select id='$label_id_1' name='$hashed_fieldName'></select>
+                    </label>
+                    <label id='$this->ID' for='$label_id_2'>
+                        <select id='$label_id_2' name='$hashed_fieldName'></select>
+                    </label>
+                </div>
+            </div>
+        ");
+    }
+}
+
+class multiTextArea extends formElements{
+    private $subtitle;
+
+    function __construct($subtitle)
+    {
+        parent::__construct();
+        $this->subtitle = $subtitle;
         $this->ID = get_class($this) . generateRandomString();
     }
 
@@ -554,10 +659,11 @@ class multiTextArea extends formElements{
         echo("
             <div style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
+                <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <div id='$this->ID'>
-                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 placeholder='#' style='padding-left: 3px;'>
-                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 placeholder='#' style='padding-left: 3px; margin-left: 10px'>
-                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 placeholder='#' style='padding-left: 3px; margin-left: 10px'>
+                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 style='padding-left: 3px;'>
+                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 style='padding-left: 3px; margin-left: 10px'>
+                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 style='padding-left: 3px; margin-left: 10px'>
                 </div>
             </div>
         ");
@@ -585,20 +691,28 @@ class date extends formElements{
         wp_enqueue_style( 'style', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css' );
         echo('<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>');
 
-        //jquery
-        echo("<script type='text/javascript'>
-                jQuery(document).ready(function($) {
-                  $( '#datepicker' ).datepicker({
-                    changeMonth: true,
-                    changeYear: true,
-                    showButtonPanel: true,
-                    dateFormat: 'yy.mm',
-                    onClose: function(dateText, inst) { 
-                        $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
-                    }
-                  });
-                });
-            </script>");
+        $data = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/js/date_picker.js');
+        echo("<script type='text/javascript'>$data</script>");
+    }
+}
+
+class inputBox extends formElements{
+    function __construct()
+    {
+        parent::__construct();
+        $this->ID = get_class($this) . generateRandomString();
+    }
+
+    function generateUI($fieldName)
+    {
+        $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content';
+
+        echo("
+            <div id='$this->ID' style='margin-bottom: 3px'>
+                <p> <label>$fieldName</label> </p>
+                <input type='text' name='$hashed_fieldName'>
+            </div>
+        ");
     }
 }
 
@@ -644,18 +758,34 @@ class text extends formElements{
 // to display fields in bbp new topic form
 add_action( 'bbp_theme_before_topic_form_content', 'bbp_display_wp_editor_array' );
 if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
-	function bbp_display_wp_editor_array() {
+    function bbp_display_wp_editor_array() {
 
         //get forum id
-	    $forumId = bbp_get_forum_id();
-	    if ($forumId == 0){
-	        $forumId = bbp_get_topic_forum_id();
-	    }
+        $forumId = bbp_get_forum_id();
+        if ($forumId == 0){
+            $forumId = bbp_get_topic_forum_id();
+        }
 
-	    // Using material UI
+        // Using material UI
         echo('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">');
         // Using jquery velidate
         echo('<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>');
+
+        // Using select2
+        echo('<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/zh-TW.min.js"></script>'
+        );
+
+        echo("
+            <script>
+                jQuery(document).ready(function($) {
+                    $('.select2').select2({
+                        language: 'zh-tw'
+                    });
+                });
+            </script>
+        ");
 
         // Read form schema
         $path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
@@ -674,7 +804,14 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
             }
         }
 
-        // Set the velidation rules and msg for each field
+        //multi selection columns
+        $field_name_array_4= $field_name_array[4].'[]'; //產業類別
+        $field_name_array_5= $field_name_array[5].'[]'; //細分產業類別
+        $field_name_array_10= $field_name_array[10].'[]'; //面試難度
+        $field_name_array_11= $field_name_array[11].'[]'; //面試結果
+        $field_name_array_12= $field_name_array[12].'[]'; //面試項目
+
+        // Set the validation rules and msg for each field
         echo('
             <style>
                 .errTxt{
@@ -688,31 +825,33 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                     //     if(value !== $("#"+param[0]).value && value !== $("#"+param[1]).value)
                     //         return true;
                     // };
+                    console.log("'.$field_name_array_10.'");
+                    
                     $("#new-post").validate({
                         rules:{
                             '.$field_name_array[0].': "required",
                             '.$field_name_array[1].': "required",
                             '.$field_name_array[2].': "required",
                             '.$field_name_array[3].': "required",
-                            '.$field_name_array[4].': "required",
-                            '.$field_name_array[5].': "required",
+                            "'.$field_name_array_4.'": "required",
+                            "'.$field_name_array_5.'": "required",
+                            '.$field_name_array[6].': "required",
                             '.$field_name_array[7].': "required",
-                            \''.$field_name_array[10].'[]\': "required",
-                            '.$field_name_array[11].': {
-                                minlength: 100,
-                                maxlength: 2000,
-                                required: true,
-                                // contentEqual: ['.$field_name_array[12].', '.$field_name_array[13].']
-                            },
-                            '.$field_name_array[12].': {
-                                minlength: 100,
-                                maxlength: 2000,
-                                required: true,
-                                // contentEqual: ['.$field_name_array[11].', '.$field_name_array[13].']
-                            },
+                            '.$field_name_array[8].': "required",
+                            '.$field_name_array[9].': "required",
+                            "'.$field_name_array_10.'": "required",
+                            "'.$field_name_array_11.'": "required",
+                            "'.$field_name_array_12.'": "required",
                             '.$field_name_array[13].': {
-                                maxlength: 1000,
-                                // contentEqual: ['.$field_name_array[11].', '.$field_name_array[12].']
+                                required: true,
+                                rangelength: [100, 10000]
+                            },
+                            '.$field_name_array[14].': {
+                                required: true,
+                                rangelength: [100, 10000]
+                            },
+                            '.$field_name_array[15].': {
+                                rangelength: [0, 10000]                 
                             }
                         },
                         messages:{
@@ -720,30 +859,50 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                             '.$field_name_array[1].': "必填",
                             '.$field_name_array[2].': "必填",
                             '.$field_name_array[3].': "必填",
-                            '.$field_name_array[4].': "必填",
-                            '.$field_name_array[5].': "必選",
-                            '.$field_name_array[7].': "必選",
-                            \''.$field_name_array[10].'[]\': "必選",
-                            '.$field_name_array[11].': {
-                                minlength: "再回想看看，還有什麼準備的小細節想跟大家分享嗎？",
-                                maxlength: "非常感謝您的用心分享！（已達字數上限：2000）",
-                                required: "必填",
-                                // contentEqual: "準備過程、面試過程、心得建議內容不能相同喔！"
-                            },
-                            '.$field_name_array[12].': {
-                                minlength: "再回想看看，還有什麼面試的小細節想跟大家分享嗎？",
-                                maxlength: "非常感謝您的用心分享！（已達字數上限：2000）",
-                                required: "必填",
-                                // contentEqual: "準備過程、面試過程、心得建議內容不能相同喔！"
-                            },
+                            "'.$field_name_array_4.'": "必填",
+                            "'.$field_name_array_5.'": "必填",
+                            '.$field_name_array[6].': "必填",
+                            '.$field_name_array[7].': "必填",
+                            '.$field_name_array[8].': "必填",
+                            '.$field_name_array[9].': "必填",
+                            "'.$field_name_array_10.'": "必填",
+                            "'.$field_name_array_11.'": "必填",
+                            "'.$field_name_array_12.'": "必填",
                             '.$field_name_array[13].': {
-                                maxlength: "非常感謝您的用心分享！（已達字數上限：1000）",
-                                // contentEqual: "準備過程、面試過程、心得建議內容不能相同喔！"
+//                                minlength: "再回想看看，還有什麼小細節想跟大家分享嗎？（字數下限：100）",
+//                                maxlength: "非常感謝您的用心分享！（已達字數上限：100000）",
+                                required: "必填",
+                                rangelength: function(range, input){
+                                    var length = $(input).val().length;
+                                    if (length < 100){
+                                        return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：" + length + "/100）";
+                                    } else if (length > 10000) {
+                                        return "超過字數限制。（字數上限：" + length + "/10000）";
+                                    }
+                                },
+                            },
+                            '.$field_name_array[14].': {
+                                required: "必填",
+                                rangelength: function(range, input){
+                                    var length = $(input).val().length;
+                                    if (length < 100){
+                                        return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：" + length + "/100）";
+                                    } else if (length > 10000) {
+                                        return "超過字數限制。（字數上限：" + length + "/10000）";
+                                    }
+                                },
+                            },
+                            '.$field_name_array[15].': {
+                                rangelength: function(range, input){
+                                    var length = $(input).val().length;
+                                    if (length > 10000) {
+                                        return "超過字數限制。（字數上限：" + length + "/10000）";
+                                    }
+                                },                            
                             }
                         },
                         errorElement : "div",
                         errorPlacement: function (error, element) {
-                            cancelClicked(); // Hide the preview modal
                             if (element.is(":radio")) {
                                 error.insertAfter(element.parent("label"));
                             }
@@ -760,8 +919,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
             </script>
         ');
 
-	    //Start generating form
-	    //read form schema
+        // Start generating form (read form schema)
         if(file_exists($path)) {
             $lines = file($path, FILE_IGNORE_NEW_LINES);
 
@@ -793,22 +951,30 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         $sl2->generateUI($field_name);
                         array_push($componentIDs, $sl2->getComponentID());
                     } else if ($field_type == 'multiSelection') {
-                        $ml = new multiSelection();
+                        $ml = new multiSelection($field_subtitle);
                         $ml->generateUI($field_name);
                         array_push($componentIDs, $ml->getComponentID());
-                    } else if ($field_type == 'dropdown') {
-                        $dn1 = new dropDown($field_subtitle);
+                    } else if ($field_type == 'dropdown_job_category') {
+                        $dn = new dropdown_job_category($field_subtitle);
+                        $dn->generateUI($field_name);
+                        array_push($componentIDs, $dn->getComponentID());
+                    } else if ($field_type == 'dropdown_industry') {
+                        $dn1 = new dropdown_industry($field_subtitle);
                         $dn1->generateUI($field_name);
                         array_push($componentIDs, $dn1->getComponentID());
-                    } else if ($field_type == 'dropdown_02') {
-                        $dn2 = new dropDown_02($field_subtitle);
+                    } else if ($field_type == 'dropdown_sub_industry') {
+                        $dn2 = new dropdown_sub_industry($field_subtitle);
                         $dn2->generateUI($field_name);
                         array_push($componentIDs, $dn2->getComponentID());
-                    } else if ($field_type == 'dropdown_03') {
-                        $cc_path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/countries_and_cities.json';
-                        $dn3 = new dropDown_03($field_subtitle, $cc_path);
+                    } else if ($field_type == 'dropdown_02') {
+                        $dn3 = new dropDown_02($field_subtitle);
                         $dn3->generateUI($field_name);
                         array_push($componentIDs, $dn3->getComponentID());
+                    } else if ($field_type == 'dropdown_03') {
+                        $cc_path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/countries_and_cities.json';
+                        $dn4 = new dropDown_03($field_subtitle, $cc_path);
+                        $dn4->generateUI($field_name);
+                        array_push($componentIDs, $dn4->getComponentID());
                     } else if ($field_type == 'date') {
                         $date = new date();
                         $date->generateUI($field_name);
@@ -818,9 +984,13 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                         $textarea->generateUI($field_name);
                         array_push($componentIDs, $textarea->getComponentID());
                     } else if ($field_type == 'multiTextArea') {
-                        $multiTextArea = new multiTextArea();
+                        $multiTextArea = new multiTextArea($field_subtitle);
                         $multiTextArea->generateUI($field_name);
                         array_push($componentIDs, $multiTextArea->getComponentID());
+                    } else if ($field_type == 'inputBox') {
+                        $inputBox = new inputBox();
+                        $inputBox->generateUI($field_name);
+                        array_push($componentIDs, $inputBox->getComponentID());
                     } else if ($field_type == 'text') {
                         $text = new text($field_subtitle);
                         $text->generateUI($field_name);
@@ -829,114 +999,22 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                 }
             }
 
-            echo("
-                <style>
-                    .check_result {
-                        margin-bottom: 5px;
-                    }
-                    #modal{
-                        display: none;
-                        position: fixed;
-                        left: 50%;
-                        top: 55%;
-                        width: 920px;
-                        height: 560px;
-                        margin-left: -460px;
-                        margin-top: -280px;
-                        padding-left: 40px;
-                        padding-right: 40px;
-                        padding-top: 18px;
-                        padding-bottom: 18px;
-                        z-index: 999;
-                        border: 2px solid #444;
-                        box-shadow: 1px 5px 5px #666;
-                        background-color: #f6f6f6;
-                        overflow-x: auto;
-                        overflow-y: auto;
-                    }
-                </style>
-                <script>
-                    const modal = document.createElement('div'); 
-                    modal.id = 'modal';
-                    var beforeThis = document.getElementById('page');
-                    document.body.insertBefore(modal, beforeThis);
-                </script>
-            ");
+            $preview_modal_css = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/css/preview_modal.css');
+            $preview_modal_js = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/js/preview_modal.js');
+            echo("<style>$preview_modal_css</style>");
+            echo("<script type='text/javascript'>$preview_modal_js</script>");
 
-                // <script src='https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js'></script>
             echo("
                 <script type='text/javascript'>
-                    fetchFunctionCountriesAndCities($componentIDs[6].children[0].children[0].value);
-                    function cancelClicked() {
-                        document.getElementById('page').setAttribute('transition', '');
-                        document.getElementById('page').style.pointerEvents = '';
-                        document.getElementById('page').style.filter = '';
-                        document.getElementById('modal').style.display = 'none';
-                        document.getElementById('bbp_topic_submit').disabled = false;
-                    };
-                    function submitClicked() {
-                        jQuery('#new-post').submit(); // Submit event should be fired by jQuery, otherwise the jQuery validator will not be triggered.
-                    };
-                </script>
-                <script type='text/javascript'>
-                    // In this time, the submit button (which id is bbp_topic_submit is not yet created)
-                    function showInterviewExperienceInput() {
-                        var result = '<div style=\"text-align: center;\"><h3>預覽畫面</h3></div>';
-                        result += '<div style=\"text-align: center; font-size: 98%; color: red; margin-top: -15px;\">請確認文章內容是否正確，送出就無法編輯了喔!<br>（檢查內容即可，排版僅供參考）</div>';
-                        result += '<h6 class=\"check_result\">文章標題</h6><text>' + document.getElementById('bbp_topic_title').value + '</text>';
-                        result += '<h6 class=\"check_result\">公司名稱</h6><text>' + document.getElementById('$componentIDs[0]').value + '</text>';
-                        result += '<h6 class=\"check_result\">職務性質</h6><text>' + document.getElementById('$componentIDs[1]').children[0].value + '</text>';
-                        result += '<h6 class=\"check_result\">職務名稱</h6><text>' + document.getElementById('$componentIDs[2]').value + '</text>';
-                        result += '<h6 class=\"check_result\">是否匿名</h6><text>';
-                        for(var i = 0; i < 2; i++) {
-                            if (document.getElementById('$componentIDs[3]').children[i].checked)
-                                result += document.getElementById('$componentIDs[3]').children[i].value;
-                        }
-                        result += '</text>';
-                        result += '<h6 class=\"check_result\">作者背景</h6><text>' + document.getElementById('$componentIDs[4]').nextElementSibling.children[5].children[0].value + '</text>';
-                        result += '<h6 class=\"check_result\">面試時間</h6><text>' + document.getElementById('datepicker').value + '</text>';
-                        result += '<h6 class=\"check_result\">面試地點</h6><text>' + document.getElementById('$componentIDs[6]').children[0].children[0].value, document.getElementById('$componentIDs[6]').children[1].children[0].value + '</text>';
-                        result += '<h6 class=\"check_result\">面試結果</h6><text>';
-                        for(var i = 0; i < 4; i++) {
-                            if (document.getElementById('$componentIDs[7]').children[i].checked)
-                                result += document.getElementById('$componentIDs[7]').children[i].value;
-                        }
-                        result += '</text>';
-                        result += '<h6 class=\"check_result\">面試難度</h6><text>';
-                        for(var i = 0; i < 3; i++) {
-                            if (document.getElementById('$componentIDs[8]').children[i].checked)
-                                result += document.getElementById('$componentIDs[8]').children[i].value + ', ';
-                        }
-                        result += '</text>';
-                        result += '<h6 class=\"check_result\">面試項目</h6><text>';
-                        [...document.getElementById('$componentIDs[9]').children].forEach((ele, idx) => {
-                            if (idx % 2 == 0 && ele.checked == true){
-                                result += document.getElementById('$componentIDs[9]').children[idx].value + ', ';
-                            }
-                        });
-                        result += '</text>';
-                        result += '<h6 class=\"check_result\">準備過程</h6><text>' + document.getElementById('$componentIDs[10]').nextElementSibling.children[5].children[0].value + '</text>';
-                        result += '<h6 class=\"check_result\">面試過程</h6><text>' + document.getElementById('$componentIDs[11]').nextElementSibling.children[5].children[0].value + '</text>';
-                        result += '<h6 class=\"check_result\">心得建議</h6><text>' + document.getElementById('$componentIDs[12]').nextElementSibling.children[5].children[0].value + '</text>';
-                        result += '<h6 class=\"check_result\">（標籤）產業</h6><text>';
-                        result += '#' + document.getElementById('$componentIDs[14]').children[0].children[0].value + ' #' + document.getElementById('$componentIDs[14]').children[1].children[0].value;
-                        result += '</text>';
-                        result += '<h6 class=\"check_result\">（標籤）自創</h6><text>';
-                        if (document.getElementById('$componentIDs[15]').children[0].value != '') result += '#' + document.getElementById('$componentIDs[15]').children[0].value + ' ';
-                        if (document.getElementById('$componentIDs[15]').children[1].value != '') result += '#' + document.getElementById('$componentIDs[15]').children[1].value + ' ';
-                        if (document.getElementById('$componentIDs[15]').children[2].value != '') result += '#' + document.getElementById('$componentIDs[15]').children[2].value + ' ';
-                        result += '</text>';
-                        result = result.trim();
+                    fetchFunctionCountriesAndCities($componentIDs[9].children[0].children[0].value);
 
-                        var mdl = document.getElementById('modal');
-                        var btns = ' <div style=\"text-align: center;\"> <button id=\"modal_cancel\" type=\"button\" onclick=\"cancelClicked()\" style=\"background-color: red; border-color: red; margin-top: 28px; bottom: 10px;\">Cancel</button> <button id=\"modal_submit\" type=\"button\" onclick=\"submitClicked()\" style=\"margin-top: 28px; bottom: 10px;\">Submit</button> </div>';
-                        mdl.innerHTML = '';
-                        mdl.innerHTML += result;
-                        mdl.innerHTML += btns;
-                        mdl.style.display = 'block';
-                        document.getElementById('page').setAttribute('transition', '.8s filter');
-                        document.getElementById('page').style.pointerEvents = 'none';
-                        document.getElementById('page').style.filter = 'blur(1.5px)';
+                    function showInterviewExperienceInput() { // In this time, the submit button (which id is bbp_topic_submit is not yet created)
+                        grabValuesInComponentsAndDisplay([
+                            $componentIDs[0], $componentIDs[1], $componentIDs[2], $componentIDs[3],
+                            $componentIDs[4], $componentIDs[5], $componentIDs[6], $componentIDs[7],
+                            $componentIDs[8], $componentIDs[9], $componentIDs[10], $componentIDs[11],
+                            $componentIDs[12], $componentIDs[13], $componentIDs[14], $componentIDs[15], $componentIDs[16],
+                        ]);
                     }
                 </script>
             ");
@@ -944,7 +1022,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
         else {
             bbp_the_content( array( 'context' => 'topic' ) ); //bbpress default
         }
-	}
+    }
 
     function hashHelper($name)
     {
@@ -955,23 +1033,25 @@ endif;
 add_action('bbp_theme_after_topic_form_submit_button', 'detect_submit_button');
 if( !function_exists('detect_submit_button') ):
     function detect_submit_button() {
-        echo("
-            <script type='text/javascript'>
-                const formElement = document.getElementById('bbp_topic_submit');
-                formElement.addEventListener('click', function originalSubmitButtonClick(e) {
-                    e.target.disabled = true;
-                    showInterviewExperienceInput();
-                });
-            </script>
-        ");
+        // for issue 49, start
+         $forumId = bbp_get_forum_id();
+         if ($forumId == 0){ // Interview experience form
+             $forumId = bbp_get_topic_forum_id();
+         }
+         if ($forumId==70){
+             return;
+         }
+        // for issue 49, end
+       $data = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/js/detect_submit.js');
+       echo("<script type='text/javascript'>$data</script>");
     }
 endif;
 
 // to parse post data into post content
 add_filter( 'bbp_get_my_custom_post_fields', 'bbp_get_custom_post_data');
 if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
-	function bbp_get_custom_post_data() {
-	    $forumId = $_POST['bbp_forum_id'];
+    function bbp_get_custom_post_data() {
+        $forumId = $_POST['bbp_forum_id'];
         $path = ABSPATH.'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
         $content = '';
         $must_fill_tag = '*';
@@ -992,17 +1072,21 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                     $field_type = $row[1];
                     $field_key = hash('ripemd160',$field_name);
 
+                    //是否將此欄位存到文章內容中
+                    $saveToPost = true;
+
                     if ($key == 0){ // 公司名稱
                         insertDataToDB($_POST['bbp_' . $field_key . '_content']);
                         $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . " ";
-                    } else if ($key == 2) { // 職務名稱
-                        $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . "面試經驗";
                     } else if ($key == 3) { // 職務名稱
-                        $isAnonymous = $_POST['bbp_' . $field_key . '_content'];
+                        $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . " 面試經驗";
+                    } else if ($key == 6) { // 匿名
+                        $isAnonymous = $_POST['bbp_' . $field_key . '_content'] == '是' ? 1:0;
+                        $saveToPost = false; //不存入 anonymous 欄位
                     }
 
                     //加入欄位內容
-                    if ( ! empty( $_POST['bbp_' . $field_key . '_content'] ) && $field_type != 'text') {
+                    if ( ! empty( $_POST['bbp_' . $field_key . '_content'] ) && $field_type != 'text' && $saveToPost) {
                         //加入欄位標題
                         $field_title = "<strong><u><font size='3pt'>" . str_replace($must_fill_tag,"",$field_name) . "</strong></u></font>
                 ";
@@ -1010,34 +1094,33 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
 
                         $token = '<noscript>' . $field_key . '</noscript>';
 
-                        if (is_array($_POST['bbp_' . $field_key . '_content'])){
+                        if (is_array($_POST['bbp_' . $field_key . '_content'])){ //處理欄位多值
                             $content .= $token;
-                            foreach($_POST['bbp_' . $field_key . '_content'] as $key1=>$item){
-                                error_log($field_name . ':' . $item);
-                                if ($key1 != count($_POST['bbp_' . $field_key . '_content']) -1 ){
+
+                            //去除 array 中的空白值, 以防產生逗號結尾文字 ex. array 有三個值 ['1', '2', ''] ---> print 出 ' 1,2, '
+                            $arr = $_POST['bbp_' . $field_key . '_content'];
+                            $arr = array_filter($arr, function($value) { return !is_null($value) && $value !== ''; });
+
+                            foreach($arr as $key1=>$item){
+                                error_log($field_name.":".$item);
+                                if ($key1 != count($arr) -1){
                                     $content .= $item . ', ';
-                                    if ($key == (count($lines) - 1) || $key == (count($lines) - 2) || $key == (count($lines) - 3)) {
-                                        $customizedTags .= $item . ', ';
-                                    }
                                 } else {
                                     $content .= $item;
-                                    if ($key == (count($lines) - 1) || $key == (count($lines) - 2) || $key == (count($lines) - 3)) {
-                                        $customizedTags .= $item . ', ';
-                                    }
+                                }
+
+                                //customized tags
+                                if ($field_name == '產業類別<a style="color:#FF0000;font-size:20px;">*</a>' || $field_name == '細分產業類別<a style="color:#FF0000;font-size:20px;">*</a>' || $field_name == '標籤') {
+                                    $customizedTags .= $item . ', ';
                                 }
                             }
                             $content .= $token;
                         } else {
                             $content .= $token . $_POST['bbp_' . $field_key . '_content'] . $token;
                         }
-//                        error_log("欄位值:".$_POST['bbp_' . $field_key . '_content']);
-                    }else{
-                        if (strpos($field_name, $must_fill_tag) != false){
-                            bbp_add_error( 'bbp_edit_topic_content', __( '<strong>錯誤</strong>： 你有必填項目「' . str_replace($must_fill_tag,"",$field_name) . '」未填', 'bbpress' ) );
-                        }
                     }
-                    $content .= '
 
+                    $content .= '
 
                 ';
                 } else {
@@ -1045,14 +1128,13 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                     continue;
                 }
             }
-            error_log($content);
+            error_log($customizedTags);
             return array($customizedTopic, $isAnonymous, $customizedTags, $content);
         } else {
             $content = $_POST['bbp_topic_content'];
-            error_log($content);
             return array($content);
         }
-	}
+    }
 
     function insertDataToDB($company_name)
     {
@@ -1072,13 +1154,13 @@ endif;
 // called inside bbp bbp_get_the_content() in wp-content/plugins/bbpress/includes/common/template.php
 add_filter('bbp_get_topic_field_content', 'get_topic_field_content');
 if ( ! function_exists( 'get_topic_field_content' ) ) :
-	function get_topic_field_content($field_key) {
-	    // Get _POST data
+    function get_topic_field_content($field_key) {
+        // Get _POST data
         // at this case, $field_key is already the hash key
-		if ( bbp_is_topic_form_post_request() && isset( $_POST['bbp_' . $field_key . '_content'] ) ) {
-			$topic_content = wp_unslash( $_POST['bbp_' . $field_key . '_content'] );
-		// Get edit data
-		} elseif ( bbp_is_topic_edit() ) {
+        if ( bbp_is_topic_form_post_request() && isset( $_POST['bbp_' . $field_key . '_content'] ) ) {
+            $topic_content = wp_unslash( $_POST['bbp_' . $field_key . '_content'] );
+        // Get edit data
+        } elseif ( bbp_is_topic_edit() ) {
             $topic_content = bbp_get_global_post_field( 'post_content', 'raw' );
             $token = '<noscript>' . $field_key . '</noscript>';
             $start = strpos($topic_content, $token);
@@ -1088,24 +1170,32 @@ if ( ! function_exists( 'get_topic_field_content' ) ) :
             $start += strlen($token);
             $end = $start + strpos(substr($topic_content, $start) , $token);
             $topic_content = substr($topic_content, $start, $end-$start);
-		// No data
-		} else {
-		    $topic_content = '';
-		}
+        // No data
+        } else {
+            $topic_content = '';
+        }
         return $topic_content;
-	}
+    }
 endif;
 
 // Show message above the new topic form to indicate * as must answer fields
 add_action( 'bbp_theme_before_topic_form_notices', 'bbp_display_must_answer_fields_message' );
 if ( ! function_exists( 'bbp_display_must_answer_fields_message' ) ) :
-	function bbp_display_must_answer_fields_message() {
+    function bbp_display_must_answer_fields_message() {
+        // for issue 49 start
+        $forumId = bbp_get_forum_id();
+        if ($forumId == 0){
+            $forumId = bbp_get_topic_forum_id();
+        }
+        if($forumId!=70){ //for issue 49 end
 ?>
-					<div class="bbp-template-notice">
-						<ul>
-							<li><a style="color:#FF0000;font-size:20px;">*</a>為必填項目</li>
-						</ul>
-					</div>
+    
+                    <div class="bbp-template-notice">
+                        <ul>
+                            <li><a style="color:#FF0000;font-size:20px;">*</a>為必填項目</li>
+                        </ul>
+                    </div>
 <?php
-	}
+        }  //for issue 49
+    }
 endif;

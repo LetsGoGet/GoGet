@@ -16,12 +16,12 @@ do_action( 'bbp_template_before_topics_loop' ); ?>
 	<li class="bbp-header">
 		<ul class="forum-titles">
 			<li class="bbp-topic-title"><?php esc_html_e( 'Topic', 'bbpress' ); ?></li>
-			<li class="bbp-topic-voice-count"><?php esc_html_e( 'Voices', 'bbpress' ); ?></li>
+			<li class="bbp-topic-voice-count"><?php esc_html_e( '點閱', 'bbpress' ); ?></li>
 			<li class="bbp-topic-reply-count"><?php bbp_show_lead_topic()
-				? esc_html_e( 'Replies', 'bbpress' )
-				: esc_html_e( 'Posts',   'bbpress' );
+				? esc_html_e( '回覆', 'bbpress' )
+				: esc_html_e( '回覆',   'bbpress' );
 			?></li>
-			<li class="bbp-topic-freshness"><?php esc_html_e( 'Last Post', 'bbpress' ); ?></li>
+			<li class="bbp-topic-freshness"><?php esc_html_e( '最近回覆', 'bbpress' ); ?></li>
 		</ul>
 	</li>
 

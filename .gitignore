@@ -1,0 +1,10 @@
+# ignore log files and databases
+*.log
+*.sql
+*.sqlite
+
+#ignore vscode settings
+.idea/*
+
+#random generated font file
+wp-content/fonts/open-sans/*

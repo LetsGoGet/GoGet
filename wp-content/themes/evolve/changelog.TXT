@@ -1,5 +1,21 @@
 === Changelog ===
 
+Version  4.3.2
+Date:       12/12/20
+
+- Several bug fixes
+
+
+Version  4.3.1
+Date:       4/10/20
+
+- Language files fixed
+- Solved a compatibility issue with plugins for post likes
+- Corrected the capability of Twitter sharing
+- Woocommerce templates updated
+- Some other bug fixes and compatibility improvements
+
+
 Version  4.3.0
 Date:       13/08/20
 

@@ -80,9 +80,9 @@ defined( 'ABSPATH' ) || exit;
 
 	</li>
 
-	<li class="bbp-topic-voice-count"><?php bbp_topic_voice_count(); ?></li>
+    <li class="bbp-topic-voice-count"><?php echo get_wpbbp_post_view( bbp_get_topic_id() ); ?>
 
-	<li class="bbp-topic-reply-count"><?php bbp_show_lead_topic() ? bbp_topic_reply_count() : bbp_topic_post_count(); ?></li>
+	<li class="bbp-topic-reply-count"><?php echo ( bbp_show_lead_topic() ? bbp_get_topic_reply_count()-1 : bbp_get_topic_post_count()-1); ?></li>
 
 	<li class="bbp-topic-freshness">
 
@@ -92,7 +92,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php do_action( 'bbp_theme_after_topic_freshness_link' ); ?>
 
-		<p class="bbp-topic-meta">
+<!--		<p class="bbp-topic-meta">
 
 			<?php do_action( 'bbp_theme_before_topic_freshness_author' ); ?>
 
@@ -100,6 +100,6 @@ defined( 'ABSPATH' ) || exit;
 
 			<?php do_action( 'bbp_theme_after_topic_freshness_author' ); ?>
 
-		</p>
+		</p>-->
 	</li>
 </ul><!-- #bbp-topic-<?php bbp_topic_id(); ?> -->
