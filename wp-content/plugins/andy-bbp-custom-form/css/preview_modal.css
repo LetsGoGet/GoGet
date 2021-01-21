@@ -12,21 +12,21 @@
     color: #1B3B90;
 }
 .preview_modal_cancel_btns {
-    color: #0A2D87;
-    background-color: white;
-    border-color: #0A2D87;
-    border-radius: 25px;
-    margin-top: 28px;
-    bottom: 10px;
-    margin-right: 25px;
+    color: #0A2D87 !important;
+    background-color: white !important;
+    border-color: #0A2D87 !important;
+    border-radius: 25px !important;
+    margin-top: 28px !important;
+    bottom: 10px !important;
+    margin-right: 25px !important;
 }
 .preview_modal_submit_btns {
-    color: white;
-    background-color: #3255AF;
-    border-color: #3255AF;
-    border-radius: 25px;
-    margin-top: 28px;
-    bottom: 10px;
+    color: white !important;
+    background-color: #3255AF !important;
+    border-color: #3255AF !important;
+    border-radius: 25px !important;
+    margin-top: 28px !important;
+    bottom: 10px !important;
 }
 
 @media (max-width: 500px) {
@@ -72,9 +72,9 @@
         left: 50%;
         top: 56%;
         width: 776px;
-        height: 520px;
+        height: 500px;
         margin-left: -388px;
-        margin-top: -260px;
+        margin-top: -250px;
         z-index: 999;
         border: 2px solid #444;
         box-shadow: 1px 5px 5px #666;
