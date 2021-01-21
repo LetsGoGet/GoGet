@@ -1,85 +1,20 @@
 .check_result {
     margin-bottom: 5px;
 }
-
-.preview_modal_tags {
-    margin-right: 22px;
-    margin-top: 5px;
-    margin-bottom: 8px;
-    border-radius: 20px;
-    border-color: #DFE4F2;
-    background-color: #F7F8FC;
-    color: #1B3B90;
-}
-.preview_modal_cancel_btns {
-    color: #0A2D87;
-    background-color: white;
-    border-color: #0A2D87;
-    border-radius: 25px;
-    margin-top: 28px;
-    bottom: 10px;
-    margin-right: 25px;
-}
-.preview_modal_submit_btns {
-    color: white;
-    background-color: #3255AF;
-    border-color: #3255AF;
-    border-radius: 25px;
-    margin-top: 28px;
-    bottom: 10px;
+#modal{
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 55%;
+    width: 920px;
+    height: 500px;
+    margin-left: -460px;
+    margin-top: -280px;
+    z-index: 999;
+    border: 2px solid #444;
+    box-shadow: 1px 5px 5px #666;
+    background: white;
+    overflow-x: auto;
+    overflow-y: auto;
 }
 
-@media (max-width: 500px) {
-    #modal{
-        display: none;
-        position: fixed;
-        left: 50%;
-        top: 30%;
-        width: 98%;
-        height: 90%;
-        margin-left: -49%;
-        margin-top: -45%;
-        z-index: 999;
-        border: 2px solid #444;
-        box-shadow: 1px 5px 5px #666;
-        background: white;
-        overflow-x: auto;
-        overflow-y: auto;
-    }
-}
-@media (min-width: 500px) and (max-width: 790px) {
-    #modal{
-        display: none;
-        position: fixed;
-        left: 50%;
-        top: 50%;
-        width: 486px;
-        height: 470px;
-        margin-left: -243px;
-        margin-top: -235px;
-        z-index: 999;
-        border: 2px solid #444;
-        box-shadow: 1px 5px 5px #666;
-        background: white;
-        overflow-x: auto;
-        overflow-y: auto;
-    }
-}
-@media (min-width: 790px) and (max-width: 5000px) {
-    #modal{
-        display: none;
-        position: fixed;
-        left: 50%;
-        top: 56%;
-        width: 776px;
-        height: 520px;
-        margin-left: -388px;
-        margin-top: -260px;
-        z-index: 999;
-        border: 2px solid #444;
-        box-shadow: 1px 5px 5px #666;
-        background: white;
-        overflow-x: auto;
-        overflow-y: auto;
-    }
-}
