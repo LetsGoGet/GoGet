@@ -92,7 +92,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php do_action( 'bbp_theme_after_topic_freshness_link' ); ?>
 
-		<p class="bbp-topic-meta">
+<!--		<p class="bbp-topic-meta">
 
 			<?php do_action( 'bbp_theme_before_topic_freshness_author' ); ?>
 
@@ -100,6 +100,6 @@ defined( 'ABSPATH' ) || exit;
 
 			<?php do_action( 'bbp_theme_after_topic_freshness_author' ); ?>
 
-		</p>
+		</p>-->
 	</li>
 </ul><!-- #bbp-topic-<?php bbp_topic_id(); ?> -->

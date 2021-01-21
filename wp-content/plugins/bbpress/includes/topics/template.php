@@ -1826,8 +1826,8 @@ function bbp_topic_favorite_link( $args = array() ) {
 			'object_type' => 'post',
 			'before'      => '',
 			'after'       => '',
-			'favorite'    => esc_html__( 'Favorite',   'bbpress' ),
-			'favorited'   => esc_html__( 'Unfavorite', 'bbpress' ),
+			'favorite'    => esc_html__( '收藏',   'bbpress' ),
+			'favorited'   => esc_html__( '取消收藏', 'bbpress' ),
 			'redirect_to' => $redirect_to
 		), 'get_topic_favorite_link' );
 

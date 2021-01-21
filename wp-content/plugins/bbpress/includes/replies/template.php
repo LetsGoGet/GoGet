@@ -1957,9 +1957,9 @@ function bbp_reply_trash_link( $args = array() ) {
 			'link_before'  => '',
 			'link_after'   => '',
 			'sep'          => ' | ',
-			'trash_text'   => esc_html__( 'Trash',   'bbpress' ),
-			'restore_text' => esc_html__( 'Restore', 'bbpress' ),
-			'delete_text'  => esc_html__( 'Delete',  'bbpress' )
+			'trash_text'   => esc_html__( '刪除',   'bbpress' ),
+			'restore_text' => esc_html__( '取消刪除', 'bbpress' ),
+			'delete_text'  => esc_html__( '永久刪除',  'bbpress' )
 		), 'get_reply_trash_link' );
 
 		// Get reply

@@ -13,8 +13,8 @@ defined( 'ABSPATH' ) || exit;
 ?>
 
 <div id="bbpress-forums" class="bbpress-wrapper">
-    
-    <h1 align="center"><?php echo(bbp_get_topic_title(bbp_get_topic_id())); ?></h1>
+
+    <h1 align="center"><b><br><?php echo(bbp_get_topic_title(bbp_get_topic_id())); ?></b></h1>
 
 	<?php bbp_breadcrumb(); ?>
 

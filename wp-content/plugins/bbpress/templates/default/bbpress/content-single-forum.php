@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 <div id="bbpress-forums" class="bbpress-wrapper">
     
-    <h1 align="center"><?php echo(bbp_get_forum_title(bbp_get_forum_id())); ?></h1>
+    <h1 align="center"><b><br><?php echo(bbp_get_forum_title(bbp_get_forum_id())); ?></b></h1>
     
     請至頁面底部新增文章
 
