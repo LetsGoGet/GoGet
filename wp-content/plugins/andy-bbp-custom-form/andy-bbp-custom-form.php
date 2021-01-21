@@ -154,14 +154,19 @@ class comboBox extends formElements{
                               // since we are using custom formatting functions we do not need to
                               // alter the remote JSON data, except to indicate that infinite
                               // scrolling can be used
-                              params.page = params.page || 1;
-
-                              return {
-                                results: data,
-                                pagination: {
-                                  more: (params.page * 30) < data.total_count
-                                }
-                              };
+                              var resData = [];
+                                data.forEach(function(value) {
+                                    if (value.text.indexOf(params.term) != -1)
+                                        resData.push(value)
+                                })
+                                return {
+                                    results: $.map(resData, function(item) {
+                                        return {
+                                            text: item.text,
+                                            id: item.text
+                                        }
+                                    })
+                                };
                             },
                             cache: true
                         }
@@ -1004,65 +1009,12 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                     fetchFunctionCountriesAndCities($componentIDs[9].children[0].children[0].value);
 
                     function showInterviewExperienceInput() { // In this time, the submit button (which id is bbp_topic_submit is not yet created)
-                        var isAnon, difficulty, interview_result, interview_type, tags;
-                        var company_name = '<text>' + document.getElementById('$componentIDs[0]').children[0].value + '</text>';
-                        var job_property = '<text>' + document.getElementById('$componentIDs[1]').children[0].value + '</text>';
-                        var job_category = '<text>' + document.getElementById('$componentIDs[2]').children[0].value + '</text>';
-                        var job_title = '<text>' + document.getElementById('$componentIDs[3]').children[1].value + '</text>';
-                        var industry = '<text>' + document.getElementById('$componentIDs[4]').children[0].children[0].value + '&nbsp;&nbsp;' + document.getElementById('$componentIDs[4]').children[1].children[0].value;
-                        var sub_industry = '<text>' + document.getElementById('$componentIDs[5]').children[0].children[0].value + '&nbsp;&nbsp;' + document.getElementById('$componentIDs[5]').children[1].children[0].value;
-                        for(var i = 0; i < 2; i++) {
-                            if (document.getElementById('$componentIDs[6]').children[i].checked)
-                                isAnon = '<text>' + document.getElementById('$componentIDs[6]').children[i].value + '</text>';
-                        }
-                        var author_bg = '<text>' + document.getElementById('$componentIDs[7]').nextElementSibling.children[0].children[0].value + '</text>';
-                        var interview_date = '<text>' + document.getElementById('datepicker').value + '</text>';
-                        var interview_loc = '<text>' + document.getElementById('$componentIDs[9]').children[0].children[0].value + '&nbsp;' + document.getElementById('$componentIDs[9]').children[1].children[0].value + '</text>';
-                        for(var i = 0; i < 4; i++) {
-                            if (document.getElementById('$componentIDs[10]').children[i].checked) {
-                                var val = document.getElementById('$componentIDs[10]').children[i].value;
-                                var bc = 'orange';
-                                if (i == 0 || i == 1) bc = 'blue';
-                                else if (i == 3 || i == 4) bc = 'red';
-                                difficulty = '<button style=\"margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: ' + bc + '; background-color: ' + bc + '; color: white\">' + val + '</button>';
-                            }
-                        }
-                        for(var i = 0; i < 3; i++) {
-                            if (document.getElementById('$componentIDs[11]').children[i].checked) {
-                                var val = document.getElementById('$componentIDs[11]').children[i].value;
-                                var bc = 'black';
-                                if (i == 0) bc = 'blue';
-                                else if (i == 1) bc = 'red';
-                                else if (i == 2) bc = 'orange';
-                                interview_result = '<button style=\"margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: ' + bc + '; background-color: ' + bc + '; color: white\">' + val + '</button>';
-                            }
-                        }
-                        interview_type = '';
-                        [...document.getElementById('$componentIDs[12]').children].forEach((ele, idx) => {
-                            if (idx % 2 == 0 && ele.checked == true){
-                                interview_type += '<text>' + document.getElementById('$componentIDs[12]').children[idx].value + ', ';
-                            }
-                        });
-                        interview_type = interview_type.slice(0, -2);
-                        interview_type += '</text>';
-                        var preparation = '<text>' + document.getElementById('$componentIDs[13]').nextElementSibling.children[0].children[0].value + '</text>';
-                        var interview_flow = '<text>' + document.getElementById('$componentIDs[14]').nextElementSibling.children[0].children[0].value + '</text>';
-                        var feedback = '<text>' + document.getElementById('$componentIDs[15]').nextElementSibling.children[0].children[0].value + '</text>';
-                        tags = '';
-                        if (document.getElementById('$componentIDs[16]').children[0].value != '') {
-                            var val = document.getElementById('$componentIDs[16]').children[0].value;
-                            tags += '<button style=\"margin-right: 22px; margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: #F7F8FC; background-color: #F7F8FC; color: #1B3B90\">' + val + '</button>';
-                        }
-                        if (document.getElementById('$componentIDs[16]').children[1].value != '') {
-                            var val = document.getElementById('$componentIDs[16]').children[1].value;
-                            tags += '<button style=\"margin-right: 22px; margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: #F7F8FC; background-color: #F7F8FC; color: #1B3B90\">' + val + '</button>';
-                        }
-                        if (document.getElementById('$componentIDs[16]').children[2].value != '') {
-                            var val = document.getElementById('$componentIDs[16]').children[2].value;
-                            tags += '<button style=\"margin-right: 22px; margin-top: 5px; margin-bottom: 8px; border-radius: 17px; border-color: #F7F8FC; background-color: #F7F8FC; color: #1B3B90\">' + val + '</button>';
-                        }
-
-                        displayPreview([company_name, job_property, job_category, job_title, industry, sub_industry, isAnon, author_bg, interview_date, interview_loc, difficulty, interview_result, interview_type, preparation, interview_flow, feedback, tags]);
+                        grabValuesInComponentsAndDisplay([
+                            $componentIDs[0], $componentIDs[1], $componentIDs[2], $componentIDs[3],
+                            $componentIDs[4], $componentIDs[5], $componentIDs[6], $componentIDs[7],
+                            $componentIDs[8], $componentIDs[9], $componentIDs[10], $componentIDs[11],
+                            $componentIDs[12], $componentIDs[13], $componentIDs[14], $componentIDs[15], $componentIDs[16],
+                        ]);
                     }
                 </script>
             ");
@@ -1127,7 +1079,7 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                         insertDataToDB($_POST['bbp_' . $field_key . '_content']);
                         $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . " ";
                     } else if ($key == 3) { // 職務名稱
-                        $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . "面試經驗";
+                        $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . " 面試經驗";
                     } else if ($key == 6) { // 匿名
                         $isAnonymous = $_POST['bbp_' . $field_key . '_content'] == '是' ? 1:0;
                         $saveToPost = false; //不存入 anonymous 欄位
