@@ -661,9 +661,9 @@ class multiTextArea extends formElements{
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <div id='$this->ID'>
-                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 placeholder='#' style='padding-left: 3px;'>
-                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 placeholder='#' style='padding-left: 3px; margin-left: 10px'>
-                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 placeholder='#' style='padding-left: 3px; margin-left: 10px'>
+                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 style='padding-left: 3px;'>
+                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 style='padding-left: 3px; margin-left: 10px'>
+                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 style='padding-left: 3px; margin-left: 10px'>
                 </div>
             </div>
         ");
