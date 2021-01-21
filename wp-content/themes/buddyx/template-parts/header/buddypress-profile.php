@@ -75,7 +75,7 @@ if ( is_user_logged_in() ) {
     echo '</a>';
 	  // show mycred_balance after user log in & add the link to bean page
 	echo '<a href="http://www.letsgoget.info/greenbean/" class="my-bean-balance">';
-	echo(do_shortcode('[mycred_my_balance title_el="div" balance_el="" title="我的綠豆" wrapper=0]'));
+	echo(do_shortcode('[mycred_my_balance title_el="div" balance_el="" title="綠豆" wrapper=0]'));
 	echo '</a>';
     wp_nav_menu( array( 'theme_location' => 'user_menu', 'menu_id' => 'user-profile-menu', 'fallback_cb' => '', 'container' => false, 'menu_class' => 'user-profile-menu', ) );
     echo '</div>';

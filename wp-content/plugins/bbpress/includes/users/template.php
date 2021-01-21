@@ -1072,8 +1072,8 @@ function bbp_user_favorites_link( $args = array(), $user_id = 0, $wrap = true ) 
 
 		// Parse arguments against default values
 		$r = bbp_parse_args( $args, array(
-			'favorite'    => esc_html__( 'Favorite',   'bbpress' ),
-			'favorited'   => esc_html__( 'Unfavorite', 'bbpress' ),
+			'favorite'    => esc_html__( '收藏',   'bbpress' ),
+			'favorited'   => esc_html__( '取消收藏', 'bbpress' ),
 			'user_id'     => 0,
 			'object_id'   => 0,
 			'object_type' => 'post',
