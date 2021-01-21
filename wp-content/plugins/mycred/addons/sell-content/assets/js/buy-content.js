@@ -36,8 +36,13 @@
 			},
 			success    : function( response ) {
 
-				if ( response.success === undefined || ( response.success === true && myCREDBuyContent.reload === '1' ) )
+				if ( response.success === undefined ) {
+					button.removeAttr( 'disabled' ).html("交易次數過於頻繁, 請稍後再試");
+				}
+
+				else if ( response.success === true && myCREDBuyContent.reload === '1' ) {
 					location.reload();
+				}
 
 				else {
 
