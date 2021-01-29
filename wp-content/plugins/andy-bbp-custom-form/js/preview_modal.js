@@ -20,8 +20,8 @@ function displayPreview(arr) {
     const [company_name, job_property, job_category, job_title, industry, sub_industry, isAnon, author_bg, interview_date, interview_loc, 
            difficulty, interview_result, interview_type, preparation, interview_flow, feedback, tags] = arr;
 
-    var result = '<div style="margin-top: -12px; padding-top: 20px; padding-left: 40px; padding-right: 40px; padding-bottom: 18px; \
-                    background: linear-gradient(#0A2D87 7.8%, white 0%);">';
+    var result = '<div id="preview_modal_nav_bar" style="margin-top: -12px; padding-top: 20px; padding-left: 40px; padding-right: 40px; padding-bottom: 18px; \
+                    background: linear-gradient(#0A2D87 121px, white 0px);">';
     var btns = '<div style="text-align: right;"> \
                 <button id="modal_cancel" class="preview_modal_cancel_btns" onclick="cancelClicked()" >上一步</button> \
                 <button id="modal_submit" class="preview_modal_submit_btns" onclick="submitClicked()" >確認發佈</button> \
@@ -37,16 +37,16 @@ function displayPreview(arr) {
     result += '<h6 class="check_result">產業類別</h6>' + industry;
     result += '<h6 class="check_result">細分產業類別</h6>' + sub_industry;
     result += '<h6 class="check_result">是否匿名</h6>' + isAnon;
-    result += '<h6 class="check_result">作者背景</h6>' + author_bg;
+    result += '<h6 class="check_result">作者背景</h6>' + author_bg.replace(/(?:\r\n|\r|\n)/g, '<br>').replace('\t', '    ');
     result += '<h6 class="check_result">面試時間</h6>' + interview_date;
     result += '<h6 class="check_result">職缺地點</h6>' + interview_loc;
     result += '<h6 class="check_result">面試難度</h6>' + difficulty;
     result += '<h6 class="check_result">面試結果</h6>' + interview_result;
     result += '<h6 class="check_result">面試項目</h6>' + interview_type;
     result += '<hr style="height:0.8px;background-color:gray;">';
-    result += '<h6 class="check_result">準備過程</h6>' + preparation;
-    result += '<h6 class="check_result">面試過程</h6>' + interview_flow;
-    result += '<h6 class="check_result">心得建議</h6>' + feedback;
+    result += '<h6 class="check_result">準備過程</h6>' + preparation.replace(/(?:\r\n|\r|\n)/g, '<br>').replace('\t', '    ');
+    result += '<h6 class="check_result">面試過程</h6>' + interview_flow.replace(/(?:\r\n|\r|\n)/g, '<br>').replace('\t', '    ');
+    result += '<h6 class="check_result">心得建議</h6>' + feedback.replace(/(?:\r\n|\r|\n)/g, '<br>').replace('\t', '    ');
     result += '<br><br>';
     result += tags;
     result += btns;
