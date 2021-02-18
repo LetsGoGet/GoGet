@@ -103,6 +103,37 @@ class formElements{
     {
         return $this->ID;
     }
+
+    function getDefaultValue($field_key){
+        if ( bbp_is_topic_edit() ) {
+            $topic_content = bbp_get_global_post_field( 'post_content', 'raw' );
+            $token = '<noscript>' . $field_key . '</noscript>';
+            $start = strpos($topic_content, $token);
+            if (! $start){
+                return '';
+            }
+            $start += strlen($token);
+            $end = $start + strpos(substr($topic_content, $start) , $token);
+            $topic_content = substr($topic_content, $start, $end-$start);
+            return $topic_content;
+        }
+        return null;
+    }
+
+    function getDefaultValueFromMetadata($fieldName){
+        $post_id = get_the_ID();
+        switch($fieldName){
+            case 'isAnonymous':
+                $metadata = get_post_meta($post_id, 'isAnonymous');
+                break;
+            case 'customizedTags':
+                $metadata = get_post_meta($post_id, 'customizedTags');
+                break;
+            default:
+                return null;
+        }
+        return $metadata;
+    }
 }
 
 class comboBox extends formElements{
@@ -119,18 +150,18 @@ class comboBox extends formElements{
     function generateUI($fieldName)
     {
         $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content';
+        $default_value = $this->getDefaultValue(hashHelper($fieldName));
         $fieldID = $hashed_fieldName.'_input';
         $listID = $hashed_fieldName.'_list';
         $fetchFunction = $hashed_fieldName.'_fetchData';
         $this->ID = $fieldID;
         $label_id = $hashed_fieldName.'_label';
-        error_log($label_id);
 
         //ajax select2
         echo("
             <script>
                 jQuery(document).ready(function($) {
-                    var url_fetch = window.location.href.split('interview')[0] + 'wp-json/fetch/v1/data';
+                    var url_fetch = window.location.origin + '/wp-json/fetch/v1/data';
                     
                     $('#$label_id').select2({
                         language: 'zh-tw',
@@ -181,6 +212,7 @@ class comboBox extends formElements{
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <label id='$this->ID' for='$label_id'>
                     <select name='$hashed_fieldName' id='$label_id' >
+                    ".(($default_value!=null)?"<option value='".$default_value."'>".$default_value."</option>":'')."
                     <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
                     </select>
                 </label>
@@ -202,15 +234,16 @@ class radio extends formElements{
     {
         $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content';
         $label_id = $hashed_fieldName.'_label';
+        $default_value = $this->getDefaultValueFromMetadata('isAnonymous');
 
         echo("
             <div id='search_bar' style='margin-bottom: 3px; margin-top: 10px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <label id='$this->ID' for='$label_id'>
-                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='否' checked/>
+                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='否' ".(($default_value[0]==false || $default_value==null)?"checked":'')."/>
                     否
-                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='是' />
+                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='是' ".(($default_value[0]==true)?"checked":'')."/>
                     是
                 </label>
             </div>
@@ -228,37 +261,40 @@ class singleSelection1 extends formElements{
     function generateUI($fieldName)
     {
         $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content';
+        $default_value = $this->getDefaultValue(hashHelper($fieldName));
         $label_id = $hashed_fieldName.'_label';
         $attached_btn_id = $this->ID . '_buttons';
+        error_log("難度:" . $default_value);
 
         echo("
             <div id='search_bar' style='margin-bottom: 3px'>
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
-                <label id='$this->ID' style='display: none;' for='$label_id'>
-                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='很簡單' />
+                <label id='$this->ID' style='display: none;'>
+                    <input type='radio' name='$hashed_fieldName' value='很簡單'/>
                     很簡單
-                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='簡單' />
+                    <input type='radio' name='$hashed_fieldName' value='簡單'/>
                     簡單
-                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='普通' />
+                    <input type='radio' name='$hashed_fieldName' value='普通'/>
                     普通
-                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='困難' />
+                    <input type='radio' name='$hashed_fieldName' value='困難'/>
                     困難
-                    <input type='radio' id='$label_id' name='$hashed_fieldName' value='很困難' />
+                    <input type='radio' name='$hashed_fieldName' value='很困難'/>
                     很困難
                 </label>
             </div>
         ");
         echo("
             <div id='$attached_btn_id' style='margin-bottom: 15px'>
-                <button data-item='0' style='margin-right: 8px; border-radius: 17px; background-color: white; color: blue'>很簡單</button>
-                <button data-item='1' style='margin-right: 8px; border-radius: 17px; background-color: white; color: blue'>簡單</button>
-                <button data-item='2' style='margin-right: 8px; border-radius: 17px; background-color: white; color: orange'>普通</button>
-                <button data-item='3' style='margin-right: 8px; border-radius: 17px; background-color: white; color: red'>困難</button>
-                <button data-item='4' style='margin-right: 8px; border-radius: 17px; background-color: white; color: red'>很困難</button>
+                <button data-item='0' style='margin-right: 8px; border-radius: 17px; background-color: white; color: blue' id='很簡單'>很簡單</button>
+                <button data-item='1' style='margin-right: 8px; border-radius: 17px; background-color: white; color: blue' id='簡單'>簡單</button>
+                <button data-item='2' style='margin-right: 8px; border-radius: 17px; background-color: white; color: orange' id='普通'>普通</button>
+                <button data-item='3' style='margin-right: 8px; border-radius: 17px; background-color: white; color: red' id='困難'>困難</button>
+                <button data-item='4' style='margin-right: 8px; border-radius: 17px; background-color: white; color: red' id='很困難'>很困難</button>
             </div>
             <script>
                 document.getElementById('$attached_btn_id').addEventListener('click', function(e) {
                     var idx = e.target.dataset.item;
+                    console.log(idx);
 
                     for(i = 0; i < 5; i++) {
                         if(i == idx) {
@@ -279,6 +315,10 @@ class singleSelection1 extends formElements{
                     e.preventDefault();
                     e.stopImmediatePropagation();
                 });
+                
+                jQuery(document).ready(function($) {
+                    ".(($default_value!=null)?"$('#$default_value').click();":'')."
+                });
             </script>
         ");
     }
@@ -295,6 +335,7 @@ class singleSelection2 extends formElements{
     {
         $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content';
         $label_id = $hashed_fieldName.'_label';
+        $default_value = $this->getDefaultValue(hashHelper($fieldName));
         $attached_btn_id = $this->ID . '_buttons';
 
         echo("
@@ -314,10 +355,10 @@ class singleSelection2 extends formElements{
         ");
         echo("
             <div id='$attached_btn_id' style='margin-bottom: 15px'>
-                <button data-item='0' style='margin-right: 8px; border-radius: 17px; background-color: white; color: blue'>錄取</button>
-                <button data-item='1' style='margin-right: 8px; border-radius: 17px; background-color: white; color: red'>未錄取</button>
-                <button data-item='2' style='margin-right: 8px; border-radius: 17px; background-color: white; color: orange'>等待中</button>
-                <button data-item='3' style='margin-right: 8px; border-radius: 17px; background-color: white; color: black'>無聲卡</button>
+                <button data-item='0' style='margin-right: 8px; border-radius: 17px; background-color: white; color: blue' id='錄取'>錄取</button>
+                <button data-item='1' style='margin-right: 8px; border-radius: 17px; background-color: white; color: red' id='未錄取'>未錄取</button>
+                <button data-item='2' style='margin-right: 8px; border-radius: 17px; background-color: white; color: orange' id='等待中'>等待中</button>
+                <button data-item='3' style='margin-right: 8px; border-radius: 17px; background-color: white; color: black' id='無聲卡'>無聲卡</button>
             </div>
             <script>
                 document.getElementById('$attached_btn_id').addEventListener('click', function(e) {
@@ -344,6 +385,10 @@ class singleSelection2 extends formElements{
                     e.preventDefault();
                     e.stopImmediatePropagation();
                 });
+                
+                jQuery(document).ready(function($) {
+                    ".(($default_value!=null)?"$('#$default_value').click();":'')."
+                });
             </script>
         ");
     }
@@ -362,6 +407,14 @@ class multiSelection extends formElements{
     {
         $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content' . '[]';
         $label_id = $hashed_fieldName.'_label';
+        $default_value = $this->getDefaultValue(hashHelper($fieldName));
+        $default_value_arr = array();
+        if ($default_value != null){
+            $default_value_arr = explode(",", $default_value);
+        }
+        for ($i=0; $i<count($default_value_arr); $i++){
+            $default_value_arr[$i] = trim($default_value_arr[$i]);
+        }
         $ids = array($label_id . '0', $label_id . '1', $label_id . '2', $label_id . '3', $label_id . '4', $label_id . '5', $label_id . '6', );
 
         echo("
@@ -369,19 +422,19 @@ class multiSelection extends formElements{
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <div id='$this->ID'>
-                    <input type='checkbox' id='$ids[0]' name='$hashed_fieldName' value='個人面試' />
+                    <input type='checkbox' id='$ids[0]' name='$hashed_fieldName' value='個人面試' ".($default_value != null && in_array('個人面試', $default_value_arr)?"checked":'')."/>
                     <label for='$ids[0]'> 個人面試 </label>
-                    <input type='checkbox' id='$ids[1]' name='$hashed_fieldName' value='團體面試' />
+                    <input type='checkbox' id='$ids[1]' name='$hashed_fieldName' value='團體面試' ".($default_value != null && in_array('團體面試', $default_value_arr)?"checked":'')."/>
                     <label for='$ids[1]'> 團體面試 </label>
-                    <input type='checkbox' id='$ids[2]' name='$hashed_fieldName' value='筆試' />
+                    <input type='checkbox' id='$ids[2]' name='$hashed_fieldName' value='筆試' ".($default_value != null && in_array('筆試', $default_value_arr)?"checked":'')."/>
                     <label for='$ids[2]'> 筆試 </label>
-                    <input type='checkbox' id='$ids[3]' name='$hashed_fieldName' value='線上測驗' />
+                    <input type='checkbox' id='$ids[3]' name='$hashed_fieldName' value='線上測驗' ".($default_value != null && in_array('線上測驗', $default_value_arr)?"checked":'')."/>
                     <label for='$ids[3]'> 線上測驗 </label>
-                    <input type='checkbox' id='$ids[4]' name='$hashed_fieldName' value='電話面試' />
+                    <input type='checkbox' id='$ids[4]' name='$hashed_fieldName' value='電話面試' ".($default_value != null && in_array('電話面試', $default_value_arr)?"checked":'')."/>
                     <label for='$ids[4]'> 電話面試 </label>
-                    <input type='checkbox' id='$ids[5]' name='$hashed_fieldName' value='複試' />
+                    <input type='checkbox' id='$ids[5]' name='$hashed_fieldName' value='複試' ".($default_value != null && in_array('複試', $default_value_arr)?"checked":'')."/>
                     <label for='$ids[5]'> 複試 </label>
-                    <input type='checkbox' id='$ids[6]' name='$hashed_fieldName' value='其它' />
+                    <input type='checkbox' id='$ids[6]' name='$hashed_fieldName' value='其它' ".($default_value != null && in_array('其它', $default_value_arr)?"checked":'')."/>
                     <label for='$ids[6]'> 其它 </label>
                 </div>
             </div>
@@ -402,6 +455,7 @@ class dropdown_02 extends formelements{
     function generateui($fieldname)
     {
         $hashed_fieldname = 'bbp_'.hashhelper($fieldname).'_content'.'[]';
+        $default_value = $this->getDefaultValue(hashHelper($fieldname));
         $label_id = $hashed_fieldname.'_label';
 
         echo("
@@ -410,6 +464,7 @@ class dropdown_02 extends formelements{
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <label id='$this->ID' for='$label_id'>
                     <select class='select2' data-minimum-results-for-search='Infinity' name='$hashed_fieldname' id='$label_id'>
+                        ".(($default_value!=null)?"<option value='".$default_value."'>".$default_value."</option>":'')."
                         <option value='正職'>正職</option>
                         <option value='兼職'>兼職</option>
                         <option value='實習'>實習</option>
@@ -435,6 +490,10 @@ class dropdown_03 extends formelements{
     function generateui($fieldname)
     {
         $hashed_fieldname = 'bbp_'.hashhelper($fieldname).'_content'.'[]';
+        $default_value = $this->getDefaultValue(hashHelper($fieldname));
+        if ($default_value != null){
+            $default_value_arr = explode(",", $default_value);
+        }
         $label_id = $hashed_fieldname.'_label';
         $label_country = $label_id . "_country";
         $label_city = $label_id . "_city";
@@ -445,7 +504,10 @@ class dropdown_03 extends formelements{
 
         $html = "";
         foreach($cc as $country => $city) {
-            $html .= "<option value='" . $country . "'>" . $country . "</option>";
+            //排除已選的選項
+            if ($country != $default_value_arr[0]){
+                $html .= "<option value='" . $country . "'>" . $country . "</option>";
+            }
         }
         echo("
             <div id='search_bar' style='margin-bottom: 3px'>
@@ -453,17 +515,24 @@ class dropdown_03 extends formelements{
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <div id='$this->ID'>
                     <label for='$label_country'>
-                        <select id='dropdown_country' name='$hashed_fieldname' id='$label_country'> $html </select>
+                        <select id='dropdown_country' name='$hashed_fieldname' id='$label_country'> 
+                            ".(($default_value!=null)?"<option value='".$default_value_arr[0]."'>".$default_value_arr[0]."</option>":'')."
+                            $html 
+                        </select>
                     </label>
                     <label for='$label_city' style='margin-left: 10px'>
-                        <select id='dropdown_city' name='$hashed_fieldname' id='$label_city'> </select>
+                        <select id='dropdown_city' name='$hashed_fieldname' id='$label_city'> 
+                            ".(($default_value!=null)?"<option value='".$default_value_arr[1]."'>".$default_value_arr[1]."</option>":'')."
+                        </select>
                     </label>
                 </div>
             </div>
         ");
         echo("
             <script type='text/javascript'>
-                var url_fetch = window.location.href.split('interview')[0] + 'wp-json/fetch/v1/data';
+                const base_url = window.location.origin
+                const url_fetch = base_url + '/wp-json/fetch/v1/data'
+                console.log(base_url)
                 const fetchFunctionCountriesAndCities = (queryText) => jQuery.ajax({
                     url: url_fetch,
                     method: 'GET',
@@ -503,6 +572,7 @@ class dropdown_job_category extends formelements{
     function generateui($fieldname)
     {
         $hashed_fieldname = 'bbp_'.hashhelper($fieldname).'_content';
+        $default_value = $this->getDefaultValue(hashhelper($fieldname));
         $label_id = $hashed_fieldname.'_label';
 
         //Fetch DB data
@@ -524,6 +594,7 @@ class dropdown_job_category extends formelements{
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <label id='$this->ID' for='$label_id'>
                     <select class='select2' name='$hashed_fieldname' id='$label_id'>
+                        ".(($default_value!=null)?"<option value='".$default_value."'>".$default_value."</option>":'')."
                         <option></option>
                         $htmlOfOptions
                     </select>
@@ -551,8 +622,14 @@ class dropdown_industry extends formElements{
     function generateUI($fieldName)
     {
         $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content'.'[]';
+        $default_value = $this->getDefaultValue(hashHelper($fieldName));
+        if ($default_value != null){
+            $default_value_arr = explode(",", $default_value);
+        }
         $label_id_1 = $hashed_fieldName.'_label_1';
         $label_id_2 = $hashed_fieldName.'_label_2';
+
+        $test = "123123";
 
         echo("
             <div id='search_bar' style='margin-bottom: 3px'>
@@ -561,6 +638,7 @@ class dropdown_industry extends formElements{
                 <div id='$this->ID'>
                     <label for='$label_id_1'>
                         <select class='select2' data-minimum-results-for-search='Infinity' name='$hashed_fieldName' id='$label_id_1'>
+                            ".(($default_value!=null)?"<option value='".$default_value_arr[0]."'>".$default_value_arr[0]."</option>":'')."
                             <option value='金融'>金融</option>
                             <option value='顧問'>顧問</option>
                             <option value='零售'>零售</option>
@@ -571,7 +649,8 @@ class dropdown_industry extends formElements{
                     </label>
                     <label for='$label_id_2'>
                         <select class='select2' data-minimum-results-for-search='Infinity' name='$hashed_fieldName' id='$label_id_2'>
-                            <option disabled selected>(無)</option>
+                            ".(($default_value!=null)?"<option value='".$default_value_arr[1]."'>".$default_value_arr[1]."</option>":'')."
+                            ".(($default_value==null)?"<option disabled selected>(無)</option>":'')."
                             <option value='金融'>金融</option>
                             <option value='顧問'>顧問</option>
                             <option value='零售'>零售</option>
@@ -599,6 +678,10 @@ class dropdown_sub_industry extends formelements{
     function generateui($fieldName)
     {
         $hashed_fieldName = 'bbp_'.hashhelper($fieldName).'_content';
+        $default_value = $this->getDefaultValue(hashHelper($fieldName));
+        if ($default_value != null){
+            $default_value_arr = explode(",", $default_value);
+        }
         $label_id_1 = $hashed_fieldName.'_label_1';
         $label_id_2 = $hashed_fieldName.'_label_2';
 
@@ -637,6 +720,17 @@ class dropdown_sub_industry extends formelements{
                 </div>
             </div>
         ");
+
+        echo("
+        <script>
+        jQuery(document).ready(function($) {
+          ".(($default_value!=null)?"$('#$label_id_1').val('$default_value_arr[0]');":'')."
+          $('#$label_id_1').trigger('change');
+          ".(($default_value!=null)?"$('#$label_id_2').val('$default_value_arr[1]');":'')."
+          $('#$label_id_2').trigger('change');
+        });
+        </script>
+        ");
     }
 }
 
@@ -653,6 +747,14 @@ class multiTextArea extends formElements{
     function generateUI($fieldName)
     {
         $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content'.'[]';
+        $default_value = $this->getDefaultValue(hashHelper($fieldName));
+        $default_value_arr = array();
+        if ($default_value != null){
+            $default_value_arr = explode(",", $default_value);
+        }
+        for ($i=0; $i<count($default_value_arr); $i++){
+            $default_value_arr[$i] = trim($default_value_arr[$i]);
+        }
         $fieldID = $hashed_fieldName.'_id';
         $label_id = $hashed_fieldName.'_label';
 
@@ -661,9 +763,9 @@ class multiTextArea extends formElements{
                 <p style='margin-bottom: -2px'> <label>$fieldName</label> </p>
                 <p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>
                 <div id='$this->ID'>
-                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 style='padding-left: 3px;'>
-                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 style='padding-left: 3px; margin-left: 10px'>
-                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 style='padding-left: 3px; margin-left: 10px'>
+                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 style='padding-left: 3px;' value='".((sizeof($default_value_arr) >= 1 )?"$default_value_arr[0]":'')."'>
+                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 style='padding-left: 3px; margin-left: 10px' value='".((sizeof($default_value_arr) >= 2 )?"$default_value_arr[1]":'')."'>
+                    <input id='$fieldID' name='$hashed_fieldName' type='text' size=15 maxlength=40 style='padding-left: 3px; margin-left: 10px' value='".((sizeof($default_value_arr) >= 3 )?"$default_value_arr[2]":'')."'>
                 </div>
             </div>
         ");
@@ -680,6 +782,8 @@ class date extends formElements{
     function generateUI($fieldName)
     {
         $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content';
+        $default_value = $this->getDefaultValue(hashHelper($fieldName));
+        error_log("date:".$default_value);
 
         echo("
             <div id='$this->ID' style='margin-bottom: 3px'>
@@ -692,7 +796,27 @@ class date extends formElements{
         echo('<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>');
 
         $data = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/js/date_picker.js');
-        echo("<script type='text/javascript'>$data</script>");
+        if ($default_value == null){
+            echo("<script type='text/javascript'>$data</script>");
+        } else {
+            echo("
+            <script>
+                jQuery(document).ready(function($) {
+                    let date = new Date('$default_value');
+                    $( '#datepicker' ).datepicker({
+                        changeMonth: true,
+                        changeYear: true,
+                        showButtonPanel: true,
+                        dateFormat: 'yy.mm',
+                        onClose: function(dateText, inst) { 
+                            $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+                        }
+                    });
+                    $( '#datepicker' ).datepicker().datepicker('setDate', new Date(date));
+                });
+            </script>
+        ");
+        }
     }
 }
 
@@ -706,11 +830,12 @@ class inputBox extends formElements{
     function generateUI($fieldName)
     {
         $hashed_fieldName = 'bbp_'.hashHelper($fieldName).'_content';
+        $default_value = $this->getDefaultValue(hashHelper($fieldName));
 
         echo("
             <div id='$this->ID' style='margin-bottom: 3px'>
                 <p> <label>$fieldName</label> </p>
-                <input type='text' name='$hashed_fieldName'>
+                <input type='text' name='$hashed_fieldName' value='$default_value'>
             </div>
         ");
     }
@@ -730,7 +855,8 @@ class textArea extends formElements{
     function generateUI($fieldName)
     {
         $hashed_fieldName = hashHelper($fieldName);
-        error_log($fieldName.':'.$hashed_fieldName);
+        $default_value = $this->getDefaultValue($hashed_fieldName);
+        if ($default_value != null) $this->defaultContent = $default_value;
         echo("<b><font size='3pt'>" . $fieldName . "<b></font>");
         echo("<p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>");
         echo("<div id='$this->ID'></div>"); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!?????????????????????????????????
@@ -1066,7 +1192,6 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
             $lines = file($path, FILE_IGNORE_NEW_LINES);
             foreach ($lines as $key => $line) {
                 if (($line != '[mycred_sell_this]') && ($line != '[/mycred_sell_this]')) {
-                    error_log('line:'.$line);
                     $row = explode(",", $line);
                     $field_name = $row[0];
                     $field_type = $row[1];
@@ -1102,7 +1227,6 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                             $arr = array_filter($arr, function($value) { return !is_null($value) && $value !== ''; });
 
                             foreach($arr as $key1=>$item){
-                                error_log($field_name.":".$item);
                                 if ($key1 != count($arr) -1){
                                     $content .= $item . ', ';
                                 } else {
@@ -1128,7 +1252,6 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
                     continue;
                 }
             }
-            error_log($customizedTags);
             return array($customizedTopic, $isAnonymous, $customizedTags, $content);
         } else {
             $content = $_POST['bbp_topic_content'];
