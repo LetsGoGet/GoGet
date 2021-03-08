@@ -881,7 +881,6 @@ if (!function_exists('bbp_display_wp_editor_array')) :
                     console.log("' . $field_name_array_10 . '");
                     
                     $("#new-post").validate({
-                        ignore: ".ql-container *",
                         rules:{
                             ' . $field_name_array[0] . ': "required",
                             ' . $field_name_array[1] . ': "required",
@@ -890,23 +889,23 @@ if (!function_exists('bbp_display_wp_editor_array')) :
                             "' . $field_name_array_4 . '": "required",
                             "' . $field_name_array_5 . '": "required",
                             ' . $field_name_array[6] . ': "required",
-                            //' . $field_name_array[7] . ': "required",
+                            ' . $field_name_array[7] . ': "required",
                             ' . $field_name_array[8] . ': "required",
                             ' . $field_name_array[9] . ': "required",
                             "' . $field_name_array_10 . '": "required",
                             "' . $field_name_array_11 . '": "required",
                             "' . $field_name_array_12 . '": "required",
-                            //' . $field_name_array[13] . ': {
-                            //    required: true,
-                            //    rangelength: [100, 10000]
-                            //},
-                            //' . $field_name_array[14] . ': {
-                            //    required: true,
-                            //    rangelength: [100, 10000]
-                            //},
-                            //' . $field_name_array[15] . ': {
-                            //    rangelength: [0, 10000]                 
-                            //}
+                            ' . $field_name_array[13] . ': {
+                                required: true,
+                                rangelength: [100, 10000]
+                            },
+                            ' . $field_name_array[14] . ': {
+                                required: true,
+                                rangelength: [100, 10000]
+                            },
+                            ' . $field_name_array[15] . ': {
+                                rangelength: [0, 10000]                 
+                            }
                         },
                         messages:{
                             ' . $field_name_array[0] . ': "必填",
