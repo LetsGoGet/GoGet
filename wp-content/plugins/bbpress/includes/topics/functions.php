@@ -192,7 +192,7 @@ function bbp_new_topic_handler( $action = '' ) {
 	if ( bbp_is_title_too_long( $topic_title ) ) {
 		bbp_add_error( 'bbp_topic_title', __( '<strong>ERROR</strong>: Your title is too long.', 'bbpress' ) );
 	}
-
+	
 	// Filter and sanitize
 	$topic_content = apply_filters( 'bbp_new_topic_pre_content', $topic_content );
     // Andy edited to here

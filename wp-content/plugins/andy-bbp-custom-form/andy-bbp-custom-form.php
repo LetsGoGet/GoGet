@@ -731,10 +731,37 @@ class textArea extends formElements{
     {
         $hashed_fieldName = hashHelper($fieldName);
         error_log($fieldName.':'.$hashed_fieldName);
-        echo("<b><font size='3pt'>" . $fieldName . "<b></font>");
+        echo("<b><font size='3pt'>" . $fieldName . "</b></font>");
         echo("<p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>");
         echo("<div id='$this->ID'></div>"); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!?????????????????????????????????
-        bbp_the_content( array( 'context' => $hashed_fieldName, 'textarea_rows' => 8, 'default_content' => $this->defaultContent) );
+        // bbp_the_content( array( 'context' => $hashed_fieldName, 'textarea_rows' => 8, 'default_content' => $this->defaultContent) );
+        bbp_the_content( array( 'context' => $hashed_fieldName) );
+
+        //Add Quill(rich editor)
+        echo('<div id="quill_'.$hashed_fieldName.'_editor" style="margin-bottom: 5px;">'.$this->defaultContent.'</div>');
+
+        // $data = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/js/rich_editor.js');
+        // echo("<script type='text/javascript'>$data</script>");
+        // echo("<script>generateRichEditor('".$this->ID."', '".$hashed_fieldName."')</script>");
+        
+        echo("<script>
+        var ".$this->ID."_editor = new Quill('#quill_".$hashed_fieldName."_editor', {
+            modules: {
+                toolbar: [
+                ['bold', 'italic', 'underline'],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                ['link']
+                ]
+            },
+            theme: 'snow',
+            formats: ['bold', 'italic', 'underline', 'list', 'indent', 'link']
+        });
+        var ".$this->ID." = document.getElementById('bbp_".$hashed_fieldName."_content');
+        ".$this->ID.".setAttribute('style', 'display: none;');
+        ".$this->ID."_editor.on('editor-change', function() {
+            ".$this->ID.".innerHTML = '<div class=\"ql-editor\">' + ".$this->ID."_editor.root.innerHTML + '</div>';
+        });
+        </script>");
     }
 }
 
@@ -765,6 +792,10 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
         if ($forumId == 0){
             $forumId = bbp_get_topic_forum_id();
         }
+
+        // Using Quill
+        echo('<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">');
+        echo('<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>');
 
         // Using material UI
         echo('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">');
@@ -828,6 +859,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                     console.log("'.$field_name_array_10.'");
                     
                     $("#new-post").validate({
+                        ignore: ".ql-container *",
                         rules:{
                             '.$field_name_array[0].': "required",
                             '.$field_name_array[1].': "required",
@@ -836,23 +868,23 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
                             "'.$field_name_array_4.'": "required",
                             "'.$field_name_array_5.'": "required",
                             '.$field_name_array[6].': "required",
-                            '.$field_name_array[7].': "required",
+                            //'.$field_name_array[7].': "required",
                             '.$field_name_array[8].': "required",
                             '.$field_name_array[9].': "required",
                             "'.$field_name_array_10.'": "required",
                             "'.$field_name_array_11.'": "required",
                             "'.$field_name_array_12.'": "required",
-                            '.$field_name_array[13].': {
-                                required: true,
-                                rangelength: [100, 10000]
-                            },
-                            '.$field_name_array[14].': {
-                                required: true,
-                                rangelength: [100, 10000]
-                            },
-                            '.$field_name_array[15].': {
-                                rangelength: [0, 10000]                 
-                            }
+                            //'.$field_name_array[13].': {
+                            //    required: true,
+                            //    rangelength: [100, 10000]
+                            //},
+                            //'.$field_name_array[14].': {
+                            //    required: true,
+                            //    rangelength: [100, 10000]
+                            //},
+                            //'.$field_name_array[15].': {
+                            //    rangelength: [0, 10000]                 
+                            //}
                         },
                         messages:{
                             '.$field_name_array[0].': "必填",
@@ -1007,7 +1039,7 @@ if ( ! function_exists( 'bbp_display_wp_editor_array' ) ) :
             echo("
                 <script type='text/javascript'>
                     fetchFunctionCountriesAndCities($componentIDs[9].children[0].children[0].value);
-
+                    
                     function showInterviewExperienceInput() { // In this time, the submit button (which id is bbp_topic_submit is not yet created)
                         grabValuesInComponentsAndDisplay([
                             $componentIDs[0], $componentIDs[1], $componentIDs[2], $componentIDs[3],
@@ -1055,6 +1087,18 @@ if ( ! function_exists( 'bbp_get_custom_post_data' ) ) :
         $path = ABSPATH.'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
         $content = '';
         $must_fill_tag = '*';
+
+        //add Quill css for list
+        // $content .= '<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">';
+        // $content .= '<style>
+        // ul li {
+        //     list-style-type: none !important;
+        // }
+        // .ql-editor{
+        //     padding: 0px 0px !important;
+        //     white-space: inherit !important;
+        // }
+        // </style>';
 
         //add to post metadata
         // update_post_meta( $_POST['bbp_topic_id'], 'company_name', $_POST['company_name'] );
