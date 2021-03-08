@@ -75,7 +75,7 @@ function grabValuesInComponentsAndDisplay($comps) {
         if ($comps[6].children[i].checked)
             isAnon = '<text>' + $comps[6].children[i].value + '</text>';
     }
-    var author_bg = '<text>' + $comps[7].value + '</text>';
+    var author_bg = '<text>' + $comps[7].nextElementSibling.children[0].value + '</text>';
     // var author_bg = '<text>' + $comps[7].nextElementSibling.children[0].children[0].value + '</text>';
     var interview_date = '<text>' + document.getElementById('datepicker').value + '</text>';
     var interview_loc = '<text>' + $comps[9].children[0].children[0].value + '&nbsp;' + $comps[9].children[1].children[0].value + '</text>';
@@ -108,9 +108,9 @@ function grabValuesInComponentsAndDisplay($comps) {
         }
     });
     interview_type = interview_type.slice(0, -2) + '</text>';
-    var preparation = '<text>' + $comps[13].value + '</text>';
-    var interview_flow = '<text>' + $comps[14].value + '</text>';
-    var feedback = '<text>' + $comps[15].value + '</text>';
+    var preparation = '<text>' + $comps[13].nextElementSibling.children[0].value + '</text>';
+    var interview_flow = '<text>' + $comps[14].nextElementSibling.children[0].value + '</text>';
+    var feedback = '<text>' + $comps[15].nextElementSibling.children[0].value + '</text>';
     // var preparation = '<text>' + $comps[13].nextElementSibling.children[0].children[0].value + '</text>';
     // var interview_flow = '<text>' + $comps[14].nextElementSibling.children[0].children[0].value + '</text>';
     // var feedback = '<text>' + $comps[15].nextElementSibling.children[0].children[0].value + '</text>';
