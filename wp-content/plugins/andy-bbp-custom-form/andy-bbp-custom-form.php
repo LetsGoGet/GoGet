@@ -758,6 +758,8 @@ class textArea extends formElements
         // bbp_the_content( array( 'context' => $hashed_fieldName, 'textarea_rows' => 8, 'default_content' => $this->defaultContent) );
         bbp_the_content(array('context' => $hashed_fieldName));
 
+        //Add word count
+        echo ('<div id="word_' . $hashed_fieldName . '_count" style="display: none;" ></div>');
         //Add Quill(rich editor)
         echo ('<div id="quill_' . $hashed_fieldName . '_editor" style="margin-bottom: 5px;">' . $this->defaultContent . '</div>');
 
@@ -846,6 +848,20 @@ if (!function_exists('bbp_display_wp_editor_array')) :
         $field_name_array_11 = $field_name_array[11] . '[]'; //面試結果
         $field_name_array_12 = $field_name_array[12] . '[]'; //面試項目
 
+        // for validate textarea
+        $key_0 = explode("_", $field_name_array[7]);
+        $quill_0 = "quill_" . $key_0[1] . "_editor";
+        $wordcount_0 = "word_" . $key_0[1] . "_count";
+        $key_1 = explode("_", $field_name_array[13]);
+        $wordcount_1 = "word_" . $key_1[1] . "_count";
+        $quill_1 = "quill_" . $key_1[1] . "_editor";
+        $key_2 = explode("_", $field_name_array[14]);
+        $wordcount_2 = "word_" . $key_2[1] . "_count";
+        $quill_2 = "quill_" . $key_2[1] . "_editor";
+        $key_3 = explode("_", $field_name_array[15]);
+        $wordcount_3 = "word_" . $key_3[1] . "_count";
+        $quill_3 = "quill_" . $key_3[1] . "_editor";
+
         // Set the validation rules and msg for each field
         echo ('
             <style>
@@ -903,7 +919,14 @@ if (!function_exists('bbp_display_wp_editor_array')) :
                             ' . $field_name_array[6] . ': "必填",
                             ' . $field_name_array[7] . ': {
                                 required: "必填",
-                                rangelength: "必填"
+                                rangelength: function(range, input){
+                                    var length = $("#' . $quill_0 . '").data("quill").getLength() - 1;
+                                    
+                                    if(length === 0) {
+                                        $("#' . $wordcount_0 . '").removeAttr("style");
+                                        $("#' . $wordcount_0 . '").addClass("errTxt");
+                                    }
+                                },
                             },
                             ' . $field_name_array[8] . ': "必填",
                             ' . $field_name_array[9] . ': "必填",
@@ -915,46 +938,45 @@ if (!function_exists('bbp_display_wp_editor_array')) :
 //                                maxlength: "非常感謝您的用心分享！（已達字數上限：100000）",
                                 required: "必填",
                                 rangelength: function(range, input){
-                                    var length = $(input).val().length - 50;
-                                    if(length < 0) {length = 0}
-                                    // if (length < 100){
-                                    //     return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：" + length + "/100）";
-                                    // } else if (length > 10000) {
-                                    //     return "超過字數限制。（字數上限：" + length + "/10000）";
-                                    // }
+                                    var length = $("#' . $quill_1 . '").data("quill").getLength() - 1;
+                                    
                                     if (length < 100){
-                                        return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：100）";
+                                        $("#' . $wordcount_1 . '").removeAttr("style");
+                                        $("#' . $wordcount_1 . '").addClass("errTxt");
+                                        //return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：" + length + "/100）";
                                     } else if (length > 10000) {
-                                        return "超過字數限制。（字數上限：10000）";
+                                        $("#' . $wordcount_1 . '").removeAttr("style");
+                                        $("#' . $wordcount_1 . '").addClass("errTxt");
+                                        //return "超過字數限制。（字數上限：" + length + "/10000）";
                                     }
                                 },
                             },
                             ' . $field_name_array[14] . ': {
                                 required: "必填",
                                 rangelength: function(range, input){
-                                    var length = $(input).val().length - 40;
-                                    if(length < 0) {length = 0}
-                                    // if (length < 100){
-                                    //     return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：" + length + "/100）";
-                                    // } else if (length > 10000) {
-                                    //     return "超過字數限制。（字數上限：" + length + "/10000）";
-                                    // }
+                                    var length = $("#' . $quill_2 . '").data("quill").getLength() - 1;
+                                    console.log(length);
                                     if (length < 100){
-                                        return "再回想看看，還有什麼過程的小細節想跟大家分享嗎？（字數下限：100）";
+                                        $("#' . $wordcount_2 . '").removeAttr("style");
+                                        $("#' . $wordcount_2 . '").addClass("errTxt");
+                                        //return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：" + length + "/100）";
                                     } else if (length > 10000) {
-                                        return "超過字數限制。（字數上限：10000）";
+                                        $("#' . $wordcount_2 . '").removeAttr("style");
+                                        $("#' . $wordcount_2 . '").addClass("errTxt");
+                                        //return "超過字數限制。（字數上限：" + length + "/10000）";
                                     }
                                 },
                             },
                             ' . $field_name_array[15] . ': {
                                 rangelength: function(range, input){
-                                    var length = $(input).val().length - 40;
-                                    if(length < 0) {length = 0}
-                                    // if (length > 10000) {
-                                    //     return "超過字數限制。（字數上限：" + length + "/10000）";
-                                    // }
+                                    var length = $("#' . $quill_3 . '").data("quill").getLength() - 1;
+                                    
                                     if (length > 10000) {
-                                        return "超過字數限制。（字數上限：10000）";
+                                        $("#' . $wordcount_3 . '").removeAttr("style");
+                                        $("#' . $wordcount_3 . '").addClass("errTxt");
+                                        //return "超過字數限制。（字數上限：" + length + "/10000）";
+                                    } else if (length < 100) {
+                                        $("#' . $wordcount_3 . '").attr("style", "display: none;");
                                     }
                                 },                            
                             }

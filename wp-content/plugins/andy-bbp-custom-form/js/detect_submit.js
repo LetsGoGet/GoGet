@@ -6,4 +6,3 @@ formElement.addEventListener('click', function originalSubmitButtonClick(e) {
         showInterviewExperienceInput();
     }
 });
-
