@@ -804,7 +804,8 @@ if (!function_exists('bbp_display_wp_editor_array')) :
         // Using material UI
         echo ('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">');
         // Using jquery velidate
-        echo ('<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>');
+        echo ('<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>');
+        // echo ('<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>');
 
         // Using select2
         echo ('<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
@@ -871,23 +872,26 @@ if (!function_exists('bbp_display_wp_editor_array')) :
                             "' . $field_name_array_4 . '": "required",
                             "' . $field_name_array_5 . '": "required",
                             ' . $field_name_array[6] . ': "required",
-                            //' . $field_name_array[7] . ': "required",
+                            ' . $field_name_array[7] . ': {
+                                required: true,
+                                rangelength: [41, 10000]
+                            },
                             ' . $field_name_array[8] . ': "required",
                             ' . $field_name_array[9] . ': "required",
                             "' . $field_name_array_10 . '": "required",
                             "' . $field_name_array_11 . '": "required",
                             "' . $field_name_array_12 . '": "required",
-                            //' . $field_name_array[13] . ': {
-                            //    required: true,
-                            //    rangelength: [100, 10000]
-                            //},
-                            //' . $field_name_array[14] . ': {
-                            //    required: true,
-                            //    rangelength: [100, 10000]
-                            //},
-                            //' . $field_name_array[15] . ': {
-                            //    rangelength: [0, 10000]                 
-                            //}
+                            ' . $field_name_array[13] . ': {
+                                required: true,
+                                rangelength: [140, 10000]
+                            },
+                            ' . $field_name_array[14] . ': {
+                                required: true,
+                                rangelength: [140, 10000]
+                            },
+                            ' . $field_name_array[15] . ': {
+                                rangelength: [0, 10000]                 
+                            }
                         },
                         messages:{
                             ' . $field_name_array[0] . ': "必填",
@@ -897,7 +901,10 @@ if (!function_exists('bbp_display_wp_editor_array')) :
                             "' . $field_name_array_4 . '": "必填",
                             "' . $field_name_array_5 . '": "必填",
                             ' . $field_name_array[6] . ': "必填",
-                            ' . $field_name_array[7] . ': "必填",
+                            ' . $field_name_array[7] . ': {
+                                required: "必填",
+                                rangelength: "必填"
+                            },
                             ' . $field_name_array[8] . ': "必填",
                             ' . $field_name_array[9] . ': "必填",
                             "' . $field_name_array_10 . '": "必填",
@@ -908,7 +915,7 @@ if (!function_exists('bbp_display_wp_editor_array')) :
 //                                maxlength: "非常感謝您的用心分享！（已達字數上限：100000）",
                                 required: "必填",
                                 rangelength: function(range, input){
-                                    var length = $(input).val().length;
+                                    var length = $(input).val().length - 40;
                                     if (length < 100){
                                         return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：" + length + "/100）";
                                     } else if (length > 10000) {
@@ -919,7 +926,7 @@ if (!function_exists('bbp_display_wp_editor_array')) :
                             ' . $field_name_array[14] . ': {
                                 required: "必填",
                                 rangelength: function(range, input){
-                                    var length = $(input).val().length;
+                                    var length = $(input).val().length - 40;
                                     if (length < 100){
                                         return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：" + length + "/100）";
                                     } else if (length > 10000) {
@@ -929,7 +936,7 @@ if (!function_exists('bbp_display_wp_editor_array')) :
                             },
                             ' . $field_name_array[15] . ': {
                                 rangelength: function(range, input){
-                                    var length = $(input).val().length;
+                                    var length = $(input).val().length - 40;
                                     if (length > 10000) {
                                         return "超過字數限制。（字數上限：" + length + "/10000）";
                                     }
