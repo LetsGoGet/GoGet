@@ -756,7 +756,7 @@ class textArea extends formElements
         echo ("<p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>");
         echo ("<div id='$this->ID'></div>"); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!?????????????????????????????????
         // bbp_the_content( array( 'context' => $hashed_fieldName, 'textarea_rows' => 8, 'default_content' => $this->defaultContent) );
-        bbp_the_content(array('context' => $hashed_fieldName));
+        bbp_the_content(array('context' => $hashed_fieldName, 'default_content' => $this->defaultContent));
 
         //Add word count
         echo ('<div id="word_' . $hashed_fieldName . '_count" style="display: none;" ></div>');
@@ -889,7 +889,7 @@ if (!function_exists('bbp_display_wp_editor_array')) :
                             "' . $field_name_array_5 . '": "required",
                             ' . $field_name_array[6] . ': "required",
                             ' . $field_name_array[7] . ': {
-                                required: true,
+                                //required: true,
                                 rangelength: [41, 10000]
                             },
                             ' . $field_name_array[8] . ': "required",
@@ -898,11 +898,11 @@ if (!function_exists('bbp_display_wp_editor_array')) :
                             "' . $field_name_array_11 . '": "required",
                             "' . $field_name_array_12 . '": "required",
                             ' . $field_name_array[13] . ': {
-                                required: true,
+                                //required: true,
                                 rangelength: [140, 10000]
                             },
                             ' . $field_name_array[14] . ': {
-                                required: true,
+                                //required: true,
                                 rangelength: [140, 10000]
                             },
                             ' . $field_name_array[15] . ': {
@@ -918,7 +918,7 @@ if (!function_exists('bbp_display_wp_editor_array')) :
                             "' . $field_name_array_5 . '": "必填",
                             ' . $field_name_array[6] . ': "必填",
                             ' . $field_name_array[7] . ': {
-                                required: "必填",
+                                //required: "必填",
                                 rangelength: function(range, input){
                                     var length = $("#' . $quill_0 . '").data("quill").getLength() - 1;
                                     
@@ -952,7 +952,7 @@ if (!function_exists('bbp_display_wp_editor_array')) :
                                 },
                             },
                             ' . $field_name_array[14] . ': {
-                                required: "必填",
+                                //required: "必填",
                                 rangelength: function(range, input){
                                     var length = $("#' . $quill_2 . '").data("quill").getLength() - 1;
                                     console.log(length);
@@ -975,7 +975,7 @@ if (!function_exists('bbp_display_wp_editor_array')) :
                                         $("#' . $wordcount_3 . '").removeAttr("style");
                                         $("#' . $wordcount_3 . '").addClass("errTxt");
                                         //return "超過字數限制。（字數上限：" + length + "/10000）";
-                                    } else if (length < 100) {
+                                    } else if (length < 10000) {
                                         $("#' . $wordcount_3 . '").attr("style", "display: none;");
                                     }
                                 },                            

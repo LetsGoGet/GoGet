@@ -29,7 +29,7 @@ function generateRichEditor($textarea_num, $hashed_fieldName) {
                 document.getElementById(wordcount_ID).innerHTML = '';
         }
         else {
-            if (wordcount < 100)
+            if (wordcount < 100 & $editor_num != 14)
                 document.getElementById(wordcount_ID).innerHTML = '再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：' + wordcount + ' /100）';
             else if (wordcount > 10000)
                 document.getElementById(wordcount_ID).innerHTML = '超過字數限制。（字數上限：" ' + wordcount + ' "/10000）';
