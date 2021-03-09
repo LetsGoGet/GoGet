@@ -14,8 +14,8 @@ function generateRichEditor($textarea_num, $hashed_fieldName) {
         theme: 'snow',
         formats: ['bold', 'italic', 'underline', 'list', 'indent', 'link']
     });
-    var quill_div = document.getElementById(quill_ID);
-    quill_div.children[0].setAttribute("name", textarea_ID);
+    // var quill_div = document.getElementById(quill_ID);
+    // quill_div.children[0].setAttribute("name", textarea_ID);
     textarea_array[$editor_num] = document.getElementById(textarea_ID);
     textarea_array[$editor_num].setAttribute('style', 'display: none;');
     editor_array[$editor_num].on('editor-change', function () {
