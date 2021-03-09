@@ -915,11 +915,17 @@ if (!function_exists('bbp_display_wp_editor_array')) :
 //                                maxlength: "非常感謝您的用心分享！（已達字數上限：100000）",
                                 required: "必填",
                                 rangelength: function(range, input){
-                                    var length = $(input).val().length - 40;
+                                    var length = $(input).val().length - 50;
+                                    if(length < 0) {length = 0}
+                                    // if (length < 100){
+                                    //     return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：" + length + "/100）";
+                                    // } else if (length > 10000) {
+                                    //     return "超過字數限制。（字數上限：" + length + "/10000）";
+                                    // }
                                     if (length < 100){
-                                        return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：" + length + "/100）";
+                                        return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：100）";
                                     } else if (length > 10000) {
-                                        return "超過字數限制。（字數上限：" + length + "/10000）";
+                                        return "超過字數限制。（字數上限：10000）";
                                     }
                                 },
                             },
@@ -927,18 +933,28 @@ if (!function_exists('bbp_display_wp_editor_array')) :
                                 required: "必填",
                                 rangelength: function(range, input){
                                     var length = $(input).val().length - 40;
+                                    if(length < 0) {length = 0}
+                                    // if (length < 100){
+                                    //     return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：" + length + "/100）";
+                                    // } else if (length > 10000) {
+                                    //     return "超過字數限制。（字數上限：" + length + "/10000）";
+                                    // }
                                     if (length < 100){
-                                        return "再回想看看，還有什麼準備的小細節想跟大家分享嗎？（字數下限：" + length + "/100）";
+                                        return "再回想看看，還有什麼過程的小細節想跟大家分享嗎？（字數下限：100）";
                                     } else if (length > 10000) {
-                                        return "超過字數限制。（字數上限：" + length + "/10000）";
+                                        return "超過字數限制。（字數上限：10000）";
                                     }
                                 },
                             },
                             ' . $field_name_array[15] . ': {
                                 rangelength: function(range, input){
                                     var length = $(input).val().length - 40;
+                                    if(length < 0) {length = 0}
+                                    // if (length > 10000) {
+                                    //     return "超過字數限制。（字數上限：" + length + "/10000）";
+                                    // }
                                     if (length > 10000) {
-                                        return "超過字數限制。（字數上限：" + length + "/10000）";
+                                        return "超過字數限制。（字數上限：10000）";
                                     }
                                 },                            
                             }
