@@ -4,6 +4,7 @@ function generateRichEditor($textarea_num, $hashed_fieldName) {
     var quill_ID = 'quill_' + $hashed_fieldName + '_editor';
     var textarea_ID = 'bbp_' + $hashed_fieldName + '_content';
     var wordcount_ID = 'word_' + $hashed_fieldName + '_count';
+    var wordcount_box = 'wordcount_' + $hashed_fieldName + '_box';
     editor_array[$editor_num] = new Quill('#' + quill_ID, {
         modules: {
             toolbar: [
@@ -19,9 +20,11 @@ function generateRichEditor($textarea_num, $hashed_fieldName) {
 
     textarea_array[$editor_num] = document.getElementById(textarea_ID);
     textarea_array[$editor_num].setAttribute('style', 'display: none;');
+    document.getElementById(wordcount_ID).innerHTML = '必填';
     editor_array[$editor_num].on('editor-change', function () {
         textarea_array[$editor_num].innerHTML = '<div class=\"ql-editor\">' + editor_array[$editor_num].root.innerHTML + '</div>';
         var wordcount = editor_array[$editor_num].getLength() - 1;
+        document.getElementById(wordcount_box).value = wordcount;
         if ($editor_num == 6) {
             if (wordcount === 0)
                 document.getElementById(wordcount_ID).innerHTML = '必填';
