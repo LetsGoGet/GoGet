@@ -752,7 +752,9 @@ class textArea extends formElements
     {
         $hashed_fieldName = hashHelper($fieldName);
         error_log($fieldName . ':' . $hashed_fieldName);
-        echo ("<b><font size='3pt'>" . $fieldName . "</b></font>");
+        // echo ("<b><font size='3pt'>" . $fieldName . "</b></font>");
+        echo ("<p style='margin-bottom: -2px'> <label>$fieldName</label> </p>");
+        echo ("<style>p:empty:before {content: none;}</style>");
         echo ("<p style='font-size: 9px; color: #9c9c9c'>$this->subtitle</p>");
         echo ("<div id='$this->ID'></div>"); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!?????????????????????????????????
         // bbp_the_content( array( 'context' => $hashed_fieldName, 'textarea_rows' => 8, 'default_content' => $this->defaultContent) );
