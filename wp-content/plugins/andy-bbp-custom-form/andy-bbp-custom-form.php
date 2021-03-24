@@ -828,6 +828,9 @@ if (!function_exists('bbp_display_wp_editor_array')) :
             </script>
         ");
 
+        // fix textarea link overflow
+        echo ('<style>.ql-editor {overflow-wrap: anywhere;}</style>');
+
         // Read form schema
         $path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
         // Create an array with all hashed field name
