@@ -70,6 +70,14 @@ defined('ABSPATH') || exit;
 
 		<?php bbp_reply_content(); ?>
 
+		<?php
+		echo ("<script type='text/javascript'>
+			var link_element = document.querySelectorAll('div.ql-editor  a');
+			for(var i = 0; i < link_element.length; i++)
+				link_element[i].setAttribute('target', '_blank');
+		</script>")
+		?>
+
 		<?php do_action('bbp_theme_after_reply_content'); ?>
 
 	</div><!-- .bbp-reply-content -->
