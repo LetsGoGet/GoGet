@@ -70,6 +70,7 @@ defined('ABSPATH') || exit;
 
 		<?php bbp_reply_content(); ?>
 
+		<!-- add target='_blank' to all link -->
 		<?php
 		echo ("<script type='text/javascript'>
 			var link_element = document.querySelectorAll('div.ql-editor  a');
