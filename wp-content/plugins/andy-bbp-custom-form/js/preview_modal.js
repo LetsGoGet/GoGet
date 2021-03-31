@@ -1,5 +1,5 @@
 const beforeThis = document.getElementById('page');
-const modal = document.createElement('div'); 
+const modal = document.createElement('div');
 
 modal.id = 'modal';
 document.body.insertBefore(modal, beforeThis);
@@ -17,8 +17,8 @@ function submitClicked() {
 };
 
 function displayPreview(arr) {
-    const [company_name, job_property, job_category, job_title, industry, sub_industry, isAnon, author_bg, interview_date, interview_loc, 
-           difficulty, interview_result, interview_type, preparation, interview_flow, feedback, tags] = arr;
+    const [company_name, job_property, job_category, job_title, industry, sub_industry, isAnon, author_bg, interview_date, interview_loc,
+        difficulty, interview_result, interview_type, preparation, interview_flow, feedback, tags] = arr;
 
     var result = '<div id="preview_modal_nav_bar" style="margin-top: -12px; padding-top: 20px; padding-left: 40px; padding-right: 40px; padding-bottom: 18px; \
                     background: linear-gradient(#0A2D87 121px, white 0px);">';
@@ -71,15 +71,16 @@ function grabValuesInComponentsAndDisplay($comps) {
     var job_title = '<text>' + $comps[3].children[1].value + '</text>';
     var industry = '<text>' + $comps[4].children[0].children[0].value + '&nbsp;&nbsp;' + $comps[4].children[1].children[0].value;
     var sub_industry = '<text>' + $comps[5][0].children[0].value + '&nbsp;&nbsp;' + $comps[5][0].children[1].children[0].value;
-    for(var i = 0; i < 2; i++) {
+    for (var i = 0; i < 2; i++) {
         if ($comps[6].children[i].checked)
             isAnon = '<text>' + $comps[6].children[i].value + '</text>';
     }
-    var author_bg = '<text>' + $comps[7].nextElementSibling.children[0].children[0].value + '</text>';
+    var author_bg = '<text>' + $comps[7].nextElementSibling.children[0].value + '</text>';
+    // var author_bg = '<text>' + $comps[7].nextElementSibling.children[0].children[0].value + '</text>';
     var interview_date = '<text>' + document.getElementById('datepicker').value + '</text>';
     var interview_loc = '<text>' + $comps[9].children[0].children[0].value + '&nbsp;' + $comps[9].children[1].children[0].value + '</text>';
 
-    for(var i = 0; i < 4; i++) {
+    for (var i = 0; i < 4; i++) {
         if ($comps[10].children[i].checked) {
             var val = $comps[10].children[i].value;
             var bc = 'orange';
@@ -89,7 +90,7 @@ function grabValuesInComponentsAndDisplay($comps) {
         }
     }
 
-    for(var i = 0; i < 3; i++) {
+    for (var i = 0; i < 3; i++) {
         if ($comps[11].children[i].checked) {
             var val = $comps[11].children[i].value;
             var bc = 'black';
@@ -102,14 +103,17 @@ function grabValuesInComponentsAndDisplay($comps) {
 
     interview_type = '';
     [...$comps[12].children].forEach((ele, idx) => {
-        if (idx % 2 == 0 && ele.checked == true){
+        if (idx % 2 == 0 && ele.checked == true) {
             interview_type += '<text>' + $comps[12].children[idx].value + ', ';
         }
     });
     interview_type = interview_type.slice(0, -2) + '</text>';
-    var preparation = '<text>' + $comps[13].nextElementSibling.children[0].children[0].value + '</text>';
-    var interview_flow = '<text>' + $comps[14].nextElementSibling.children[0].children[0].value + '</text>';
-    var feedback = '<text>' + $comps[15].nextElementSibling.children[0].children[0].value + '</text>';
+    var preparation = '<text>' + $comps[13].nextElementSibling.children[0].value + '</text>';
+    var interview_flow = '<text>' + $comps[14].nextElementSibling.children[0].value + '</text>';
+    var feedback = '<text>' + $comps[15].nextElementSibling.children[0].value + '</text>';
+    // var preparation = '<text>' + $comps[13].nextElementSibling.children[0].children[0].value + '</text>';
+    // var interview_flow = '<text>' + $comps[14].nextElementSibling.children[0].children[0].value + '</text>';
+    // var feedback = '<text>' + $comps[15].nextElementSibling.children[0].children[0].value + '</text>';
 
     tags = '';
     if ($comps[16].children[0].value != '') {

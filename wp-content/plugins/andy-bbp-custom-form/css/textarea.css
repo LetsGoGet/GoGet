@@ -1,0 +1,7 @@
+ul li {
+    list-style-type: none !important;
+}
+.ql-editor{
+    padding: 0px 0px !important;
+    white-space: inherit !important;
+}
