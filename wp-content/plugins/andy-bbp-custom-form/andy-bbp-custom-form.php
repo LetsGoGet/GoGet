@@ -803,22 +803,23 @@ if (!function_exists('bbp_display_wp_editor_array')) :
             $forumId = bbp_get_topic_forum_id();
         }
 
-        // Using Quill
-        echo ('<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">');
-        echo ('<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>');
+        if ($forumId == 28){
+            // Using Quill
+            echo ('<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">');
+            echo ('<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>');
 
-        // Using material UI
-        echo ('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">');
-        // Using jquery velidate
-        echo ('<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>');
-        // echo ('<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>');
+            // Using material UI
+            echo ('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">');
+            // Using jquery velidate
+            echo ('<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>');
+            // echo ('<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>');
 
-        // Using select2
-        echo ('<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+            // Using select2
+            echo ('<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
             <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/zh-TW.min.js"></script>');
 
-        echo ("
+            echo ("
             <script>
                 jQuery(document).ready(function($) {
                     $('.select2').select2({
@@ -828,53 +829,53 @@ if (!function_exists('bbp_display_wp_editor_array')) :
             </script>
         ");
 
-        // fix textarea link overflow
-        echo ('<style>.ql-editor {overflow-wrap: anywhere;}</style>');
+            // fix textarea link overflow
+            echo ('<style>.ql-editor {overflow-wrap: anywhere;}</style>');
 
-        // Read form schema
-        $path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
-        // Create an array with all hashed field name
-        $field_name_array = array();
-        if (file_exists($path)) {
-            $lines = file($path, FILE_IGNORE_NEW_LINES);
+            // Read form schema
+            $path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
+            // Create an array with all hashed field name
+            $field_name_array = array();
+            if (file_exists($path)) {
+                $lines = file($path, FILE_IGNORE_NEW_LINES);
 
-            foreach ($lines as $line) {
-                // Skip mycred row
-                if (($line != '[mycred_sell_this]') && ($line != '[/mycred_sell_this]')) {
-                    $row = explode(",", $line);
-                    $field_name = $row[0];
-                    $field_name_array[] = 'bbp_' . hashHelper($field_name) . '_content';
+                foreach ($lines as $line) {
+                    // Skip mycred row
+                    if (($line != '[mycred_sell_this]') && ($line != '[/mycred_sell_this]')) {
+                        $row = explode(",", $line);
+                        $field_name = $row[0];
+                        $field_name_array[] = 'bbp_' . hashHelper($field_name) . '_content';
+                    }
                 }
             }
-        }
 
-        //multi selection columns
-        $field_name_array_4 = $field_name_array[4] . '[]'; //產業類別
-        $field_name_array_5 = $field_name_array[5] . '[]'; //細分產業類別
-        $field_name_array_10 = $field_name_array[10] . '[]'; //面試難度
-        $field_name_array_11 = $field_name_array[11] . '[]'; //面試結果
-        $field_name_array_12 = $field_name_array[12] . '[]'; //面試項目
+            //multi selection columns
+            $field_name_array_4 = $field_name_array[4] . '[]'; //產業類別
+            $field_name_array_5 = $field_name_array[5] . '[]'; //細分產業類別
+            $field_name_array_10 = $field_name_array[10] . '[]'; //面試難度
+            $field_name_array_11 = $field_name_array[11] . '[]'; //面試結果
+            $field_name_array_12 = $field_name_array[12] . '[]'; //面試項目
 
-        // for validate textarea
-        $key_0 = explode("_", $field_name_array[7]);
-        $quill_0 = "quill_" . $key_0[1] . "_editor";
-        $wordcountbox_0 = "wordcount_" . $key_0[1] . "_box";
-        $wordcount_0 = "word_" . $key_0[1] . "_count";
-        $key_1 = explode("_", $field_name_array[13]);
-        $wordcountbox_1 = "wordcount_" . $key_1[1] . "_box";
-        $wordcount_1 = "word_" . $key_1[1] . "_count";
-        $quill_1 = "quill_" . $key_1[1] . "_editor";
-        $key_2 = explode("_", $field_name_array[14]);
-        $wordcountbox_2 = "wordcount_" . $key_2[1] . "_box";
-        $wordcount_2 = "word_" . $key_2[1] . "_count";
-        $quill_2 = "quill_" . $key_2[1] . "_editor";
-        $key_3 = explode("_", $field_name_array[15]);
-        $wordcountbox_3 = "wordcount_" . $key_3[1] . "_box";
-        $wordcount_3 = "word_" . $key_3[1] . "_count";
-        $quill_3 = "quill_" . $key_3[1] . "_editor";
+            // for validate textarea
+            $key_0 = explode("_", $field_name_array[7]);
+            $quill_0 = "quill_" . $key_0[1] . "_editor";
+            $wordcountbox_0 = "wordcount_" . $key_0[1] . "_box";
+            $wordcount_0 = "word_" . $key_0[1] . "_count";
+            $key_1 = explode("_", $field_name_array[13]);
+            $wordcountbox_1 = "wordcount_" . $key_1[1] . "_box";
+            $wordcount_1 = "word_" . $key_1[1] . "_count";
+            $quill_1 = "quill_" . $key_1[1] . "_editor";
+            $key_2 = explode("_", $field_name_array[14]);
+            $wordcountbox_2 = "wordcount_" . $key_2[1] . "_box";
+            $wordcount_2 = "word_" . $key_2[1] . "_count";
+            $quill_2 = "quill_" . $key_2[1] . "_editor";
+            $key_3 = explode("_", $field_name_array[15]);
+            $wordcountbox_3 = "wordcount_" . $key_3[1] . "_box";
+            $wordcount_3 = "word_" . $key_3[1] . "_count";
+            $quill_3 = "quill_" . $key_3[1] . "_editor";
 
-        // Set the validation rules and msg for each field
-        echo ('
+            // Set the validation rules and msg for each field
+            echo ('
             <style>
                 .errTxt{
                     color: red;
@@ -1053,92 +1054,92 @@ if (!function_exists('bbp_display_wp_editor_array')) :
             </script>
         ');
 
-        // Start generating form (read form schema)
-        if (file_exists($path)) {
-            $lines = file($path, FILE_IGNORE_NEW_LINES);
+            // Start generating form (read form schema)
+            if (file_exists($path)) {
+                $lines = file($path, FILE_IGNORE_NEW_LINES);
 
-            $componentIDs = array();
-            foreach ($lines as $line) {
-                //skip mycred row
-                if (($line != '[mycred_sell_this]') && ($line != '[/mycred_sell_this]')) {
-                    $row = explode(",", $line);
-                    $field_name = $row[0];
-                    $field_type = $row[1];
-                    $field_default_content = $row[2];
-                    $field_subtitle = $row[3];
+                $componentIDs = array();
+                foreach ($lines as $line) {
+                    //skip mycred row
+                    if (($line != '[mycred_sell_this]') && ($line != '[/mycred_sell_this]')) {
+                        $row = explode(",", $line);
+                        $field_name = $row[0];
+                        $field_type = $row[1];
+                        $field_default_content = $row[2];
+                        $field_subtitle = $row[3];
 
-                    if (substr($field_type, 0, 5) == "combo") {
-                        $query_type = explode(":", $field_type)[1];
-                        $comboBox = new comboBox($query_type, $field_subtitle);
-                        $comboBox->generateUI($field_name);
-                        array_push($componentIDs, $comboBox->getComponentID());
-                    } else if ($field_type == 'radio') {
-                        $radio = new radio($field_subtitle);
-                        $radio->generateUI($field_name);
-                        array_push($componentIDs, $radio->getComponentID());
-                    } else if ($field_type == 'singleSelection1') {
-                        $sl1 = new singleSelection1();
-                        $sl1->generateUI($field_name);
-                        array_push($componentIDs, $sl1->getComponentID());
-                    } else if ($field_type == 'singleSelection2') {
-                        $sl2 = new singleSelection2();
-                        $sl2->generateUI($field_name);
-                        array_push($componentIDs, $sl2->getComponentID());
-                    } else if ($field_type == 'multiSelection') {
-                        $ml = new multiSelection($field_subtitle);
-                        $ml->generateUI($field_name);
-                        array_push($componentIDs, $ml->getComponentID());
-                    } else if ($field_type == 'dropdown_job_category') {
-                        $dn = new dropdown_job_category($field_subtitle);
-                        $dn->generateUI($field_name);
-                        array_push($componentIDs, $dn->getComponentID());
-                    } else if ($field_type == 'dropdown_industry') {
-                        $dn1 = new dropdown_industry($field_subtitle);
-                        $dn1->generateUI($field_name);
-                        array_push($componentIDs, $dn1->getComponentID());
-                    } else if ($field_type == 'dropdown_sub_industry') {
-                        $dn2 = new dropdown_sub_industry($field_subtitle);
-                        $dn2->generateUI($field_name);
-                        array_push($componentIDs, $dn2->getComponentID());
-                    } else if ($field_type == 'dropdown_02') {
-                        $dn3 = new dropDown_02($field_subtitle);
-                        $dn3->generateUI($field_name);
-                        array_push($componentIDs, $dn3->getComponentID());
-                    } else if ($field_type == 'dropdown_03') {
-                        $cc_path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/countries_and_cities.json';
-                        $dn4 = new dropDown_03($field_subtitle, $cc_path);
-                        $dn4->generateUI($field_name);
-                        array_push($componentIDs, $dn4->getComponentID());
-                    } else if ($field_type == 'date') {
-                        $date = new date();
-                        $date->generateUI($field_name);
-                        array_push($componentIDs, $date->getComponentID());
-                    } else if ($field_type == 'textarea') {
-                        $textarea = new textArea($field_default_content, $field_subtitle);
-                        $textarea->generateUI($field_name);
-                        array_push($componentIDs, $textarea->getComponentID());
-                    } else if ($field_type == 'multiTextArea') {
-                        $multiTextArea = new multiTextArea($field_subtitle);
-                        $multiTextArea->generateUI($field_name);
-                        array_push($componentIDs, $multiTextArea->getComponentID());
-                    } else if ($field_type == 'inputBox') {
-                        $inputBox = new inputBox();
-                        $inputBox->generateUI($field_name);
-                        array_push($componentIDs, $inputBox->getComponentID());
-                    } else if ($field_type == 'text') {
-                        $text = new text($field_subtitle);
-                        $text->generateUI($field_name);
-                        array_push($componentIDs, $text->getComponentID());
+                        if (substr($field_type, 0, 5) == "combo") {
+                            $query_type = explode(":", $field_type)[1];
+                            $comboBox = new comboBox($query_type, $field_subtitle);
+                            $comboBox->generateUI($field_name);
+                            array_push($componentIDs, $comboBox->getComponentID());
+                        } else if ($field_type == 'radio') {
+                            $radio = new radio($field_subtitle);
+                            $radio->generateUI($field_name);
+                            array_push($componentIDs, $radio->getComponentID());
+                        } else if ($field_type == 'singleSelection1') {
+                            $sl1 = new singleSelection1();
+                            $sl1->generateUI($field_name);
+                            array_push($componentIDs, $sl1->getComponentID());
+                        } else if ($field_type == 'singleSelection2') {
+                            $sl2 = new singleSelection2();
+                            $sl2->generateUI($field_name);
+                            array_push($componentIDs, $sl2->getComponentID());
+                        } else if ($field_type == 'multiSelection') {
+                            $ml = new multiSelection($field_subtitle);
+                            $ml->generateUI($field_name);
+                            array_push($componentIDs, $ml->getComponentID());
+                        } else if ($field_type == 'dropdown_job_category') {
+                            $dn = new dropdown_job_category($field_subtitle);
+                            $dn->generateUI($field_name);
+                            array_push($componentIDs, $dn->getComponentID());
+                        } else if ($field_type == 'dropdown_industry') {
+                            $dn1 = new dropdown_industry($field_subtitle);
+                            $dn1->generateUI($field_name);
+                            array_push($componentIDs, $dn1->getComponentID());
+                        } else if ($field_type == 'dropdown_sub_industry') {
+                            $dn2 = new dropdown_sub_industry($field_subtitle);
+                            $dn2->generateUI($field_name);
+                            array_push($componentIDs, $dn2->getComponentID());
+                        } else if ($field_type == 'dropdown_02') {
+                            $dn3 = new dropDown_02($field_subtitle);
+                            $dn3->generateUI($field_name);
+                            array_push($componentIDs, $dn3->getComponentID());
+                        } else if ($field_type == 'dropdown_03') {
+                            $cc_path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/countries_and_cities.json';
+                            $dn4 = new dropDown_03($field_subtitle, $cc_path);
+                            $dn4->generateUI($field_name);
+                            array_push($componentIDs, $dn4->getComponentID());
+                        } else if ($field_type == 'date') {
+                            $date = new date();
+                            $date->generateUI($field_name);
+                            array_push($componentIDs, $date->getComponentID());
+                        } else if ($field_type == 'textarea') {
+                            $textarea = new textArea($field_default_content, $field_subtitle);
+                            $textarea->generateUI($field_name);
+                            array_push($componentIDs, $textarea->getComponentID());
+                        } else if ($field_type == 'multiTextArea') {
+                            $multiTextArea = new multiTextArea($field_subtitle);
+                            $multiTextArea->generateUI($field_name);
+                            array_push($componentIDs, $multiTextArea->getComponentID());
+                        } else if ($field_type == 'inputBox') {
+                            $inputBox = new inputBox();
+                            $inputBox->generateUI($field_name);
+                            array_push($componentIDs, $inputBox->getComponentID());
+                        } else if ($field_type == 'text') {
+                            $text = new text($field_subtitle);
+                            $text->generateUI($field_name);
+                            array_push($componentIDs, $text->getComponentID());
+                        }
                     }
                 }
-            }
 
-            $preview_modal_css = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/css/preview_modal.css');
-            $preview_modal_js = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/js/preview_modal.js');
-            echo ("<style>$preview_modal_css</style>");
-            echo ("<script type='text/javascript'>$preview_modal_js</script>");
+                $preview_modal_css = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/css/preview_modal.css');
+                $preview_modal_js = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/js/preview_modal.js');
+                echo ("<style>$preview_modal_css</style>");
+                echo ("<script type='text/javascript'>$preview_modal_js</script>");
 
-            echo ("
+                echo ("
                 <script type='text/javascript'>
                     fetchFunctionCountriesAndCities($componentIDs[9].children[0].children[0].value);
                     
@@ -1152,8 +1153,9 @@ if (!function_exists('bbp_display_wp_editor_array')) :
                     }
                 </script>
             ");
-        } else {
-            bbp_the_content(array('context' => 'topic')); //bbpress default
+            } else {
+                bbp_the_content(array('context' => 'topic')); //bbpress default
+            }
         }
     }
 
