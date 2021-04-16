@@ -1,5 +1,5 @@
 <?php
-
+namespace GoGetForums;
 /**
  * Plugin Name: GoGet - Forum
  */
@@ -19,7 +19,6 @@ if ( !class_exists( 'GoGetForums' ) ) {
          */
         public function __construct(){
             $this->load_constants();
-            require_once GOGETFORUMS_INCLUDES_PATH . 'forum-assets.php';
             add_action('init', array( $this, 'includes' ), 4);
         }
 
@@ -31,6 +30,7 @@ if ( !class_exists( 'GoGetForums' ) ) {
          */
         public function includes()
         {
+            require_once GOGETFORUMS_INCLUDES_PATH . 'forum-assets.php';
             require_once GOGETFORUMS_INCLUDES_PATH . 'forum.php';
             require_once GOGETFORUMS_INCLUDES_PATH . 'post.php';
             require_once GOGETFORUMS_INCLUDES_PATH . 'component_function.php';
@@ -85,7 +85,7 @@ if ( !class_exists( 'GoGetForums' ) ) {
     function activate_gogetforum_at_plugin_loader()
     {
         // Init BuddyForms.
-        $GLOBALS['gogetforums_new'] = new GoGetForums();
+        $GLOBALS['gogetforums'] = new GoGetForums();
 
         // Maybe init other service in the future
     }
