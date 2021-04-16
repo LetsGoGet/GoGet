@@ -4,36 +4,83 @@
  * Plugin Name: GoGet - Forum
  */
 
-//require component_function file
-require('component_function.php');
+if ( !class_exists( 'GoGetForums' ) ) {
+    class GoGetForums {
+        /**
+         * @var string
+         */
+        public  $version = '0.1.0' ;
 
-// to display fields in bbp new topic form
-add_action('bbp_theme_before_topic_form_content', 'test');
-if (!function_exists('test')) :
-    function test()
-    {
-        //get forum id
-        $forumId = bbp_get_forum_id();
+        /**
+         * Initiate the class
+         *
+         * @package GoGetForums
+         * @since 0.1.0-dev
+         */
+        public function __construct(){
+            $this->load_constants();
+            error_log("asdf");
+            require_once GOGETFORUMS_INCLUDES_PATH . 'forum-assets.php';
+            add_action('init', array( $this, 'includes' ), 4);
+        }
 
-        if ($forumId == 30) {
-            // Using Quill
-            echo ('<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">');
-            echo ('<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>');
+        /**
+         * Include files needed by GoGetForum
+         *
+         * @package GoGetForum
+         * @since 0.1.0-dev
+         */
+        public function includes()
+        {
+            error_log("hiiiii");
+            require_once GOGETFORUMS_INCLUDES_PATH . 'forum.php';
+            require_once GOGETFORUMS_INCLUDES_PATH . 'post.php';
+            require_once GOGETFORUMS_INCLUDES_PATH . 'component_function.php';
+        }
 
-            // Dropdown
-            $test_data = [1, 2, 3];
-            Dropdown($test_data);
 
-            // Textarea
-            $test_data = "test default content";
-            Textarea($test_data);
+        /**
+         * Defines constants needed throughout the plugin.
+         *
+         * @package GoGetForums
+         * @since 0.1.0-dev
+         */
+        public function load_constants(){
+            /**
+             * Define the plugin version
+             */
+            define( 'GOGETFORUMS_VERSION', $this->version );
 
-            // SingleSelection
-            $test_data = [
-                'content' => ['很簡單', '簡單', '普通', '困難', '很困難'],
-                'color' => ['blue', 'blue', 'orange', 'red', 'red'],
-            ];
-            SingleSelection($test_data);
+            if ( !defined( 'GOGETFORUMS_PLUGIN_URL' ) ) {
+                /**
+                 * Define the plugin url
+                 */
+                define( 'GOGETFORUMS_PLUGIN_URL', plugins_url( '/', __FILE__ ) );
+            }
+            if ( !defined( 'GOGETFORUMS_INSTALL_PATH' ) ) {
+                /**
+                 * Define the install path
+                 */
+                define( 'GOGETFORUMS_INSTALL_PATH', dirname( __FILE__ ) . '/' );
+            }
+            if ( !defined( 'GOGETFORUMS_INCLUDES_PATH' ) ) {
+                /**
+                 * Define the include path
+                 */
+                define( 'GOGETFORUMS_INCLUDES_PATH', GOGETFORUMS_INSTALL_PATH . 'includes/' );
+            }
+            if ( !defined( 'GOGETFORUMS_TEMPLATE_PATH' ) ) {
+                /**
+                 * Define the template path
+                 */
+                define( 'GOGETFORUMS_TEMPLATE_PATH', BUDDYFORMS_INSTALL_PATH . 'templates/' );
+            }
+            if ( !defined( 'GOGETFORUMS_ASSETS' ) ) {
+                /**
+                 * Define the template path
+                 */
+                define( 'GOGETFORUMS_ASSETS', plugins_url( 'assets/', __FILE__ ) );
+            }
         }
     }
-endif;
+}
