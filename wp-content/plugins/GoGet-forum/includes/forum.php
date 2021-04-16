@@ -1,5 +1,10 @@
 <?php
+namespace GoGetForums\includes;
 
+/**
+ * Class forum
+ * Specify each forum's components
+ */
 class forum{
     public function __construct()
     {
@@ -12,22 +17,19 @@ class testForum extends forum{
     {
         parent::__construct();
 
-        // Using Quill
-        GoGetForumsAssets::load_quill_assets();
-
         // Dropdown
         $test_data = [1, 2, 3];
-        Dropdown($test_data);
+        $dropdown = new Dropdown($test_data);
 
         // Textarea
         $test_data = "test default content";
-        Textarea($test_data);
+        $textarea = new Textarea($test_data);
 
         // SingleSelection
         $test_data = [
             'content' => ['很簡單', '簡單', '普通', '困難', '很困難'],
             'color' => ['blue', 'blue', 'orange', 'red', 'red'],
         ];
-        SingleSelection($test_data);
+        $singleSelection = new SingleSelection($test_data);
     }
 }
