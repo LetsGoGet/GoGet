@@ -13,7 +13,7 @@
 
     <div id="quill__editor" style="margin-bottom: 5px;"><?php echo $data ?></div>
 
-    <?php $js_data = file_get_contents(ABSPATH . 'wp-content/plugins/GoGet-forum/js/rich_editor.js'); ?>
+    <?php $js_data = file_get_contents(GOGETFORUMS_ASSETS . 'js/rich_editor.js'); ?>
     <script type='text/javascript'>
         <?php echo $js_data ?>
         generateRichEditor("1", "");
