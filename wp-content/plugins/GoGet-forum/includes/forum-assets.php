@@ -1,5 +1,5 @@
 <?php
-
+namespace GoGetForums\includes;
 
 /**
  * Class GoGetForumsAssets
@@ -8,11 +8,7 @@ class GoGetForumsAssets
 {
     public function __construct()
     {
-        add_action('admin_enqueue_scripts', array($this, 'admin_styles'), 102, 1);
-        add_action('admin_enqueue_scripts', array($this, 'admin_js'), 102, 1);
-        add_filter('admin_footer_text', array($this, 'admin_footer_text'), 1);
-
-        add_action('wp_enqueue_scripts', array($this, 'front_js_loader'), 9999, 1);
+       self::load_common_assets();
     }
 
     /**
@@ -24,8 +20,8 @@ class GoGetForumsAssets
 
     public static function load_quill_assets(){
         // quill.js // https://quilljs.com/
-        wp_enqueue_script( 'GoGetForums-quill-js', GOGETFORUMS_ASSETS . 'vendors/quill/css/quill.snow.css');
-        wp_enqueue_style( 'GoGetForums-quill-css', GOGETFORUMS_ASSETS . 'vendors/quill/js/quill.js' );
+        wp_enqueue_script( 'GoGetForums-quill-js', GOGETFORUMS_ASSETS . 'vendors/quill/js/quill.js');
+        wp_enqueue_style( 'GoGetForums-quill-css', GOGETFORUMS_ASSETS . 'vendors/quill/css/quill.snow.css' );
     }
 
     /**
