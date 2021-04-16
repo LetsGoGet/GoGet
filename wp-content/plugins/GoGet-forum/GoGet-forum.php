@@ -15,11 +15,10 @@ if ( !class_exists( 'GoGetForums' ) ) {
          * Initiate the class
          *
          * @package GoGetForums
-         * @since 0.1.0-dev
+         * @since 0.1.0
          */
         public function __construct(){
             $this->load_constants();
-            error_log("asdf");
             require_once GOGETFORUMS_INCLUDES_PATH . 'forum-assets.php';
             add_action('init', array( $this, 'includes' ), 4);
         }
@@ -32,7 +31,6 @@ if ( !class_exists( 'GoGetForums' ) ) {
          */
         public function includes()
         {
-            error_log("hiiiii");
             require_once GOGETFORUMS_INCLUDES_PATH . 'forum.php';
             require_once GOGETFORUMS_INCLUDES_PATH . 'post.php';
             require_once GOGETFORUMS_INCLUDES_PATH . 'component_function.php';
@@ -73,7 +71,7 @@ if ( !class_exists( 'GoGetForums' ) ) {
                 /**
                  * Define the template path
                  */
-                define( 'GOGETFORUMS_TEMPLATE_PATH', BUDDYFORMS_INSTALL_PATH . 'templates/' );
+                define( 'GOGETFORUMS_TEMPLATE_PATH', GOGETFORUMS_INSTALL_PATH . 'templates/' );
             }
             if ( !defined( 'GOGETFORUMS_ASSETS' ) ) {
                 /**
@@ -83,4 +81,14 @@ if ( !class_exists( 'GoGetForums' ) ) {
             }
         }
     }
+
+    function activate_gogetforum_at_plugin_loader()
+    {
+        // Init BuddyForms.
+        $GLOBALS['gogetforums_new'] = new GoGetForums();
+
+        // Maybe init other service in the future
+    }
+
+    activate_gogetforum_at_plugin_loader();
 }
