@@ -803,7 +803,7 @@ if (!function_exists('bbp_display_wp_editor_array')) :
             $forumId = bbp_get_topic_forum_id();
         }
 
-        if ($forumId == 28){
+        if ($forumId == 28) {
             // Using Quill
             echo ('<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">');
             echo ('<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>');
