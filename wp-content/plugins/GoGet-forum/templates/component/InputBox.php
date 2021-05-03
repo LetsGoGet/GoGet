@@ -2,9 +2,9 @@
 $input_box = "";
 for ($i = 0; $i < $data['inputBox_cnt']; $i++) {
     if ($i == 0)
-        $input_box .= "<input type='text' name='input_box_test1'>";
+        $input_box .= "<input type='text' name='goget_" . $meta_key . "'>";
     else
-        $input_box .= "<input type='text' name='input_box_test1' style='margin-left: 10px'>";
+        $input_box .= "<input type='text' name='goget_" . $meta_key . "' style='margin-left: 10px'>";
 }
 ?>
 

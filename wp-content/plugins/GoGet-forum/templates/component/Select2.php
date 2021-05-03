@@ -3,8 +3,8 @@
     <p style='font-size: 9px; color: #9c9c9c'><?php echo $data['field_subtitle'] ?></p>
 
     <div id='select2'>
-        <label id='select2_label' for='select2_test1'>
-            <select id='select2_test1' name='select2_test1'></select>
+        <label for=<?php echo ('goget_' . $meta_key) ?>>
+            <select id=<?php echo ('goget_' . $meta_key) ?> name=<?php echo ('goget_' . $meta_key) ?>></select>
         </label>
     </div>
 </div>
@@ -15,5 +15,5 @@
 <script type='text/javascript'>
     <?php echo $test_data ?>
     <?php echo $js_data ?>
-    <?php echo ("setSelect2('select2_test1');"); ?>
+    <?php echo ("setSelect2('goget_" . $meta_key . "');"); ?>
 </script>
