@@ -1,7 +1,7 @@
 <?php
 $checkbox = "";
 foreach ($data['content'] as $key => $d) {
-    $checkbox .= "<input type='checkbox' id='goget_" . $meta_key . "' name='checkBox_test1''goget_" . $meta_key . "' value='" . $d . "' />
+    $checkbox .= "<input type='checkbox' id='goget_" . $meta_key . "' name='goget_" . $meta_key . "[]" . "' value='" . $d . "' />
     <label for='goget_" . $meta_key . "'> " . $d . " </label>";
 }
 ?>
