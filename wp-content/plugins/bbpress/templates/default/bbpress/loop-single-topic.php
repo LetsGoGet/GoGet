@@ -59,7 +59,21 @@ defined( 'ABSPATH' ) || exit;
 
 			<?php do_action( 'bbp_theme_before_topic_started_by' ); ?>
 
-			<span class="bbp-topic-started-by"><?php printf( esc_html__( 'Started by: %1$s', 'bbpress' ), bbp_get_topic_author_link( array( 'size' => '14' ) ) ); ?></span>
+			<span class="bbp-topic-started-by">
+				<?php 
+					// printf( esc_html__( 'Started by: %1$s', 'bbpress' ), bbp_get_topic_author_link( array( 'size' => '14' ))
+					// );
+
+					global $current_user;
+  					get_currentuserinfo();
+  					echo $current_user->user_login; 
+
+
+				?>	
+				</span>
+
+
+
 
 			<?php do_action( 'bbp_theme_after_topic_started_by' ); ?>
 
@@ -81,16 +95,24 @@ defined( 'ABSPATH' ) || exit;
 	</li>
 
     <li class="bbp-topic-voice-count"><?php echo get_wpbbp_post_view( bbp_get_topic_id() ); ?>
+<!-- ===== -->
 
-	<li class="bbp-topic-reply-count"><?php echo ( bbp_show_lead_topic() ? bbp_get_topic_reply_count()-1 : bbp_get_topic_post_count()-1); ?></li>
+
+<li class="bbp-topic-reply-count">
+
+	<!-- star review -->
+	<?php echo (do_shortcode('[videowhisper_rating post_id='.bbp_get_topic_id().']'));
+
+	?>
+
+
+	</li>
+
 
 	<li class="bbp-topic-freshness">
 
-		<?php do_action( 'bbp_theme_before_topic_freshness_link' ); ?>
+	<?php bbp_topic_post_date();?>
 
-		<?php bbp_topic_freshness_link(); ?>
-
-		<?php do_action( 'bbp_theme_after_topic_freshness_link' ); ?>
 
 <!--		<p class="bbp-topic-meta">
 
@@ -102,4 +124,7 @@ defined( 'ABSPATH' ) || exit;
 
 		</p>-->
 	</li>
+<!-- ======== -->
 </ul><!-- #bbp-topic-<?php bbp_topic_id(); ?> -->
+
+
