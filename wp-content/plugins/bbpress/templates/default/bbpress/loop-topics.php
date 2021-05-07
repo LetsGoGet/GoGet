@@ -16,14 +16,33 @@ do_action( 'bbp_template_before_topics_loop' ); ?>
 	<li class="bbp-header">
 		<ul class="forum-titles">
 			<li class="bbp-topic-title"><?php esc_html_e( 'Topic', 'bbpress' ); ?></li>
-			<li class="bbp-topic-voice-count"><?php esc_html_e( '點閱', 'bbpress' ); ?></li>
-			<li class="bbp-topic-reply-count"><?php bbp_show_lead_topic()
-				? esc_html_e( '回覆', 'bbpress' )
-				: esc_html_e( '回覆',   'bbpress' );
-			?></li>
-			<li class="bbp-topic-freshness"><?php esc_html_e( '最近回覆', 'bbpress' ); ?></li>
+
+<!-- 更改紀錄 -->
+			<li class="bbp-topic-voice-count"><?php esc_html_e( '點閱', 'bbpress' ); ?> 
+
+			<a href="./?k=post_views_count"> 
+				<?php if($_GET['k']=='post_views_count'){echo "▼";}else{ echo "▽" ;} ?>
+			 </a>
+			</li>
+<!-- Henry editing histroy -->	
+
+			<li class="bbp-topic-reply-count"><?php esc_html_e( '評分', 'bbpress' ); ?>
+
+			</li>
+
+		<li class="bbp-topic-post-date"><?php esc_html_e( '發布日期', 'bbpress' ); ?>
+			
+			<a href="./"> 
+			<?php if($_GET['k']==''){ 
+						echo "▼"; }else{ echo "▽" ;} 
+				?>   </a>
+
+
+		</li>
 		</ul>
 	</li>
+
+<!-- Henry editing histroy-->	
 
 	<li class="bbp-body">
 
