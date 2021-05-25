@@ -48,6 +48,17 @@ defined( 'ABSPATH' ) || exit;
 		<?php do_action( 'bbp_theme_before_topic_title' ); ?>
 
 		<a class="bbp-topic-permalink" href="<?php bbp_topic_permalink(); ?>"><?php bbp_topic_title(); ?></a>
+<!-- 在下面這邊加入判斷解鎖資訊 -->
+		<?php 
+			if(mycred_post_is_for_sale(bbp_get_topic_id() )&& mycred_get_post_meta(bbp_get_topic_id(), '_mycred_content_sales', true)<=3){
+				echo('
+					<div class="watch-first"; ; style="display: inline-block; color: red ; padding: 4px ; border: 1px solid; text-align:center " >  搶先看！ </div>
+
+				');
+			}
+		
+		?>
+<!-- 在上面這邊加入判斷解鎖資訊 -->
 
 		<?php do_action( 'bbp_theme_after_topic_title' ); ?>
 
@@ -61,12 +72,8 @@ defined( 'ABSPATH' ) || exit;
 
 			<span class="bbp-topic-started-by">
 				<?php 
-					// printf( esc_html__( 'Started by: %1$s', 'bbpress' ), bbp_get_topic_author_link( array( 'size' => '14' ))
-					// );
-
-					global $current_user;
-  					get_currentuserinfo();
-  					echo $current_user->user_login; 
+					printf( esc_html__( 'Started by: %1$s', 'bbpress' ), bbp_get_topic_author_link( array( 'size' => '14' ))
+				);
 
 
 				?>	
@@ -100,18 +107,19 @@ defined( 'ABSPATH' ) || exit;
 
 <li class="bbp-topic-reply-count">
 
-	<!-- star review -->
-	<?php echo (do_shortcode('[videowhisper_rating post_id='.bbp_get_topic_id().']'));
-
-	?>
-
+	<!-- topic reply count -->
+	<?php bbp_topic_reply_count() ?>
 
 	</li>
 
 
 	<li class="bbp-topic-freshness">
 
-	<?php bbp_topic_post_date();?>
+<!-- 控制顯示日期只有年/月 -->
+	<?php 
+		$post_date = bbp_get_topic_post_date();
+		echo("<div style='transform: translateX(10px)'>".substr($post_date,0,10)."</div>");
+	?>
 
 
 <!--		<p class="bbp-topic-meta">
