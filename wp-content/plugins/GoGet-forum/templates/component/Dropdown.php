@@ -17,8 +17,8 @@ foreach ($data['content'] as $value) {
         $cnt = 0;
         foreach ($data['content'] as $key => $value) {
             echo ("
-            <label for='dropdown_test1'>
-                <select id='dropdown_test1' name='dropdown_test1'> " . $options[$cnt] . " </select>
+            <label for='goget_" . $meta_key . "_" . $key . "'>
+                <select id='goget_" . $meta_key . "_" . $key . "' name='goget_" . $meta_key . "[]" . "'> " . $options[$cnt] . " </select>
             </label>
         ");
             $cnt += 1;
