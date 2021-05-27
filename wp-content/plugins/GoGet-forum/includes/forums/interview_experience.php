@@ -1,24 +1,31 @@
 <?php
+namespace GoGetForums\includes\forums;
 
-namespace GoGetForums\includes;
+use GoGetForums\includes\ComboBox;
+use GoGetForums\includes\DatePicker;
+use GoGetForums\includes\Dropdown;
+use GoGetForums\includes\InputBox;
+use GoGetForums\includes\interview_experience_val;
+use GoGetForums\includes\MultiCheckBox;
+use GoGetForums\includes\Radio;
+use GoGetForums\includes\Select2;
+use GoGetForums\includes\SingleSelection;
+use GoGetForums\includes\Textarea;
 
 /**
- * Class forum
- * Specify each forum's components
+ * ob_start() is important for avoiding "Warning: Cannot modify header information - headers already sent by ERROR"
+ * It turn on the output buffer mechanism in PHP.
  */
-class forum
-{
-    public function __construct()
-    {
-        // include common assets
-    }
-}
+ob_start();
 
-class testForum extends forum
+class interview_experience extends forum
 {
-    public function __construct()
+    public function __construct($id)
     {
-        parent::__construct();
+        parent::__construct($id);
+
+        // init validator
+        $this->validator = new interview_experience_val();
 
         // For testing
         // Using select2

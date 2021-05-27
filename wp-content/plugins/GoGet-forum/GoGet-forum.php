@@ -31,8 +31,22 @@ if ( !class_exists( 'GoGetForums' ) ) {
         public function includes()
         {
             require_once GOGETFORUMS_INCLUDES_PATH . 'forum-assets.php';
-            require_once GOGETFORUMS_INCLUDES_PATH . 'forum.php';
+
+            /** forum classes
+             *  Important: These classes has to be required before post.php to prevent "class not found exception"
+             */
+            require_once GOGETFORUMS_INCLUDES_PATH . '/forums/forum.php';
+            require_once GOGETFORUMS_INCLUDES_PATH . '/forums/interview_experience.php';
+
+            /** validators */
+            require_once GOGETFORUMS_INCLUDES_PATH . '/validators/validator.php';
+            require_once GOGETFORUMS_INCLUDES_PATH . '/validators/interview_experience_val.php';
+
             require_once GOGETFORUMS_INCLUDES_PATH . 'post.php';
+
+            /**
+             * component classes
+             */
             require_once GOGETFORUMS_INCLUDES_PATH . 'component_function.php';
         }
 
@@ -78,6 +92,12 @@ if ( !class_exists( 'GoGetForums' ) ) {
                  * Define the template path
                  */
                 define( 'GOGETFORUMS_ASSETS', plugins_url( 'assets/', __FILE__ ) );
+            }
+            if ( !defined( 'GOGETFORUMS_FORM_PREFIX' ) ) {
+                /**
+                 * Define the plugin url
+                 */
+                define( 'GOGETFORUMS_FORM_PREFIX', 'goget_');
             }
         }
     }
