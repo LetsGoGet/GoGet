@@ -1189,89 +1189,90 @@ if (!function_exists('bbp_get_custom_post_data')) :
     function bbp_get_custom_post_data()
     {
         $forumId = $_POST['bbp_forum_id'];
-        $path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
-        $content = '';
-        $must_fill_tag = '*';
+        if ($forumId == 28){
+            $path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
+            $content = '';
+            $must_fill_tag = '*';
 
-        //add to post metadata
-        // update_post_meta( $_POST['bbp_topic_id'], 'company_name', $_POST['company_name'] );
+            //add to post metadata
+            // update_post_meta( $_POST['bbp_topic_id'], 'company_name', $_POST['company_name'] );
 
-        if (file_exists($path)) {
-            $customizedTopic = "";
-            $isAnonymous = false;
-            $customizedTags = "";
-            $lines = file($path, FILE_IGNORE_NEW_LINES);
-            foreach ($lines as $key => $line) {
-                if (($line != '[mycred_sell_this]') && ($line != '[/mycred_sell_this]')) {
-                    error_log('line:' . $line);
-                    $row = explode(",", $line);
-                    $field_name = $row[0];
-                    $field_type = $row[1];
-                    $field_key = hash('ripemd160', $field_name);
+            if (file_exists($path)) {
+                $customizedTopic = "";
+                $isAnonymous = false;
+                $customizedTags = "";
+                $lines = file($path, FILE_IGNORE_NEW_LINES);
+                foreach ($lines as $key => $line) {
+                    if (($line != '[mycred_sell_this]') && ($line != '[/mycred_sell_this]')) {
+                        error_log('line:' . $line);
+                        $row = explode(",", $line);
+                        $field_name = $row[0];
+                        $field_type = $row[1];
+                        $field_key = hash('ripemd160', $field_name);
 
-                    //是否將此欄位存到文章內容中
-                    $saveToPost = true;
+                        //是否將此欄位存到文章內容中
+                        $saveToPost = true;
 
-                    if ($key == 0) { // 公司名稱
-                        insertDataToDB($_POST['bbp_' . $field_key . '_content']);
-                        $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . " ";
-                    } else if ($key == 3) { // 職務名稱
-                        $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . " 面試經驗";
-                    } else if ($key == 6) { // 匿名
-                        $isAnonymous = $_POST['bbp_' . $field_key . '_content'] == '是' ? 1 : 0;
-                        $saveToPost = false; //不存入 anonymous 欄位
-                    }
-
-                    //加入欄位內容
-                    if (!empty($_POST['bbp_' . $field_key . '_content']) && $field_type != 'text' && $saveToPost) {
-                        //加入欄位標題
-                        $field_title = "<strong><u><font size='3pt'>" . str_replace($must_fill_tag, "", $field_name) . "</strong></u></font>
-                ";
-                        $content .= $field_title;
-
-                        $token = '<noscript>' . $field_key . '</noscript>';
-
-                        if (is_array($_POST['bbp_' . $field_key . '_content'])) { //處理欄位多值
-                            $content .= $token;
-
-                            //去除 array 中的空白值, 以防產生逗號結尾文字 ex. array 有三個值 ['1', '2', ''] ---> print 出 ' 1,2, '
-                            $arr = $_POST['bbp_' . $field_key . '_content'];
-                            $arr = array_filter($arr, function ($value) {
-                                return !is_null($value) && $value !== '';
-                            });
-
-                            foreach ($arr as $key1 => $item) {
-                                error_log($field_name . ":" . $item);
-                                if ($key1 != count($arr) - 1) {
-                                    $content .= $item . ', ';
-                                } else {
-                                    $content .= $item;
-                                }
-
-                                //customized tags
-                                if ($field_name == '產業類別<a style="color:#FF0000;font-size:20px;">*</a>' || $field_name == '細分產業類別<a style="color:#FF0000;font-size:20px;">*</a>' || $field_name == '標籤') {
-                                    $customizedTags .= $item . ', ';
-                                }
-                            }
-                            $content .= $token;
-                        } else {
-                            $content .= $token . $_POST['bbp_' . $field_key . '_content'] . $token;
+                        if ($key == 0) { // 公司名稱
+                            insertDataToDB($_POST['bbp_' . $field_key . '_content']);
+                            $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . " ";
+                        } else if ($key == 3) { // 職務名稱
+                            $customizedTopic .= $_POST['bbp_' . $field_key . '_content'] . " 面試經驗";
+                        } else if ($key == 6) { // 匿名
+                            $isAnonymous = $_POST['bbp_' . $field_key . '_content'] == '是' ? 1 : 0;
+                            $saveToPost = false; //不存入 anonymous 欄位
                         }
-                    }
 
-                    $content .= '
+                        //加入欄位內容
+                        if (!empty($_POST['bbp_' . $field_key . '_content']) && $field_type != 'text' && $saveToPost) {
+                            //加入欄位標題
+                            $field_title = "<strong><u><font size='3pt'>" . str_replace($must_fill_tag, "", $field_name) . "</strong></u></font>
+                ";
+                            $content .= $field_title;
+
+                            $token = '<noscript>' . $field_key . '</noscript>';
+
+                            if (is_array($_POST['bbp_' . $field_key . '_content'])) { //處理欄位多值
+                                $content .= $token;
+
+                                //去除 array 中的空白值, 以防產生逗號結尾文字 ex. array 有三個值 ['1', '2', ''] ---> print 出 ' 1,2, '
+                                $arr = $_POST['bbp_' . $field_key . '_content'];
+                                $arr = array_filter($arr, function ($value) {
+                                    return !is_null($value) && $value !== '';
+                                });
+
+                                foreach ($arr as $key1 => $item) {
+                                    error_log($field_name . ":" . $item);
+                                    if ($key1 != count($arr) - 1) {
+                                        $content .= $item . ', ';
+                                    } else {
+                                        $content .= $item;
+                                    }
+
+                                    //customized tags
+                                    if ($field_name == '產業類別<a style="color:#FF0000;font-size:20px;">*</a>' || $field_name == '細分產業類別<a style="color:#FF0000;font-size:20px;">*</a>' || $field_name == '標籤') {
+                                        $customizedTags .= $item . ', ';
+                                    }
+                                }
+                                $content .= $token;
+                            } else {
+                                $content .= $token . $_POST['bbp_' . $field_key . '_content'] . $token;
+                            }
+                        }
+
+                        $content .= '
 
                 ';
-                } else {
-                    $content .= $line;
-                    continue;
+                    } else {
+                        $content .= $line;
+                        continue;
+                    }
                 }
+                return array($customizedTopic, $isAnonymous, $customizedTags, $content, null);
+            } else {
+                $content = $_POST['bbp_topic_content'];
+                return array($content);
             }
-            error_log($customizedTags);
-            return array($customizedTopic, $isAnonymous, $customizedTags, $content);
-        } else {
-            $content = $_POST['bbp_topic_content'];
-            return array($content);
         }
     }
 

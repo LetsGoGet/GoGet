@@ -168,41 +168,6 @@ function bbp_new_topic_handler($action = '')
 		bbp_add_error( 'bbp_topic_title', __( '<strong>ERROR</strong>: Your title is too long.', 'bbpress' ) );
 	}
      */
-	/** Topic Content *********************************************************/
-
-	// Andy edited from here
-	$custom_post_content = apply_filters('bbp_get_my_custom_post_fields', '');
-	if (count($custom_post_content) == 1) {
-		$topic_content = $custom_post_content[0]; // To return multiple values, the original argument is wrapped into array with length one
-	} else {
-		$customizedTopic = $custom_post_content[0];
-		$isAnonymous = $custom_post_content[1];
-		$customizedTags = $custom_post_content[2];
-		$topic_content = $custom_post_content[3];
-	}
-
-	// Copy from above section
-	if (!empty($customizedTopic)) {
-		$topic_title = sanitize_text_field($customizedTopic);
-	} else {
-		$topic_title = sanitize_text_field($_POST['bbp_topic_title']); // for issue 49
-	}
-	$topic_title = apply_filters('bbp_new_topic_pre_title', $topic_title);
-	if (empty($topic_title)) {
-		bbp_add_error('bbp_topic_title', __('<strong>ERROR</strong>: Your topic needs a title.', 'bbpress'));
-	}
-	if (bbp_is_title_too_long($topic_title)) {
-		bbp_add_error('bbp_topic_title', __('<strong>ERROR</strong>: Your title is too long.', 'bbpress'));
-	}
-
-	// Filter and sanitize
-	$topic_content = apply_filters('bbp_new_topic_pre_content', $topic_content);
-	// Andy edited to here
-
-	// No topic content
-	if (empty($topic_content)) {
-		bbp_add_error('bbp_topic_content', __('<strong>ERROR</strong>: Your topic cannot be empty.', 'bbpress'));
-	}
 
 	/** Topic Forum ***********************************************************/
 
@@ -267,6 +232,52 @@ function bbp_new_topic_handler($action = '')
 			}
 		}
 	}
+
+    /** Topic Content *********************************************************/
+
+    // Andy edited from here
+    $custom_post_content = apply_filters('bbp_get_my_custom_post_fields', '');
+    if ($forum_id == 30){
+        $custom_post_content = null;
+        $custom_post_content = apply_filters('goget_forum_get_custom_post_fields', '');
+    }
+
+    if (count($custom_post_content) == 1) {
+        $topic_content = $custom_post_content[0]; // To return multiple values, the original argument is wrapped into array with length one
+    } else {
+        $customizedTopicTitle = $custom_post_content[0];
+        $isAnonymous = $custom_post_content[1];
+        $customizedTags = $custom_post_content[2];
+        $topic_content = $custom_post_content[3];
+
+        /* 2021/04/22 added
+         * saving form value in post_meta
+         */
+        $form_data = $custom_post_content[4];
+    }
+
+    // Copy from above section
+    if (!empty($customizedTopicTitle)) {
+        $topic_title = sanitize_text_field($customizedTopicTitle);
+    } else {
+        $topic_title = sanitize_text_field($_POST['bbp_topic_title']); // for issue 49
+    }
+    $topic_title = apply_filters('bbp_new_topic_pre_title', $topic_title);
+    if (empty($topic_title)) {
+        bbp_add_error('bbp_topic_title', __('<strong>ERROR</strong>: Your topic needs a title.', 'bbpress'));
+    }
+    if (bbp_is_title_too_long($topic_title)) {
+        bbp_add_error('bbp_topic_title', __('<strong>ERROR</strong>: Your title is too long.', 'bbpress'));
+    }
+
+    // Filter and sanitize
+    $topic_content = apply_filters('bbp_new_topic_pre_content', $topic_content);
+    // Andy edited to here
+
+    // No topic content
+    if (empty($topic_content)) {
+        bbp_add_error('bbp_topic_content', __('<strong>ERROR</strong>: Your topic cannot be empty.', 'bbpress'));
+    }
 
 	/** Topic Flooding ********************************************************/
 
@@ -351,9 +362,18 @@ function bbp_new_topic_handler($action = '')
 	// Insert topic
 	$topic_id = wp_insert_post($topic_data, true);
 
-	$anon = 0;
+	// Insert anonymous status into post meta
 	if ($isAnonymous == true) $isAnonymous = 1;
 	add_post_meta($topic_id, 'isAnonymous', $isAnonymous);
+	
+	/* 2021/04/22 Added
+	 * Insert form field into post meta
+	 */
+    error_log('form_data');
+
+    foreach($form_data as $key=>$value){
+        add_post_meta($topic_id, $key, $value);
+    }
 
 	/** No Errors *************************************************************/
 
@@ -586,15 +606,15 @@ function bbp_edit_topic_handler($action = '')
 	if (count($custom_post_content) == 1) {
 		$topic_content = $custom_post_content[0]; // To return multiple values, the original argument is wrapped into array with length one
 	} else {
-		$customizedTopic = $custom_post_content[0];
+		$customizedTopicTitle = $custom_post_content[0];
 		$isAnonymous = $custom_post_content[1];
 		$customizedTags = $custom_post_content[2];
 		$topic_content = $custom_post_content[3];
 	}
 
 	// Copy from above section
-	if (!empty($customizedTopic)) {
-		$topic_title = sanitize_text_field($customizedTopic);
+	if (!empty($customizedTopicTitle)) {
+		$topic_title = sanitize_text_field($customizedTopicTitle);
 	} else {
 		$topic_title = sanitize_text_field($_POST['bbp_topic_title']); // for issue 49
 	}
