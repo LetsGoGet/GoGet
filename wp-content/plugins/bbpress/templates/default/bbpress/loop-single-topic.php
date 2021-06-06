@@ -48,6 +48,25 @@ defined( 'ABSPATH' ) || exit;
 		<?php do_action( 'bbp_theme_before_topic_title' ); ?>
 
 		<a class="bbp-topic-permalink" href="<?php bbp_topic_permalink(); ?>"><?php bbp_topic_title(); ?></a>
+<!-- 在下面這邊加入判斷解鎖資訊 -->
+		<?php 
+			if(mycred_post_is_for_sale(bbp_get_topic_id() )&& mycred_get_content_sales_count(bbp_get_topic_id()) < 3){
+				echo('
+					<div class="watch-first"; ; style="display: inline-block; color: red ; padding: 4px ; border: 1px solid; text-align:center " >  搶先看！ </div>
+
+				');
+			}
+		
+		?>
+		
+		<?php
+		if (bbp_get_forum_id() == 70){ // 討論版
+    		$excerpt = get_the_excerpt(); 
+            $excerpt = substr( $excerpt, 0, 100 );
+            echo('<br>'. $excerpt);
+		}
+        ?>
+<!-- 在上面這邊加入判斷解鎖資訊 -->
 
 		<?php do_action( 'bbp_theme_after_topic_title' ); ?>
 
@@ -59,7 +78,17 @@ defined( 'ABSPATH' ) || exit;
 
 			<?php do_action( 'bbp_theme_before_topic_started_by' ); ?>
 
-			<span class="bbp-topic-started-by"><?php printf( esc_html__( 'Started by: %1$s', 'bbpress' ), bbp_get_topic_author_link( array( 'size' => '14' ) ) ); ?></span>
+			<span class="bbp-topic-started-by">
+				<?php 
+					printf( esc_html__( 'Started by: %1$s', 'bbpress' ), bbp_get_topic_author_link( array( 'size' => '14' ))
+				);
+
+
+				?>	
+				</span>
+
+
+
 
 			<?php do_action( 'bbp_theme_after_topic_started_by' ); ?>
 
@@ -81,16 +110,25 @@ defined( 'ABSPATH' ) || exit;
 	</li>
 
     <li class="bbp-topic-voice-count"><?php echo get_wpbbp_post_view( bbp_get_topic_id() ); ?>
+<!-- ===== -->
 
-	<li class="bbp-topic-reply-count"><?php echo ( bbp_show_lead_topic() ? bbp_get_topic_reply_count()-1 : bbp_get_topic_post_count()-1); ?></li>
+
+<li class="bbp-topic-reply-count">
+
+	<!-- topic reply count -->
+	<?php bbp_topic_reply_count() ?>
+
+	</li>
+
 
 	<li class="bbp-topic-freshness">
 
-		<?php do_action( 'bbp_theme_before_topic_freshness_link' ); ?>
+<!-- 控制顯示日期只有年/月 -->
+	<?php 
+		$post_date = bbp_get_topic_post_date();
+		echo("<div style='transform: translateX(10px)'>".substr($post_date,0,10)."</div>");
+	?>
 
-		<?php bbp_topic_freshness_link(); ?>
-
-		<?php do_action( 'bbp_theme_after_topic_freshness_link' ); ?>
 
 <!--		<p class="bbp-topic-meta">
 
@@ -102,4 +140,7 @@ defined( 'ABSPATH' ) || exit;
 
 		</p>-->
 	</li>
+<!-- ======== -->
 </ul><!-- #bbp-topic-<?php bbp_topic_id(); ?> -->
+
+

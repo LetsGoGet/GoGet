@@ -482,7 +482,9 @@ if ( ! function_exists( 'mycred_sell_content_payment_buttons' ) ) :
                 
                 //Andy edited
                 $button   = '<button type="button" class="mycred-buy-this-content-button ' . $setup['button_classes'] . '" data-pid="' . $post_id . '" data-type="' . $point_type . '">' . $button_label . '</button>';
-                $buttons[]    = apply_filters( 'mycred_sell_this_button', $button, $post, $setup, $mycred );
+                
+				// $button       = '<button type="button" class="mycred-buy-this-content-button ' . $setup['button_classes'] . '" data-pid="' . $post_id . '" data-type="' . $point_type . '" onclick="javascript:self.location.reload()";>' . $button_label . '</button>';
+				$buttons[]    = apply_filters( 'mycred_sell_this_button', $button, $post, $setup, $mycred );
 
 			}
 
@@ -626,6 +628,7 @@ if ( ! function_exists( 'mycred_sell_content_new_purchase' ) ) :
 					mycred_delete_post_meta( $post->ID, '_mycred_content_sales' );
 					mycred_delete_post_meta( $post->ID, '_mycred_content_buyers' );
 
+					do_action('GoGet_new_purchase', $post->ID);
 				}
 
 				// Free
