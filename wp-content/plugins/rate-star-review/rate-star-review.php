@@ -90,8 +90,6 @@ if (!class_exists("VWrateStarReview"))
 					return  $content . $addCode;
 				}
 
-			return $content;
-
 		}
 
 		static function updatePostRating($post_id)
@@ -504,8 +502,10 @@ HTMLCODE;
 					'post_status'    => 'publish',
 				);
 
-				if ($form == 'insert' ) $rating_id = wp_insert_post($post);
-
+				if ($form == 'insert' ) {
+				    $rating_id = wp_insert_post($post);
+					do_action('GoGet_star_review_new_review', $post_id, $rating_id, $rating, $current_user->ID);
+				}
 
 				if ($form == 'update' )
 				{
@@ -617,13 +617,21 @@ HTMLCODE;
 			$htmlCode .= '<script>
 			function formVars(params)
 			{
-			var vars = params;
-			vars = vars + \'&rating=\' + jQuery(\'#rating\').rating(\'get rating\');
-			vars = vars + \'&title=\' + encodeURIComponent(jQuery(\'#reviewTitle\').val());
-			vars = vars + \'&content=\' + encodeURIComponent(jQuery(\'#reviewContent\').val());
-			vars = vars + \'&category=\' + encodeURIComponent(jQuery(\'#reviewCategory\').val());
+				//從這裡開始加入擋住空白元素的判斷式
+				if (jQuery(\'#reviewContent\').val()==""){
+					alert("請輸入評論喔~");
+					var form= document.getElementsByClassName("ui form")[0];
+					form.innerHTML= form.innerHTML + "<h5 style=" + "color:red" + " >請輸入評論喔~</h5>";
+				}else { 
 
-			return vars;
+
+				var vars = params;
+				vars = vars + \'&rating=\' + jQuery(\'#rating\').rating(\'get rating\');
+				vars = vars + \'&title=\' + encodeURIComponent(jQuery(\'#reviewTitle\').val());
+				vars = vars + \'&content=\' + encodeURIComponent(jQuery(\'#reviewContent\').val());
+				vars = vars + \'&category=\' + encodeURIComponent(jQuery(\'#reviewCategory\').val());
+				return vars;
+				}
 			}
 
 			</script>';
@@ -669,29 +677,29 @@ var loader$id;
 
 	function loadContent$id(message = '', vars = ''){
 
-	if (message)
-	if (message.length > 0)
-	{
-	  jQuery("#videowhisperContainer$id").html(message);
-	}
+		if (message)
+		if (message.length > 0)
+		{
+		jQuery("#videowhisperContainer$id").html(message);
+		}
 
-		if (loader$id) loader$id.abort();
+			if (loader$id) loader$id.abort();
 
-		loader$id = jQuery.ajax({
-			url: aurl$id,
-			data: "interfaceid=$id" + vars,
-			success: function(data) {
-				jQuery("#videowhisperContainer$id").html(data);
-				//jQuery('.ui.rating').rating();
-				jQuery('.ui.rating.readonly').rating('disable');
-			}
-		});
-	}
-
+			loader$id = jQuery.ajax({
+				url: aurl$id,
+				data: "interfaceid=$id" + vars,
+				success: function(data) {
+					jQuery("#videowhisperContainer$id").html(data);
+					//jQuery('.ui.rating').rating();
+					jQuery('.ui.rating.readonly').rating('disable');
+				}
+			});
+		}
+	
 	jQuery(document).ready(function(){
 		loadContent$id();
 	});
-
+	
 </script>
 
 <div id="videowhisperContainer$id" class="videowhisperContainer ui container">
