@@ -580,7 +580,14 @@ function bbp_reply_content( $reply_id = 0 ) {
 			return get_the_password_form();
 		}
 
-		$content = get_post_field( 'post_content', $reply_id );
+		// Check whether reply's post_meta is empty (with prefix "goget_")
+        // TODO: (amie) Finish "goget_forum_get_topic_content" function in post.php
+		$custom_content = apply_filters('goget_forum_get_topic_content', $reply_id);
+		if ( ! empty($custom_content) ){
+            $content = $custom_content;
+        } else {
+            $content = get_post_field( 'post_content', $reply_id );
+        }
 
 		// Filter & return
 		return apply_filters( 'bbp_get_reply_content', $content, $reply_id );

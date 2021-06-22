@@ -12,7 +12,8 @@ if (!function_exists('add_post')) :
 
         switch ($forumId){
             case 30:
-                new interview_experience($forumId);
+                $forum = new interview_experience($forumId);
+                $forum->show_components();
                 break;
             default:
                 break;
@@ -53,5 +54,42 @@ if (!function_exists('save_post')) :
         //$filtered_array =  filter_var_array($intersected_array, $validator);
 
         return $intersected_array;
+    }
+endif;
+
+
+add_filter('goget_forum_get_topic_post_meta',  __NAMESPACE__ . '\\get_topic_post_meta');
+if (!function_exists('get_topic_post_meta')) :
+    function get_topic_post_meta($reply_id){
+        $post_meta = get_post_meta($reply_id);
+
+        // 篩選 array 中 prefix 為 "goget_" 的值
+        $filtered_data =  array_filter($post_meta, function($v, $k) {
+            return strpos($k, 'goget_') !== false;
+        }, ARRAY_FILTER_USE_BOTH);
+
+        return array_map( function($value){
+            // Example: data " a:2:{i:0;s:6:"金融";i:1;s:5:"(無)";} " would be unserialized into ['金融', '無']
+            // if the data can't be serialized, it will return false
+            return unserialize($value[0]);
+        }, $filtered_data);
+    }
+endif;
+
+// show topic content
+add_filter('goget_forum_get_topic_content',  __NAMESPACE__ . '\\get_topic_content');
+if (!function_exists('get_topic_content')) :
+    function get_topic_content($reply_id){
+        $post_meta = get_topic_post_meta($reply_id);
+
+        //generate content by each forum's behavior
+        $forumId = bbp_get_forum_id();
+        switch ($forumId) {
+            case "30":
+                $forum = new interview_experience($forumId);
+                return $forum->get_content($post_meta);
+            default:
+                return null;
+        }
     }
 endif;

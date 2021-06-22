@@ -27,6 +27,18 @@ class interview_experience extends forum
         // init validator
         $this->validator = new interview_experience_val();
 
+        // init components
+        $this->components = $this->init_components();
+    }
+
+    public function show_components(){
+        foreach( $this->components as $component){
+            $component->show();
+        }
+    }
+
+    public function init_components(): array
+    {
         // For testing
         // Using select2
         echo ('<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
@@ -49,7 +61,7 @@ class interview_experience extends forum
                 '1' => ['正職', '實習', '兼職'],
             ]
         ];
-        $dropdown = new Dropdown($test_data, 'job_type');
+        $dropdown_1 = new Dropdown($test_data, 'job_type');
 
         // InputBox
         $test_data = [
@@ -57,7 +69,7 @@ class interview_experience extends forum
             'field_subtitle' => '',
             'inputBox_cnt' => 1
         ];
-        $inputBox = new InputBox($test_data, 'job_title');
+        $inputBox_1 = new InputBox($test_data, 'job_title');
 
         // Multi-column Dropdown
         $test_data = [
@@ -68,7 +80,7 @@ class interview_experience extends forum
                 '2' => ['(無)', '金融', '顧問', '零售', '科技', '新創', '其他']
             ]
         ];
-        $dropdown = new Dropdown($test_data, 'industry_category');
+        $dropdown_2 = new Dropdown($test_data, 'industry_category');
 
         // Select2
         $test_data = [
@@ -91,7 +103,7 @@ class interview_experience extends forum
             'field_subtitle' => '讓相似背景的人有機會透過解鎖文章獲得幫助',
             'content' => '不知道該怎麼下手嗎？可以參考這裡的這裡的範例格式：'
         ];
-        $textarea = new Textarea($test_data, 'author');
+        $textarea_1 = new Textarea($test_data, 'author');
 
         // Textarea
         $test_data = [
@@ -99,7 +111,7 @@ class interview_experience extends forum
             'field_subtitle' => '',
             'content' => '履歷、面試準備方法及時間安排'
         ];
-        $textarea = new Textarea($test_data, 'prepare');
+        $textarea_2 = new Textarea($test_data, 'prepare');
 
         // DatePicker
         $test_data = [
@@ -115,7 +127,7 @@ class interview_experience extends forum
             'content' => ['很簡單', '簡單', '普通', '困難', '很困難'],
             'color' => ['blue', 'blue', 'orange', 'red', 'red'],
         ];
-        $singleSelection = new SingleSelection($test_data, 'interview_difficulty');
+        $singleSelection_1 = new SingleSelection($test_data, 'interview_difficulty');
 
         // SingleSelection
         $test_data = [
@@ -124,7 +136,7 @@ class interview_experience extends forum
             'content' => ['錄取', '未錄取', '等待中', '無聲卡'],
             'color' => ['blue', 'red', 'orange', 'black'],
         ];
-        $singleSelection = new SingleSelection($test_data, 'interview_result');
+        $singleSelection_2 = new SingleSelection($test_data, 'interview_result');
 
         // MultiCheckBox
         $test_data = [
@@ -140,6 +152,35 @@ class interview_experience extends forum
             'field_subtitle' => '範例：暑期實習、FMCG、外商',
             'inputBox_cnt' => 3
         ];
-        $inputBox = new InputBox($test_data, 'tag');
+        $inputBox_2 = new InputBox($test_data, 'tag');
+
+        return array(
+            $comboBox, $dropdown_1, $inputBox_1, $dropdown_2, $select2, $radio,
+            $textarea_1, $textarea_2, $datePicker, $singleSelection_1, $singleSelection_2,
+            $multi_checkbox, $inputBox_2
+        );
+    }
+
+    public function get_content($post_meta): ?string
+    {
+        $content = null; // concat html
+
+        foreach($this->components as $component){
+            switch ($component->meta_key){
+                case "company":
+                    $content = $content . "<p> " . $post_meta['goget_company'][0] . " </p>";
+                    break;
+                case "job_type":
+                    $content = $content . "<p> " . $post_meta['goget_job_type'][0] . " </p>";
+                    break;
+                case "job_title":
+                    $content = $content . "<p> " . $post_meta['goget_job_title'][0] . " </p>";
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return $content;
     }
 }

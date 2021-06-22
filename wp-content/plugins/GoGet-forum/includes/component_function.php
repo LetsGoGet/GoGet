@@ -11,6 +11,9 @@ class Component
         $this->data = $data;
         $this->meta_key = $meta_key;
     }
+
+    // include() 的 scope 僅限於該 function, 需事先定義 variable, include 的 file 才讀得到
+    public function show(){}
 }
 
 class Dropdown extends Component
@@ -19,7 +22,11 @@ class Dropdown extends Component
     public function __construct($data, $meta_key) // in the future, we could extend extra parameters.
     {
         parent::__construct($data, $meta_key);
+    }
 
+    public function show(){
+        $data = $this->data;
+        $meta_key = $this->meta_key;
         include(GOGETFORUMS_TEMPLATE_PATH . "component/Dropdown.php");
     }
 }
@@ -33,7 +40,11 @@ class Textarea extends Component
 
         // include quill.js
         GoGetForumsAssets::load_quill_assets();
+    }
 
+    public function show(){
+        $data = $this->data;
+        $meta_key = $this->meta_key;
         include(GOGETFORUMS_TEMPLATE_PATH . "component/Textarea.php");
     }
 }
@@ -44,7 +55,11 @@ class SingleSelection extends Component
     public function __construct($data, $meta_key)
     {
         parent::__construct($data, $meta_key);
+    }
 
+    public function show(){
+        $data = $this->data;
+        $meta_key = $this->meta_key;
         include(GOGETFORUMS_TEMPLATE_PATH . "component/SingleSelection.php");
     }
 }
@@ -55,7 +70,11 @@ class InputBox extends Component
     public function __construct($data, $meta_key)
     {
         parent::__construct($data, $meta_key);
+    }
 
+    public function show(){
+        $data = $this->data;
+        $meta_key = $this->meta_key;
         include(GOGETFORUMS_TEMPLATE_PATH . "component/InputBox.php");
     }
 }
@@ -66,7 +85,11 @@ class Radio extends Component
     public function __construct($data, $meta_key)
     {
         parent::__construct($data, $meta_key);
+    }
 
+    public function show(){
+        $data = $this->data;
+        $meta_key = $this->meta_key;
         include(GOGETFORUMS_TEMPLATE_PATH . "component/Radio.php");
     }
 }
@@ -77,7 +100,11 @@ class MultiCheckBox extends Component
     public function __construct($data, $meta_key)
     {
         parent::__construct($data, $meta_key);
+    }
 
+    public function show(){
+        $data = $this->data;
+        $meta_key = $this->meta_key;
         include(GOGETFORUMS_TEMPLATE_PATH . "component/MultiCheckBox.php");
     }
 }
@@ -88,7 +115,11 @@ class ComboBox extends Component
     public function __construct($data, $meta_key)
     {
         parent::__construct($data, $meta_key);
+    }
 
+    public function show(){
+        $data = $this->data;
+        $meta_key = $this->meta_key;
         include(GOGETFORUMS_TEMPLATE_PATH . "component/ComboBox.php");
     }
 }
@@ -99,6 +130,11 @@ class DatePicker extends Component
     public function __construct($data, $meta_key)
     {
         parent::__construct($data, $meta_key);
+    }
+
+    public function show(){
+        $data = $this->data;
+        $meta_key = $this->meta_key;
 
         // Use cdn for testing
         wp_enqueue_style('style', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css');
@@ -114,7 +150,11 @@ class Select2 extends Component
     public function __construct($data, $meta_key)
     {
         parent::__construct($data, $meta_key);
+    }
 
+    public function show(){
+        $data = $this->data;
+        $meta_key = $this->meta_key;
         include(GOGETFORUMS_TEMPLATE_PATH . "component/Select2.php");
     }
 }
