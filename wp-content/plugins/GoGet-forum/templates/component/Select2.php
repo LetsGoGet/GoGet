@@ -1,19 +1,47 @@
 <div id='select2_section' style='margin-bottom: 3px'>
-    <p style='margin-bottom: -2px'> <label><?php echo $data['field_title'] ?></label> </p>
+    <p style='margin-bottom: -2px'> <label>
+            <?php
+
+            use GoGetForums\includes\RequiredStar;
+
+            echo $data['field_title'];
+            if ($data['required'])
+                new RequiredStar("", "");
+            ?>
+        </label> </p>
     <p style='font-size: 9px; color: #9c9c9c'><?php echo $data['field_subtitle'] ?></p>
 
     <div id='select2'>
-        <label for=<?php echo ('goget_' . $meta_key) ?>>
-            <select id=<?php echo ('goget_' . $meta_key) ?> name=<?php echo ('goget_' . $meta_key) ?>></select>
-        </label>
+        <?php
+        foreach ($data['content_file'] as $key => $value) {
+            echo ("
+            <label for='goget_$meta_key'>
+                <select id='goget_$meta_key" . $key . "' name='goget_$meta_key" . "[]'></select>
+            </label>
+            ");
+        }
+        ?>
+        <!-- <label for=<?php echo ('goget_' . $meta_key) ?>>
+            <select id=<?php echo ('goget_' . $meta_key) ?> name=<?php echo ('goget_' . $meta_key . '[]') ?>></select>
+        </label> -->
     </div>
 </div>
 
 <?php $js_data = file_get_contents(GOGETFORUMS_ASSETS . 'js/select2.js'); ?>
-<!-- for testing -->
-<?php $test_data = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/js/sub_industry_data.js'); ?>
+<!-- <?php $test_data = file_get_contents(GOGETFORUMS_ASSETS . 'js/' . $data['content_file'] . '.js'); ?> -->
+<?php
+$data_file = array();
+foreach ($data['content_file'] as $value) {
+    $data_file[$value] = file_get_contents(GOGETFORUMS_ASSETS . 'js/' . $value . '.js');
+}
+?>
 <script type='text/javascript'>
-    <?php echo $test_data ?>
+    <?php echo "var data = {};" ?>
+    <?php foreach ($data['content_file'] as $value) {
+        echo $data_file[$value];
+    } ?>
     <?php echo $js_data ?>
-    <?php echo ("setSelect2('goget_" . $meta_key . "');"); ?>
+    <?php foreach ($data['content_file'] as $key => $value) {
+        echo ("setSelect2('goget_" . $meta_key . $key . "', '" . $value . "');");
+    } ?>
 </script>

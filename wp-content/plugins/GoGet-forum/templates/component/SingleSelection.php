@@ -8,7 +8,16 @@ foreach ($data['content'] as $key => $content) {
 ?>
 
 <div id='single_selection' style='margin-bottom: 3px'>
-    <p style='margin-bottom: -2px'> <label><?php echo $data['field_title'] ?></label> </p>
+    <p style='margin-bottom: -2px'> <label>
+            <?php
+
+            use GoGetForums\includes\RequiredStar;
+
+            echo $data['field_title'];
+            if ($data['required'])
+                new RequiredStar("", "");
+            ?>
+        </label> </p>
     <p style='font-size: 9px; color: #9c9c9c'><?php echo $data['field_subtitle'] ?></p>
     <label style='display: none;' id=<?php echo ('goget_' . $meta_key . '_label') ?> for=<?php echo ('goget_' . $meta_key) ?>>
         <?php echo $option ?>
