@@ -150,6 +150,33 @@ class interview_experience extends forum
         ];
         $datePicker = new DatePicker($test_data, 'interview_date');
 
+        // Multi-column Dropdown - location
+        $country_data = array();
+        $country_data_file = file_get_contents(GOGETFORUMS_ASSETS . 'data/countries_and_cities_data.json');
+        $cc = json_decode($country_data_file, true);
+        foreach ($cc as $country => $city) {
+            array_push($country_data, $country);
+            $city_data[$country] = $city;
+        }
+
+        $test_data = [
+            'field_title' => '職缺地點',
+            'field_subtitle' => '',
+            'content' => [
+                '1' => $country_data,
+                '2' => $city_data['台灣']
+            ],
+            'required' => true
+        ];
+
+        $dropdown_3 = new Dropdown($test_data, 'interview_location');
+
+        $location_js = file_get_contents(GOGETFORUMS_ASSETS . 'js/special_dropdown.js');
+        echo ("<script>");
+        echo $location_js;
+        echo ("setSpecialDropdown('goget_interview_location_1', 'goget_interview_location_2', '台灣', " . json_encode($city_data) . ")");
+        echo ("</script>");
+
         // SingleSelection
         $test_data = [
             'field_title' => '面試難度',
