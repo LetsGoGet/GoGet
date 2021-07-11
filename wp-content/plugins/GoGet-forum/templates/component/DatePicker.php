@@ -10,7 +10,7 @@
             ?>
         </label> </p>
     <p style='font-size: 9px; color: #9c9c9c'> <?php echo $data['field_subtitle'] ?></p>
-    <input type='text' id=<?php echo ('goget_' . $meta_key) ?> name=<?php echo ('goget_' . $meta_key) ?>>
+    <input type='text' id=<?php echo ('goget_' . $meta_key) ?> name=<?php echo ('goget_' . $meta_key) ?> class=<?php echo $data['validate_class'] ?>>
 </div>
 
 <?php $js_data = file_get_contents(GOGETFORUMS_ASSETS . 'js/date_picker.js'); ?>

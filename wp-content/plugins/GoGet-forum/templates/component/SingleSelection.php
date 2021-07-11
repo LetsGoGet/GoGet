@@ -2,7 +2,10 @@
 $option = "";
 $btn = "";
 foreach ($data['content'] as $key => $content) {
-    $option .= "<input type='radio' id='goget_" . $meta_key . "' name='goget_" . $meta_key . "' value='" . $content . "'>" . $content . "<input />";
+    if ($key == 0)
+        $option .= "<input type='radio' class=" . $data['validate_class'] . " id='goget_" . $meta_key . "' name='goget_" . $meta_key . "' value='" . $content . "'>" . $content . "<input />";
+    else
+        $option .= "<input type='radio' id='goget_" . $meta_key . "' name='goget_" . $meta_key . "' value='" . $content . "'>" . $content . "<input />";
     $btn .= "<button data-item='" . $key . "' style='margin-right: 8px; border-radius: 17px; background-color: white; color: " . $data['color'][$key] . "'>" . $content . "</button>";
 }
 ?>

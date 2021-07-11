@@ -18,6 +18,10 @@ class forum
     {
     }
 
+    public function init_frontend_validator()
+    {
+    }
+
     public function init_components()
     {
     }

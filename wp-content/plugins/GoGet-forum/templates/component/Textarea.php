@@ -15,8 +15,8 @@
     <textarea id=<?php echo ('goget_' . $meta_key) ?> name=<?php echo ('goget_' . $meta_key) ?>></textarea>
 
     <!-- for validation -->
-    <input id=<?php echo ('wordcount_' . $meta_key . '_box') ?> name=<?php echo ('wordcount_' . $meta_key . '_box') ?> style="display: none;" type="number" value="0"></input>
-    <div id=<?php echo ('word_' . $meta_key . '_count') ?> style="display: none;"></div>
+    <input id=<?php echo ('wordcount_' . $meta_key . '_box') ?> name=<?php echo ('wordcount_' . $meta_key . '_box') ?> style="display: none;" type="number" value="0" class=<?php echo $data['validate_class'] ?>></input>
+    <!-- <div id=<?php echo ('word_' . $meta_key . '_count') ?> style="display: none;"></div> -->
 
     <div id=<?php echo ('quill_' . $meta_key . '_editor') ?> style="margin-bottom: 5px;"><?php echo $data['content'] ?></div>
 

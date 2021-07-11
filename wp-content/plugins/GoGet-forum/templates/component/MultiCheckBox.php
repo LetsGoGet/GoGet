@@ -1,7 +1,11 @@
 <?php
 $checkbox = "";
 foreach ($data['content'] as $key => $d) {
-    $checkbox .= "<input type='checkbox' id='goget_" . $meta_key . "' name='goget_" . $meta_key . "[]" . "' value='" . $d . "' />
+    if ($key == 0)
+        $checkbox .= "<input type='checkbox' class=" . $data['validate_class'] . " id='goget_" . $meta_key . "' name='goget_" . $meta_key . "[]" . "' value='" . $d . "' />
+    <label for='goget_" . $meta_key . "'> " . $d . " </label>";
+    else
+        $checkbox .= "<input type='checkbox' id='goget_" . $meta_key . "' name='goget_" . $meta_key . "[]" . "' value='" . $d . "' />
     <label for='goget_" . $meta_key . "'> " . $d . " </label>";
 }
 ?>

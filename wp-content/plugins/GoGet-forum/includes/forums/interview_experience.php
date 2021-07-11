@@ -52,6 +52,9 @@ class interview_experience extends forum
 
         // init components
         // $this->components = $this->init_components();
+
+        // init front-end validator
+        $this->init_frontend_validator();
     }
 
     // public function show_components(){
@@ -59,6 +62,23 @@ class interview_experience extends forum
     //         $component->show();
     //     }
     // }
+
+    public function init_frontend_validator()
+    {
+        // Using jquery velidate
+        echo ('<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>');
+
+        // error message css
+        $validator_css = file_get_contents(GOGETFORUMS_ASSETS . 'css/frontend_validator_message.css');
+        echo ("<style>");
+        echo $validator_css;
+        echo ("</style>");
+        // jQuery validator
+        $validator_js = file_get_contents(GOGETFORUMS_ASSETS . 'js/frontend_validator.js');
+        echo ("<script>");
+        echo $validator_js;
+        echo ("</script>");
+    }
 
     public function init_components() //: array
     {
@@ -73,7 +93,8 @@ class interview_experience extends forum
             'field_title' => '公司名稱',
             'field_subtitle' => '外商可直接輸入英文查詢，非外商可輸入中文查詢，若沒有找到請自行輸入',
             'fetch_type' => 'company',
-            'required' => true
+            'required' => true,
+            'validate_class' => 'required-field'
         ];
         $comboBox = new ComboBox($test_data, 'company');
 
@@ -84,7 +105,10 @@ class interview_experience extends forum
             'content' => [
                 '1' => ['正職', '實習', '兼職'],
             ],
-            'required' => true
+            'required' => true,
+            'validate_class' => [
+                '1' => 'required-field'
+            ]
         ];
         $dropdown_1 = new Dropdown($test_data, 'job_type');
 
@@ -93,7 +117,8 @@ class interview_experience extends forum
             'field_title' => '職務名稱',
             'field_subtitle' => '',
             'inputBox_cnt' => 1,
-            'required' => true
+            'required' => true,
+            'validate_class' => 'required-field'
         ];
         $inputBox_1 = new InputBox($test_data, 'job_title');
 
@@ -105,7 +130,11 @@ class interview_experience extends forum
                 '1' => ['金融', '顧問', '零售', '科技', '新創', '其他'],
                 '2' => ['(無)', '金融', '顧問', '零售', '科技', '新創', '其他']
             ],
-            'required' => true
+            'required' => true,
+            'validate_class' => [
+                '1' => 'required-field',
+                '2' => ''
+            ]
         ];
         $dropdown_2 = new Dropdown($test_data, 'industry_category');
 
@@ -115,7 +144,8 @@ class interview_experience extends forum
             'field_title' => '細分產業類別',
             'field_subtitle' => '請選擇最接近的產業類別',
             'content_file' => ['sub_industry_data1', 'sub_industry_data2'],
-            'required' => true
+            'required' => true,
+            'validate_class' => ['required-field', '']
         ];
         $select2 = new Select2($test_data, 'industry_subcategory');
 
@@ -124,7 +154,8 @@ class interview_experience extends forum
             'field_title' => '是否隱藏帳號名稱',
             'field_subtitle' => '無論是否隱藏，皆不會公布帳號名稱外的資訊',
             'content' => ['是', '否'],
-            'required' => true
+            'required' => true,
+            'validate_class' => 'required-field'
         ];
         $radio = new Radio($test_data, 'anonymous');
 
@@ -138,7 +169,8 @@ class interview_experience extends forum
             2. 工作：OOO公司暑期實習生<br/>
             3. 經驗：OOO總召<br/>
             4. 證照：多益OOO分<br/>',
-            'required' => true
+            'required' => true,
+            'validate_class' => 'word-limit'
         ];
         $textarea_1 = new Textarea($test_data, 'author');
 
@@ -146,7 +178,8 @@ class interview_experience extends forum
         $test_data = [
             'field_title' => '面試時間',
             'field_subtitle' => '',
-            'required' => true
+            'required' => true,
+            'validate_class' => 'required-field'
         ];
         $datePicker = new DatePicker($test_data, 'interview_date');
 
@@ -166,7 +199,11 @@ class interview_experience extends forum
                 '1' => $country_data,
                 '2' => $city_data['台灣']
             ],
-            'required' => true
+            'required' => true,
+            'validate_class' => [
+                '1' => 'required-field',
+                '2' => ''
+            ]
         ];
 
         $dropdown_3 = new Dropdown($test_data, 'interview_location');
@@ -183,7 +220,8 @@ class interview_experience extends forum
             'field_subtitle' => '',
             'content' => ['很簡單', '簡單', '普通', '困難', '很困難'],
             'color' => ['blue', 'blue', 'orange', 'red', 'red'],
-            'required' => true
+            'required' => true,
+            'validate_class' => 'required-field'
         ];
         $singleSelection_1 = new SingleSelection($test_data, 'interview_difficulty');
 
@@ -193,7 +231,8 @@ class interview_experience extends forum
             'field_subtitle' => '',
             'content' => ['錄取', '未錄取', '等待中', '無聲卡'],
             'color' => ['blue', 'red', 'orange', 'black'],
-            'required' => true
+            'required' => true,
+            'validate_class' => 'required-field'
         ];
         $singleSelection_2 = new SingleSelection($test_data, 'interview_result');
 
@@ -202,7 +241,8 @@ class interview_experience extends forum
             'field_title' => '面試項目',
             'field_subtitle' => '選擇申請過程中有參與到的項目/關卡（可複選）',
             'content' => ['個人面試', '團體面試', '筆試', '線上測驗'],
-            'required' => true
+            'required' => true,
+            'validate_class' => 'required-field'
         ];
         $multi_checkbox = new MultiCheckBox($test_data, 'interview_level');
 
@@ -211,7 +251,8 @@ class interview_experience extends forum
             'field_title' => '準備過程',
             'field_subtitle' => '',
             'content' => '履歷、面試準備方法及時間安排',
-            'required' => true
+            'required' => true,
+            'validate_class' => 'word-limit'
         ];
         $textarea_2 = new Textarea($test_data, 'prepare');
 
@@ -229,7 +270,8 @@ class interview_experience extends forum
             5. 注意事項：針對關卡的技巧或小叮嚀<br/>
             
             填寫得愈完整愈能幫助到其他面試者喔！',
-            'required' => true
+            'required' => true,
+            'validate_class' => 'word-limit'
         ];
         $textarea_2 = new Textarea($test_data, 'interview_process');
 
@@ -237,7 +279,8 @@ class interview_experience extends forum
         $test_data = [
             'field_title' => '心得建議',
             'field_subtitle' => '',
-            'content' => '給同樣朝夢想努力的人一些鼓勵及建議吧！'
+            'content' => '給同樣朝夢想努力的人一些鼓勵及建議吧！',
+            'validate_class' => ''
         ];
         $textarea_3 = new Textarea($test_data, 'experiences_suggestions');
 
@@ -245,7 +288,8 @@ class interview_experience extends forum
         $test_data = [
             'field_title' => '標籤',
             'field_subtitle' => '範例：暑期實習、FMCG、外商',
-            'inputBox_cnt' => 3
+            'inputBox_cnt' => 3,
+            'validate_class' => ''
         ];
         $inputBox_4 = new InputBox($test_data, 'tag');
 

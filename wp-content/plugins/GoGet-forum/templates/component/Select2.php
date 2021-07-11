@@ -16,7 +16,7 @@
         foreach ($data['content_file'] as $key => $value) {
             echo ("
             <label for='goget_$meta_key'>
-                <select id='goget_$meta_key" . $key . "' name='goget_$meta_key" . "[]'></select>
+                <select id='goget_$meta_key" . $key . "' class=" . $data['validate_class'][$key] . " name='goget_$meta_key" . "[]'></select>
             </label>
             ");
         }
@@ -28,7 +28,6 @@
 </div>
 
 <?php $js_data = file_get_contents(GOGETFORUMS_ASSETS . 'js/select2.js'); ?>
-<!-- <?php $test_data = file_get_contents(GOGETFORUMS_ASSETS . 'js/' . $data['content_file'] . '.js'); ?> -->
 <?php
 $data_file = array();
 foreach ($data['content_file'] as $value) {

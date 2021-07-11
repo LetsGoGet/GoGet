@@ -27,7 +27,7 @@ foreach ($data['content'] as $value) {
         foreach ($data['content'] as $key => $value) {
             echo ("
             <label for='goget_" . $meta_key . "_" . $key . "'>
-                <select id='goget_" . $meta_key . "_" . $key . "' name='goget_" . $meta_key . "[]" . "'> " . $options[$cnt] . " </select>
+                <select id='goget_" . $meta_key . "_" . $key . "' class=" . $data['validate_class'][$key] . " name='goget_" . $meta_key . "[]" . "'> " . $options[$cnt] . " </select>
             </label>
         ");
             $cnt += 1;
