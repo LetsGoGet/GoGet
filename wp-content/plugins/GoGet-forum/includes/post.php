@@ -13,6 +13,10 @@ if (!function_exists('add_post')) :
         $forumId = bbp_get_forum_id();
 
         switch ($forumId) {
+            case 28:
+                $forum = new interview_experience($forumId);
+                $forum->init_components();
+                break;
             case 30:
                 $forum = new interview_experience($forumId);
                 $forum->init_components();
@@ -31,6 +35,18 @@ if (!function_exists('save_post')) :
         $forumId = bbp_get_forum_id();
         $forum = null;
         switch ($forumId) {
+            case 28:
+                $forum = new interview_experience($forumId);
+                if ($forum != null) {
+                    $form_data = validate_form($forum->validator->get());
+                    $topic_title = $form_data['goget_company'] . ' ' . $form_data['goget_job_title'][0] . ' 面試經驗';
+                    /**
+                     * TODO: 確保 $form_data 內有 $form['isAnonymous'], 且格式為 boolean, 同 tag
+                     * 最後回傳 array($form['topic_title'], $form['isAnonymous'], $form['tags'], 'content', $form_data);
+                     */
+                    return array($topic_title, '是否匿名', 'tags', 'content', $form_data);
+                }
+                break;
             case 30:
                 $forum = new interview_experience($forumId);
                 if ($forum != null) {
@@ -93,11 +109,34 @@ if (!function_exists('get_topic_content')) :
         //generate content by each forum's behavior
         $forumId = bbp_get_forum_id();
         switch ($forumId) {
+            case "28":
+                $forum = new interview_experience($forumId);
+                return $forum->get_content($post_meta);
             case "30":
                 $forum = new interview_experience($forumId);
                 return $forum->get_content($post_meta);
             default:
                 return null;
         }
+    }
+endif;
+
+// TODO: Ask Andy whether it's necessary to keep this func or not
+// fix prior bug
+add_action('bbp_theme_after_topic_form_submit_button', __NAMESPACE__ . '\\detect_submit_button');
+if (!function_exists('detect_submit_button')) :
+    function detect_submit_button()
+    {
+        // for issue 49, start
+        $forumId = bbp_get_forum_id();
+        if ($forumId == 0) { // Interview experience form
+            $forumId = bbp_get_topic_forum_id();
+        }
+        if ($forumId == 70) {
+            return;
+        }
+        // for issue 49, end
+        // $data = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/js/detect_submit.js');
+        // echo ("<script type='text/javascript'>$data</script>");
     }
 endif;

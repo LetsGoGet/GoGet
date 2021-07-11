@@ -580,16 +580,17 @@ function bbp_reply_content( $reply_id = 0 ) {
 			return get_the_password_form();
 		}
 
-		// Check whether reply's post_meta is empty (with prefix "goget_")
-        // TODO: (amie) Finish "goget_forum_get_topic_content" function in post.php
+		// Check whether this reply's post_meta is empty (with prefix "goget_")
 		$custom_content = apply_filters('goget_forum_get_topic_content', $reply_id);
-		if ( ! empty($custom_content) ){
+
+		if ( $custom_content != null ){ // this reply has at least one or more post_meta with prefix "goget_"
             $content = $custom_content;
         } else {
             $content = get_post_field( 'post_content', $reply_id );
+            $content = "<h3 style='color:blue'>註: 此文章使用舊版模式寫作</h3>" . $content;
         }
 
-		// Filter & return
+        // Filter & return
 		return apply_filters( 'bbp_get_reply_content', $content, $reply_id );
 	}
 

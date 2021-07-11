@@ -279,7 +279,12 @@ class interview_experience extends forum
 
     public function get_content($post_meta): ?string
     {
+        /* Check whether this content is deprecated or not
+         * Old content version doesn't have any metadata included prefix of "goget_"
+         */
+        $counts_of_forum_meta = 0;
         $content = null; // concat html
+
         foreach ($this->meta_keys as $meta_key => $title) {
             if ($meta_key == 'anonymous')
                 continue;
@@ -301,6 +306,9 @@ class interview_experience extends forum
                     <strong><u><font size='3pt'>$title</font></u></strong>
                     <br>" . $post_meta['goget_' . $meta_key] . "</p>";
                 }
+
+                // counter ++
+                $counts_of_forum_meta += 1;
             } else {
                 $content = $content . "<p>
                 <strong><u><font size='3pt'>$title</font></u></strong>
@@ -312,6 +320,8 @@ class interview_experience extends forum
             }
         }
 
-        return $content;
+        error_log("counts_of_forum_meta = " . $counts_of_forum_meta);
+
+        return $counts_of_forum_meta > 0 ? $content : null;
     }
 }
