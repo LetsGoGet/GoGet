@@ -20,5 +20,5 @@
 <?php $js_data = file_get_contents(GOGETFORUMS_ASSETS . 'js/combo_box.js'); ?>
 <script type='text/javascript'>
     <?php echo $js_data ?>
-    <?php echo ("setComboBox('goget_" . $meta_key . "', '" . $data['fetch_type'] . "', 'forums');"); ?>
+    <?php echo ("setComboBox('goget_" . $meta_key . "', '" . $data['fetch_type'] . "', 'interview-experience');"); ?>
 </script>
