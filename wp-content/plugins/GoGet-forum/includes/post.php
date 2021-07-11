@@ -30,13 +30,12 @@ endif;
 // save post
 add_filter('goget_forum_get_custom_post_fields',  __NAMESPACE__ . '\\save_post');
 if (!function_exists('save_post')) :
-    function save_post()
+    function save_post($forum_id)
     {
-        $forumId = bbp_get_forum_id();
         $forum = null;
-        switch ($forumId) {
+        switch ($forum_id) {
             case 28:
-                $forum = new interview_experience($forumId);
+                $forum = new interview_experience($forum_id);
                 if ($forum != null) {
                     $form_data = validate_form($forum->validator->get());
                     $topic_title = $form_data['goget_company'] . ' ' . $form_data['goget_job_title'][0] . ' 面試經驗';
@@ -44,11 +43,12 @@ if (!function_exists('save_post')) :
                      * TODO: 確保 $form_data 內有 $form['isAnonymous'], 且格式為 boolean, 同 tag
                      * 最後回傳 array($form['topic_title'], $form['isAnonymous'], $form['tags'], 'content', $form_data);
                      */
+                    error_log("topic title:" . $topic_title);
                     return array($topic_title, '是否匿名', 'tags', 'content', $form_data);
                 }
                 break;
             case 30:
-                $forum = new interview_experience($forumId);
+                $forum = new interview_experience($forum_id);
                 if ($forum != null) {
                     $form_data = validate_form($forum->validator->get());
                     $topic_title = $form_data['goget_company'] . ' ' . $form_data['goget_job_title'][0] . ' 面試經驗';
