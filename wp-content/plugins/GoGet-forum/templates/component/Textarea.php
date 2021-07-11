@@ -19,10 +19,4 @@
     <!-- <div id=<?php echo ('word_' . $meta_key . '_count') ?> style="display: none;"></div> -->
 
     <div id=<?php echo ('quill_' . $meta_key . '_editor') ?> style="margin-bottom: 5px;"><?php echo $data['content'] ?></div>
-
-    <?php $js_data = file_get_contents(GOGETFORUMS_ASSETS . 'js/rich_editor.js'); ?>
-    <script type='text/javascript'>
-        <?php echo $js_data ?>
-        <?php echo ("generateRichEditor('" . $meta_key . "');") ?>
-    </script>
 </div>

@@ -46,7 +46,9 @@ class Textarea extends Component
         // include quill.js
         GoGetForumsAssets::load_quill_assets();
 
+        // include textarea and rich editor
         include(GOGETFORUMS_TEMPLATE_PATH . "component/Textarea.php");
+        GoGetForumsAssets::load_rich_editor_assets($meta_key);
     }
 
     // public function show(){
