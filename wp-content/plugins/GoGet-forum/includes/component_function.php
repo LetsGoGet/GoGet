@@ -23,6 +23,9 @@ class Dropdown extends Component
     {
         parent::__construct($data, $meta_key);
 
+        // Include select2
+        GoGetForumsAssets::load_select2_assets();
+
         include(GOGETFORUMS_TEMPLATE_PATH . "component/Dropdown.php");
     }
 
@@ -128,6 +131,9 @@ class ComboBox extends Component
     {
         parent::__construct($data, $meta_key);
 
+        // Include select2
+        GoGetForumsAssets::load_select2_assets();
+
         include(GOGETFORUMS_TEMPLATE_PATH . "component/ComboBox.php");
     }
 
@@ -170,6 +176,9 @@ class Select2 extends Component
     public function __construct($data, $meta_key)
     {
         parent::__construct($data, $meta_key);
+
+        // Include select2
+        GoGetForumsAssets::load_select2_assets();
 
         include(GOGETFORUMS_TEMPLATE_PATH . "component/Select2.php");
     }

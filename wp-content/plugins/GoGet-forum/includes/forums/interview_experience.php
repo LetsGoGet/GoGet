@@ -63,31 +63,8 @@ class interview_experience extends forum
     //     }
     // }
 
-    public function init_frontend_validator()
-    {
-        // Using jquery velidate
-        echo ('<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>');
-
-        // error message css
-        $validator_css = file_get_contents(GOGETFORUMS_ASSETS . 'css/frontend_validator_message.css');
-        echo ("<style>");
-        echo $validator_css;
-        echo ("</style>");
-        // jQuery validator
-        $validator_js = file_get_contents(GOGETFORUMS_ASSETS . 'js/frontend_validator.js');
-        echo ("<script>");
-        echo $validator_js;
-        echo ("</script>");
-    }
-
     public function init_components() //: array
     {
-        // For testing
-        // Using select2
-        echo ('<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/zh-TW.min.js"></script>');
-
         // ComboBox
         $test_data = [
             'field_title' => '公司名稱',

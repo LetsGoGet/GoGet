@@ -2,6 +2,8 @@
 
 namespace GoGetForums\includes\forums;
 
+use GoGetForums\includes\GoGetForumsAssets;
+
 /**
  * Class forum
  * Specify each forum's components
@@ -20,6 +22,7 @@ class forum
 
     public function init_frontend_validator()
     {
+        GoGetForumsAssets::load_jquery_validator_assets();
     }
 
     public function init_components()
