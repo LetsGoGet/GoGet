@@ -6,11 +6,11 @@ function setSingleSelection(btn_id, selection_id, color) {
 
         for (i = 0; i < btn_cnt; i++) {
             if (i == idx) {
-                document.getElementById(selection_id).children[i].checked = true;
+                document.getElementById(selection_id).children[i * 2].checked = true;
                 document.getElementById(btn_id).children[i].style.color = 'white';
                 document.getElementById(btn_id).children[i].style.backgroundColor = color[i];
             } else {
-                document.getElementById(selection_id).children[i].checked = false;
+                document.getElementById(selection_id).children[i * 2].checked = false;
                 document.getElementById(btn_id).children[i].style.color = color[i];
                 document.getElementById(btn_id).children[i].style.backgroundColor = 'white';
             }
