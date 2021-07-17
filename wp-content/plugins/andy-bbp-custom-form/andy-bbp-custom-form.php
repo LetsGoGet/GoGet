@@ -1178,8 +1178,8 @@ if (!function_exists('detect_submit_button')) :
             return;
         }
         // for issue 49, end
-        $data = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/js/detect_submit.js');
-        echo ("<script type='text/javascript'>$data</script>");
+        // $data = file_get_contents(ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/js/detect_submit.js');
+        // echo ("<script type='text/javascript'>$data</script>");
     }
 endif;
 
@@ -1189,7 +1189,7 @@ if (!function_exists('bbp_get_custom_post_data')) :
     function bbp_get_custom_post_data()
     {
         $forumId = $_POST['bbp_forum_id'];
-        if ($forumId == 28){
+        if ($forumId == 28) {
             $path = ABSPATH . 'wp-content/plugins/andy-bbp-custom-form/article_templates/' . strval($forumId) . '.txt';
             $content = '';
             $must_fill_tag = '*';

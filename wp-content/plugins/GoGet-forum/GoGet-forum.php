@@ -42,7 +42,11 @@ if ( !class_exists( 'GoGetForums' ) ) {
             require_once GOGETFORUMS_INCLUDES_PATH . '/validators/validator.php';
             require_once GOGETFORUMS_INCLUDES_PATH . '/validators/interview_experience_val.php';
 
+            /** posts */
             require_once GOGETFORUMS_INCLUDES_PATH . 'post.php';
+
+            /** api */
+            require_once GOGETFORUMS_INCLUDES_PATH . 'api/live-search.php';
 
             /**
              * component classes

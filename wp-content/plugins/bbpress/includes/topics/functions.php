@@ -236,11 +236,7 @@ function bbp_new_topic_handler($action = '')
     /** Topic Content *********************************************************/
 
     // Andy edited from here
-    $custom_post_content = apply_filters('bbp_get_my_custom_post_fields', '');
-    if ($forum_id == 30){
-        $custom_post_content = null;
-        $custom_post_content = apply_filters('goget_forum_get_custom_post_fields', '');
-    }
+    $custom_post_content = apply_filters('goget_forum_get_custom_post_fields', $forum_id);
 
     if (count($custom_post_content) == 1) {
         $topic_content = $custom_post_content[0]; // To return multiple values, the original argument is wrapped into array with length one
