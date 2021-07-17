@@ -21,6 +21,9 @@ if (!function_exists('add_post')) :
                 $forum = new interview_experience($forumId);
                 $forum->init_components();
                 break;
+            case 70:
+                bbp_the_content(array('context' => 'topic')); //bbpress default
+                break;
             default:
                 break;
         }
