@@ -3,6 +3,7 @@
 namespace GoGetForums\includes;
 
 use GoGetForums\includes\forums\interview_experience;
+use GoGetForums\includes\forums\work_experience;
 
 // to display fields in bbp new topic form
 add_action('bbp_theme_before_topic_form_content', __NAMESPACE__ . '\\add_post');
@@ -18,7 +19,7 @@ if (!function_exists('add_post')) :
                 $forum->init_components();
                 break;
             case 30:
-                $forum = new interview_experience($forumId);
+                $forum = new work_experience($forumId);
                 $forum->init_components();
                 break;
             default:
@@ -48,10 +49,10 @@ if (!function_exists('save_post')) :
                 }
                 break;
             case 30:
-                $forum = new interview_experience($forum_id);
+                $forum = new work_experience($forum_id);
                 if ($forum != null) {
                     $form_data = validate_form($forum->validator->get());
-                    $topic_title = $form_data['goget_company'] . ' ' . $form_data['goget_job_title'][0] . ' 面試經驗';
+                    $topic_title = $form_data['goget_company'] . ' ' . $form_data['goget_job_title'][0] . ' 工作經驗';
                     /**
                      * TODO: 確保 $form_data 內有 $form['isAnonymous'], 且格式為 boolean, 同 tag
                      * 最後回傳 array($form['topic_title'], $form['isAnonymous'], $form['tags'], 'content', $form_data);
@@ -113,7 +114,7 @@ if (!function_exists('get_topic_content')) :
                 $forum = new interview_experience($forumId);
                 return $forum->get_content($post_meta);
             case "30":
-                $forum = new interview_experience($forumId);
+                $forum = new work_experience($forumId);
                 return $forum->get_content($post_meta);
             default:
                 return null;

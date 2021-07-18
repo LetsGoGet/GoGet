@@ -3,23 +3,16 @@
 namespace GoGetForums\includes\forums;
 
 use GoGetForums\includes\ComboBox;
-use GoGetForums\includes\DatePicker;
 use GoGetForums\includes\Dropdown;
 use GoGetForums\includes\InputBox;
-use GoGetForums\includes\interview_experience_val;
-use GoGetForums\includes\MultiCheckBox;
+use GoGetForums\includes\work_experience_val;
 use GoGetForums\includes\Radio;
 use GoGetForums\includes\Select2;
 use GoGetForums\includes\SingleSelection;
 use GoGetForums\includes\Textarea;
 
-/**
- * ob_start() is important for avoiding "Warning: Cannot modify header information - headers already sent by ERROR"
- * It turn on the output buffer mechanism in PHP.
- */
 ob_start();
-
-class interview_experience extends forum
+class work_experience extends forum
 {
     public function __construct($id)
     {
@@ -34,37 +27,33 @@ class interview_experience extends forum
             'industry_category' => '產業類別',
             'industry_subcategory' => '細分產業類別',
             'anonymous' => '是否隱藏帳號名稱',
+            'is_on_the_job' => '現在是否在職',
+            'job_duration' => '任職多久',
+            'job_recommendation_level' => '職務推薦指數',
+            'salary_level' => '薪資區間',
+            'week_working_hr' => '一週工時',
+            'job_content' => '工作內容',
+            'job_advantage' => '職位優點',
+            'job_disadvantage' => '職位缺點',
+            'company_culture' => '公司與團隊文化',
+            'supervisor_style' => '主管帶領方式',
+            'growth' => '獲得的成長',
+            'other_sharing' => '其他分享',
+            'reference' => '參考連結',
             'author' => '作者背景',
-            'interview_date' => '面試時間',
-            'interview_location' => '面試地點',
-            'interview_difficulty' => '面試難度',
-            'interview_result' => '面試結果',
-            'interview_level' => '面試項目',
-            'prepare' => '準備過程',
-            'interview_process' => '面試過程',
-            'experiences_suggestions' => '心得建議',
             'tag' => '標籤'
         );
 
         // init validator
-        $this->validator = new interview_experience_val($this->meta_keys);
+        $this->validator = new work_experience_val($this->meta_keys);
 
-        $this->mycred_pos = array('interview_level', 'experiences_suggestions');
-
-        // init components
-        // $this->components = $this->init_components();
+        $this->mycred_pos = array('salary_level', 'reference');
 
         // init front-end validator
         $this->init_frontend_validator();
     }
 
-    // public function show_components(){
-    //     foreach( $this->components as $component){
-    //         $component->show();
-    //     }
-    // }
-
-    public function init_components() //: array
+    public function init_components()
     {
         // ComboBox
         $test_data = [
@@ -74,7 +63,7 @@ class interview_experience extends forum
             'required' => true,
             'validate_class' => 'required-field'
         ];
-        $comboBox = new ComboBox($test_data, 'company');
+        new ComboBox($test_data, 'company');
 
         // Dropdown
         $test_data = [
@@ -88,7 +77,7 @@ class interview_experience extends forum
                 '1' => 'required-field'
             ]
         ];
-        $dropdown_1 = new Dropdown($test_data, 'job_type');
+        new Dropdown($test_data, 'job_type');
 
         // Select2
         // store option data in js file, put the file in assets/js, pass file name in content_file
@@ -101,7 +90,7 @@ class interview_experience extends forum
             'required' => true,
             'validate_class' => ['required-field']
         ];
-        $select2 = new Select2($test_data, 'job_category');
+        new Select2($test_data, 'job_category');
 
         // InputBox
         $test_data = [
@@ -111,7 +100,7 @@ class interview_experience extends forum
             'required' => true,
             'validate_class' => 'required-field'
         ];
-        $inputBox_1 = new InputBox($test_data, 'job_title');
+        new InputBox($test_data, 'job_title');
 
         // Multi-column Dropdown
         $test_data = [
@@ -127,7 +116,7 @@ class interview_experience extends forum
                 '2' => ''
             ]
         ];
-        $dropdown_2 = new Dropdown($test_data, 'industry_category');
+        new Dropdown($test_data, 'industry_category');
 
         // Select2
         // store option data in js file, put the file in assets/js, pass file name in content_file
@@ -139,7 +128,7 @@ class interview_experience extends forum
             'required' => true,
             'validate_class' => ['required-field', '']
         ];
-        $select2_2 = new Select2($test_data, 'industry_subcategory');
+        new Select2($test_data, 'industry_subcategory');
 
         // Radio
         $test_data = [
@@ -149,32 +138,44 @@ class interview_experience extends forum
             'required' => true,
             'validate_class' => 'required-field'
         ];
-        $radio = new Radio($test_data, 'anonymous');
+        new Radio($test_data, 'anonymous');
 
-        // Textarea
+        // Radio
         $test_data = [
-            'field_title' => '作者背景',
-            'field_subtitle' => '讓相似背景的人有機會透過解鎖文章獲得幫助',
-            'content' => '讓相似背景的人有機會透過解鎖文章獲得幫助<br/>
-            不知道該怎麼下手嗎？可以參考這裡的這裡的範例格式：<br/>
-            1. 學歷：國立OO大學/OO學系<br/>
-            2. 工作：OOO公司暑期實習生<br/>
-            3. 經驗：OOO總召<br/>
-            4. 證照：多益OOO分<br/>',
-            'required' => true,
-            'validate_class' => 'word-limit'
-        ];
-        $textarea_1 = new Textarea($test_data, 'author');
-
-        // DatePicker
-        $test_data = [
-            'field_title' => '面試時間',
+            'field_title' => '現在是否在職',
             'field_subtitle' => '',
+            'content' => ['在職', '已離職', '不告訴你：）'],
             'required' => true,
             'validate_class' => 'required-field'
         ];
-        $datePicker = new DatePicker($test_data, 'interview_date');
+        new Radio($test_data, 'is_on_the_job');
 
+        // Dropdown
+        $test_data = [
+            'field_title' => '任職多久',
+            'field_subtitle' => '請選擇最接近之選項',
+            'content' => [
+                '1' => ['1年以下', '1~2年', '2~3年', '3~4年', '4~5年', '5年以上'],
+            ],
+            'required' => true,
+            'validate_class' => [
+                '1' => 'required-field'
+            ]
+        ];
+        new Dropdown($test_data, 'job_duration');
+
+        // SingleSelection
+        $test_data = [
+            'field_title' => '職務推薦指數',
+            'field_subtitle' => '',
+            'content' => ['很不推', '不推', '普通', '推', '很推'],
+            'color' => ['blue', 'blue', 'orange', 'red', 'red'],
+            'required' => true,
+            'validate_class' => 'required-field'
+        ];
+        new SingleSelection($test_data, 'job_recommendation_level');
+
+        // TODO: salary level
         // Multi-column Dropdown - location
         $country_data = array();
         $country_data_file = file_get_contents(GOGETFORUMS_ASSETS . 'data/countries_and_cities_data.json');
@@ -206,75 +207,121 @@ class interview_experience extends forum
         echo ("setSpecialDropdown('goget_interview_location_1', 'goget_interview_location_2', '台灣', " . json_encode($city_data) . ")");
         echo ("</script>");
 
-        // SingleSelection
+        // InputBox
         $test_data = [
-            'field_title' => '面試難度',
+            'field_title' => '一週工時',
             'field_subtitle' => '',
-            'content' => ['很簡單', '簡單', '普通', '困難', '很困難'],
-            'color' => ['blue', 'blue', 'orange', 'red', 'red'],
+            'inputBox_cnt' => 1,
             'required' => true,
             'validate_class' => 'required-field'
         ];
-        $singleSelection_1 = new SingleSelection($test_data, 'interview_difficulty');
-
-        // SingleSelection
-        $test_data = [
-            'field_title' => '面試結果',
-            'field_subtitle' => '',
-            'content' => ['錄取', '未錄取', '等待中', '無聲卡'],
-            'color' => ['blue', 'red', 'orange', 'black'],
-            'required' => true,
-            'validate_class' => 'required-field'
-        ];
-        $singleSelection_2 = new SingleSelection($test_data, 'interview_result');
-
-        // MultiCheckBox
-        $test_data = [
-            'field_title' => '面試項目',
-            'field_subtitle' => '選擇申請過程中有參與到的項目/關卡（可複選）',
-            'content' => ['個人面試', '團體面試', '筆試', '線上測驗'],
-            'required' => true,
-            'validate_class' => 'required-field'
-        ];
-        $multi_checkbox = new MultiCheckBox($test_data, 'interview_level');
+        new InputBox($test_data, 'week_working_hr');
 
         // Textarea
+        // TODO: word limit 400~100000
         $test_data = [
-            'field_title' => '準備過程',
-            'field_subtitle' => '',
-            'content' => '履歷、面試準備方法及時間安排',
-            'required' => true,
-            'validate_class' => 'word-limit'
-        ];
-        $textarea_2 = new Textarea($test_data, 'prepare');
-
-        // Textarea
-        $test_data = [
-            'field_title' => '面試過程',
+            'field_title' => '工作內容',
             'field_subtitle' => '',
             'content' => '不知道該怎麼下手嗎？可以參考這裡的這裡的範例格式：<br/>
-            第一關<br/>
-            
-            1. 時程：月份或間隔週數<br/>
-            2. 形式：單獨或團體、紙筆或面試<br/>
-            3. 面試官：人資或部門主管<br/>
-            4. 內容：回想看看自我介紹內容的重點是甚麼？遇到的特別題目與你的答案？<br/>
-            5. 注意事項：針對關卡的技巧或小叮嚀<br/>
-            
-            填寫得愈完整愈能幫助到其他面試者喔！',
+            1. 職位介紹 (組織, 部門...)<br/>
+            2. 主要職責<br/>
+            3. 一日工作流程<br/>
+            4. 所需技能<br/>
+            5. 其他<br/>',
             'required' => true,
             'validate_class' => 'word-limit'
         ];
-        $textarea_2 = new Textarea($test_data, 'interview_process');
+        new Textarea($test_data, 'job_content');
 
         // Textarea
         $test_data = [
-            'field_title' => '心得建議',
-            'field_subtitle' => '',
-            'content' => '給同樣朝夢想努力的人一些鼓勵及建議吧！',
+            'field_title' => '職位優點',
+            'field_subtitle' => '你覺得這個職位有什麼讓你很喜歡、會想要分享給他人的點？
+            學習曲線?轉職機會?升遷速度?出差機會?履歷加分?薪資優渥?',
+            'content' => '',
+            'required' => true,
+            'validate_class' => 'word-limit'
+        ];
+        new Textarea($test_data, 'job_advantage');
+
+        // Textarea
+        $test_data = [
+            'field_title' => '職位缺點',
+            'field_subtitle' => '你覺得這份工作有甚麼缺點？
+            高工時?壓力大?缺乏挑戰?低薪?主管能力?',
+            'content' => '',
+            'required' => true,
+            'validate_class' => 'word-limit'
+        ];
+        new Textarea($test_data, 'job_disadvantage');
+
+        // Textarea
+        $test_data = [
+            'field_title' => '公司與團隊文化',
+            'field_subtitle' => '你覺得公司與部門的文化如何？是活潑、安靜、自由、還是氣氛嚴肅...等？
+            與同事相處起來感受又是如何呢？',
+            'content' => '',
+            'required' => false,
             'validate_class' => ''
         ];
-        $textarea_3 = new Textarea($test_data, 'experiences_suggestions');
+        new Textarea($test_data, 'company_culture');
+
+        // Textarea
+        $test_data = [
+            'field_title' => '主管代領方式',
+            'field_subtitle' => '公司主管/mentor帶領與教導的方式如何呢？
+            你覺得這樣的方式適合或不適合你？為什麼？',
+            'content' => '',
+            'required' => false,
+            'validate_class' => ''
+        ];
+        new Textarea($test_data, 'supervisor_style');
+
+        // Textarea
+        $test_data = [
+            'field_title' => '獲得的成長',
+            'field_subtitle' => '在這份工作中學到了什麼？
+            最印象深刻的成長或挫敗經驗是什麼呢？',
+            'content' => '',
+            'required' => false,
+            'validate_class' => ''
+        ];
+        new Textarea($test_data, 'growth');
+
+        // Textarea
+        $test_data = [
+            'field_title' => '其他分享',
+            'field_subtitle' => '還有沒有很想分享給大家知道的事情？
+            例如不會出現在job description中的工作、這份工作帶給你意想不到的好處/壞處等等',
+            'content' => '',
+            'required' => false,
+            'validate_class' => ''
+        ];
+        new Textarea($test_data, 'other_sharing');
+
+        // Textarea
+        $test_data = [
+            'field_title' => '參考連結',
+            'field_subtitle' => '參考資料、面試心得文、相同或類似職位經驗分享文',
+            'content' => '',
+            'required' => false,
+            'validate_class' => ''
+        ];
+        new Textarea($test_data, 'reference');
+
+        // Textarea
+        $test_data = [
+            'field_title' => '作者背景',
+            'field_subtitle' => '讓相似背景的人有機會透過解鎖文章獲得幫助',
+            'content' => '讓相似背景的人有機會透過解鎖文章獲得幫助<br/>
+            不知道該怎麼下手嗎？可以參考這裡的這裡的範例格式：<br/>
+            1. 學歷：OO大學/OO學系<br/>
+            2. 經歷：O年OO產業OO職位經歷
+            3. 技能/證照：多益OOO分<br/>',
+            'required' => true,
+            'validate_class' => 'required-field'
+        ];
+        new Textarea($test_data, 'author');
 
         // multi-Inputbox
         $test_data = [
@@ -284,13 +331,7 @@ class interview_experience extends forum
             'required' => false,
             'validate_class' => ''
         ];
-        $inputBox_4 = new InputBox($test_data, 'tag');
-
-        // return array(
-        //     $comboBox, $dropdown_1, $inputBox_1, $dropdown_2, $select2, $radio,
-        //     $textarea_1, $textarea_2, $datePicker, $singleSelection_1, $singleSelection_2,
-        //     $multi_checkbox, $inputBox_2
-        // );
+        new InputBox($test_data, 'tag');
     }
 
     public function get_content($post_meta): ?string

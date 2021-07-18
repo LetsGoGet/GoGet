@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
     $.validator.addMethod('richEditor', function (val, element) {
-        if (val >= 100 && val <= 10000)
+        if (val >= 100 && val <= 100000)
             return true;
         else
             return false;
