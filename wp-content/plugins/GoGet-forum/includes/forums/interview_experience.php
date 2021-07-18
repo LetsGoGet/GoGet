@@ -29,6 +29,7 @@ class interview_experience extends forum
         $this->meta_keys = array(
             'company' => '公司名稱',
             'job_type' => '職務性質',
+            'job_category' => '職務類別',
             'job_title' => '職務名稱',
             'industry_category' => '產業類別',
             'industry_subcategory' => '細分產業類別',
@@ -89,6 +90,19 @@ class interview_experience extends forum
         ];
         $dropdown_1 = new Dropdown($test_data, 'job_type');
 
+        // Select2
+        // store option data in js file, put the file in assets/js, pass file name in content_file
+        // be sure to have ; at the end of the file
+        $test_data = [
+            'field_title' => '職務類別',
+            'field_subtitle' => '請選擇最接近的職務類別',
+            'content_file' => ['job_category_data'],
+            'is_first' => true,
+            'required' => true,
+            'validate_class' => ['required-field']
+        ];
+        $select2 = new Select2($test_data, 'job_category');
+
         // InputBox
         $test_data = [
             'field_title' => '職務名稱',
@@ -121,10 +135,11 @@ class interview_experience extends forum
             'field_title' => '細分產業類別',
             'field_subtitle' => '請選擇最接近的產業類別',
             'content_file' => ['sub_industry_data1', 'sub_industry_data2'],
+            'is_first' => false,
             'required' => true,
             'validate_class' => ['required-field', '']
         ];
-        $select2 = new Select2($test_data, 'industry_subcategory');
+        $select2_2 = new Select2($test_data, 'industry_subcategory');
 
         // Radio
         $test_data = [
@@ -296,8 +311,9 @@ class interview_experience extends forum
                 if (gettype($post_meta['goget_' . $meta_key]) == 'array') {
                     $concat_content = '';
                     foreach ($post_meta['goget_' . $meta_key] as $value) {
-                        $concat_content = $concat_content . $value . ' ';
+                        $concat_content = $concat_content . $value . ',';
                     }
+                    $concat_content = substr($concat_content, 0, strlen($concat_content) - 1);
                     $content = $content . "<p>
                     <strong><u><font size='3pt'>$title</font></u></strong>
                     <br>" . $concat_content . "</p>";

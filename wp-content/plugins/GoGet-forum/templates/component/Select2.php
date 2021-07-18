@@ -35,7 +35,7 @@ foreach ($data['content_file'] as $value) {
 }
 ?>
 <script type='text/javascript'>
-    <?php echo "var data = {};" ?>
+    <?php if ($data['is_first']) echo "var data = {};" ?>
     <?php foreach ($data['content_file'] as $value) {
         echo $data_file[$value];
     } ?>
