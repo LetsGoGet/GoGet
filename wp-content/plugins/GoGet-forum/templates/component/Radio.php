@@ -2,7 +2,7 @@
 $radio_input = "";
 foreach ($data['content'] as $key => $d) {
     if ($key == 0)
-        $radio_input .= "<input type='radio' class=" . $data['validate_class'] . " id='goget_" . $meta_key . "' name='goget_" . $meta_key . "' value='" . $d . "'> " . $d . " </input>";
+        $radio_input .= "<input type='radio' class='" . $data['validate_class'] . "' id='goget_" . $meta_key . "' name='goget_" . $meta_key . "' value='" . $d . "'> " . $d . " </input>";
     else
         $radio_input .= "<input type='radio' id='goget_" . $meta_key . "' name='goget_" . $meta_key . "' value='" . $d . "'> " . $d . " </input>";
 }

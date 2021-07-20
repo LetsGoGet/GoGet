@@ -1,110 +1,110 @@
 data['job_category_data'] = [
     {
-        id: 0,
+        id: 'UIUX / 視覺設計 Arts and Design',
         text: 'UIUX / 視覺設計 Arts and Design'
     },
     {
-        id: 1,
+        id: '人資 Human Resource',
         text: '人資 Human Resource'
     },
     {
-        id: 2,
+        id: '其他 Others',
         text: '其他 Others'
     },
     {
-        id: 3,
+        id: '品管測試 Quality Control and Testing',
         text: '品管測試 Quality Control and Testing'
     },
     {
-        id: 4,
+        id: '商業開發 Business Development',
         text: '商業開發 Business Development'
     },
     {
-        id: 5,
+        id: '媒體公關 Public Relations',
         text: '媒體公關 Public Relations'
     },
     {
-        id: 6,
+        id: '學術研究 Academic Research',
         text: '學術研究 Academic Research'
     },
     {
-        id: 7,
+        id: '客戶服務 Customer Services',
         text: '客戶服務 Customer Services'
     },
     {
-        id: 8,
+        id: '工程與研發 Engineering and R&D',
         text: '工程與研發 Engineering and R&D'
     },
     {
-        id: 9,
+        id: '市場分析 Business Analysis',
         text: '市場分析 Business Analysis'
     },
     {
-        id: 10,
+        id: '成長駭客 Growth Hacking',
         text: '成長駭客 Growth Hacking'
     },
     {
-        id: 11,
+        id: '採購 Merchandising',
         text: '採購 Merchandising'
     },
     {
-        id: 12,
+        id: '攝影 / 影音製作 Video Editing',
         text: '攝影 / 影音製作 Video Editing'
     },
     {
-        id: 13,
+        id: '教育 / 教學 Education',
         text: '教育 / 教學 Education'
     },
     {
-        id: 14,
+        id: '會計 Accounting',
         text: '會計 Accounting'
     },
     {
-        id: 15,
+        id: '法務 Legal',
         text: '法務 Legal'
     },
     {
-        id: 16,
+        id: '營運 Operations',
         text: '營運 Operations'
     },
     {
-        id: 17,
+        id: '產品 / 專案管理 Product and Project Management',
         text: '產品 / 專案管理 Product and Project Management'
     },
     {
-        id: 18,
+        id: '經營管理 Business and Management',
         text: '經營管理 Business and Management'
     },
     {
-        id: 19,
+        id: '編輯 / 內容經營 Social Media Management',
         text: '編輯 / 內容經營 Social Media Management'
     },
     {
-        id: 20,
+        id: '行政 Administrative',
         text: '行政 Administrative'
     },
     {
-        id: 21,
+        id: '行銷企劃 / 社群經營 Marketing',
         text: '行銷企劃 / 社群經營 Marketing'
     },
     {
-        id: 22,
+        id: '財務 Finance',
         text: '財務 Finance'
     },
     {
-        id: 23,
+        id: '資料科學 Data Science and Analytics',
         text: '資料科學 Data Science and Analytics'
     },
     {
-        id: 24,
+        id: '通路開發 Channel Development',
         text: '通路開發 Channel Development'
     },
     {
-        id: 25,
+        id: '銷售服務 Sales',
         text: '銷售服務 Sales'
     },
     {
-        id: 26,
+        id: '顧問服務 Consulting',
         text: '顧問服務 Consulting'
     }
 ];

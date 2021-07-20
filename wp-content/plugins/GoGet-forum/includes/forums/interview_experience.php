@@ -71,6 +71,7 @@ class interview_experience extends forum
             'field_title' => '公司名稱',
             'field_subtitle' => '外商可直接輸入英文查詢，非外商可輸入中文查詢，若沒有找到請自行輸入',
             'fetch_type' => 'company',
+            'url_split' => 'interview-experience',
             'required' => true,
             'validate_class' => 'required-field'
         ];
@@ -162,7 +163,8 @@ class interview_experience extends forum
             3. 經驗：OOO總召<br/>
             4. 證照：多益OOO分<br/>',
             'required' => true,
-            'validate_class' => 'word-limit'
+            // 'validate_class' => 'word-limit'
+            'validate_class' => '' // for testing
         ];
         $textarea_1 = new Textarea($test_data, 'author');
 
@@ -200,10 +202,10 @@ class interview_experience extends forum
 
         $dropdown_3 = new Dropdown($test_data, 'interview_location');
 
-        $location_js = file_get_contents(GOGETFORUMS_ASSETS . 'js/special_dropdown.js');
+        $location_js = file_get_contents(GOGETFORUMS_ASSETS . 'js/location_dropdown.js');
         echo ("<script>");
         echo $location_js;
-        echo ("setSpecialDropdown('goget_interview_location_1', 'goget_interview_location_2', '台灣', " . json_encode($city_data) . ")");
+        echo ("setLocationDropdown('goget_interview_location_1', 'goget_interview_location_2', '台灣', " . json_encode($city_data) . ")");
         echo ("</script>");
 
         // SingleSelection
@@ -244,7 +246,8 @@ class interview_experience extends forum
             'field_subtitle' => '',
             'content' => '履歷、面試準備方法及時間安排',
             'required' => true,
-            'validate_class' => 'word-limit'
+            // 'validate_class' => 'word-limit'
+            'validate_class' => '' // for testing
         ];
         $textarea_2 = new Textarea($test_data, 'prepare');
 
@@ -263,7 +266,8 @@ class interview_experience extends forum
             
             填寫得愈完整愈能幫助到其他面試者喔！',
             'required' => true,
-            'validate_class' => 'word-limit'
+            // 'validate_class' => 'word-limit'
+            'validate_class' => '' // for testing
         ];
         $textarea_2 = new Textarea($test_data, 'interview_process');
 

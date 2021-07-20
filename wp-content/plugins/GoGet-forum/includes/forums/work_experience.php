@@ -60,6 +60,7 @@ class work_experience extends forum
             'field_title' => '公司名稱',
             'field_subtitle' => '外商可直接輸入英文查詢，非外商可輸入中文查詢，若沒有找到請自行輸入',
             'fetch_type' => 'company',
+            'url_split' => 'job-experience',
             'required' => true,
             'validate_class' => 'required-field'
         ];
@@ -175,36 +176,28 @@ class work_experience extends forum
         ];
         new SingleSelection($test_data, 'job_recommendation_level');
 
-        // TODO: salary level
-        // Multi-column Dropdown - location
-        $country_data = array();
-        $country_data_file = file_get_contents(GOGETFORUMS_ASSETS . 'data/countries_and_cities_data.json');
-        $cc = json_decode($country_data_file, true);
-        foreach ($cc as $country => $city) {
-            array_push($country_data, $country);
-            $city_data[$country] = $city;
-        }
-
+        // Multi-column Dropdown - special
         $test_data = [
-            'field_title' => '職缺地點',
-            'field_subtitle' => '',
+            'field_title' => '薪資區間',
+            'field_subtitle' => '請選擇最接近之答案，新台幣計價',
             'content' => [
-                '1' => $country_data,
-                '2' => $city_data['台灣']
+                '1' => ['時薪', '月薪', '年薪'],
+                '2' => ['150以下', '150~300', '超過300']
             ],
-            'required' => true,
+            'required' => false,
             'validate_class' => [
-                '1' => 'required-field',
+                '1' => '',
                 '2' => ''
             ]
         ];
 
-        $dropdown_3 = new Dropdown($test_data, 'interview_location');
+        $dropdown_3 = new Dropdown($test_data, 'salary_level');
 
-        $location_js = file_get_contents(GOGETFORUMS_ASSETS . 'js/special_dropdown.js');
+        $special_dropdown_js = file_get_contents(GOGETFORUMS_ASSETS . 'js/special_dropdown.js');
+        $salary_level_data = file_get_contents(GOGETFORUMS_ASSETS . 'data/salary_level_data.json');
         echo ("<script>");
-        echo $location_js;
-        echo ("setSpecialDropdown('goget_interview_location_1', 'goget_interview_location_2', '台灣', " . json_encode($city_data) . ")");
+        echo $special_dropdown_js;
+        echo ("setSpecialDropdown('goget_salary_level_1', 'goget_salary_level_2', " . $salary_level_data . ")");
         echo ("</script>");
 
         // InputBox
@@ -229,7 +222,8 @@ class work_experience extends forum
             4. 所需技能<br/>
             5. 其他<br/>',
             'required' => true,
-            'validate_class' => 'word-limit'
+            // 'validate_class' => 'word-limit'
+            'validate_class' => '' // for testing
         ];
         new Textarea($test_data, 'job_content');
 
@@ -240,7 +234,8 @@ class work_experience extends forum
             學習曲線?轉職機會?升遷速度?出差機會?履歷加分?薪資優渥?',
             'content' => '',
             'required' => true,
-            'validate_class' => 'word-limit'
+            // 'validate_class' => 'word-limit'
+            'validate_class' => '' // for testing
         ];
         new Textarea($test_data, 'job_advantage');
 
@@ -251,7 +246,8 @@ class work_experience extends forum
             高工時?壓力大?缺乏挑戰?低薪?主管能力?',
             'content' => '',
             'required' => true,
-            'validate_class' => 'word-limit'
+            // 'validate_class' => 'word-limit'
+            'validate_class' => '' // for testing
         ];
         new Textarea($test_data, 'job_disadvantage');
 
@@ -268,7 +264,7 @@ class work_experience extends forum
 
         // Textarea
         $test_data = [
-            'field_title' => '主管代領方式',
+            'field_title' => '主管帶領方式',
             'field_subtitle' => '公司主管/mentor帶領與教導的方式如何呢？
             你覺得這樣的方式適合或不適合你？為什麼？',
             'content' => '',
@@ -319,7 +315,7 @@ class work_experience extends forum
             2. 經歷：O年OO產業OO職位經歷
             3. 技能/證照：多益OOO分<br/>',
             'required' => true,
-            'validate_class' => 'required-field'
+            'validate_class' => 'required-field' // need new class for required rich editor
         ];
         new Textarea($test_data, 'author');
 
