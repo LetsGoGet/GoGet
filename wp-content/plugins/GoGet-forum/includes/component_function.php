@@ -39,7 +39,7 @@ class Dropdown extends Component
 class Textarea extends Component
 {
     // Textarea
-    public  function __construct($data, $meta_key)
+    public  function __construct($data, $meta_key, $word_limit)
     {
         parent::__construct($data, $meta_key);
 
@@ -48,7 +48,7 @@ class Textarea extends Component
 
         // include textarea and rich editor
         include(GOGETFORUMS_TEMPLATE_PATH . "component/Textarea.php");
-        GoGetForumsAssets::load_rich_editor_assets($meta_key);
+        GoGetForumsAssets::load_rich_editor_assets($meta_key, $word_limit);
     }
 
     // public function show(){

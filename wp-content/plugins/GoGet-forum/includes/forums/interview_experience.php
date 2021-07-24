@@ -163,10 +163,9 @@ class interview_experience extends forum
             3. 經驗：OOO總召<br/>
             4. 證照：多益OOO分<br/>',
             'required' => true,
-            // 'validate_class' => 'word-limit'
-            'validate_class' => '' // for testing
+            'validate_class' => 'word-limit-100'
         ];
-        $textarea_1 = new Textarea($test_data, 'author');
+        $textarea_1 = new Textarea($test_data, 'author', 100);
 
         // DatePicker
         $test_data = [
@@ -246,10 +245,9 @@ class interview_experience extends forum
             'field_subtitle' => '',
             'content' => '履歷、面試準備方法及時間安排',
             'required' => true,
-            // 'validate_class' => 'word-limit'
-            'validate_class' => '' // for testing
+            'validate_class' => 'word-limit-100'
         ];
-        $textarea_2 = new Textarea($test_data, 'prepare');
+        $textarea_2 = new Textarea($test_data, 'prepare', 100);
 
         // Textarea
         $test_data = [
@@ -266,10 +264,9 @@ class interview_experience extends forum
             
             填寫得愈完整愈能幫助到其他面試者喔！',
             'required' => true,
-            // 'validate_class' => 'word-limit'
-            'validate_class' => '' // for testing
+            'validate_class' => 'word-limit-100'
         ];
-        $textarea_2 = new Textarea($test_data, 'interview_process');
+        $textarea_2 = new Textarea($test_data, 'interview_process', 100);
 
         // Textarea
         $test_data = [
@@ -278,7 +275,7 @@ class interview_experience extends forum
             'content' => '給同樣朝夢想努力的人一些鼓勵及建議吧！',
             'validate_class' => ''
         ];
-        $textarea_3 = new Textarea($test_data, 'experiences_suggestions');
+        $textarea_3 = new Textarea($test_data, 'experiences_suggestions', 0);
 
         // multi-Inputbox
         $test_data = [

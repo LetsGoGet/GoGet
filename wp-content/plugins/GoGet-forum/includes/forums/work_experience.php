@@ -222,10 +222,9 @@ class work_experience extends forum
             4. 所需技能<br/>
             5. 其他<br/>',
             'required' => true,
-            // 'validate_class' => 'word-limit'
-            'validate_class' => '' // for testing
+            'validate_class' => 'word-limit-400'
         ];
-        new Textarea($test_data, 'job_content');
+        new Textarea($test_data, 'job_content', 400);
 
         // Textarea
         $test_data = [
@@ -234,10 +233,9 @@ class work_experience extends forum
             學習曲線?轉職機會?升遷速度?出差機會?履歷加分?薪資優渥?',
             'content' => '',
             'required' => true,
-            // 'validate_class' => 'word-limit'
-            'validate_class' => '' // for testing
+            'validate_class' => 'word-limit-100'
         ];
-        new Textarea($test_data, 'job_advantage');
+        new Textarea($test_data, 'job_advantage', 100);
 
         // Textarea
         $test_data = [
@@ -246,10 +244,9 @@ class work_experience extends forum
             高工時?壓力大?缺乏挑戰?低薪?主管能力?',
             'content' => '',
             'required' => true,
-            // 'validate_class' => 'word-limit'
-            'validate_class' => '' // for testing
+            'validate_class' => 'word-limit-100'
         ];
-        new Textarea($test_data, 'job_disadvantage');
+        new Textarea($test_data, 'job_disadvantage', 100);
 
         // Textarea
         $test_data = [
@@ -260,7 +257,7 @@ class work_experience extends forum
             'required' => false,
             'validate_class' => ''
         ];
-        new Textarea($test_data, 'company_culture');
+        new Textarea($test_data, 'company_culture', 0);
 
         // Textarea
         $test_data = [
@@ -271,7 +268,7 @@ class work_experience extends forum
             'required' => false,
             'validate_class' => ''
         ];
-        new Textarea($test_data, 'supervisor_style');
+        new Textarea($test_data, 'supervisor_style', 0);
 
         // Textarea
         $test_data = [
@@ -282,7 +279,7 @@ class work_experience extends forum
             'required' => false,
             'validate_class' => ''
         ];
-        new Textarea($test_data, 'growth');
+        new Textarea($test_data, 'growth', 0);
 
         // Textarea
         $test_data = [
@@ -293,7 +290,7 @@ class work_experience extends forum
             'required' => false,
             'validate_class' => ''
         ];
-        new Textarea($test_data, 'other_sharing');
+        new Textarea($test_data, 'other_sharing', 0);
 
         // Textarea
         $test_data = [
@@ -303,7 +300,7 @@ class work_experience extends forum
             'required' => false,
             'validate_class' => ''
         ];
-        new Textarea($test_data, 'reference');
+        new Textarea($test_data, 'reference', 0);
 
         // Textarea
         $test_data = [
@@ -315,9 +312,9 @@ class work_experience extends forum
             2. 經歷：O年OO產業OO職位經歷
             3. 技能/證照：多益OOO分<br/>',
             'required' => true,
-            'validate_class' => 'required-field' // need new class for required rich editor
+            'validate_class' => 'word-limit-100'
         ];
-        new Textarea($test_data, 'author');
+        new Textarea($test_data, 'author', 100);
 
         // multi-Inputbox
         $test_data = [
