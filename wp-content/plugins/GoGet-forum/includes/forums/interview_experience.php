@@ -46,6 +46,10 @@ class interview_experience extends forum
             'tag' => '標籤'
         );
 
+        $this->tag_meta_keys = array(
+           'job_title', 'industry_category', 'industry_subcategory', 'tag'
+        );
+
         // init validator
         $this->validator = new interview_experience_val($this->meta_keys);
 
