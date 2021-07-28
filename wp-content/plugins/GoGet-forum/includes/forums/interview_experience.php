@@ -45,6 +45,10 @@ class interview_experience extends forum
             'tag' => '標籤'
         );
 
+        $this->tag_meta_keys = array(
+           'job_title', 'industry_category', 'industry_subcategory', 'tag'
+        );
+
         // init validator
         $this->validator = new interview_experience_val($this->meta_keys);
 
@@ -147,7 +151,7 @@ class interview_experience extends forum
             3. 經驗：OOO總召<br/>
             4. 證照：多益OOO分<br/>',
             'required' => true,
-            'validate_class' => 'word-limit'
+//            'validate_class' => 'word-limit'
         ];
         $textarea_1 = new Textarea($test_data, 'author');
 
@@ -229,7 +233,7 @@ class interview_experience extends forum
             'field_subtitle' => '',
             'content' => '履歷、面試準備方法及時間安排',
             'required' => true,
-            'validate_class' => 'word-limit'
+//            'validate_class' => 'word-limit'
         ];
         $textarea_2 = new Textarea($test_data, 'prepare');
 
@@ -248,7 +252,7 @@ class interview_experience extends forum
             
             填寫得愈完整愈能幫助到其他面試者喔！',
             'required' => true,
-            'validate_class' => 'word-limit'
+//            'validate_class' => 'word-limit'
         ];
         $textarea_2 = new Textarea($test_data, 'interview_process');
 

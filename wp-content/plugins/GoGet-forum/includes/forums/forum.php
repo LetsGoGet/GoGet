@@ -12,8 +12,8 @@ class forum
 {
     public $id;
     public $validator;
-    // public $components = array();
     public $meta_keys;
+    public $tag_meta_keys; // 要加入 tag 的 meta keys
     public $mycred_pos;
 
     public function __construct($id)

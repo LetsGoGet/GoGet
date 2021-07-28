@@ -21,6 +21,9 @@ if (!function_exists('add_post')) :
                 $forum = new interview_experience($forumId);
                 $forum->init_components();
                 break;
+            case 70:
+                bbp_the_content(array('context' => 'topic')); //bbpress default
+                break;
             default:
                 break;
         }
@@ -38,25 +41,26 @@ if (!function_exists('save_post')) :
                 $forum = new interview_experience($forum_id);
                 if ($forum != null) {
                     $form_data = validate_form($forum->validator->get());
-                    $topic_title = $form_data['goget_company'] . ' ' . $form_data['goget_job_title'][0] . ' 面試經驗';
-                    /**
-                     * TODO: 確保 $form_data 內有 $form['isAnonymous'], 且格式為 boolean, 同 tag
-                     * 最後回傳 array($form['topic_title'], $form['isAnonymous'], $form['tags'], 'content', $form_data);
-                     */
-                    error_log("topic title:" . $topic_title);
-                    return array($topic_title, '是否匿名', 'tags', 'content', $form_data);
+
+                    $topic_title = $form_data[ GOGETFORUMS_FORM_PREFIX . 'company'] . ' ' . $form_data[ GOGETFORUMS_FORM_PREFIX . 'job_title'][0] . ' 面試經驗';
+                    $tags = concat_tag_string($form_data, $forum->tag_meta_keys);
+                    $anonymous = $form_data[GOGETFORUMS_FORM_PREFIX . 'anonymous'] == '是';
+
+                    // array("標題", "是否匿名", "標籤", "(已棄用)文章內容", "文章內容")
+                    return array($topic_title, $anonymous, $tags, 'content', $form_data);
                 }
                 break;
             case 30:
                 $forum = new interview_experience($forum_id);
                 if ($forum != null) {
                     $form_data = validate_form($forum->validator->get());
-                    $topic_title = $form_data['goget_company'] . ' ' . $form_data['goget_job_title'][0] . ' 面試經驗';
-                    /**
-                     * TODO: 確保 $form_data 內有 $form['isAnonymous'], 且格式為 boolean, 同 tag
-                     * 最後回傳 array($form['topic_title'], $form['isAnonymous'], $form['tags'], 'content', $form_data);
-                     */
-                    return array($topic_title, '是否匿名', 'tags', 'content', $form_data);
+
+                    $topic_title = $form_data[ GOGETFORUMS_FORM_PREFIX . 'company'] . ' ' . $form_data[ GOGETFORUMS_FORM_PREFIX . 'job_title'][0] . ' 面試經驗';
+                    $tags = concat_tag_string($form_data, $forum->tag_meta_keys);
+                    $anonymous = $form_data[GOGETFORUMS_FORM_PREFIX . 'anonymous'] == '是';
+
+                    // array("標題", "是否匿名", "標籤", "(已棄用)文章內容", "文章內容")
+                    return array($topic_title, $anonymous, $tags, 'content', $form_data);
                 }
                 break;
         }
@@ -74,6 +78,31 @@ if (!function_exists('save_post')) :
         //$filtered_array =  filter_var_array($intersected_array, $validator);
 
         return $intersected_array;
+    }
+
+    /** 依照該 forum 需要加入 tag 的 meta_key array
+     * 取出 $form_data 對應的值, 串接成一個 tag string
+     * ex. "金融, 科技, 遠端工作"
+     */
+    function concat_tag_string($form_data, $tag_meta_keys){
+        $tags = array();
+
+        foreach ($tag_meta_keys as $meta_key){
+            if (is_array($form_data[GOGETFORUMS_FORM_PREFIX . $meta_key])) { // 處理欄位多值或單值
+                //去除 array 中的空白值, 以防產生逗號結尾文字 ex. array 有三個值 ['1', '2', ''] ---> print 出 ' 1,2, '
+                $arr = array_filter($form_data[GOGETFORUMS_FORM_PREFIX . $meta_key], function ($value) {
+                    return !is_null($value) && $value !== '';
+                });
+
+                foreach ($arr as $item) {
+                    array_push($tags, $item);
+                }
+            } else {
+                array_push($tags, $form_data[GOGETFORUMS_FORM_PREFIX . $meta_key]);
+            }
+        }
+
+        return implode(',', $tags);
     }
 endif;
 
