@@ -44,6 +44,10 @@ class work_experience extends forum
             'tag' => '標籤'
         );
 
+        $this->tag_meta_keys = array(
+            'job_title', 'industry_category', 'industry_subcategory', 'tag', 'job_category'
+        );
+
         // init validator
         $this->validator = new work_experience_val($this->meta_keys);
 

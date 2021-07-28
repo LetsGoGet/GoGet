@@ -47,7 +47,7 @@ class interview_experience extends forum
         );
 
         $this->tag_meta_keys = array(
-           'job_title', 'industry_category', 'industry_subcategory', 'tag'
+           'job_title', 'industry_category', 'industry_subcategory', 'tag', 'job_category'
         );
 
         // init validator
