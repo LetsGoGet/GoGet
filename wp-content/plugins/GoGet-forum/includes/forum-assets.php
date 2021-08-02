@@ -17,6 +17,12 @@ class GoGetForumsAssets
      */
     public static function load_common_assets()
     {
+        wp_enqueue_style('GoGetForums-forum-css', GOGETFORUMS_ASSETS . 'css/forum_common.css');
+    }
+
+    public static function load_show_post_common_assets()
+    {
+        wp_enqueue_style('GoGetForums-forum-show-post-css', GOGETFORUMS_ASSETS . 'css/forum_show_post_common.css');
     }
 
     public static function load_quill_assets()
