@@ -27,9 +27,11 @@ class forum
 
     public function init_components()
     {
+        GoGetForumsAssets::load_common_assets();
     }
 
     public function get_content($post_meta)
     {
+        GoGetForumsAssets::load_show_post_common_assets();
     }
 }

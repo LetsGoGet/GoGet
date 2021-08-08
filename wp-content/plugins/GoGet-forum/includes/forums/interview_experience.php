@@ -70,6 +70,8 @@ class interview_experience extends forum
 
     public function init_components() //: array
     {
+        parent::init_components();
+
         // ComboBox
         $test_data = [
             'field_title' => '公司名稱',
@@ -113,6 +115,7 @@ class interview_experience extends forum
             'field_title' => '職務名稱',
             'field_subtitle' => '',
             'inputBox_cnt' => 1,
+            'input_type' => 'text',
             'required' => true,
             'validate_class' => 'required-field'
         ];
@@ -151,6 +154,7 @@ class interview_experience extends forum
             'field_title' => '是否隱藏帳號名稱',
             'field_subtitle' => '無論是否隱藏，皆不會公布帳號名稱外的資訊',
             'content' => ['是', '否'],
+            'default' => ['', 'checked'],
             'required' => true,
             'validate_class' => 'required-field'
         ];
@@ -162,10 +166,10 @@ class interview_experience extends forum
             'field_subtitle' => '讓相似背景的人有機會透過解鎖文章獲得幫助',
             'content' => '讓相似背景的人有機會透過解鎖文章獲得幫助<br/>
             不知道該怎麼下手嗎？可以參考這裡的這裡的範例格式：<br/>
-            1. 學歷：國立OO大學/OO學系<br/>
-            2. 工作：OOO公司暑期實習生<br/>
-            3. 經驗：OOO總召<br/>
-            4. 證照：多益OOO分<br/>',
+            <ol><li>學歷：國立OO大學/OO學系</li>
+            <li>工作：OOO公司暑期實習生</li>
+            <li>經驗：OOO總召</li>
+            <li>證照：多益OOO分</li><ol>',
             'required' => true,
             'validate_class' => 'word-limit-100'
         ];
@@ -237,7 +241,7 @@ class interview_experience extends forum
         $test_data = [
             'field_title' => '面試項目',
             'field_subtitle' => '選擇申請過程中有參與到的項目/關卡（可複選）',
-            'content' => ['個人面試', '團體面試', '筆試', '線上測驗'],
+            'content' => ['個人面試', '團體面試', '筆試', '線上測驗', '電話面試', '複試', '其他'],
             'required' => true,
             'validate_class' => 'required-field'
         ];
@@ -260,11 +264,11 @@ class interview_experience extends forum
             'content' => '不知道該怎麼下手嗎？可以參考這裡的這裡的範例格式：<br/>
             第一關<br/>
             
-            1. 時程：月份或間隔週數<br/>
-            2. 形式：單獨或團體、紙筆或面試<br/>
-            3. 面試官：人資或部門主管<br/>
-            4. 內容：回想看看自我介紹內容的重點是甚麼？遇到的特別題目與你的答案？<br/>
-            5. 注意事項：針對關卡的技巧或小叮嚀<br/>
+            <ol><li>時程：月份或間隔週數</li>
+            <li>形式：單獨或團體、紙筆或面試</li>
+            <li>面試官：人資或部門主管</li>
+            <li>內容：回想看看自我介紹內容的重點是甚麼？遇到的特別題目與你的答案？</li>
+            <li>注意事項：針對關卡的技巧或小叮嚀</li></ol>
             
             填寫得愈完整愈能幫助到其他面試者喔！',
             'required' => true,
@@ -286,6 +290,7 @@ class interview_experience extends forum
             'field_title' => '標籤',
             'field_subtitle' => '範例：暑期實習、FMCG、外商',
             'inputBox_cnt' => 3,
+            'input_type' => 'text',
             'required' => false,
             'validate_class' => ''
         ];
@@ -300,6 +305,8 @@ class interview_experience extends forum
 
     public function get_content($post_meta): ?string
     {
+        parent::get_content([]);
+
         /* Check whether this content is deprecated or not
          * Old content version doesn't have any metadata included prefix of "goget_"
          */
@@ -313,11 +320,12 @@ class interview_experience extends forum
                 // mycred start point
                 $content .= '[mycred_sell_this]';
             }
-            if ($post_meta['goget_' . $meta_key]) {
+            if ($post_meta['goget_' . $meta_key][0]) {
                 if (gettype($post_meta['goget_' . $meta_key]) == 'array') {
                     $concat_content = '';
                     foreach ($post_meta['goget_' . $meta_key] as $value) {
-                        $concat_content = $concat_content . $value . ',';
+                        if ($value != '')
+                            $concat_content = $concat_content . $value . ',';
                     }
                     $concat_content = substr($concat_content, 0, strlen($concat_content) - 1);
                     $content = $content . "<p>
@@ -331,11 +339,12 @@ class interview_experience extends forum
 
                 // counter ++
                 $counts_of_forum_meta += 1;
-            } else {
-                $content = $content . "<p>
-                <strong><u><font size='3pt'>$title</font></u></strong>
-                <br>未填寫</p>";
             }
+            // else {
+            //     $content = $content . "<p>
+            //     <strong><u><font size='3pt'>$title</font></u></strong>
+            //     <br>未填寫</p>";
+            // }
             if ($meta_key == $this->mycred_pos[1]) {
                 // mycred end point
                 $content .= '[/mycred_sell_this]';

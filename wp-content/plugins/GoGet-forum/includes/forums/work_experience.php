@@ -59,6 +59,8 @@ class work_experience extends forum
 
     public function init_components()
     {
+        parent::init_components();
+
         // ComboBox
         $test_data = [
             'field_title' => '公司名稱',
@@ -102,6 +104,7 @@ class work_experience extends forum
             'field_title' => '職務名稱',
             'field_subtitle' => '',
             'inputBox_cnt' => 1,
+            'input_type' => 'text',
             'required' => true,
             'validate_class' => 'required-field'
         ];
@@ -140,6 +143,7 @@ class work_experience extends forum
             'field_title' => '是否隱藏帳號名稱',
             'field_subtitle' => '無論是否隱藏，皆不會公布帳號名稱外的資訊',
             'content' => ['是', '否'],
+            'default' => ['', 'checked'],
             'required' => true,
             'validate_class' => 'required-field'
         ];
@@ -209,6 +213,7 @@ class work_experience extends forum
             'field_title' => '一週工時',
             'field_subtitle' => '',
             'inputBox_cnt' => 1,
+            'input_type' => 'number',
             'required' => true,
             'validate_class' => 'required-field'
         ];
@@ -220,11 +225,11 @@ class work_experience extends forum
             'field_title' => '工作內容',
             'field_subtitle' => '',
             'content' => '不知道該怎麼下手嗎？可以參考這裡的這裡的範例格式：<br/>
-            1. 職位介紹 (組織, 部門...)<br/>
-            2. 主要職責<br/>
-            3. 一日工作流程<br/>
-            4. 所需技能<br/>
-            5. 其他<br/>',
+            <ol><li>職位介紹 (組織, 部門...)</li>
+            <li>主要職責</li>
+            <li>一日工作流程</li>
+            <li>所需技能</li>
+            <li>其他</li></ol>',
             'required' => true,
             'validate_class' => 'word-limit-400'
         ];
@@ -312,9 +317,9 @@ class work_experience extends forum
             'field_subtitle' => '讓相似背景的人有機會透過解鎖文章獲得幫助',
             'content' => '讓相似背景的人有機會透過解鎖文章獲得幫助<br/>
             不知道該怎麼下手嗎？可以參考這裡的這裡的範例格式：<br/>
-            1. 學歷：OO大學/OO學系<br/>
-            2. 經歷：O年OO產業OO職位經歷
-            3. 技能/證照：多益OOO分<br/>',
+            <ol><li>學歷：OO大學/OO學系</li>
+            <li>經歷：O年OO產業OO職位經歷</li>
+            <li>技能/證照：多益OOO分</li></ol>',
             'required' => true,
             'validate_class' => 'word-limit-100'
         ];
@@ -325,6 +330,7 @@ class work_experience extends forum
             'field_title' => '標籤',
             'field_subtitle' => '範例：暑期實習、FMCG、外商',
             'inputBox_cnt' => 3,
+            'input_type' => 'text',
             'required' => false,
             'validate_class' => ''
         ];
@@ -333,6 +339,8 @@ class work_experience extends forum
 
     public function get_content($post_meta): ?string
     {
+        parent::get_content([]);
+
         /* Check whether this content is deprecated or not
          * Old content version doesn't have any metadata included prefix of "goget_"
          */
@@ -346,16 +354,17 @@ class work_experience extends forum
                 // mycred start point
                 $content .= '[mycred_sell_this]';
             }
-            if ($post_meta['goget_' . $meta_key]) {
+            if ($post_meta['goget_' . $meta_key][0]) {
                 if (gettype($post_meta['goget_' . $meta_key]) == 'array') {
                     $concat_content = '';
                     foreach ($post_meta['goget_' . $meta_key] as $value) {
-                        $concat_content = $concat_content . $value . ',';
+                        if ($value != '')
+                            $concat_content = $concat_content . $value . ',';
                     }
                     $concat_content = substr($concat_content, 0, strlen($concat_content) - 1);
                     $content = $content . "<p>
-                    <strong><u><font size='3pt'>$title</font></u></strong>
-                    <br>" . $concat_content . "</p>";
+                        <strong><u><font size='3pt'>$title</font></u></strong>
+                        <br>" . $concat_content . "</p>";
                 } else {
                     $content = $content . "<p>
                     <strong><u><font size='3pt'>$title</font></u></strong>
@@ -364,11 +373,12 @@ class work_experience extends forum
 
                 // counter ++
                 $counts_of_forum_meta += 1;
-            } else {
-                $content = $content . "<p>
-                <strong><u><font size='3pt'>$title</font></u></strong>
-                <br>未填寫</p>";
             }
+            // else {
+            //     $content = $content . "<p>
+            //     <strong><u><font size='3pt'>$title</font></u></strong>
+            //     <br>未填寫</p>";
+            // }
             if ($meta_key == $this->mycred_pos[1]) {
                 // mycred end point
                 $content .= '[/mycred_sell_this]';
