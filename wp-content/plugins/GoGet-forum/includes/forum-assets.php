@@ -17,6 +17,12 @@ class GoGetForumsAssets
      */
     public static function load_common_assets()
     {
+        wp_enqueue_style('GoGetForums-forum-css', GOGETFORUMS_ASSETS . 'css/forum_common.css');
+    }
+
+    public static function load_show_post_common_assets()
+    {
+        wp_enqueue_style('GoGetForums-forum-show-post-css', GOGETFORUMS_ASSETS . 'css/forum_show_post_common.css');
     }
 
     public static function load_quill_assets()
@@ -26,14 +32,18 @@ class GoGetForumsAssets
         wp_enqueue_style('GoGetForums-quill-css', GOGETFORUMS_ASSETS . 'vendors/quill/css/quill.snow.css');
     }
 
-    public static function load_rich_editor_assets($meta_key){
+    public static function load_rich_editor_assets($meta_key, $word_limit)
+    {
         // register JS file
         wp_register_script('GoGetForums-rich_editor_' . $meta_key, GOGETFORUMS_ASSETS . 'js/rich_editor.js');
 
         // pass parameter into JS file
-        wp_localize_script( 'GoGetForums-rich_editor_' . $meta_key, 'component',
+        wp_localize_script(
+            'GoGetForums-rich_editor_' . $meta_key,
+            'component',
             array(
-                'meta_key' => $meta_key
+                'meta_key' => $meta_key,
+                'word_limit' => $word_limit
             )
         );
 

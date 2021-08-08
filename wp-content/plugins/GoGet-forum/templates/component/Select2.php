@@ -16,7 +16,7 @@
         foreach ($data['content_file'] as $key => $value) {
             echo ("
             <label for='goget_$meta_key'>
-                <select id='goget_$meta_key" . $key . "' class=" . $data['validate_class'][$key] . " name='goget_$meta_key" . "[]'></select>
+                <select id='goget_$meta_key" . $key . "' class='" . $data['validate_class'][$key] . "' name='goget_$meta_key" . "[]'></select>
             </label>
             ");
         }
@@ -35,7 +35,7 @@ foreach ($data['content_file'] as $value) {
 }
 ?>
 <script type='text/javascript'>
-    <?php echo "var data = {};" ?>
+    <?php if ($data['is_first']) echo "var data = {};" ?>
     <?php foreach ($data['content_file'] as $value) {
         echo $data_file[$value];
     } ?>

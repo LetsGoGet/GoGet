@@ -5,4 +5,4 @@ function setSelect2(select_id, content) {
             data: data[content]
         });
     });
-}
+};

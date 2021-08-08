@@ -1,15 +1,22 @@
 jQuery(document).ready(function ($) {
-    $.validator.addMethod('richEditor', function (val, element) {
-        if (val >= 100 && val <= 10000)
+    $.validator.addMethod('richEditor_100', function (val, element) {
+        if (val >= 100 && val <= 100000)
             return true;
-        else
+        else {
+            element.nextElementSibling.removeAttribute('style');
             return false;
-    }, function (params, element) {
-        if (element.value < 100)
-            return '再回想看看，還有什麼細節想跟大家分享嗎？（字數下限：' + element.value + ' /100）';
-        else
-            return '超過字數限制。（字數上限：" ' + element.value + ' "/10000）';
-    });
+        }
+    }, '');
+
+    $.validator.addMethod('richEditor_400', function (val, element) {
+        console.log(val);
+        if (val >= 400 && val <= 100000)
+            return true;
+        else {
+            element.nextElementSibling.removeAttribute('style');
+            return false;
+        }
+    }, '');
 
     $.validator.addMethod('cRequired', jQuery.validator.methods.required, '必填');
 
@@ -17,8 +24,11 @@ jQuery(document).ready(function ($) {
         "required-field": {
             cRequired: true
         },
-        "word-limit": {
-            richEditor: true
+        "word-limit-100": {
+            richEditor_100: true
+        },
+        "word-limit-400": {
+            richEditor_100: true
         }
     });
 

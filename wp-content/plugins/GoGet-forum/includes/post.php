@@ -3,6 +3,7 @@
 namespace GoGetForums\includes;
 
 use GoGetForums\includes\forums\interview_experience;
+use GoGetForums\includes\forums\work_experience;
 
 // to display fields in bbp new topic form
 add_action('bbp_theme_before_topic_form_content', __NAMESPACE__ . '\\add_post');
@@ -18,7 +19,7 @@ if (!function_exists('add_post')) :
                 $forum->init_components();
                 break;
             case 30:
-                $forum = new interview_experience($forumId);
+                $forum = new work_experience($forumId);
                 $forum->init_components();
                 break;
             case 70:
@@ -51,7 +52,7 @@ if (!function_exists('save_post')) :
                 }
                 break;
             case 30:
-                $forum = new interview_experience($forum_id);
+                $forum = new work_experience($forum_id);
                 if ($forum != null) {
                     $form_data = validate_form($forum->validator->get());
 
@@ -142,7 +143,7 @@ if (!function_exists('get_topic_content')) :
                 $forum = new interview_experience($forumId);
                 return $forum->get_content($post_meta);
             case "30":
-                $forum = new interview_experience($forumId);
+                $forum = new work_experience($forumId);
                 return $forum->get_content($post_meta);
             default:
                 return null;
