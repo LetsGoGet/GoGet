@@ -43,11 +43,12 @@ class interview_experience extends forum
             'prepare' => '準備過程',
             'interview_process' => '面試過程',
             'experiences_suggestions' => '心得建議',
+            'reference' => '參考連結',
             'tag' => '標籤'
         );
 
         $this->tag_meta_keys = array(
-           'job_title', 'industry_category', 'industry_subcategory', 'tag', 'job_category'
+            'job_title', 'industry_category', 'industry_subcategory', 'tag', 'job_category'
         );
 
         // init validator
@@ -284,6 +285,16 @@ class interview_experience extends forum
             'validate_class' => ''
         ];
         $textarea_3 = new Textarea($test_data, 'experiences_suggestions', 0);
+
+        // Textarea
+        $test_data = [
+            'field_title' => '參考連結',
+            'field_subtitle' => '參考資料、面試心得文、相同或類似職位經驗分享文',
+            'content' => '',
+            'required' => false,
+            'validate_class' => ''
+        ];
+        new Textarea($test_data, 'reference', 0);
 
         // multi-Inputbox
         $test_data = [
