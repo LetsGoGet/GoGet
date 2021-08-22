@@ -48,7 +48,7 @@ if (!function_exists('save_post')) :
                     $anonymous = $form_data[GOGETFORUMS_FORM_PREFIX . 'anonymous'] == '是';
 
                     // array("標題", "是否匿名", "標籤", "(已棄用)文章內容", "文章內容")
-                    return array($topic_title, $anonymous, $tags, 'content', $form_data);
+                    return array($topic_title, $anonymous, $tags, implode(',', $form_data), $form_data);
                 }
                 break;
             case 30:
