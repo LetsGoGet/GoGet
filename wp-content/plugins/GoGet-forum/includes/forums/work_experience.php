@@ -321,9 +321,9 @@ class work_experience extends forum
             <li>經歷：O年OO產業OO職位經歷</li>
             <li>技能/證照：多益OOO分</li></ol>',
             'required' => true,
-            'validate_class' => 'word-limit-100'
+            'validate_class' => 'word-limit-required'
         ];
-        new Textarea($test_data, 'author', 100);
+        new Textarea($test_data, 'author', 0);
 
         // multi-Inputbox
         $test_data = [
@@ -364,21 +364,16 @@ class work_experience extends forum
                     $concat_content = substr($concat_content, 0, strlen($concat_content) - 1);
                     $content = $content . "<p>
                         <strong><u><font size='3pt'>$title</font></u></strong>
-                        <br>" . $concat_content . "</p>";
+                        " . $concat_content . "</p>";
                 } else {
                     $content = $content . "<p>
                     <strong><u><font size='3pt'>$title</font></u></strong>
-                    <br>" . $post_meta['goget_' . $meta_key] . "</p>";
+                    " . $post_meta['goget_' . $meta_key] . "</p>";
                 }
 
                 // counter ++
                 $counts_of_forum_meta += 1;
             }
-            // else {
-            //     $content = $content . "<p>
-            //     <strong><u><font size='3pt'>$title</font></u></strong>
-            //     <br>未填寫</p>";
-            // }
             if ($meta_key == $this->mycred_pos[1]) {
                 // mycred end point
                 $content .= '[/mycred_sell_this]';
