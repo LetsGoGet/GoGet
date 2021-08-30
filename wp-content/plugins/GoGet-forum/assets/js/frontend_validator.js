@@ -9,7 +9,6 @@ jQuery(document).ready(function ($) {
     }, '');
 
     $.validator.addMethod('richEditor_400', function (val, element) {
-        console.log(val);
         if (val >= 400 && val <= 100000)
             return true;
         else {
@@ -17,6 +16,13 @@ jQuery(document).ready(function ($) {
             return false;
         }
     }, '');
+
+    $.validator.addMethod('richEditor_required', function (val, element) {
+        if (val >= 1 && val <= 100000)
+            return true;
+        else
+            return false;
+    }, '必填')
 
     $.validator.addMethod('cRequired', jQuery.validator.methods.required, '必填');
 
@@ -28,7 +34,10 @@ jQuery(document).ready(function ($) {
             richEditor_100: true
         },
         "word-limit-400": {
-            richEditor_100: true
+            richEditor_400: true
+        },
+        'word-limit-required': {
+            richEditor_required: true
         }
     });
 

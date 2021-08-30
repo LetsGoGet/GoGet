@@ -54,7 +54,7 @@ class interview_experience extends forum
         // init validator
         $this->validator = new interview_experience_val($this->meta_keys);
 
-        $this->mycred_pos = array('interview_level', 'experiences_suggestions');
+        $this->mycred_pos = array('interview_level', 'reference');
 
         // init components
         // $this->components = $this->init_components();
@@ -341,11 +341,11 @@ class interview_experience extends forum
                     $concat_content = substr($concat_content, 0, strlen($concat_content) - 1);
                     $content = $content . "<p>
                     <strong><u><font size='3pt'>$title</font></u></strong>
-                    <br>" . $concat_content . "</p>";
+                    " . $concat_content . "</p>";
                 } else {
                     $content = $content . "<p>
                     <strong><u><font size='3pt'>$title</font></u></strong>
-                    <br>" . $post_meta['goget_' . $meta_key] . "</p>";
+                    " . $post_meta['goget_' . $meta_key] . "</p>";
                 }
 
                 // counter ++

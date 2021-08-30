@@ -5,3 +5,10 @@ input[type="checkbox"] {
 span.select2 {
     width: auto !important;
 }
+
+select {
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    font-family: 'Noto Sans TC';
+}
