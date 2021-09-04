@@ -6,6 +6,10 @@ span.select2 {
     width: auto !important;
 }
 
+#goget_industry_subcategory1 + span {
+    width: 7em !important;
+}
+
 select {
     background-color: #fff;
     border: 1px solid #aaa;
