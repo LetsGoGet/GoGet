@@ -252,8 +252,8 @@ class work_experience extends forum
         $test_data = [
             'field_title' => '職位優缺點',
             'field_subtitle' => '學習曲線？轉職機會？升遷速度？出差機會？履歷加分？薪資福利？公司文化？工時？壓力？挑戰？主管能力？',
-            'content' => '<ol><li>1. 優點</li>
-            <li>2. 缺點</li><ol>',
+            'content' => '<ol><li>優點</li>
+            <li>缺點</li><ol>',
             'required' => true,
             'validate_class' => 'word-limit-100'
         ];
