@@ -8,6 +8,15 @@ jQuery(document).ready(function ($) {
         }
     }, '');
 
+    $.validator.addMethod('richEditor_200', function (val, element) {
+        if (val >= 200 && val <= 100000)
+            return true;
+        else {
+            element.nextElementSibling.removeAttribute('style');
+            return false;
+        }
+    }, '');
+
     $.validator.addMethod('richEditor_400', function (val, element) {
         if (val >= 400 && val <= 100000)
             return true;
@@ -32,6 +41,9 @@ jQuery(document).ready(function ($) {
         },
         "word-limit-100": {
             richEditor_100: true
+        },
+        "word-limit-200": {
+            richEditor_200: true
         },
         "word-limit-400": {
             richEditor_400: true

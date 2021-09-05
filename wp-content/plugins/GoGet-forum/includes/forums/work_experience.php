@@ -28,19 +28,18 @@ class work_experience extends forum
             'industry_subcategory' => '細分產業類別',
             'anonymous' => '是否隱藏帳號名稱',
             'is_on_the_job' => '現在是否在職',
+            'author' => '作者背景',
             'job_duration' => '任職多久',
             'job_recommendation_level' => '職務推薦指數',
             'salary_level' => '薪資區間',
             'week_working_hr' => '一週工時',
             'job_content' => '工作內容',
-            'job_advantage' => '職位優點',
-            'job_disadvantage' => '職位缺點',
-            'company_culture' => '公司與團隊文化',
-            'supervisor_style' => '主管帶領方式',
+            'job_advantage_disadvantage' => '職位優缺點',
+            'assessment_promotion' => '考核與升遷',
+            'team_operation' => '團隊運作',
             'growth' => '獲得的成長',
             'other_sharing' => '其他分享',
             'reference' => '參考連結',
-            'author' => '作者背景',
             'tag' => '標籤'
         );
 
@@ -116,7 +115,7 @@ class work_experience extends forum
             'field_subtitle' => '請選擇最接近的產業類別',
             'content' => [
                 '1' => ['金融', '顧問', '零售', '科技', '新創', '其他'],
-                '2' => ['(無)', '金融', '顧問', '零售', '科技', '新創', '其他']
+                '2' => ['', '金融', '顧問', '零售', '科技', '新創', '其他']
             ],
             'required' => true,
             'validate_class' => [
@@ -158,6 +157,20 @@ class work_experience extends forum
             'validate_class' => 'required-field'
         ];
         new Radio($test_data, 'is_on_the_job');
+
+        // Textarea
+        $test_data = [
+            'field_title' => '作者背景',
+            'field_subtitle' => '讓相似背景的人有機會透過解鎖文章獲得幫助',
+            'content' => '讓相似背景的人有機會透過解鎖文章獲得幫助<br/>
+            不知道該怎麼下手嗎？可以參考這裡的這裡的範例格式：<br/>
+            <ol><li>學歷：OO大學/OO學系</li>
+            <li>經歷：O年OO產業OO職位經歷</li>
+            <li>技能/證照：多益OOO分</li></ol>',
+            'required' => true,
+            'validate_class' => 'word-limit-required'
+        ];
+        new Textarea($test_data, 'author', 0);
 
         // Dropdown
         $test_data = [
@@ -237,47 +250,34 @@ class work_experience extends forum
 
         // Textarea
         $test_data = [
-            'field_title' => '職位優點',
-            'field_subtitle' => '你覺得這個職位有什麼讓你很喜歡、會想要分享給他人的點？
-            學習曲線?轉職機會?升遷速度?出差機會?履歷加分?薪資優渥?',
-            'content' => '',
+            'field_title' => '職位優缺點',
+            'field_subtitle' => '學習曲線？轉職機會？升遷速度？出差機會？履歷加分？薪資福利？公司文化？工時？壓力？挑戰？主管能力？',
+            'content' => '<ol><li>優點</li>
+            <li>缺點</li><ol>',
             'required' => true,
             'validate_class' => 'word-limit-100'
         ];
-        new Textarea($test_data, 'job_advantage', 100);
+        new Textarea($test_data, 'job_advantage_disadvantage', 100);
 
         // Textarea
         $test_data = [
-            'field_title' => '職位缺點',
-            'field_subtitle' => '你覺得這份工作有甚麼缺點？
-            高工時?壓力大?缺乏挑戰?低薪?主管能力?',
+            'field_title' => '考核與升遷',
+            'field_subtitle' => '實習職位：轉正比例高不高？轉正條件為何？正職職位：績效如何考核？通常升遷年資與調薪幅度為何？',
             'content' => '',
             'required' => true,
-            'validate_class' => 'word-limit-100'
+            'validate_class' => 'word-limit-required'
         ];
-        new Textarea($test_data, 'job_disadvantage', 100);
+        new Textarea($test_data, 'assessment_promotion', 0);
 
         // Textarea
         $test_data = [
-            'field_title' => '公司與團隊文化',
-            'field_subtitle' => '你覺得公司與部門的文化如何？是活潑、安靜、自由、還是氣氛嚴肅...等？
-            與同事相處起來感受又是如何呢？',
+            'field_title' => '團隊運作',
+            'field_subtitle' => '專案如何進行？主管如何帶領？部門內與部門間如何分工？',
             'content' => '',
             'required' => false,
             'validate_class' => ''
         ];
-        new Textarea($test_data, 'company_culture', 0);
-
-        // Textarea
-        $test_data = [
-            'field_title' => '主管帶領方式',
-            'field_subtitle' => '公司主管/mentor帶領與教導的方式如何呢？
-            你覺得這樣的方式適合或不適合你？為什麼？',
-            'content' => '',
-            'required' => false,
-            'validate_class' => ''
-        ];
-        new Textarea($test_data, 'supervisor_style', 0);
+        new Textarea($test_data, 'team_operation', 0);
 
         // Textarea
         $test_data = [
@@ -310,20 +310,6 @@ class work_experience extends forum
             'validate_class' => ''
         ];
         new Textarea($test_data, 'reference', 0);
-
-        // Textarea
-        $test_data = [
-            'field_title' => '作者背景',
-            'field_subtitle' => '讓相似背景的人有機會透過解鎖文章獲得幫助',
-            'content' => '讓相似背景的人有機會透過解鎖文章獲得幫助<br/>
-            不知道該怎麼下手嗎？可以參考這裡的這裡的範例格式：<br/>
-            <ol><li>學歷：OO大學/OO學系</li>
-            <li>經歷：O年OO產業OO職位經歷</li>
-            <li>技能/證照：多益OOO分</li></ol>',
-            'required' => true,
-            'validate_class' => 'word-limit-required'
-        ];
-        new Textarea($test_data, 'author', 0);
 
         // multi-Inputbox
         $test_data = [
@@ -367,8 +353,8 @@ class work_experience extends forum
                         " . $concat_content . "</p>";
                 } else {
                     $content = $content . "<p>
-                    <strong><u><font size='3pt'>$title</font></u></strong>
-                    " . $post_meta['goget_' . $meta_key] . "</p>";
+                        <strong><u><font size='3pt'>$title</font></u></strong>
+                        " . $post_meta['goget_' . $meta_key] . "</p>";
                 }
 
                 // counter ++

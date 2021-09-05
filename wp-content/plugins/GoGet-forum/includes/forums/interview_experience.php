@@ -128,7 +128,7 @@ class interview_experience extends forum
             'field_subtitle' => '請選擇最接近的產業類別',
             'content' => [
                 '1' => ['金融', '顧問', '零售', '科技', '新創', '其他'],
-                '2' => ['(無)', '金融', '顧問', '零售', '科技', '新創', '其他']
+                '2' => ['', '金融', '顧問', '零售', '科技', '新創', '其他']
             ],
             'required' => true,
             'validate_class' => [
@@ -165,16 +165,15 @@ class interview_experience extends forum
         $test_data = [
             'field_title' => '作者背景',
             'field_subtitle' => '讓相似背景的人有機會透過解鎖文章獲得幫助',
-            'content' => '讓相似背景的人有機會透過解鎖文章獲得幫助<br/>
-            不知道該怎麼下手嗎？可以參考這裡的這裡的範例格式：<br/>
+            'content' => '不知道該怎麼下手嗎？可以參考這裡的這裡的範例格式：<br/>
             <ol><li>學歷：國立OO大學/OO學系</li>
             <li>工作：OOO公司暑期實習生</li>
             <li>經驗：OOO總召</li>
             <li>證照：多益OOO分</li><ol>',
             'required' => true,
-            'validate_class' => 'word-limit-100'
+            'validate_class' => 'word-limit-required'
         ];
-        $textarea_1 = new Textarea($test_data, 'author', 100);
+        $textarea_1 = new Textarea($test_data, 'author', 0);
 
         // DatePicker
         $test_data = [
@@ -251,12 +250,12 @@ class interview_experience extends forum
         // Textarea
         $test_data = [
             'field_title' => '準備過程',
-            'field_subtitle' => '',
-            'content' => '履歷、面試準備方法及時間安排',
+            'field_subtitle' => '履歷、面試準備方法及時間安排',
+            'content' => '',
             'required' => true,
-            'validate_class' => 'word-limit-100'
+            'validate_class' => 'word-limit-200'
         ];
-        $textarea_2 = new Textarea($test_data, 'prepare', 100);
+        $textarea_2 = new Textarea($test_data, 'prepare', 200);
 
         // Textarea
         $test_data = [
@@ -269,19 +268,17 @@ class interview_experience extends forum
             <li>形式：單獨或團體、紙筆或面試</li>
             <li>面試官：人資或部門主管</li>
             <li>內容：回想看看自我介紹內容的重點是甚麼？遇到的特別題目與你的答案？</li>
-            <li>注意事項：針對關卡的技巧或小叮嚀</li></ol>
-            
-            填寫得愈完整愈能幫助到其他面試者喔！',
+            <li>注意事項：針對關卡的技巧或小叮嚀</li></ol>',
             'required' => true,
-            'validate_class' => 'word-limit-100'
+            'validate_class' => 'word-limit-200'
         ];
-        $textarea_2 = new Textarea($test_data, 'interview_process', 100);
+        $textarea_2 = new Textarea($test_data, 'interview_process', 200);
 
         // Textarea
         $test_data = [
             'field_title' => '心得建議',
-            'field_subtitle' => '',
-            'content' => '給同樣朝夢想努力的人一些鼓勵及建議吧！',
+            'field_subtitle' => '給同樣朝夢想努力的人一些鼓勵及建議吧！',
+            'content' => '',
             'validate_class' => ''
         ];
         $textarea_3 = new Textarea($test_data, 'experiences_suggestions', 0);
@@ -334,18 +331,26 @@ class interview_experience extends forum
             if ($post_meta['goget_' . $meta_key][0]) {
                 if (gettype($post_meta['goget_' . $meta_key]) == 'array') {
                     $concat_content = '';
+                    $skip = false;
                     foreach ($post_meta['goget_' . $meta_key] as $value) {
-                        if ($value != '')
+                        if ($value !== '' && !strpos($value, 'ql-editor'))
                             $concat_content = $concat_content . $value . ',';
+                        else if (strlen($value) > 40) {
+                            $concat_content = $concat_content . $value . ',';
+                        } else if (strpos($value, 'ql-editor')) {
+                            $skip = true;
+                        }
                     }
+                    if ($skip)
+                        continue;
                     $concat_content = substr($concat_content, 0, strlen($concat_content) - 1);
                     $content = $content . "<p>
                     <strong><u><font size='3pt'>$title</font></u></strong>
                     " . $concat_content . "</p>";
                 } else {
                     $content = $content . "<p>
-                    <strong><u><font size='3pt'>$title</font></u></strong>
-                    " . $post_meta['goget_' . $meta_key] . "</p>";
+                        <strong><u><font size='3pt'>$title</font></u></strong>
+                        " . $post_meta['goget_' . $meta_key] . "</p>";
                 }
 
                 // counter ++

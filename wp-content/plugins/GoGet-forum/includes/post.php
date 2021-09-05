@@ -43,7 +43,7 @@ if (!function_exists('save_post')) :
                 if ($forum != null) {
                     $form_data = validate_form($forum->validator->get());
 
-                    $topic_title = $form_data[ GOGETFORUMS_FORM_PREFIX . 'company'] . ' ' . $form_data[ GOGETFORUMS_FORM_PREFIX . 'job_title'][0] . ' 面試經驗';
+                    $topic_title = $form_data[GOGETFORUMS_FORM_PREFIX . 'company'] . ' ' . $form_data[GOGETFORUMS_FORM_PREFIX . 'job_title'][0] . ' 面試經驗';
                     $tags = concat_tag_string($form_data, $forum->tag_meta_keys);
                     $anonymous = $form_data[GOGETFORUMS_FORM_PREFIX . 'anonymous'] == '是';
 
@@ -56,7 +56,7 @@ if (!function_exists('save_post')) :
                 if ($forum != null) {
                     $form_data = validate_form($forum->validator->get());
 
-                    $topic_title = $form_data[ GOGETFORUMS_FORM_PREFIX . 'company'] . ' ' . $form_data[ GOGETFORUMS_FORM_PREFIX . 'job_title'][0] . ' 面試經驗';
+                    $topic_title = $form_data[GOGETFORUMS_FORM_PREFIX . 'company'] . ' ' . $form_data[GOGETFORUMS_FORM_PREFIX . 'job_title'][0] . ' 工作經驗';
                     $tags = concat_tag_string($form_data, $forum->tag_meta_keys);
                     $anonymous = $form_data[GOGETFORUMS_FORM_PREFIX . 'anonymous'] == '是';
 
@@ -85,10 +85,11 @@ if (!function_exists('save_post')) :
      * 取出 $form_data 對應的值, 串接成一個 tag string
      * ex. "金融, 科技, 遠端工作"
      */
-    function concat_tag_string($form_data, $tag_meta_keys){
+    function concat_tag_string($form_data, $tag_meta_keys)
+    {
         $tags = array();
 
-        foreach ($tag_meta_keys as $meta_key){
+        foreach ($tag_meta_keys as $meta_key) {
             if (is_array($form_data[GOGETFORUMS_FORM_PREFIX . $meta_key])) { // 處理欄位多值或單值
                 //去除 array 中的空白值, 以防產生逗號結尾文字 ex. array 有三個值 ['1', '2', ''] ---> print 出 ' 1,2, '
                 $arr = array_filter($form_data[GOGETFORUMS_FORM_PREFIX . $meta_key], function ($value) {
