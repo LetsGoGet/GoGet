@@ -343,10 +343,18 @@ class work_experience extends forum
             if ($post_meta['goget_' . $meta_key][0]) {
                 if (gettype($post_meta['goget_' . $meta_key]) == 'array') {
                     $concat_content = '';
+                    $skip = false;
                     foreach ($post_meta['goget_' . $meta_key] as $value) {
-                        if ($value != '')
+                        if ($value !== '' && !strpos($value, 'ql-editor'))
                             $concat_content = $concat_content . $value . ',';
+                        else if (strlen($value) > 40) {
+                            $concat_content = $concat_content . $value . ',';
+                        } else if (strpos($value, 'ql-editor')) {
+                            $skip = true;
+                        }
                     }
+                    if ($skip)
+                        continue;
                     $concat_content = substr($concat_content, 0, strlen($concat_content) - 1);
                     $content = $content . "<p>
                         <strong><u><font size='3pt'>$title</font></u></strong>
