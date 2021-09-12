@@ -3,6 +3,8 @@
 namespace GoGetForums\includes\forums;
 
 use GoGetForums\includes\GoGetForumsAssets;
+use HTMLPurifier;
+use HTMLPurifier_Config;
 
 /**
  * Class forum
@@ -15,9 +17,31 @@ class forum
     public $meta_keys;
     public $tag_meta_keys; // 要加入 tag 的 meta keys
     public $mycred_pos;
+    public $purifier;
 
     public function __construct($id)
     {
+        // initialize purifier
+        $this->init_purifier();
+    }
+
+    private function init_purifier(){
+        $config = HTMLPurifier_Config::createDefault();
+        $config->set('HTML', 'Allowed',
+            'a[accesskey|href|rel|tabindex}target|type]
+                             ,area[accesskey|alt, coords|href|name|shape|tabindex|target]
+                             ,img[alt|border|height|ismap|src|usemap|width]
+                             ,b,blockquote[cite],br,dd,div,dl,dt,em,h1,h2,h3,h4,h5,h6
+                             ,hr,i,li[value],map,ol[start|type]
+                             ,nav[accesskey|contenteditable|contextmenu|data-*|draggable|dropzone|hidden|spellcheck|tabindex|translate]
+                             ,ol[start|type],p,pre,rp,rt,ruby,s,small,source,span,strike,strong,style,sub,sup,
+                             ,table[border|cols|summary|cellpadding|cellspacing|align]
+                             ,tbody[valign],td[bordercolor|colspan|rowspan],tfoot[valign]
+                             ,th[colspan|rowspan|scope],thead[valign],tr[colspan|rowspan]
+                             ,tt,u,ul,video[autoplay|controls|height|loop|muted|poster|preload|src|width]
+                             '
+        );
+        $this->purifier = new HTMLPurifier($config);
     }
 
     public function init_frontend_validator()
