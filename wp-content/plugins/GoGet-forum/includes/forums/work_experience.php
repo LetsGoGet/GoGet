@@ -358,7 +358,7 @@ class work_experience extends forum
                     $concat_content = substr($concat_content, 0, strlen($concat_content) - 1);
                     $content = $content . "<p>
                         <strong><u><font size='3pt'>$title</font></u></strong>
-                        " . $concat_content . "</p>";
+                        " . $this->purifier->purify($concat_content) . "</p>";
                 } else {
                     $content = $content . "<p>
                         <strong><u><font size='3pt'>$title</font></u></strong>

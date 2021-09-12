@@ -58,6 +58,11 @@ if (!class_exists('GoGetForums')) {
              * component classes
              */
             require_once GOGETFORUMS_INCLUDES_PATH . 'component_function.php';
+
+            /**
+             * vendors
+             */
+            require_once GOGETFORUMS_VENDORS_PATH . 'htmlpurifier/library/HTMLPurifier.auto.php';
         }
 
 
@@ -91,6 +96,12 @@ if (!class_exists('GoGetForums')) {
                  * Define the include path
                  */
                 define('GOGETFORUMS_INCLUDES_PATH', GOGETFORUMS_INSTALL_PATH . 'includes/');
+            }
+            if (!defined('GOGETFORUMS_VENDORS_PATH')) {
+                /**
+                 * Define the include path
+                 */
+                define('GOGETFORUMS_VENDORS_PATH', GOGETFORUMS_INSTALL_PATH . 'vendors/');
             }
             if (!defined('GOGETFORUMS_TEMPLATE_PATH')) {
                 /**
