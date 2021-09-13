@@ -31,10 +31,10 @@ class forum
             'a[accesskey|href|rel|tabindex}target|type]
                              ,area[accesskey|alt, coords|href|name|shape|tabindex|target]
                              ,img[alt|border|height|ismap|src|usemap|width]
-                             ,b,blockquote[cite],br,dd,div,dl,dt,em,h1,h2,h3,h4,h5,h6
-                             ,hr,i,li[value],map,ol[start|type]
+                             ,b,blockquote[cite],br,dd,div[class],dl,dt,em,h1,h2,h3,h4,h5,h6
+                             ,hr,i,li[class|value],map,ol[start|type]
                              ,nav[accesskey|contenteditable|contextmenu|data-*|draggable|dropzone|hidden|spellcheck|tabindex|translate]
-                             ,ol[start|type],p,pre,rp,rt,ruby,s,small,source,span,strike,strong,style,sub,sup,
+                             ,ol[class|start|type],p,pre,rp,rt,ruby,s,small,source,span,strike,strong,style,sub,sup,
                              ,table[border|cols|summary|cellpadding|cellspacing|align]
                              ,tbody[valign],td[bordercolor|colspan|rowspan],tfoot[valign]
                              ,th[colspan|rowspan|scope],thead[valign],tr[colspan|rowspan]
