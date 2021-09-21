@@ -343,8 +343,13 @@ class interview_experience extends forum
                             $skip = true;
                         }
                     }
-                    if ($skip)
+                    if ($skip) {
+                        if ($meta_key == $this->mycred_pos[1]) {
+                            // mycred end point
+                            $content .= '[/mycred_sell_this]';
+                        }
                         continue;
+                    }
                     $concat_content = substr($concat_content, 0, strlen($concat_content) - 1);
                     $content = $content . "<p>
                     <strong><u><font size='3pt'>$title</font></u></strong>
